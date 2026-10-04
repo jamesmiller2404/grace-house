@@ -21,8 +21,8 @@ export const site = {
   ],
   facts: [
     "Private pay: no Medi-Cal or insurance",
-    "Not a detox center. If you are still using or in withdrawal, seek medical care first.",
     "Intakes on weekdays only",
+    "Not a detox center. If you are still using or in withdrawal, seek medical care first.",
   ],
   // Confirm these national numbers before launch.
   crisisLines: [

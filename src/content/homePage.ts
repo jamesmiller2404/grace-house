@@ -23,14 +23,6 @@ export const homePageSections: SectionConfig[] = [
       secondaryCta: { label: "Our Stories", href: "/stories" },
     },
   },
-    {
-    type: "welcome",
-    props: {
-      heading: "Welcome to Grace House",
-      body: "Grace House NorCal is a faith-based discipleship program in Sacramento, California, dedicated to helping men and women overcome life’s challenges, rebuild their lives, and discover lasting hope through spiritual growth, personal accountability, and strong moral values. Through compassionate support and lasting relationships, we strive...",
-      pullQuote: "To see families restored and give hope to the hopeless.",
-    },
-  },
   {
     type: "help-strip",
     props: {
@@ -39,13 +31,22 @@ export const homePageSections: SectionConfig[] = [
       closedBody: "It's late, and you still have options. The lines below are open right now.",
       phone: site.phone,
       phoneHref: site.phoneHref,
-      cta: { label: "Start intake", href: "/get-help" },
+      cta: { label: "Start", href: "/get-help" },
+      ctaNote: "Fill out the Grace House Assessment Form",
       hours: site.hours,
       openNowLabel: "We're open now",
       closedLabel: "The office is closed. Leave a message and we'll call back within one business day.",
       facts: site.facts,
-      crisisTitle: "SUPPORT AVAILABLE ANY TIME",
+      crisisTitle: "SUPPORT THAT IS AVAILABLE 24/7",
       crisisLines: site.crisisLines,
+    },
+  },
+      {
+    type: "welcome",
+    props: {
+      heading: "Welcome to Grace House",
+      body: "Grace House NorCal is a faith-based discipleship program in Sacramento, California, dedicated to helping men and women overcome life’s challenges, rebuild their lives, and discover lasting hope through spiritual growth, personal accountability, and strong moral values. Through compassionate support and lasting relationships, we strive...",
+      pullQuote: "To see families restored and give hope to the hopeless.",
     },
   },
   {

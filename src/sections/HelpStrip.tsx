@@ -10,6 +10,7 @@ export type HelpStripProps = {
   phone: string;
   phoneHref: string;
   cta: { label: string; href: string };
+  ctaNote?: string;
   hours: { label: string; days: number[]; open: number; close: number; timeZone: string };
   openNowLabel: string;
   closedLabel: string;
@@ -40,6 +41,7 @@ export default function HelpStrip({
   phone,
   phoneHref,
   cta,
+  ctaNote,
   hours,
   openNowLabel,
   closedLabel,
@@ -54,52 +56,71 @@ export default function HelpStrip({
 
   return (
     <section aria-labelledby="help-title" className="border-b-4 border-gold bg-sand text-ink">
-      <div className="mx-auto max-w-6xl px-6 py-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        <div className="grid gap-8 md:grid-cols-[3fr_2fr] md:gap-12">
           <div>
-            <h2 id="help-title" className="font-heading text-2xl text-anchor">
+            <h2 id="help-title" className="font-heading text-3xl font-bold text-ink md:text-4xl">
               {heading}
             </h2>
-            <p>{closed ? closedBody : openBody}</p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a href={phoneHref} className="whitespace-nowrap text-2xl font-semibold text-anchor">
-              {phone}
-            </a>
-            <Link href={cta.href} className="rounded-md bg-terra px-5 py-3 font-semibold text-white">
-              {cta.label}
-            </Link>
-          </div>
-        </div>
+            <p className="mt-2 text-lg">{closed ? closedBody : openBody}</p>
 
-        <div className="mt-4 border-t border-anchor/20 pt-4 text-base">
-          <p className="font-semibold text-anchor">
-            {open === null
-              ? `Intake line ${hours.label}`
-              : closed
-                ? closedLabel
-                : `${openNowLabel} · Intake line ${hours.label}`}
-          </p>
-          <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <Link
+                href={cta.href}
+                className="rounded-md bg-terra px-8 py-4 text-2xl font-bold text-white transition-colors hover:bg-anchor"
+              >
+                {cta.label}
+              </Link>
+              {ctaNote && <span className="text-lg font-bold">← {ctaNote}</span>}
+            </div>
+
+            <p className="mt-5 text-2xl font-bold">
+              or call{" "}
+              <a href={phoneHref} className="whitespace-nowrap hover:underline">
+                {phone}
+              </a>
+            </p>
+
+            <p className="mt-4 flex items-center gap-2 font-semibold">
+              <span
+                aria-hidden
+                className={`inline-block h-3.5 w-3.5 shrink-0 rounded-full ${
+                  closed ? "bg-terra" : "bg-green-700"
+                }`}
+              />
+              <span>
+                {open === null
+                  ? `Intake line ${hours.label}`
+                  : closed
+                    ? closedLabel
+                    : `${openNowLabel} · Intake line ${hours.label}`}
+              </span>
+            </p>
+          </div>
+
+          <ul className="space-y-3 text-base md:pt-1">
             {facts.map((f) => (
               <li
                 key={f}
-                className="before:mr-1 before:font-bold before:text-terra before:content-['✓']"
+                className="flex gap-2 before:font-bold before:text-terra before:content-['✓']"
               >
-                {f}
+                <span>{f}</span>
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="mt-8 border-t border-anchor/30 pt-4">
           {crisisTitle && (
-            <p className="mt-4 text-xs font-semibold tracking-[0.12em] text-anchor">{crisisTitle}</p>
+            <p className="text-sm font-bold tracking-[0.06em] text-ink">{crisisTitle}</p>
           )}
-          <ul className="mt-2 grid gap-3 sm:grid-cols-3">
+          <ul className="mt-3 grid gap-4 sm:grid-cols-3">
             {crisisLines.map((c) => (
               <li key={c.label}>
-                <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-terra">
+                <span className="block text-sm font-bold uppercase tracking-[0.05em] text-terra">
                   {c.label}
                 </span>
-                <a href={c.href} className="font-semibold text-anchor underline">
+                <a href={c.href} className="font-bold text-ink underline">
                   {c.text}
                 </a>
               </li>
