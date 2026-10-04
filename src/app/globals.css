@@ -1,26 +1,27 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Design tokens from the style specimen. Change a color here and the whole site follows. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-anchor: #32243f;     /* aubergine */
+  --color-cream: #f7f3eb;
+  --color-sand: #e7d8c3;
+  --color-terra: #9e5640;      /* buttons with white text */
+  --color-gold: #c9a45c;       /* text only on dark backgrounds */
+  --color-lift: #e3a857;       /* tags, hover, highlights */
+  --color-ink: #242725;
+  --font-heading: var(--font-dm-serif), Georgia, serif;
+  --font-sans: var(--font-source), system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.6;
+}
+
+/* DM Serif Display has a single weight. Stop browsers from faux-bolding headings. */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
 }
