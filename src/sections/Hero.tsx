@@ -19,23 +19,42 @@ export default function Hero({
   secondaryCta,
 }: HeroProps) {
   return (
-    <section className="relative isolate overflow-hidden bg-anchor text-center text-cream">
+    <section className="bg-anchor text-cream relative isolate overflow-hidden text-center">
       {/* Drop your Photoshop export at public/images/hero.jpg (about 2400px wide) */}
-      <Image src={image} alt="" fill priority sizes="100vw" className="-z-10 object-cover" />
-      <div className="absolute inset-0 -z-10 bg-anchor/80" />
+      <Image
+        src={image}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="-z-10 object-cover"
+      />
+      <div className="bg-anchor/80 absolute inset-0 -z-10" />
       <div className="mx-auto max-w-3xl px-6 py-24 md:py-32">
-        {eyebrow && <p className="text-sm font-semibold tracking-[0.18em] text-gold">{eyebrow}</p>}
-        <h1 className="mt-3 font-heading text-5xl leading-[1.05] md:text-7xl">{heading}</h1>
+        {eyebrow && (
+          <p className="text-gold text-sm font-semibold tracking-[0.18em]">
+            {eyebrow}
+          </p>
+        )}
+        <h1 className="font-heading mt-3 text-5xl leading-[1.05] md:text-7xl">
+          {heading}
+        </h1>
         {body && <p className="mx-auto mt-4 max-w-xl text-xl">{body}</p>}
         {(primaryCta || secondaryCta) && (
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {primaryCta && (
-              <Link href={primaryCta.href} className="rounded-md bg-terra px-6 py-3 font-semibold text-white">
+              <Link
+                href={primaryCta.href}
+                className="bg-terra rounded-md px-6 py-3 font-semibold text-white"
+              >
                 {primaryCta.label}
               </Link>
             )}
             {secondaryCta && (
-              <Link href={secondaryCta.href} className="rounded-md border-2 border-cream px-6 py-3 font-semibold">
+              <Link
+                href={secondaryCta.href}
+                className="border-cream rounded-md border-2 px-6 py-3 font-semibold"
+              >
                 {secondaryCta.label}
               </Link>
             )}

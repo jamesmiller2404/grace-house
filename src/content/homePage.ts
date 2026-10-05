@@ -27,21 +27,24 @@ export const homePageSections: SectionConfig[] = [
     type: "help-strip",
     props: {
       heading: "Need help now?",
-      openBody: "You don't have to figure this out alone. Talk to a real person.",
-      closedBody: "It's late, and you still have options. The lines below are open right now.",
+      openBody:
+        "You don't have to figure this out alone. Talk to a real person.",
+      closedBody:
+        "It's late, and you still have options. The lines below are open right now.",
       phone: site.phone,
       phoneHref: site.phoneHref,
       cta: { label: "Start", href: "/get-help" },
       ctaNote: "Fill out the Grace House Assessment Form",
       hours: site.hours,
       openNowLabel: "We're open now",
-      closedLabel: "The office is closed. Leave a message and we'll call back within one business day.",
+      closedLabel:
+        "The office is closed. Leave a message and we'll call back within one business day.",
       facts: site.facts,
       crisisTitle: "SUPPORT THAT IS AVAILABLE 24/7",
       crisisLines: site.crisisLines,
     },
   },
-      {
+  {
     type: "welcome",
     props: {
       heading: "Welcome to Grace House",
@@ -52,11 +55,14 @@ export const homePageSections: SectionConfig[] = [
   {
     type: "four-pillars",
     props: {
-      eyebrow: "WHAT GUIDES EVERYTHING WE DO",
+      eyebrow: "WHAT GUIDES GRACE HOUSE",
       heading: "The Four Pillars of Recovery",
-      intro: "Each step builds on the last, and the path leads home.",
+      subtitle: "- The Way -",
       pillars,
-      cta: { label: "Read about the Four Pillars →", href: "/about#pillars" },
+      cta: {
+        label: "Read more about The Four Pillars →",
+        href: "/about#pillars",
+      },
     },
   },
 ];

@@ -18,10 +18,10 @@ export default function Nav() {
             className="h-16 md:h-[78px]"
           />
           <span className="shrink-0">
-            <span className="block whitespace-nowrap font-heading text-4xl font-normal tracking-[0.04em] text-white md:text-6xl">
+            <span className="font-heading block text-4xl font-normal tracking-[0.04em] whitespace-nowrap text-white md:text-6xl">
               {site.name}
             </span>
-            <span className="mt-1 block whitespace-nowrap font-sans text-sm font-medium uppercase text-gold md:text-2xl">
+            <span className="text-gold mt-1 block font-sans text-sm font-medium whitespace-nowrap uppercase md:text-2xl">
               {site.tagline}
             </span>
           </span>
@@ -32,14 +32,18 @@ export default function Nav() {
           <Link
             href="/support"
             style={{ borderRadius: "12px" }}
-            className="bg-lift px-5 py-2.5 font-sans text-base font-medium uppercase tracking-wider text-anchor hover:bg-gold"
+            className="bg-lift text-anchor hover:bg-gold px-5 py-2.5 font-sans text-base font-medium tracking-wider uppercase"
           >
             Donate to Grace House
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
             {site.nav.map((l) => (
-              <Link key={l.href} href={l.href} className="font-sans text-2xl font-medium text-cream/90 hover:text-lift">
+              <Link
+                key={l.href}
+                href={l.href}
+                className="text-cream/90 hover:text-lift font-sans text-2xl font-medium"
+              >
                 {l.label}
               </Link>
             ))}
@@ -47,10 +51,10 @@ export default function Nav() {
 
           {/* Mobile: links live in a no-JS menu */}
           <details className="relative md:hidden">
-            <summary className="cursor-pointer list-none rounded-md border border-cream/40 px-3 py-2 text-base">
+            <summary className="border-cream/40 cursor-pointer list-none rounded-md border px-3 py-2 text-base">
               Menu
             </summary>
-            <div className="absolute right-0 z-10 mt-2 w-44 rounded-md bg-anchor p-3 shadow-lg ring-1 ring-cream/20">
+            <div className="bg-anchor ring-cream/20 absolute right-0 z-10 mt-2 w-44 rounded-md p-3 shadow-lg ring-1">
               {site.nav.map((l) => (
                 <Link key={l.href} href={l.href} className="block py-2">
                   {l.label}
@@ -63,4 +67,3 @@ export default function Nav() {
     </header>
   );
 }
-

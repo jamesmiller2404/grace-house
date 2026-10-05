@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 
 export type HelpStripProps = {
@@ -11,7 +11,13 @@ export type HelpStripProps = {
   phoneHref: string;
   cta: { label: string; href: string };
   ctaNote?: string;
-  hours: { label: string; days: number[]; open: number; close: number; timeZone: string };
+  hours: {
+    label: string;
+    days: number[];
+    open: number;
+    close: number;
+    timeZone: string;
+  };
   openNowLabel: string;
   closedLabel: string;
   facts: string[];
@@ -19,7 +25,18 @@ export type HelpStripProps = {
   crisisLines: { label: string; text: string; href: string }[];
 };
 
-const DAYS: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+const DAYS: Record<string, number> = {
+  Sun: 0,
+  Mon: 1,
+  Tue: 2,
+  Wed: 3,
+  Thu: 4,
+  Fri: 5,
+  Sat: 6,
+};
+
+// No external store to subscribe to; the snapshot is recomputed each render.
+const subscribeNoop = () => () => {};
 
 function isOfficeOpen(hours: HelpStripProps["hours"], now = new Date()) {
   const { days, open, close, timeZone } = hours;
@@ -49,17 +66,28 @@ export default function HelpStrip({
   crisisTitle,
   crisisLines,
 }: HelpStripProps) {
-  // null until mounted, so server and client markup match
-  const [open, setOpen] = useState<boolean | null>(null);
-  useEffect(() => setOpen(isOfficeOpen(hours)), [hours]);
+  // null until mounted, so server and client markup match.
+  // useSyncExternalStore gives us exactly that: getServerSnapshot returns null,
+  // and the client snapshot is computed after hydration without setState-in-effect.
+  const open = useSyncExternalStore(
+    subscribeNoop,
+    () => isOfficeOpen(hours),
+    () => null,
+  );
   const closed = open === false;
 
   return (
-    <section aria-labelledby="help-title" className="border-b-4 border-gold bg-sand text-ink">
+    <section
+      aria-labelledby="help-title"
+      className="border-gold bg-sand text-ink border-b-4"
+    >
       <div className="mx-auto max-w-6xl px-6 py-8">
         <div className="grid gap-8 md:grid-cols-[3fr_2fr] md:gap-12">
           <div>
-            <h2 id="help-title" className="font-heading text-3xl font-bold text-ink md:text-4xl">
+            <h2
+              id="help-title"
+              className="font-heading text-ink text-3xl font-bold md:text-4xl"
+            >
               {heading}
             </h2>
             <p className="mt-2 text-lg">{closed ? closedBody : openBody}</p>
@@ -67,11 +95,13 @@ export default function HelpStrip({
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <Link
                 href={cta.href}
-                className="rounded-md bg-terra px-8 py-4 text-2xl font-bold text-white transition-colors hover:bg-anchor"
+                className="bg-terra hover:bg-anchor rounded-md px-8 py-4 text-2xl font-bold text-white transition-colors"
               >
                 {cta.label}
               </Link>
-              {ctaNote && <span className="text-lg font-bold">← {ctaNote}</span>}
+              {ctaNote && (
+                <span className="text-lg font-bold">← {ctaNote}</span>
+              )}
             </div>
 
             <p className="mt-5 text-2xl font-bold">
@@ -102,7 +132,7 @@ export default function HelpStrip({
             {facts.map((f) => (
               <li
                 key={f}
-                className="flex gap-2 before:font-bold before:text-terra before:content-['✓']"
+                className="before:text-terra flex gap-2 before:font-bold before:content-['✓']"
               >
                 <span>{f}</span>
               </li>
@@ -110,17 +140,19 @@ export default function HelpStrip({
           </ul>
         </div>
 
-        <div className="mt-8 border-t border-anchor/30 pt-4">
+        <div className="border-anchor/30 mt-8 border-t pt-4">
           {crisisTitle && (
-            <p className="text-sm font-bold tracking-[0.06em] text-ink">{crisisTitle}</p>
+            <p className="text-ink text-sm font-bold tracking-[0.06em]">
+              {crisisTitle}
+            </p>
           )}
           <ul className="mt-3 grid gap-4 sm:grid-cols-3">
             {crisisLines.map((c) => (
               <li key={c.label}>
-                <span className="block text-sm font-bold uppercase tracking-[0.05em] text-terra">
+                <span className="text-terra block text-sm font-bold tracking-[0.05em] uppercase">
                   {c.label}
                 </span>
-                <a href={c.href} className="font-bold text-ink underline">
+                <a href={c.href} className="text-ink font-bold underline">
                   {c.text}
                 </a>
               </li>

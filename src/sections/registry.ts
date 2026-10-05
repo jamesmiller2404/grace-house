@@ -33,8 +33,14 @@ export const sectionRegistry = {
 export type SectionType = keyof typeof sectionRegistry;
 
 /** Returns the component for a section type, or undefined for unknown types. */
-export function getSectionComponent(type: string): ComponentType<Record<string, unknown>> | undefined {
-  const entry = (sectionRegistry as Record<string, { component: ComponentType<unknown> }>)[type];
+export function getSectionComponent(
+  type: string,
+): ComponentType<Record<string, unknown>> | undefined {
+  const entry = (
+    sectionRegistry as Record<string, { component: ComponentType<unknown> }>
+  )[type];
   // The cast is contained here: every section component validates its own props at render time.
-  return entry ? (entry.component as unknown as ComponentType<Record<string, unknown>>) : undefined;
+  return entry
+    ? (entry.component as unknown as ComponentType<Record<string, unknown>>)
+    : undefined;
 }

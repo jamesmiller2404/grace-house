@@ -27,7 +27,15 @@ export const site = {
   // Confirm these national numbers before launch.
   crisisLines: [
     { label: "Emergency or overdose", text: "Call 911", href: "tel:911" },
-    { label: "Crisis or suicidal thoughts", text: "Call or text 988", href: "tel:988" },
-    { label: "Find treatment, 24/7", text: "SAMHSA 1-800-662-4357", href: "tel:18006624357" },
+    {
+      label: "Crisis or suicidal thoughts",
+      text: "Call or text 988",
+      href: "tel:988",
+    },
+    {
+      label: "Find treatment, 24/7",
+      text: "SAMHSA 1-800-662-4357",
+      href: "tel:18006624357",
+    },
   ],
 };
