@@ -18,7 +18,7 @@ export default function FourPillars({
   cta,
 }: FourPillarsProps) {
   return (
-    <section className="bg-anchor text-cream px-6 py-16">
+    <section id="pillars" className="bg-anchor text-cream px-6 py-16">
       <div className="mx-auto max-w-6xl">
         {eyebrow && (
           <p className="text-gold text-center text-sm font-semibold tracking-[0.2em]">

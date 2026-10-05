@@ -38,15 +38,53 @@ export default function Nav() {
           </Link>
 
           <nav className="hidden items-center gap-6 text-xl md:flex lg:gap-8 lg:text-2xl" aria-label="Main">
-            {site.nav.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="text-cream/90 hover:text-lift font-sans font-medium whitespace-nowrap"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {site.nav.map((l) =>
+              l.children ? (
+                <div key={l.href} className="group relative">
+                  <Link
+                    href={l.href}
+                    className="text-cream/90 hover:text-lift flex items-center gap-1.5 font-sans font-medium whitespace-nowrap"
+                  >
+                    {l.label}
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="h-4 w-4 shrink-0 transition-transform group-hover:rotate-180"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </Link>
+                  <div
+                    className="invisible absolute left-0 top-full z-20 pt-2 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                  >
+                    <div className="bg-anchor ring-cream/20 w-56 rounded-md p-2 shadow-lg ring-1">
+                      {l.children.map((c) => (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          className="text-cream/90 hover:bg-cream/10 hover:text-lift block rounded-md px-3 py-2 font-sans text-base font-medium"
+                        >
+                          {c.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="text-cream/90 hover:text-lift font-sans font-medium whitespace-nowrap"
+                >
+                  {l.label}
+                </Link>
+              ),
+            )}
           </nav>
 
           {/* Mobile: links live in a no-JS menu */}
@@ -56,9 +94,20 @@ export default function Nav() {
             </summary>
             <div className="bg-anchor ring-cream/20 absolute right-0 z-10 mt-2 w-44 rounded-md p-3 shadow-lg ring-1">
               {site.nav.map((l) => (
-                <Link key={l.href} href={l.href} className="block py-2">
-                  {l.label}
-                </Link>
+                <div key={l.href}>
+                  <Link href={l.href} className="block py-2">
+                    {l.label}
+                  </Link>
+                  {l.children?.map((c) => (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      className="text-cream/80 hover:text-lift block py-2 pl-4 text-base"
+                    >
+                      {c.label}
+                    </Link>
+                  ))}
+                </div>
               ))}
             </div>
           </details>

@@ -17,13 +17,15 @@ import Welcome, { type WelcomeProps } from "./Welcome";
 import FourPillars, { type FourPillarsProps } from "./FourPillars";
 import HelpStrip, { type HelpStripProps } from "./HelpStrip";
 import UpcomingEvents, { type UpcomingEventsProps } from "./UpcomingEvents";
+import StoriesSection, { type StoriesSectionProps } from "./StoriesSection";
 
 export type SectionConfig =
   | { type: "hero"; props: HeroProps }
   | { type: "welcome"; props: WelcomeProps }
   | { type: "four-pillars"; props: FourPillarsProps }
   | { type: "help-strip"; props: HelpStripProps }
-  | { type: "upcoming-events"; props: UpcomingEventsProps };
+  | { type: "upcoming-events"; props: UpcomingEventsProps }
+  | { type: "stories"; props: StoriesSectionProps };
 
 export const sectionRegistry = {
   hero: { component: Hero },
@@ -31,6 +33,7 @@ export const sectionRegistry = {
   "four-pillars": { component: FourPillars },
   "help-strip": { component: HelpStrip },
   "upcoming-events": { component: UpcomingEvents },
+  stories: { component: StoriesSection },
 } as const;
 
 export type SectionType = keyof typeof sectionRegistry;

@@ -13,11 +13,19 @@ export const site = {
     timeZone: "America/Los_Angeles",
   },
   nav: [
-    { label: "About", href: "/about" },
-    { label: "Program", href: "/program" },
-    { label: "Stories", href: "/stories" },
-    { label: "Events", href: "/events" },
-    { label: "Support", href: "/support" },
+    { label: "Home", href: "/" },
+    {
+      label: "About Grace House",
+      href: "/about",
+      children: [
+        { label: "Mission", href: "/about/mission" },
+        { label: "The Four Pillars", href: "/#pillars" },
+        { label: "Board Members", href: "/about/board" },
+        { label: "FAQ", href: "/about/faq" },
+      ],
+    },
+    { label: "Stories", href: "/#stories" },
+    { label: "Events", href: "/#events" },
   ],
   facts: [
     "Private pay: no Medi-Cal or insurance",

@@ -1,6 +1,7 @@
 import { site } from "./site";
 import { pillars } from "./pillars";
 import { upcomingEvents } from "./events";
+import { stories } from "./stories";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
@@ -48,9 +49,10 @@ export const homePageSections: SectionConfig[] = [
   {
     type: "welcome",
     props: {
-      heading: "Welcome to Grace House",
+      heading: "What is Grace House",
       body: "Grace House NorCal is a faith-based discipleship program in Sacramento, California, dedicated to helping men and women overcome life’s challenges, rebuild their lives, and discover lasting hope through spiritual growth, personal accountability, and strong moral values. Through compassionate support and lasting relationships, we strive...",
       pullQuote: "To see families restored and give hope to the hopeless.",
+      cta: { label: "Learn More", href: "/about/mission" },
     },
   },
   {
@@ -64,6 +66,16 @@ export const homePageSections: SectionConfig[] = [
         label: "Read more about The Four Pillars →",
         href: "/about#pillars",
       },
+    },
+  },
+  {
+    type: "stories",
+    props: {
+      eyebrow: "Lives Changed",
+      heading: "Every journey begins somewhere.",
+      subtitle: "Read how graduates found their footing, and their way home.",
+      stories,
+      cta: { label: "View all stories", href: "/stories" },
     },
   },
   {

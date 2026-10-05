@@ -1,10 +1,13 @@
+import Link from "next/link";
+
 export type WelcomeProps = {
   heading: string;
   body: string;
   pullQuote?: string;
+  cta?: { label: string; href: string };
 };
 
-export default function Welcome({ heading, body, pullQuote }: WelcomeProps) {
+export default function Welcome({ heading, body, pullQuote, cta }: WelcomeProps) {
   return (
     <section id="welcome" className="bg-cream px-6 py-14">
       <div className="mx-auto max-w-6xl">
@@ -17,6 +20,14 @@ export default function Welcome({ heading, body, pullQuote }: WelcomeProps) {
               {pullQuote}
             </p>
           </blockquote>
+        )}
+        {cta && (
+          <Link
+            href={cta.href}
+            className="text-terra hover:text-lift mt-8 inline-flex items-center gap-2 text-xl font-semibold underline underline-offset-4"
+          >
+            {cta.label} <span aria-hidden>→</span>
+          </Link>
         )}
       </div>
     </section>

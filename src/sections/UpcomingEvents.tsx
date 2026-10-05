@@ -45,11 +45,11 @@ export default function UpcomingEvents({
         {subtitle && <p className="mt-4 text-lg">{subtitle}</p>}
 
         <ul className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => {
+          {events.map((event, i) => {
             const date = parseISODate(event.date);
             return (
               <li
-                key={`${event.title}-${event.date}-${event.time}`}
+                key={`${event.title}-${event.date}-${event.time}-${i}`}
                 className="flex flex-col rounded-lg bg-white p-6 shadow-sm"
               >
                 <div className="flex items-start gap-5">
