@@ -1,5 +1,6 @@
 import { site } from "./site";
 import { pillars } from "./pillars";
+import { upcomingEvents } from "./events";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
@@ -15,8 +16,8 @@ export const homePageSections: SectionConfig[] = [
   {
     type: "hero",
     props: {
-      eyebrow: "FAITH-BASED RECOVERY · SACRAMENTO",
-      heading: "Hope starts here.",
+      eyebrow: "Faith-Based Recovery",
+      heading: "Hope Starts Here",
       body: "Transforming lives. Restoring families. Renewing hope.",
       image: "/images/hero.jpg",
       primaryCta: { label: "Learn More", href: "#welcome" },
@@ -65,4 +66,14 @@ export const homePageSections: SectionConfig[] = [
       },
     },
   },
+  {
+    type: "upcoming-events",
+    props: {
+      heading: "Upcoming Events",
+      subtitle: "Join us.",
+      events: upcomingEvents,
+      cta: { label: "View all events", href: "/events" },
+    },
+  },
 ];
+

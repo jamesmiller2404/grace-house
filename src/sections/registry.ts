@@ -16,18 +16,21 @@ import Hero, { type HeroProps } from "./Hero";
 import Welcome, { type WelcomeProps } from "./Welcome";
 import FourPillars, { type FourPillarsProps } from "./FourPillars";
 import HelpStrip, { type HelpStripProps } from "./HelpStrip";
+import UpcomingEvents, { type UpcomingEventsProps } from "./UpcomingEvents";
 
 export type SectionConfig =
   | { type: "hero"; props: HeroProps }
   | { type: "welcome"; props: WelcomeProps }
   | { type: "four-pillars"; props: FourPillarsProps }
-  | { type: "help-strip"; props: HelpStripProps };
+  | { type: "help-strip"; props: HelpStripProps }
+  | { type: "upcoming-events"; props: UpcomingEventsProps };
 
 export const sectionRegistry = {
   hero: { component: Hero },
   welcome: { component: Welcome },
   "four-pillars": { component: FourPillars },
   "help-strip": { component: HelpStrip },
+  "upcoming-events": { component: UpcomingEvents },
 } as const;
 
 export type SectionType = keyof typeof sectionRegistry;

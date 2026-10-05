@@ -19,7 +19,7 @@ export default function Hero({
   secondaryCta,
 }: HeroProps) {
   return (
-    <section className="bg-anchor text-cream relative isolate overflow-hidden text-center">
+    <section className="relative isolate overflow-hidden text-center">
       {/* Drop your Photoshop export at public/images/hero.jpg (about 2400px wide) */}
       <Image
         src={image}
@@ -29,37 +29,46 @@ export default function Hero({
         sizes="100vw"
         className="-z-10 object-cover"
       />
-      <div className="bg-anchor/80 absolute inset-0 -z-10" />
-      <div className="mx-auto max-w-3xl px-6 py-24 md:py-32">
-        {eyebrow && (
-          <p className="text-gold text-sm font-semibold tracking-[0.18em]">
-            {eyebrow}
-          </p>
-        )}
-        <h1 className="font-heading mt-3 text-5xl leading-[1.05] md:text-7xl">
-          {heading}
-        </h1>
-        {body && <p className="mx-auto mt-4 max-w-xl text-xl">{body}</p>}
-        {(primaryCta || secondaryCta) && (
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {primaryCta && (
-              <Link
-                href={primaryCta.href}
-                className="bg-terra rounded-md px-6 py-3 font-semibold text-white"
-              >
-                {primaryCta.label}
-              </Link>
-            )}
-            {secondaryCta && (
-              <Link
-                href={secondaryCta.href}
-                className="border-cream rounded-md border-2 px-6 py-3 font-semibold"
-              >
-                {secondaryCta.label}
-              </Link>
-            )}
-          </div>
-        )}
+      {/* Light scrim only — the mockup keeps the photo bright */}
+      <div className="absolute inset-0 -z-10 bg-ink/10" />
+
+      {/* Dark translucent card holding the copy, anchored toward the top */}
+      <div className="mx-auto flex min-h-[42rem] max-w-7xl items-start justify-center px-6 pt-10 pb-24 md:min-h-[52rem] md:pt-14">
+        <div className="bg-slate-900/55 rounded-xl px-6 py-10 text-cream shadow-lg md:px-16 md:py-12">
+          {eyebrow && (
+            <p className="text-gold text-base font-bold tracking-[0.08em] uppercase">
+              {eyebrow}
+            </p>
+          )}
+          <h1 className="font-heading mt-3 text-5xl text-white md:text-8xl">
+            {heading}
+          </h1>
+          {body && (
+            <p className="mt-4 text-xl font-semibold text-white md:text-2xl">
+              {body}
+            </p>
+          )}
+          {(primaryCta || secondaryCta) && (
+            <div className="mt-8 flex flex-wrap justify-center gap-6">
+              {primaryCta && (
+                <Link
+                  href={primaryCta.href}
+                  className="bg-terra hover:bg-terra/90 rounded-lg px-10 py-3.5 text-xl font-bold text-white"
+                >
+                  {primaryCta.label}
+                </Link>
+              )}
+              {secondaryCta && (
+                <Link
+                  href={secondaryCta.href}
+                  className="bg-white text-ink hover:bg-cream rounded-lg px-10 py-3.5 text-xl font-bold"
+                >
+                  {secondaryCta.label}
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
