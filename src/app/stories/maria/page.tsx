@@ -1,10 +1,49 @@
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import MemoriesGallery, { type Memory } from "@/components/MemoriesGallery";
+import { pillars } from "@/content/pillars";
 
 export const metadata = {
   title: "Maria's Story — Grace House",
 };
+
+/** Index (0-based) of the pillar that mattered most to Maria. */
+const KEY_PILLAR_INDEX = 0;
+
+/** Personal photos from Maria's time at Grace House (placeholders). */
+const memories: Memory[] = [
+  {
+    image: "/images/extraImage1.jpg",
+    alt: "Maria laughing with friends on the porch",
+    caption: "Porch nights with the house. Used with permission.",
+  },
+  {
+    image: "/images/extraImage2.jpg",
+    alt: "Maria serving dinner at a house celebration",
+    caption: "Cooking her first holiday dinner. Used with permission.",
+  },
+  {
+    image: "/images/extraImage3.jpg",
+    alt: "Maria on a group trip with housemates",
+    caption: "The house camping trip. Used with permission.",
+  },
+  {
+    image: "/images/person2.jpg",
+    alt: "Maria with her sponsor at her graduation",
+    caption: "Graduation day with her sponsor. Used with permission.",
+  },
+  {
+    image: "/images/pillar-4.jpg",
+    alt: "Maria and her daughter reunited",
+    caption: "Reunited with her daughter. Used with permission.",
+  },
+  {
+    image: "/images/person3.jpg",
+    alt: "Maria speaking at a house meeting",
+    caption: "Sharing her story at a Friday meeting. Used with permission.",
+  },
+];
 
 /**
  * Mockup: full profile page for a single graduate, matching
@@ -121,6 +160,46 @@ export default function MariaStoryPage() {
               </Link>
             </p>
           </div>
+
+          {/* The pillar that mattered most to this graduate */}
+          <section
+            aria-labelledby="key-pillar-heading"
+            className="relative mx-auto mt-16 max-w-4xl overflow-hidden rounded-lg"
+          >
+            {/* Gold edge on the left, dark gradient card body */}
+            <div className="bg-gold absolute inset-y-0 left-0 w-1.5" />
+            <div className="bg-gradient-to-br from-anchor to-[#241b2e] flex flex-col gap-4 px-6 py-8 sm:flex-row sm:items-center sm:gap-8 sm:px-10 sm:py-10">
+              <span
+                aria-hidden
+                className="font-heading text-gold shrink-0 self-start text-5xl leading-none sm:self-center sm:text-6xl"
+              >
+                {String(KEY_PILLAR_INDEX + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p className="text-gold text-sm font-bold tracking-[0.15em] uppercase">
+                  The pillar that mattered most to Maria
+                </p>
+                <h2
+                  id="key-pillar-heading"
+                  className="font-heading mt-2 text-3xl text-white sm:text-4xl"
+                >
+                  {pillars[KEY_PILLAR_INDEX].title}
+                </h2>
+                <p className="text-cream mt-3 text-lg leading-relaxed">
+                  {pillars[KEY_PILLAR_INDEX].text}{" "}
+                  <Link
+                    href="/#pillars"
+                    className="text-gold font-bold underline underline-offset-4 hover:text-lift"
+                  >
+                    Read more about The Four Pillars <span aria-hidden>→</span>
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Personal photo memories */}
+          <MemoriesGallery name="Maria" memories={memories} />
         </div>
       </main>
     </>
