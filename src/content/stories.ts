@@ -35,7 +35,7 @@ export const stories: StoryItem[] = [
     excerpt: "“I've made life-long friends at Grace House.”",
     image: "/images/person2.jpg",
     href: "/stories/john",
-    readLabel: "Read her story",
+    readLabel: "Read his story",
   },
   {
     name: "Brandon",
@@ -43,6 +43,6 @@ export const stories: StoryItem[] = [
     excerpt: "“Grace House taught me who I am.”",
     image: "/images/person3.jpg",
     href: "/stories/brandon",
-    readLabel: "Read her story",
+    readLabel: "Read his story",
   },
 ];
