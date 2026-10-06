@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import SectionRenderer from "@/sections/SectionRenderer";
 import { homePageSections } from "@/content/homePage";
 
@@ -17,6 +18,7 @@ export default function Home() {
           <SectionRenderer key={`${section.type}-${i}`} section={section} />
         ))}
       </main>
+      <Footer />
     </>
   );
 }
