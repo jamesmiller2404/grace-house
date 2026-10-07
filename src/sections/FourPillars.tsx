@@ -83,7 +83,7 @@ export default function FourPillars({
         {cta && (
           <Link
             href={cta.href}
-            className="text-gold hover:text-lift mt-10 block text-center text-xl font-semibold underline underline-offset-4"
+            className="text-gold hover:text-lift mt-10 block text-center text-xl font-semibold"
           >
             {cta.label}
           </Link>

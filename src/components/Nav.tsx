@@ -5,9 +5,9 @@ import { site } from "@/content/site";
 export default function Nav() {
   return (
     <header className="bg-anchor text-cream">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-6 md:gap-8 md:py-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-6 lg:gap-8 lg:py-10">
         {/* Crown + wordmark */}
-        <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-5 md:gap-7">
+        <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-5 lg:gap-7">
           <Image
             src="/images/crown.png"
             alt=""
@@ -18,26 +18,27 @@ export default function Nav() {
             className="h-8 shrink-0 sm:h-12 md:h-[78px]"
           />
           <span className="min-w-0">
-            <span className="font-heading block truncate text-2xl font-normal tracking-[0.04em] whitespace-nowrap text-white sm:text-3xl md:text-4xl lg:text-6xl">
+            <span className="font-heading text-[clamp(1.5rem,6vw,3.75rem)] block leading-tight font-normal tracking-[0.04em] text-white sm:whitespace-nowrap">
               {site.name}
             </span>
-            <span className="text-gold mt-0.5 block font-sans text-xs font-medium tracking-wide whitespace-nowrap uppercase sm:text-sm md:text-base lg:text-2xl">
+            <span className="text-gold mt-0.5 block font-sans text-[clamp(0.7rem,2.8vw,1.5rem)] leading-tight font-medium tracking-wide uppercase sm:whitespace-nowrap">
               {site.tagline}
             </span>
           </span>
         </Link>
 
         {/* Right column: donate button above nav links */}
-        <div className="flex shrink-0 flex-col items-end gap-4 sm:gap-6 md:gap-9">
+        <div className="flex shrink-0 flex-col items-end gap-4 sm:gap-6 lg:gap-9">
           <Link
             href="/support"
             style={{ borderRadius: "12px" }}
-            className="bg-lift text-anchor hover:bg-gold px-3 py-1.5 font-sans text-xs font-medium tracking-wider whitespace-nowrap uppercase sm:px-4 sm:py-2 sm:text-sm md:px-5 md:py-2.5 md:text-base"
+            className="bg-lift text-anchor hover:bg-gold shrink-0 px-3 py-1.5 text-center font-sans text-xs font-medium tracking-wider uppercase sm:px-4 sm:py-2 sm:text-sm lg:px-5 lg:py-2.5 lg:text-base"
           >
-            Donate to Grace House
+            <span className="sm:hidden">Donate</span>
+            <span className="hidden sm:inline">Donate to Grace House</span>
           </Link>
 
-          <nav className="hidden items-center gap-6 text-xl md:flex lg:gap-8 lg:text-2xl" aria-label="Main">
+          <nav className="hidden items-center gap-6 text-xl lg:flex lg:gap-8 lg:text-2xl" aria-label="Main">
             {site.nav.map((l) =>
               l.children ? (
                 <div key={l.href} className="group relative">
@@ -88,7 +89,7 @@ export default function Nav() {
           </nav>
 
           {/* Mobile: links live in a no-JS menu */}
-          <details className="relative md:hidden">
+          <details className="relative lg:hidden">
             <summary className="border-cream/40 cursor-pointer list-none rounded-md border px-3 py-2 text-base">
               Menu
             </summary>

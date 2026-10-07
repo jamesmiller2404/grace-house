@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import { missionPage } from "@/content/mission";
+import { fourPillarsPage } from "@/content/fourPillars";
 
 export const metadata = {
-  title: "Mission — Grace House",
+  title: "The Four Pillars — Grace House",
 };
 
-export default function MissionPage() {
-  const { missionHeading, missionStatement } = missionPage;
+export default function FourPillarsPage() {
+  const { pillarsHeading, pillarsBody } = fourPillarsPage;
   return (
     <>
       <Nav />
@@ -36,15 +36,15 @@ export default function MissionPage() {
                 </Link>
               </li>
               <li aria-hidden className="text-ink/60 font-normal">›</li>
-              <li aria-current="page">{missionHeading}</li>
+              <li aria-current="page">{pillarsHeading}</li>
             </ol>
           </nav>
 
-          {/* Mission */}
+          {/* The Four Pillars */}
           <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
-          <h1 className="font-heading text-ink text-5xl">{missionHeading}</h1>
+          <h1 className="font-heading text-ink text-5xl">{pillarsHeading}</h1>
           <p className="whitespace-pre-line mt-4 max-w-[60ch] text-lg leading-relaxed">
-            {missionStatement}
+            {pillarsBody}
           </p>
         </div>
       </main>

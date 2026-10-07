@@ -19,10 +19,9 @@ export const homePageSections: SectionConfig[] = [
     props: {
       eyebrow: "Faith-Based Recovery",
       heading: "Hope Starts Here",
-      body: "Transforming lives. Restoring families. Renewing hope.",
       image: "/images/hero.jpg",
       primaryCta: { label: "Learn More", href: "#welcome" },
-      secondaryCta: { label: "Our Stories", href: "/stories" },
+      secondaryCta: { label: "Our Stories", href: "#stories" },
     },
   },
   {
@@ -64,7 +63,7 @@ export const homePageSections: SectionConfig[] = [
       pillars,
       cta: {
         label: "Read more about The Four Pillars →",
-        href: "/about#pillars",
+        href: "/about/four-pillars",
       },
     },
   },

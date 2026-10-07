@@ -60,7 +60,7 @@ export default function StoriesSection({
                   <p className="mt-2 text-base leading-relaxed italic">
                     {story.excerpt}
                   </p>
-                  <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold underline underline-offset-4">
+                  <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold">
                     {story.readLabel} <span aria-hidden>→</span>
                   </span>
                 </div>
@@ -72,7 +72,7 @@ export default function StoriesSection({
         {cta && (
           <Link
             href={cta.href}
-            className="text-terra hover:text-lift mt-10 inline-flex items-center gap-2 text-xl font-semibold underline underline-offset-4"
+            className="text-terra hover:text-lift mt-10 inline-flex items-center gap-2 text-xl font-semibold"
           >
             {cta.label} <span aria-hidden>→</span>
           </Link>

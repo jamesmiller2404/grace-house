@@ -84,7 +84,7 @@ export default function UpcomingEvents({
 
                 <Link
                   href={event.href}
-                  className="text-terra hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold underline underline-offset-4"
+                  className="text-terra hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold"
                 >
                   View event <span aria-hidden>→</span>
                 </Link>
@@ -96,7 +96,7 @@ export default function UpcomingEvents({
         {cta && (
           <Link
             href={cta.href}
-            className="text-terra hover:text-lift mt-10 inline-flex items-center gap-2 text-xl font-semibold underline underline-offset-4"
+            className="text-terra hover:text-lift mt-10 inline-flex items-center gap-2 text-xl font-semibold"
           >
             {cta.label} <span aria-hidden>→</span>
           </Link>

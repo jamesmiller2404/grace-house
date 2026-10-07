@@ -17,17 +17,21 @@ export default function StoriesIndexPage() {
       <Nav />
       <main className="bg-sand px-4 py-10 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <nav aria-label="Breadcrumb" className="text-sm">
-            <ol className="text-terra flex flex-wrap items-center gap-2 font-semibold">
+          <nav
+            aria-label="Breadcrumb"
+            className="text-terra pb-1 text-base font-bold"
+          >
+            <ol className="flex flex-wrap items-center gap-2">
               <li>
-                <Link href="/" className="hover:text-anchor underline-offset-4 hover:underline">
+                <Link
+                  href="/"
+                  className="underline-offset-4 hover:underline"
+                >
                   Home
                 </Link>
               </li>
-              <li aria-hidden className="text-ink/60">›</li>
-              <li aria-current="page" className="text-ink">
-                Lives Changed
-              </li>
+              <li aria-hidden className="text-ink/60 font-normal">›</li>
+              <li aria-current="page">Lives Changed</li>
             </ol>
           </nav>
 
@@ -62,7 +66,7 @@ export default function StoriesIndexPage() {
                       {story.name}
                     </h2>
                     <p className="mt-2 text-base italic">{story.excerpt}</p>
-                    <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold underline underline-offset-4">
+                    <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold">
                       {story.readLabel} <span aria-hidden>→</span>
                     </span>
                   </div>

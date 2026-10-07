@@ -17,7 +17,7 @@ export default function Footer() {
           <p className="text-gold mt-1 text-sm font-medium tracking-wide uppercase">
             {site.tagline}
           </p>
-          <p className="mt-5 max-w-xs text-cream/85 leading-relaxed">
+          <p className="mt-5 max-w-xs text-cream/85 italic leading-relaxed">
             To see families restored and give hope to the hopeless.
           </p>
         </div>
@@ -36,15 +36,8 @@ export default function Footer() {
           <p className="mt-2 text-cream/85 leading-relaxed">
             Mon–Fri, 9am–5pm
             <br />
-            No weekend intakes
+            Intakes on weekdays only
           </p>
-          <Link
-            href="/support"
-            style={{ borderRadius: "12px" }}
-            className="bg-terra hover:bg-[#b06850] mt-6 inline-block px-5 py-3 font-sans text-sm font-semibold text-white transition-colors"
-          >
-            Start intake
-          </Link>
         </div>
 
         {/* Column 3: Explore */}
@@ -54,12 +47,10 @@ export default function Footer() {
           </h2>
           <ul className="mt-4 space-y-2.5">
             {[
-              { label: "About", href: "/about" },
-              { label: "Program", href: "/about/mission" },
+              { label: "Home", href: "/home" },
               { label: "Stories", href: "/stories" },
               { label: "Events", href: "/#events" },
-              { label: "Support", href: "/support" },
-              { label: "Get Help", href: "/#get-help" },
+              { label: "Donate", href: "/#donate" },
             ].map((l) => (
               <li key={l.label}>
                 <Link
@@ -83,27 +74,6 @@ export default function Footer() {
             <li>Women&rsquo;s house</li>
             <li>Men&rsquo;s transitional home</li>
             <li>Sacramento, CA</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Crisis strip */}
-      <div className="border-cream/10 border-t">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-2 px-4 py-5 sm:px-6">
-          <p className="text-gold text-sm font-semibold tracking-widest uppercase">
-            In crisis? Support is available any time
-          </p>
-          <ul className="flex flex-wrap gap-x-8 gap-y-2">
-            {site.crisisLines.map((c) => (
-              <li key={c.label}>
-                <a
-                  href={c.href}
-                  className="text-cream hover:text-lift text-base font-semibold transition-colors"
-                >
-                  {c.text}
-                </a>
-              </li>
-            ))}
           </ul>
         </div>
       </div>

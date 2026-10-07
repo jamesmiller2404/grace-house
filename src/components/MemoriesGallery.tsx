@@ -55,7 +55,7 @@ export default function MemoriesGallery({
           type="button"
           onClick={() => setExpanded((e) => !e)}
           aria-expanded={expanded}
-          className="text-terra hover:text-anchor mt-4 inline-flex items-center gap-2 text-lg font-semibold underline underline-offset-4"
+          className="text-terra hover:text-anchor mt-4 inline-flex items-center gap-2 text-lg font-semibold"
         >
           {expanded ? "View fewer" : "View more"} <span aria-hidden>→</span>
         </button>

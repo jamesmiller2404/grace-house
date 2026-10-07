@@ -34,18 +34,13 @@ export default function Hero({
 
       {/* Dark translucent card holding the copy, anchored toward the top */}
       <div className="mx-auto flex min-h-[42rem] max-w-7xl items-start justify-center px-6 pt-10 pb-24 md:min-h-[52rem] md:pt-14">
-        <div className="bg-slate-900/55 rounded-xl px-6 py-10 text-cream shadow-lg md:px-16 md:py-12">
-          {eyebrow && (
-            <p className="text-gold text-base font-bold tracking-[0.08em] uppercase">
-              {eyebrow}
-            </p>
-          )}
-          <h1 className="font-heading mt-3 text-5xl text-white md:text-8xl">
+        <div className="bg-slate-900/55 rounded-xl px-6 py-8 text-cream shadow-lg md:px-14 md:py-10">
+          <h1 className="font-heading text-5xl text-white md:text-8xl">
             {heading}
           </h1>
-          {body && (
-            <p className="mt-4 text-xl font-semibold text-white md:text-2xl">
-              {body}
+          {eyebrow && (
+            <p className="text-gold mt-4 text-base font-bold tracking-[0.08em] uppercase">
+              {eyebrow}
             </p>
           )}
           {(primaryCta || secondaryCta) && (

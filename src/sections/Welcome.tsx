@@ -24,7 +24,7 @@ export default function Welcome({ heading, body, pullQuote, cta }: WelcomeProps)
         {cta && (
           <Link
             href={cta.href}
-            className="text-terra hover:text-lift mt-8 inline-flex items-center gap-2 text-xl font-semibold underline underline-offset-4"
+            className="text-terra hover:text-lift mt-8 inline-flex items-center gap-2 text-xl font-semibold"
           >
             {cta.label} <span aria-hidden>→</span>
           </Link>
