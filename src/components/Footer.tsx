@@ -22,15 +22,32 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Column 2: pastor photo */}
-        <div className="flex justify-center lg:justify-center">
-          <Image
-            src="/images/pastorLonnie2a.jpg"
-            alt="Pastor Lonnie"
-            width={1086}
-            height={1086}
-            className="rounded-lg h-auto w-full max-w-xs shadow-lg"
-          />
+        {/* Column 2: pastor photo + memorial dedication */}
+        <div className="flex w-full max-w-xs flex-col items-center lg:w-auto">
+          <a
+            href="/images/pastorLonnie2a.jpg"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View full-size photo of Pastor Lonnie"
+            title="View full-size photo"
+            className="block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+          >
+            <Image
+              src="/images/pastorLonnie2a.jpg"
+              alt="Pastor Lonnie"
+              width={1086}
+              height={1086}
+              className="h-auto w-full max-w-[240px] rounded-lg shadow-lg transition-transform duration-200 hover:scale-[1.03]"
+            />
+          </a>
+          <p className="font-memorial mt-5 text-center leading-snug text-white">
+            <span className="block text-2xl font-medium tracking-[0.14em]">
+              Lonnie Wes Nix
+            </span>
+            <span className="mt-2 block text-lg italic tracking-[0.28em] text-white/90">
+              1956&nbsp;&ndash;&nbsp;2021
+            </span>
+          </p>
         </div>
 
         {/* Column 3: Get help */}
@@ -55,7 +72,7 @@ export default function Footer() {
       {/* Legal row */}
       <div className="border-cream/10 border-t">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-5 text-sm text-cream/70 sm:px-6">
-          <p>© 2026 {site.name}. Not a detox center.</p>
+          <p>© 2026 {site.name}</p>
           <p>
             <a href="#" className="hover:text-lift transition-colors">
               Privacy

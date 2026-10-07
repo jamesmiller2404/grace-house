@@ -11,6 +11,8 @@
   --color-ink: #242725;
   --font-heading: var(--font-dm-serif), Georgia, serif;
   --font-sans: var(--font-source), system-ui, sans-serif;
+  /* Elegant serif for the memorial dedication in the footer */
+  --font-memorial: var(--font-cormorant), Georgia, serif;
 }
 
 body {

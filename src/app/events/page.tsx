@@ -18,7 +18,7 @@ export default function EventsPage() {
       <main className="flex-1">
         <UpcomingEvents
           heading="Upcoming Events"
-          subtitle="Join us — everyone is welcome."
+          subtitle="Join us"
           events={upcomingEvents}
           showControls
         />
