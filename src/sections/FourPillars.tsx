@@ -21,7 +21,7 @@ export default function FourPillars({
     <section id="pillars" className="bg-anchor text-cream px-6 py-16">
       <div className="mx-auto max-w-6xl">
         {eyebrow && (
-          <p className="text-gold text-center text-sm font-semibold tracking-[0.2em]">
+          <p className="text-gold text-center text-[21px] font-semibold tracking-[0.2em]">
             {eyebrow}
           </p>
         )}

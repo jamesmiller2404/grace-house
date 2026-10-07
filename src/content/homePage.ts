@@ -19,8 +19,8 @@ export const homePageSections: SectionConfig[] = [
     props: {
       eyebrow: "Faith-Based Recovery",
       heading: "Hope Starts Here",
-      image: "/images/hero.jpg",
-      primaryCta: { label: "Learn More", href: "#welcome" },
+      image: "/images/hero1a.jpg",
+      primaryCta: { label: "Our Home", href: "#welcome" },
       secondaryCta: { label: "Our Stories", href: "/#stories" },
     },
   },
@@ -29,19 +29,19 @@ export const homePageSections: SectionConfig[] = [
     props: {
       heading: "Need help now?",
       openBody:
-        "You don't have to figure this out alone. Talk to a real person.",
+        "Our office is open. You don't have to figure this out alone. Talk to a real person. Or you can fill out the assessment below and we will contact you within two business days.",
       closedBody:
-        "It's late, and you still have options. The lines below are open right now.",
+        "Our office is currently closed. You can fill out the assessment below and we will contact you within two business days.",
       phone: site.phone,
       phoneHref: site.phoneHref,
-      cta: { label: "Start", href: "/get-help" },
+      cta: { label: "Start Assessment", href: "/get-help" },
       ctaNote: "Fill out the Grace House Assessment Form",
       hours: site.hours,
       openNowLabel: "We're open now",
       closedLabel:
-        "The office is closed. Leave a message and we'll call back within one business day.",
+        "The office is closed. Leave a message and we'll call back within two business day.",
       facts: site.facts,
-      crisisTitle: "SUPPORT THAT IS AVAILABLE 24/7",
+      crisisTitle: "RESOURCES THAT ARE AVAILABLE 24/7",
       crisisLines: site.crisisLines,
     },
   },
@@ -50,8 +50,8 @@ export const homePageSections: SectionConfig[] = [
     props: {
       heading: "What is Grace House",
       body: "Grace House NorCal is a faith-based discipleship program in Sacramento, California, dedicated to helping men and women overcome life’s challenges, rebuild their lives, and discover lasting hope through spiritual growth, personal accountability, and strong moral values. Through compassionate support and lasting relationships, we strive...",
-      pullQuote: "To see families restored and give hope to the hopeless.",
-      cta: { label: "Learn More", href: "/about/mission" },
+      pullQuote: "to see families restored and give hope to the hopeless.",
+      cta: { label: "Read our mission", href: "/about/mission" },
     },
   },
   {
@@ -62,7 +62,7 @@ export const homePageSections: SectionConfig[] = [
       subtitle: "- The Way -",
       pillars,
       cta: {
-        label: "Read more about The Four Pillars →",
+        label: "Read more about The Four Pillars",
         href: "/about/four-pillars",
       },
     },

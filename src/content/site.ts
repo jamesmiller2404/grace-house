@@ -15,17 +15,17 @@ export const site = {
   nav: [
     { label: "Home", href: "/" },
     {
-      label: "About Grace House",
-      href: "/about",
+      label: "About",
       children: [
         { label: "Mission", href: "/about/mission" },
         { label: "The Four Pillars", href: "/#pillars" },
-        { label: "Board Members", href: "/about/board" },
         { label: "FAQ", href: "/about/faq" },
+        { label: "Board Members", href: "/about/board" },
+        { label: "Staff", href: "/about/staff" },        
       ],
     },
-    { label: "Stories", href: "/stories" },
-    { label: "Events", href: "/#events" },
+    { label: "Lives Changed", href: "/stories" },
+    { label: "Upcoming Events", href: "/#events" },
   ],
   facts: [
     "Private pay: no Medi-Cal or insurance",

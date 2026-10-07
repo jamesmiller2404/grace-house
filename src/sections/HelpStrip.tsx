@@ -92,16 +92,29 @@ export default function HelpStrip({
             </h2>
             <p className="mt-2 text-lg">{closed ? closedBody : openBody}</p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <Link
-                href={cta.href}
-                className="bg-terra hover:bg-anchor rounded-md px-8 py-4 text-2xl font-bold text-white transition-colors"
-              >
-                {cta.label}
-              </Link>
-              {ctaNote && (
-                <span className="text-lg font-bold">← {ctaNote}</span>
-              )}
+            <div className="mt-6">
+              <div className="flex flex-wrap items-center gap-4 max-lg:w-fit max-lg:flex-col max-lg:gap-0">
+                <Link
+                  href={cta.href}
+                  className="bg-terra hover:bg-terra/90 rounded-md px-4 py-2 text-lg font-bold text-white transition-colors"
+                >
+                  {cta.label}
+                </Link>
+                {ctaNote && (
+                  <span className="text-base font-bold max-lg:hidden">← {ctaNote}</span>
+                )}
+                {ctaNote && (
+                  <div className="mt-2 lg:hidden">
+                    <span
+                      aria-hidden="true"
+                      className="block text-center text-base font-bold leading-none"
+                    >
+                      ↑
+                    </span>
+                    <span className="text-base font-bold">{ctaNote}</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             <p className="mt-5 text-2xl font-bold">
@@ -140,24 +153,27 @@ export default function HelpStrip({
           </ul>
         </div>
 
-        <div className="border-anchor/30 mt-8 border-t pt-4">
+        <div className="mt-8">
           {crisisTitle && (
-            <p className="text-ink text-sm font-bold tracking-[0.06em]">
+            <p className="text-ink text-center text-xl font-bold tracking-[0.06em] uppercase">
               {crisisTitle}
             </p>
           )}
-          <ul className="mt-3 grid gap-4 sm:grid-cols-3">
-            {crisisLines.map((c) => (
-              <li key={c.label}>
-                <span className="text-terra block text-sm font-bold tracking-[0.05em] uppercase">
-                  {c.label}
-                </span>
-                <a href={c.href} className="text-ink font-bold underline">
-                  {c.text}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="border-anchor/30 mt-3 border-t pt-3">
+            <ul className="grid gap-4 sm:grid-cols-3">
+              {crisisLines.map((c) => (
+                <li key={c.label}>
+                  <span className="text-terra block text-sm font-bold tracking-[0.05em] uppercase">
+                    {c.label}
+                  </span>
+                  <a href={c.href} className="text-ink font-bold underline">
+                    {c.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="border-anchor/30 mt-4 border-t" />
         </div>
       </div>
     </section>

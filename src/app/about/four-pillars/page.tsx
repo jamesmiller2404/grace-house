@@ -25,15 +25,6 @@ export default function FourPillarsPage() {
                 </Link>
               </li>
               <li aria-hidden className="text-ink/60 font-normal">›</li>
-              <li>
-                <Link
-                  href="/about"
-                  className="underline-offset-4 hover:underline"
-                >
-                  About
-                </Link>
-              </li>
-              <li aria-hidden className="text-ink/60 font-normal">›</li>
               <li aria-current="page">{pillarsHeading}</li>
             </ol>
           </nav>

@@ -5,7 +5,7 @@ import { site } from "@/content/site";
 export default function Nav() {
   return (
     <header className="bg-anchor text-cream">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-6 lg:gap-8 lg:py-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-6 lg:gap-8 lg:py-[18px]">
         {/* Crown + wordmark */}
         <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-5 lg:gap-7">
           <Image
@@ -18,33 +18,35 @@ export default function Nav() {
             className="h-8 shrink-0 sm:h-12 md:h-[78px]"
           />
           <span className="min-w-0">
-            <span className="font-heading text-[clamp(1.5rem,6vw,3.75rem)] block leading-tight font-normal tracking-[0.04em] text-white sm:whitespace-nowrap">
+            <span className="font-heading text-[clamp(1.5rem,6vw,3.75rem)] block leading-none font-normal tracking-[0.04em] text-white sm:whitespace-nowrap">
               {site.name}
             </span>
-            <span className="text-gold mt-0.5 block font-sans text-[clamp(0.7rem,2.8vw,1.5rem)] leading-tight font-medium tracking-wide uppercase sm:whitespace-nowrap">
+            <span className="text-gold mt-0.5 block font-sans text-[clamp(0.7rem,2.8vw,1.5rem)] leading-none font-medium tracking-wide uppercase sm:whitespace-nowrap">
               {site.tagline}
             </span>
           </span>
         </Link>
 
         {/* Right column: donate button above nav links */}
-        <div className="flex shrink-0 flex-col items-end gap-4 sm:gap-6 lg:gap-9">
+        <div className="flex shrink-0 flex-col items-end gap-2.5 sm:gap-3.5 lg:gap-5">
           <Link
             href="/support"
-            style={{ borderRadius: "12px" }}
-            className="bg-lift text-anchor hover:bg-gold shrink-0 px-3 py-1.5 text-center font-sans text-xs font-medium tracking-wider uppercase sm:px-4 sm:py-2 sm:text-sm lg:px-5 lg:py-2.5 lg:text-base"
+            style={{ borderRadius: "8px" }}
+            className="bg-lift text-anchor hover:bg-gold shrink-0 px-2 py-0.5 text-center font-sans text-[11px] font-medium tracking-wider uppercase sm:px-3 sm:py-1 sm:text-[13px] lg:px-3.5 lg:py-1 lg:text-sm"
           >
             <span className="sm:hidden">Donate</span>
             <span className="hidden sm:inline">Donate to Grace House</span>
           </Link>
 
-          <nav className="hidden items-center gap-6 text-xl lg:flex lg:gap-8 lg:text-2xl" aria-label="Main">
+          <nav className="hidden items-center gap-6 text-[14px] lg:flex lg:gap-8 lg:text-[17px] mt-[24px]" aria-label="Main">
             {site.nav.map((l) =>
               l.children ? (
-                <div key={l.href} className="group relative">
-                  <Link
-                    href={l.href}
-                    className="text-cream/90 hover:text-lift flex items-center gap-1.5 font-sans font-medium whitespace-nowrap"
+                <div
+                  key={l.label}
+                  className="group relative"
+                >
+                  <span
+                    className="text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1.5 font-sans font-medium whitespace-nowrap"
                   >
                     {l.label}
                     <svg
@@ -59,7 +61,7 @@ export default function Nav() {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </Link>
+                  </span>
                   <div
                     className="invisible absolute left-0 top-full z-20 pt-2 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
                   >
@@ -95,10 +97,14 @@ export default function Nav() {
             </summary>
             <div className="bg-anchor ring-cream/20 absolute right-0 z-10 mt-2 w-44 rounded-md p-3 shadow-lg ring-1">
               {site.nav.map((l) => (
-                <div key={l.href}>
-                  <Link href={l.href} className="block py-2">
-                    {l.label}
-                  </Link>
+                <div key={l.label}>
+                  {l.children ? (
+                    <div className="py-2 font-medium">{l.label}</div>
+                  ) : (
+                    <Link href={l.href} className="block py-2">
+                      {l.label}
+                    </Link>
+                  )}
                   {l.children?.map((c) => (
                     <Link
                       key={c.href}

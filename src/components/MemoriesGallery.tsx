@@ -14,7 +14,7 @@ const INITIAL_COUNT = 3;
 /**
  * "Maria memories..." — the graduate's personal photos, per
  * photoshop_assets/story-page-section4.png. Shows three at a time;
- * "View more →" reveals the rest (and collapses again).
+ * "View more" reveals the rest (and collapses again).
  */
 export default function MemoriesGallery({
   name,
@@ -57,7 +57,7 @@ export default function MemoriesGallery({
           aria-expanded={expanded}
           className="text-terra hover:text-anchor mt-4 inline-flex items-center gap-2 text-lg font-semibold"
         >
-          {expanded ? "View fewer" : "View more"} <span aria-hidden>→</span>
+          {expanded ? "View fewer" : "View more"}
         </button>
       )}
     </section>

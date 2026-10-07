@@ -153,7 +153,7 @@ export default function StoryProfile({ profile }: StoryProfileProps) {
                     href="/about/four-pillars"
                     className="text-gold font-bold hover:text-lift"
                   >
-                    Read more about The Four Pillars <span aria-hidden>→</span>
+                    Read more about The Four Pillars
                   </Link>
                 </p>
               </div>
@@ -202,7 +202,7 @@ export default function StoryProfile({ profile }: StoryProfileProps) {
           href="/stories"
           className="text-terra hover:text-anchor mt-8 inline-flex items-center gap-2 text-xl font-semibold"
         >
-          View all profiles and stories <span aria-hidden>→</span>
+          View all profiles and stories
         </Link>
       </section>
     </div>

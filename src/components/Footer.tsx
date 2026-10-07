@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { site } from "@/content/site";
 
 /**
@@ -8,22 +7,22 @@ import { site } from "@/content/site";
 export default function Footer() {
   return (
     <footer className="bg-[#040d1d] text-cream">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 py-14 text-center sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:text-left">
         {/* Column 1: wordmark + mission blurb */}
-        <div>
+        <div className="lg:max-w-sm">
           <p className="font-heading text-3xl tracking-[0.04em] text-white">
             {site.name}
           </p>
           <p className="text-gold mt-1 text-sm font-medium tracking-wide uppercase">
             {site.tagline}
           </p>
-          <p className="mt-5 max-w-xs text-cream/85 italic leading-relaxed">
+          <p className="mt-5 max-w-xs text-cream/85 italic leading-relaxed mx-auto lg:mx-0">
             To see families restored and give hope to the hopeless.
           </p>
         </div>
 
         {/* Column 2: Get help */}
-        <div>
+        <div className="lg:text-right">
           <h2 className="text-lift text-sm font-semibold tracking-widest uppercase">
             Get Help
           </h2>
@@ -38,43 +37,6 @@ export default function Footer() {
             <br />
             Intakes on weekdays only
           </p>
-        </div>
-
-        {/* Column 3: Explore */}
-        <div>
-          <h2 className="text-lift text-sm font-semibold tracking-widest uppercase">
-            Explore
-          </h2>
-          <ul className="mt-4 space-y-2.5">
-            {[
-              { label: "Home", href: "/home" },
-              { label: "Stories", href: "/stories" },
-              { label: "Events", href: "/#events" },
-              { label: "Donate", href: "/#donate" },
-            ].map((l) => (
-              <li key={l.label}>
-                <Link
-                  href={l.href}
-                  className="text-cream/85 hover:text-lift transition-colors"
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Column 4: Our homes */}
-        <div>
-          <h2 className="text-lift text-sm font-semibold tracking-widest uppercase">
-            Our Homes
-          </h2>
-          <ul className="mt-4 space-y-2.5 text-cream/85">
-            <li>Men&rsquo;s house</li>
-            <li>Women&rsquo;s house</li>
-            <li>Men&rsquo;s transitional home</li>
-            <li>Sacramento, CA</li>
-          </ul>
         </div>
       </div>
 
