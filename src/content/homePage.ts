@@ -21,7 +21,7 @@ export const homePageSections: SectionConfig[] = [
       heading: "Hope Starts Here",
       image: "/images/hero.jpg",
       primaryCta: { label: "Learn More", href: "#welcome" },
-      secondaryCta: { label: "Our Stories", href: "#stories" },
+      secondaryCta: { label: "Our Stories", href: "/#stories" },
     },
   },
   {

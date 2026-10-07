@@ -24,7 +24,7 @@ export const site = {
         { label: "FAQ", href: "/about/faq" },
       ],
     },
-    { label: "Stories", href: "/#stories" },
+    { label: "Stories", href: "/stories" },
     { label: "Events", href: "/#events" },
   ],
   facts: [

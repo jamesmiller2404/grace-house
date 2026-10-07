@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Source_Sans_3 } from "next/font/google";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 // DM Serif Display ships in one weight only (400)
@@ -24,7 +25,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${dmSerif.variable} ${source.variable}`}>
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col">
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

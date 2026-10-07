@@ -31,7 +31,7 @@ export default async function EventDetailPage({ params }: Params) {
   return (
     <>
       <Nav />
-      <main>
+      <main className="flex-1">
         <EventPage event={event} />
       </main>
     </>

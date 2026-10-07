@@ -15,7 +15,7 @@ export default function StoriesIndexPage() {
   return (
     <>
       <Nav />
-      <main className="bg-sand px-4 py-10 sm:px-6">
+      <main className="flex-1 bg-sand px-4 py-10 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <nav
             aria-label="Breadcrumb"

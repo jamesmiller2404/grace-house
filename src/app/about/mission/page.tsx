@@ -11,7 +11,7 @@ export default function MissionPage() {
   return (
     <>
       <Nav />
-      <main className="bg-cream px-6 py-14">
+      <main className="flex-1 bg-cream px-6 py-14">
         <div className="mx-auto max-w-6xl">
           <nav
             aria-label="Breadcrumb"

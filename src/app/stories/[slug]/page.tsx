@@ -31,7 +31,7 @@ export default async function StoryPage({ params }: Params) {
   return (
     <>
       <Nav />
-      <main>
+      <main className="flex-1">
         <StoryProfile profile={profile} />
       </main>
     </>
