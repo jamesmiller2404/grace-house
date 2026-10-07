@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Nav from "@/components/Nav";
 import StoryProfile from "@/components/StoryProfile";
 import { getStoryProfile, storyProfiles } from "@/content/storyProfiles";
 
@@ -30,7 +29,6 @@ export default async function StoryPage({ params }: Params) {
 
   return (
     <>
-      <Nav />
       <main className="flex-1">
         <StoryProfile profile={profile} />
       </main>

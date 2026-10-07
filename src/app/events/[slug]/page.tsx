@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Nav from "@/components/Nav";
 import EventPage from "@/components/EventPage";
 import { getEventDetail, eventDetails } from "@/content/events";
 
@@ -30,7 +29,6 @@ export default async function EventDetailPage({ params }: Params) {
 
   return (
     <>
-      <Nav />
       <main className="flex-1">
         <EventPage event={event} />
       </main>

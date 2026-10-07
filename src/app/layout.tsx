@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Source_Sans_3 } from "next/font/google";
+import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSerif.variable} ${source.variable}`}>
       <body className="flex min-h-screen flex-col">
+        <Nav />
         {children}
         <Footer />
       </body>

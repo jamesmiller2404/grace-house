@@ -1,4 +1,3 @@
-import Nav from "@/components/Nav";
 import SectionRenderer from "@/sections/SectionRenderer";
 import { homePageSections } from "@/content/homePage";
 
@@ -11,7 +10,6 @@ import { homePageSections } from "@/content/homePage";
 export default function Home() {
   return (
     <>
-      <Nav />
       <main className="flex-1">
         {homePageSections.map((section, i) => (
           <SectionRenderer key={`${section.type}-${i}`} section={section} />

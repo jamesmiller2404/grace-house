@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "@/components/Nav";
 import { stories } from "@/content/stories";
 
 export const metadata = {
@@ -14,7 +13,6 @@ export const metadata = {
 export default function StoriesIndexPage() {
   return (
     <>
-      <Nav />
       <main className="flex-1 bg-sand px-4 py-10 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <nav

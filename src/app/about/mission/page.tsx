@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Nav from "@/components/Nav";
 import { missionPage } from "@/content/mission";
 
 export const metadata = {
@@ -10,7 +9,6 @@ export default function MissionPage() {
   const { missionHeading, missionStatement } = missionPage;
   return (
     <>
-      <Nav />
       <main className="flex-1 bg-cream px-6 py-14">
         <div className="mx-auto max-w-6xl">
           <nav
