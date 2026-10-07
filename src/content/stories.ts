@@ -20,6 +20,11 @@ export type StoryItem = {
   href: string;
   /** Text for the card link, e.g. "Read her story". */
   readLabel: string;
+  /**
+   * Index (0-based) into `pillars` of the pillar that mattered most to this
+   * person — shown and sorted as "The Pillar" column in list view.
+   */
+  pillarIndex: number;
 };
 
 export const stories: StoryItem[] = [
@@ -31,6 +36,7 @@ export const stories: StoryItem[] = [
     image: "/images/person1.jpg",
     href: "/stories/maria",
     readLabel: "Read her story",
+    pillarIndex: 0,
   },
   {
     name: "John",
@@ -40,6 +46,7 @@ export const stories: StoryItem[] = [
     image: "/images/person2.jpg",
     href: "/stories/john",
     readLabel: "Read his story",
+    pillarIndex: 1,
   },
   {
     name: "Brandon",
@@ -49,5 +56,6 @@ export const stories: StoryItem[] = [
     image: "/images/person3.jpg",
     href: "/stories/brandon",
     readLabel: "Read his story",
+    pillarIndex: 2,
   },
 ];

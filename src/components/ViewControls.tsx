@@ -1,96 +1,122 @@
 "use client";
 
 export type ViewMode = "card" | "list";
-export type SortMode = "date" | "name";
 
 export type ViewControlsProps = {
   view: ViewMode;
-  sort: SortMode;
   onViewChange: (view: ViewMode) => void;
-  onSortChange: (sort: SortMode) => void;
 };
 
 /**
- * Shared display controls for the Lives Changed and Upcoming Events pages:
- * a "Card / List" layout toggle and a "Date / Name" sort toggle. Rendered as
- * two labelled button groups with aria-pressed so screen readers announce
- * the active option; plain buttons keep both keyboard accessible.
+ * Layout toggle matching photoshop_assets/listView.png: the grid icon (four
+ * squares) switches to card view, the rows icon (four squares with lines)
+ * switches to list view. Sorting lives in the list view's table headers.
  */
-export default function ViewControls({
-  view,
-  sort,
-  onViewChange,
-  onSortChange,
-}: ViewControlsProps) {
+export default function ViewControls({ view, onViewChange }: ViewControlsProps) {
   return (
-    <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-      <div role="group" aria-label="Layout" className="flex items-center gap-3">
-        <span className="text-ink/70 text-sm font-bold tracking-[0.05em] uppercase">
-          View
-        </span>
-        <div className="border-ink/20 flex overflow-hidden rounded-md border bg-white">
-          <ToggleButton
-            active={view === "card"}
-            onClick={() => onViewChange("card")}
-          >
-            Card
-          </ToggleButton>
-          <ToggleButton
-            active={view === "list"}
-            onClick={() => onViewChange("list")}
-          >
-            List
-          </ToggleButton>
-        </div>
-      </div>
-
-      <div
-        role="group"
-        aria-label="Sort by"
-        className="flex items-center gap-3"
+    <div role="group" aria-label="Layout" className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={() => onViewChange("card")}
+        aria-pressed={view === "card"}
+        aria-label="Card view"
+        title="Card view"
+        className={
+          "flex h-9 w-9 items-center justify-center rounded border transition " +
+          (view === "card"
+            ? "border-ink/60 bg-ink/5 text-ink"
+            : "border-ink/20 bg-white text-ink/60 hover:text-ink")
+        }
       >
-        <span className="text-ink/70 text-sm font-bold tracking-[0.05em] uppercase">
-          Sort by
-        </span>
-        <div className="border-ink/20 flex overflow-hidden rounded-md border bg-white">
-          <ToggleButton
-            active={sort === "date"}
-            onClick={() => onSortChange("date")}
-          >
-            Date
-          </ToggleButton>
-          <ToggleButton
-            active={sort === "name"}
-            onClick={() => onSortChange("name")}
-          >
-            Name
-          </ToggleButton>
-        </div>
-      </div>
+        {/* Four-square grid icon */}
+        <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden="true">
+          <rect x="2" y="2" width="7" height="7" fill="currentColor" />
+          <rect x="11" y="2" width="7" height="7" fill="currentColor" />
+          <rect x="2" y="11" width="7" height="7" fill="currentColor" />
+          <rect x="11" y="11" width="7" height="7" fill="currentColor" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        onClick={() => onViewChange("list")}
+        aria-pressed={view === "list"}
+        aria-label="List view"
+        title="List view"
+        className={
+          "flex h-9 w-9 items-center justify-center rounded border transition " +
+          (view === "list"
+            ? "border-ink/60 bg-ink/5 text-ink"
+            : "border-ink/20 bg-white text-ink/60 hover:text-ink")
+        }
+      >
+        {/* Four rows: small square + line each */}
+        <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden="true">
+          {[2.5, 6.5, 10.5, 14.5].map((y) => (
+            <g key={y}>
+              <rect x="2" y={y} width="3" height="2.6" fill="currentColor" />
+              <rect
+                x="7"
+                y={y + 0.5}
+                width="11"
+                height="1.6"
+                fill="currentColor"
+              />
+            </g>
+          ))}
+        </svg>
+      </button>
     </div>
   );
 }
 
-function ToggleButton({
+/** Sort state shared by the sortable table headers. */
+export type SortState<K extends string> = { key: K; ascending: boolean };
+
+/**
+ * Up/down arrow pair shown next to a sortable table header label. Clicking
+ * the arrows activates that column; clicking again reverses the direction.
+ */
+export function SortArrows({
   active,
+  ascending,
   onClick,
-  children,
+  label,
 }: {
   active: boolean;
+  ascending: boolean;
   onClick: () => void;
-  children: string;
+  label: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      aria-label={`Sort by ${label} ${
+        active && ascending ? "descending" : "ascending"
+      }`}
       aria-pressed={active}
-      className={
-        "px-4 py-1.5 text-sm font-bold tracking-[0.05em] uppercase transition " +
-        (active ? "bg-terra text-white" : "text-ink hover:text-terra")
-      }
+      className="text-ink hover:text-terra inline-flex flex-col items-center align-middle leading-none transition"
     >
-      {children}
+      <svg
+        viewBox="0 0 10 6"
+        className={
+          active && ascending ? "text-terra h-2.5 w-2.5" : "h-2.5 w-2.5 opacity-50"
+        }
+        aria-hidden="true"
+      >
+        <path d="M5 0 L10 6 L0 6 Z" fill="currentColor" />
+      </svg>
+      <svg
+        viewBox="0 0 10 6"
+        className={
+          active && !ascending
+            ? "text-terra mt-0.5 h-2.5 w-2.5"
+            : "mt-0.5 h-2.5 w-2.5 opacity-50"
+        }
+        aria-hidden="true"
+      >
+        <path d="M5 6 L0 0 L10 0 Z" fill="currentColor" />
+      </svg>
     </button>
   );
 }
