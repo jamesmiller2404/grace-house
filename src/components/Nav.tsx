@@ -1,8 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { site } from "@/content/site";
 
 export default function Nav() {
+  const mobileMenuRef = useRef<HTMLDetailsElement>(null);
+
+  // Close the mobile menu when tapping/clicking outside of it.
+  useEffect(() => {
+    function handlePointerDown(event: PointerEvent) {
+      const menu = mobileMenuRef.current;
+      if (menu?.open && !menu.contains(event.target as Node)) {
+        menu.open = false;
+      }
+    }
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
+
+  // Close the mobile menu after a link inside it is tapped.
+  function closeMobileMenu() {
+    if (mobileMenuRef.current) {
+      mobileMenuRef.current.open = false;
+    }
+  }
   return (
     <header className="bg-anchor text-cream">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-6 lg:gap-8 lg:py-[18px]">
@@ -90,12 +111,12 @@ export default function Nav() {
             )}
           </nav>
 
-          {/* Mobile: links live in a no-JS menu */}
-          <details className="relative lg:hidden">
+          {/* Mobile: links live in a menu that closes on link tap / outside tap */}
+          <details ref={mobileMenuRef} className="relative lg:hidden">
             <summary className="border-cream/40 cursor-pointer list-none rounded-md border px-3 py-2 text-base">
               Menu
             </summary>
-            <div className="bg-anchor ring-cream/20 absolute right-0 z-10 mt-2 w-44 rounded-md p-3 shadow-lg ring-1">
+            <div className="bg-anchor ring-cream/20 absolute right-0 z-10 mt-2 w-44 rounded-md p-3 shadow-lg ring-1" onClick={closeMobileMenu}>
               {site.nav.map((l) => (
                 <div key={l.label}>
                   {l.children ? (

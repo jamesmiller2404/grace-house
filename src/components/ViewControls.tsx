@@ -79,22 +79,17 @@ export type SortState<K extends string> = { key: K; ascending: boolean };
 export function SortArrows({
   active,
   ascending,
-  onClick,
   label,
 }: {
   active: boolean;
   ascending: boolean;
-  onClick: () => void;
+  /** Kept for API compatibility; the wrapping header button handles clicks. */
+  onClick?: () => void;
   label: string;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={`Sort by ${label} ${
-        active && ascending ? "descending" : "ascending"
-      }`}
-      aria-pressed={active}
+    <span
+      aria-hidden="true"
       className="text-ink hover:text-terra inline-flex flex-col items-center align-middle leading-none transition"
     >
       <svg
@@ -117,6 +112,6 @@ export function SortArrows({
       >
         <path d="M5 6 L0 0 L10 0 Z" fill="currentColor" />
       </svg>
-    </button>
+    </span>
   );
 }

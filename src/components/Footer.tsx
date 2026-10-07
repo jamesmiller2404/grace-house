@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { site } from "@/content/site";
 
 /**
@@ -21,7 +22,18 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Column 2: Get help */}
+        {/* Column 2: pastor photo */}
+        <div className="flex justify-center lg:justify-center">
+          <Image
+            src="/images/pastorLonnie2a.jpg"
+            alt="Pastor Lonnie"
+            width={1086}
+            height={1086}
+            className="rounded-lg h-auto w-full max-w-xs shadow-lg"
+          />
+        </div>
+
+        {/* Column 3: Get help */}
         <div className="lg:text-right">
           <h2 className="text-lift text-sm font-semibold tracking-widest uppercase">
             Get Help
