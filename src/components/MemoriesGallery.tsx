@@ -12,7 +12,7 @@ export type Memory = {
 const INITIAL_COUNT = 3;
 
 /**
- * "Maria memories..." — the graduate's personal photos, per
+ * "{name}'s memories..." — the graduate's personal photos, per
  * photoshop_assets/story-page-section4.png. Shows three at a time;
  * "View more" reveals the rest (and collapses again).
  */
@@ -30,7 +30,7 @@ export default function MemoriesGallery({
   return (
     <section aria-labelledby="memories-heading" className="mt-16">
       <h2 id="memories-heading" className="font-heading text-anchor text-4xl">
-        {name} memories&hellip;
+        {name}&rsquo;s memories&hellip;
       </h2>
 
       <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

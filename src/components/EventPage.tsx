@@ -58,7 +58,7 @@ export default function EventPage({ event }: EventPageProps) {
       <nav aria-label="Breadcrumb" className="mx-auto max-w-6xl px-6 pt-8 text-base">
         <ol className="text-terra flex flex-wrap items-center gap-2 font-bold">
           <li>
-            <Link href="/#events" className="underline-offset-4 hover:underline">
+            <Link href="/events" className="underline-offset-4 hover:underline">
               Events
             </Link>
           </li>

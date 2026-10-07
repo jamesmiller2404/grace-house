@@ -15,8 +15,6 @@ export type StoryProfile = {
   image: string;
   /** Pull quote shown in the hero. */
   heroQuote: string;
-  /** Reading-time note under the hero quote, e.g. "A 5-minute read". */
-  readTime: string;
   /** Story body: a sequence of plain paragraphs and subheadings. */
   body: Array<{ type: "p"; text: string } | { type: "h2"; text: string }>;
   /** Copy for the full-width dark pull-quote band. */
@@ -38,7 +36,6 @@ export const storyProfiles: StoryProfile[] = [
     tag: "Graduate - 2026",
     image: "/images/person1.jpg",
     heroQuote: "Grace House gave me my life back.",
-    readTime: "A 5-minute read",
     body: [
       {
         type: "p",
@@ -109,7 +106,6 @@ export const storyProfiles: StoryProfile[] = [
     tag: "Graduate - 2026",
     image: "/images/person2.jpg",
     heroQuote: "I've made life-long friends at Grace House.",
-    readTime: "A 4-minute read",
     body: [
       {
         type: "p",
@@ -161,7 +157,6 @@ export const storyProfiles: StoryProfile[] = [
     tag: "Graduate - 2026",
     image: "/images/person3.jpg",
     heroQuote: "Grace House taught me who I am.",
-    readTime: "A 4-minute read",
     body: [
       {
         type: "p",

@@ -64,7 +64,6 @@ export default function StoryProfile({ profile }: StoryProfileProps) {
                 &ldquo;{profile.heroQuote}&rdquo;
               </p>
             </blockquote>
-            <p className="text-ink/80 mt-3">{profile.readTime}</p>
           </div>
         </div>
       </header>

@@ -25,7 +25,7 @@ export const site = {
       ],
     },
     { label: "Lives Changed", href: "/stories" },
-    { label: "Upcoming Events", href: "/#events" },
+    { label: "Upcoming Events", href: "/events" },
   ],
   facts: [
     "Private pay: no Medi-Cal or insurance",

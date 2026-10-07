@@ -11,6 +11,8 @@ export type StoryItem = {
   name: string;
   /** Small gold pill label, e.g. "Graduate - 2026". */
   tag: string;
+  /** ISO date string (YYYY-MM-DD) — e.g. the person's graduation date. */
+  date: string;
   /** Short pull quote shown on the card. */
   excerpt: string;
   image: string;
@@ -24,6 +26,7 @@ export const stories: StoryItem[] = [
   {
     name: "Maria",
     tag: "Graduate - 2026",
+    date: "2026-05-30",
     excerpt: "“I finally felt like I belonged somewhere.”",
     image: "/images/person1.jpg",
     href: "/stories/maria",
@@ -32,6 +35,7 @@ export const stories: StoryItem[] = [
   {
     name: "John",
     tag: "Graduate - 2026",
+    date: "2026-06-30",
     excerpt: "“I've made life-long friends at Grace House.”",
     image: "/images/person2.jpg",
     href: "/stories/john",
@@ -40,6 +44,7 @@ export const stories: StoryItem[] = [
   {
     name: "Brandon",
     tag: "Graduate - 2026",
+    date: "2026-08-15",
     excerpt: "“Grace House taught me who I am.”",
     image: "/images/person3.jpg",
     href: "/stories/brandon",
