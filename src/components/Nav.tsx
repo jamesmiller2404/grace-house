@@ -69,8 +69,9 @@ export default function Nav() {
                   key={l.label}
                   className="group relative"
                 >
-                  <span
-                    className="border-cream/25 text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1.5 rounded-md border px-3 py-1 font-sans font-medium whitespace-nowrap lg:px-4 lg:py-1.5"
+                  <button
+                    type="button"
+                    className="border-cream/25 text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1.5 rounded-md border px-3 py-1 font-sans font-medium whitespace-nowrap focus-visible:outline-lift focus-visible:outline-2 focus-visible:outline-offset-2 lg:px-4 lg:py-1.5"
                   >
                     {l.label}
                     <svg
@@ -85,7 +86,7 @@ export default function Nav() {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </span>
+                  </button>
                   <div
                     className="invisible absolute left-0 top-full z-20 pt-2 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
                   >

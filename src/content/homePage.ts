@@ -47,7 +47,7 @@ export const homePageSections: SectionConfig[] = [
       hours: site.hours,
       openNowLabel: "We're open now",
       closedLabel:
-        "The office is closed. Leave a message and we'll call back within two business day.",
+        "The office is closed. Leave a message and we'll call back within two business days.",
       facts: site.facts,
       crisisTitle: "RESOURCES THAT ARE AVAILABLE 24/7",
       crisisLines: site.crisisLines,
