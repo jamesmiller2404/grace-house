@@ -42,7 +42,7 @@ export const homePageSections: SectionConfig[] = [
         "Our office is currently closed. You can fill out the assessment below and we will contact you within two business days.",
       phone: site.phone,
       phoneHref: site.phoneHref,
-      cta: { label: "Start Assessment", href: "/get-help" },
+      cta: { label: "Start Assessment", href: "/assessment" },
       ctaNote: "Fill out the Grace House Assessment Form",
       hours: site.hours,
       openNowLabel: "We're open now",

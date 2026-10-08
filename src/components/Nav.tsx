@@ -62,7 +62,7 @@ export default function Nav() {
             <span className="hidden sm:inline">Donate to Grace House</span>
           </Link>
 
-          <nav className="hidden items-center gap-6 text-[14px] lg:flex lg:gap-8 lg:text-[17px] mt-[24px]" aria-label="Main">
+          <nav className="hidden items-center gap-0.5 text-[14px] lg:flex lg:gap-1 lg:text-[17px] mt-[24px]" aria-label="Main">
             {site.nav.map((l) =>
               l.children ? (
                 <div
@@ -70,7 +70,7 @@ export default function Nav() {
                   className="group relative"
                 >
                   <span
-                    className="text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1.5 font-sans font-medium whitespace-nowrap"
+                    className="border-cream/25 text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1.5 rounded-md border px-3 py-1 font-sans font-medium whitespace-nowrap lg:px-4 lg:py-1.5"
                   >
                     {l.label}
                     <svg
@@ -106,7 +106,7 @@ export default function Nav() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="text-cream/90 hover:text-lift font-sans font-medium whitespace-nowrap"
+                  className="border-cream/25 text-cream/90 hover:text-lift rounded-md border px-3 py-1 font-sans font-medium whitespace-nowrap lg:px-4 lg:py-1.5"
                 >
                   {l.label}
                 </Link>
