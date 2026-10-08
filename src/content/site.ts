@@ -25,6 +25,7 @@ export const site = {
       ],
     },
     { label: "Lives Changed", href: "/stories" },
+    { label: "Giving Back", href: "/giving-back" },
     { label: "Upcoming Events", href: "/events" },
   ],
   facts: [
