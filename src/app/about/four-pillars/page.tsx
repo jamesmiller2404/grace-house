@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { fourPillarsPage } from "@/content/fourPillars";
+import { pillars } from "@/content/pillars";
+import FourPillars from "@/sections/FourPillars";
 
 export const metadata = {
   title: "The Four Pillars — Grace House",
@@ -35,7 +37,18 @@ export default function FourPillarsPage() {
           <p className="whitespace-pre-line mt-4 max-w-[60ch] text-lg leading-relaxed">
             {pillarsBody}
           </p>
+          <br aria-hidden />
+          <br aria-hidden />
+          <br aria-hidden />
         </div>
+
+        {/* The Four Pillars section, same as the homepage */}
+        <FourPillars
+          eyebrow="WHAT GUIDES GRACE HOUSE"
+          heading="The Four Pillars of Recovery"
+          subtitle="- The Way -"
+          pillars={pillars}
+        />
       </main>
     </>
   );

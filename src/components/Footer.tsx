@@ -107,11 +107,17 @@ export default function Footer() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-5 text-sm text-cream/70 sm:px-6">
           <p>© 2026 {site.name}</p>
           <p>
-            <a href="#" className="hover:text-lift transition-colors">
+            <a
+              href="/privacy"
+              className="hover:text-lift transition-colors"
+            >
               Privacy
             </a>
             <span className="mx-2">·</span>
-            <a href="#" className="hover:text-lift transition-colors">
+            <a
+              href="/accessibility"
+              className="hover:text-lift transition-colors"
+            >
               Accessibility
             </a>
           </p>

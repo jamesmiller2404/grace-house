@@ -18,7 +18,7 @@ export const site = {
       label: "About",
       children: [
         { label: "Mission", href: "/about/mission" },
-        { label: "The Four Pillars", href: "/#pillars" },
+        { label: "The Four Pillars", href: "/about/four-pillars" },
         { label: "FAQ", href: "/about/faq" },
         { label: "Board Members", href: "/about/board" },
         { label: "Staff", href: "/about/staff" },        
@@ -32,6 +32,16 @@ export const site = {
     "Intakes on weekdays only",
     "Not a detox center. If you are still using or in withdrawal, seek medical care first.",
   ],
+  // Donation details
+  paypal: {
+    email: "GraceHouseNorCal@comcast.net",
+    donateHref:
+      "https://www.paypal.com/donate/?business=GraceHouseNorCal%40comcast.net&no_recurring=0&currency_code=USD",
+  },
+  venmo: {
+    username: "@Gracehouse-NorCal",
+    profileHref: "https://account.venmo.com/u/Gracehouse-NorCal",
+  },
   // Confirm these national numbers before launch.
   crisisLines: [
     { label: "Emergency or overdose", text: "Call 911", href: "tel:911" },
