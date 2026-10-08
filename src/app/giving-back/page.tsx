@@ -37,41 +37,29 @@ export default function GivingBackPage() {
             Giving Back
           </h1>
           <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-            Placeholder subtitle — a short description of Grace House&apos;s
-            community outreach work and how people can get involved.
+            Grace House prides itself on giving back to our community. We are
+            proud to take part in homeless feedings, winter sanctuary
+            transportation, food for hungry families, veteran stand-downs, the
+            adopt-a-grandparent project and giving back to our community
+            whether that looks like doing yard work, helping them move,
+            bringing them meals when needed.
+          </p>
+          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
+            You can find us feeding our unhoused friends at the Gathering Inn
+            (Roseville location) every Tuesday at 11am (rain or shine).
+          </p>
+          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
+            We are also feeding at Royer Park in Roseville (190 Park Dr
+            Roseville, CA 95678) on Sundays at 3PM. We would love to see you
+            out there.
+          </p>
+          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
+            We are back with our new Tuesday feed from 3:00PM – 4:00PM at the
+            Sylvan Oaks Library located at 6700 Auburn Blvd, Citrus Heights, CA
+            95621.
           </p>
 
-          <section className="mt-12">
-            <h2 className="font-heading text-anchor text-3xl italic">
-              Our Community Outreach
-            </h2>
-            <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-              Placeholder paragraph — describe the outreach programs Grace
-              House runs in the community, who they serve, and the impact they
-              have.
-            </p>
-          </section>
-
-          <section className="mt-12">
-            <h2 className="font-heading text-anchor text-3xl italic">
-              Volunteer Opportunities
-            </h2>
-            <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-              Placeholder paragraph — list current volunteer opportunities,
-              what volunteers do, and how to sign up.
-            </p>
-          </section>
-
-          <section className="mt-12">
-            <h2 className="font-heading text-anchor text-3xl italic">
-              Partners &amp; Donations
-            </h2>
-            <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-              Placeholder paragraph — thank and list community partners, and
-              explain ways businesses and individuals can donate or sponsor
-              Grace House&apos;s outreach work.
-            </p>
-          </section>
+         
         </div>
       </main>
     </>

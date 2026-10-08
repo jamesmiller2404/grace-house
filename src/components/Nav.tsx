@@ -144,6 +144,8 @@ export default function Nav() {
           </details>
         </div>
       </div>
+      {/* Gold divider along the bottom edge of the header, mirroring the HelpStrip */}
+      <div aria-hidden="true" className="border-gold border-b-4" />
     </header>
   );
 }
