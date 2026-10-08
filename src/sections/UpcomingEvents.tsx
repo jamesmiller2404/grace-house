@@ -249,29 +249,36 @@ export default function UpcomingEvents({
                   key={`${event.title}-${event.date}-${event.time}-${i}`}
                   className="flex flex-col rounded-lg bg-white p-6 shadow-sm"
                 >
-                  <div className="flex items-start gap-5">
-                    {date && <DateTile date={date} />}
-                    <div>
-                      <span className="bg-lift text-ink inline-block rounded-full px-3 py-1 text-xs font-bold tracking-[0.08em] uppercase">
-                        {event.category}
-                      </span>
-                      <h3 className="font-heading text-anchor mt-2 text-3xl leading-tight">
-                        {event.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <p className="mt-4 text-base">
-                    {event.location}
-                    <br />
-                    {event.time}
-                  </p>
-
                   <Link
                     href={event.href}
-                    className="text-terra hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold"
+                    className="group flex h-full flex-col focus-visible:outline-terra focus-visible:outline-2"
                   >
-                    View event
+                    {/* Date tile */}
+                    {date && <DateTile date={date} />}
+
+                    {/* Title */}
+                    <h3 className="font-heading text-anchor group-hover:text-terra mt-4 text-3xl leading-tight">
+                      {event.title}
+                    </h3>
+
+                    {/* One-line description */}
+                    <p className="text-ink/80 mt-2 text-base">{event.description}</p>
+
+                    {/* Time range */}
+                    <p className="text-ink mt-4 text-base font-semibold">
+                      {event.time} - {event.endTime}
+                    </p>
+
+                    {/* Venue */}
+                    <p className="text-ink mt-1 text-base">{event.location}</p>
+
+                    {/* City */}
+                    <p className="text-ink mt-1 text-base">{event.city}</p>
+
+                    {/* Cost */}
+                    <p className="text-ink mt-1 text-base font-semibold">
+                      {event.cost}
+                    </p>
                   </Link>
                 </li>
               );

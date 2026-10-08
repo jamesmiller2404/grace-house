@@ -72,17 +72,16 @@ export default function EventPage({ event }: EventPageProps) {
           {/* Left column: header, photo, about */}
           <div>
             <header>
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="bg-lift text-ink rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
-                  {event.category}
-                </span>
-                <span className="border-ink rounded-full border px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
-                  {event.status}
-                </span>
-              </div>
+              <span className="border-ink inline-block rounded-full border px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
+                {event.status}
+              </span>
               <h1 className="font-heading text-anchor mt-4 text-5xl leading-tight sm:text-6xl">
                 {event.title}
               </h1>
+
+              <p className="text-ink/80 mt-3 max-w-prose text-lg">
+                {event.description}
+              </p>
 
               <dl className="mt-6 space-y-1.5 text-lg">
                 <div className="flex flex-wrap gap-x-2">
@@ -93,8 +92,12 @@ export default function EventPage({ event }: EventPageProps) {
                   </dd>
                 </div>
                 <div className="flex flex-wrap gap-x-2">
-                  <dt className="font-bold">Where</dt>
+                  <dt className="font-bold">Venue</dt>
                   <dd>- {event.location}</dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold">City</dt>
+                  <dd>- {event.city}</dd>
                 </div>
                 <div className="flex flex-wrap gap-x-2">
                   <dt className="font-bold">Cost</dt>
@@ -132,7 +135,7 @@ export default function EventPage({ event }: EventPageProps) {
             </section>
           </div>
 
-          {/* Right column: date/RSVP card, then who it's for + contact */}
+          {/* Right column: date card, then who it's for + contact */}
           <div className="space-y-6 lg:pt-1">
             <div className="border-gold rounded-lg border-2 bg-white p-6 shadow-sm">
               <div className="flex items-center gap-4">
@@ -154,13 +157,6 @@ export default function EventPage({ event }: EventPageProps) {
                   {event.startTime} - {event.endTime}
                 </p>
               </div>
-              <button
-                type="button"
-                className="bg-terra mt-5 w-full rounded-md px-6 py-2.5 text-lg font-bold text-white transition hover:opacity-90"
-              >
-                RSVP
-              </button>
-              <p className="mt-3 text-center text-base">{event.rsvpNote}</p>
               <hr className="border-ink/15 my-4" />
               <ul className="space-y-2 text-lg font-semibold">
                 <li>
@@ -179,20 +175,6 @@ export default function EventPage({ event }: EventPageProps) {
                     Copy link to share
                   </a>
                 </li>
-              </ul>
-            </div>
-
-            <div className="border-ink rounded-lg border-2 bg-white p-6 shadow-sm">
-              <h2 className="font-heading text-anchor text-xl">Who it&apos;s for</h2>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {event.audience.map((tag) => (
-                  <li
-                    key={tag}
-                    className="bg-lift/60 border-ink/40 rounded-full border px-3 py-1 text-sm"
-                  >
-                    {tag}
-                  </li>
-                ))}
               </ul>
             </div>
 

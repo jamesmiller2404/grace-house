@@ -34,8 +34,8 @@ export default function MemoriesGallery({
       </h2>
 
       <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((memory) => (
-          <li key={memory.image}>
+        {visible.map((memory, i) => (
+          <li key={`${memory.image}-${i}`}>
             <div className="border-ink/70 relative aspect-[4/3] overflow-hidden rounded-lg border">
               <Image
                 src={memory.image}

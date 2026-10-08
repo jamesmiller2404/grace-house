@@ -5,6 +5,14 @@ import { stories } from "./stories";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
+ * Maximum number of cards each homepage section displays. The full lists still
+ * live on the dedicated /stories and /events pages; the homepage only shows a
+ * preview, capped here.
+ */
+export const MAX_HOME_STORIES = 3;
+export const MAX_HOME_EVENTS = 3;
+
+/**
  * Front-page section layout — one source of truth for which sections appear,
  * in what order, and with what content.
  *
@@ -73,7 +81,7 @@ export const homePageSections: SectionConfig[] = [
       eyebrow: "Lives Changed",
       heading: "Every journey begins somewhere.",
       subtitle: "Read how graduates found their footing, and their way home.",
-      stories,
+      stories: stories.slice(0, MAX_HOME_STORIES),
       cta: { label: "View all stories", href: "/stories" },
     },
   },
@@ -82,7 +90,7 @@ export const homePageSections: SectionConfig[] = [
     props: {
       heading: "Upcoming Events",
       subtitle: "Join us.",
-      events: upcomingEvents,
+      events: upcomingEvents.slice(0, MAX_HOME_EVENTS),
       cta: { label: "View all events", href: "/events" },
     },
   },

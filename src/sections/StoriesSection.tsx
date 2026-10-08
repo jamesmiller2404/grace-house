@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { formatStoryDate, storyDateLabel } from "@/lib/formatStoryDate";
 import type { StoryItem } from "@/content/stories";
 
 export type StoriesSectionProps = {
@@ -57,6 +58,11 @@ export default function StoriesSection({
                   <h3 className="font-heading text-anchor mt-4 text-3xl italic leading-tight">
                     {story.name}
                   </h3>
+                  {story.date && (
+                    <p className="text-ink/70 mt-1 text-sm font-semibold">
+                      {storyDateLabel(story.tag)} {formatStoryDate(story.date)}
+                    </p>
+                  )}
                   <p className="mt-2 text-base leading-relaxed italic">
                     {story.excerpt}
                   </p>

@@ -22,19 +22,19 @@ export default function StoryProfile({ profile }: StoryProfileProps) {
       {/* Thin gold bar across the very top */}
       <div className="bg-gold h-1.5 w-full" aria-hidden />
 
-      {/* Breadcrumb — Lives Changed › Stories */}
+      {/* Breadcrumb — Lives Changed › <profile name> */}
       <nav
         aria-label="Breadcrumb"
         className="mx-auto max-w-6xl px-6 pt-8 text-base"
       >
         <ol className="text-terra flex flex-wrap items-center gap-2 font-bold">
           <li>
-            <Link href="/#stories" className="underline-offset-4 hover:underline">
+            <Link href="/stories" className="underline-offset-4 hover:underline">
               Lives Changed
             </Link>
           </li>
           <li aria-hidden className="text-ink/60 font-normal">›</li>
-          <li aria-current="page">Stories</li>
+          <li aria-current="page">{profile.name}</li>
         </ol>
       </nav>
 

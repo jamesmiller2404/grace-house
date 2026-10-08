@@ -11,10 +11,16 @@ export type EventItem = {
   date: string;
   /** Start time shown on the card, e.g. "4:00 PM". */
   time: string;
-  /** Where the event happens, e.g. "Grace House". */
+  /** End time shown on the card, e.g. "6:00 PM". */
+  endTime: string;
+  /** Venue the event happens at, e.g. "Grace House". */
   location: string;
-  /** Small gold pill label, e.g. "Community". */
-  category: string;
+  /** City, e.g. "Sacramento, CA". */
+  city: string;
+  /** One-line description shown on the card under the title. */
+  description: string;
+  /** Cost shown on the card, e.g. "Free". */
+  cost: string;
   /** Where "View event" links to. */
   href: string;
 };
@@ -24,40 +30,59 @@ export const upcomingEvents: EventItem[] = [
     title: "Halloween Haunted House",
     date: "2026-10-31",
     time: "4:00 PM",
+    endTime: "6:00 PM",
     location: "St. Augustine Community Church",
-    category: "Community",
+    city: "Sacramento, CA",
+    description:
+      "A spooky (but family-friendly) haunted walkthrough with cider and treats.",
+    cost: "Free",
     href: "/events/halloween-haunted-house",
   },
   {
     title: "Friends Giving",
     date: "2026-11-24",
     time: "4:00 PM",
+    endTime: "6:00 PM",
     location: "Grace House",
-    category: "Community",
+    city: "Sacramento, CA",
+    description:
+      "A family-style dinner with residents, graduates, families and friends.",
+    cost: "Free",
     href: "/events/friends-giving",
   },
   {
     title: "Christmas Dinner",
     date: "2026-12-25",
     time: "4:00 PM",
+    endTime: "6:00 PM",
     location: "Grace House",
-    category: "Community",
+    city: "Sacramento, CA",
+    description:
+      "A warm holiday meal so no one spends Christmas evening alone.",
+    cost: "Free",
     href: "/events/christmas-dinner",
   },
   {
     title: "Spring Open House",
     date: "2027-03-20",
     time: "4:00 PM",
+    endTime: "6:00 PM",
     location: "Grace House",
-    category: "Community",
+    city: "Sacramento, CA",
+    description:
+      "Tour the house and meet the people behind a season of recovery.",
+    cost: "Free",
     href: "/events/spring-open-house",
   },
   {
     title: "Christmas Service",
     date: "2026-12-25",
     time: "6:30 PM",
+    endTime: "7:30 PM",
     location: "Cross Roads Church",
-    category: "Community",
+    city: "Sacramento, CA",
+    description: "A festive Christmas service open to the whole community.",
+    cost: "Free",
     href: "/events/christmas-service",
   },
 ];
@@ -71,8 +96,8 @@ export const upcomingEvents: EventItem[] = [
 export type EventDetail = {
   slug: string;
   title: string;
-  /** Gold pill label, e.g. "Community". */
-  category: string;
+  /** One-line description shown under the title. */
+  description: string;
   /** Status pill, e.g. "Upcoming". */
   status: string;
   /** ISO date string, e.g. "2026-10-18". */
@@ -81,7 +106,10 @@ export type EventDetail = {
   startTime: string;
   /** e.g. "6:00pm". */
   endTime: string;
+  /** Venue, e.g. "Grace House". */
   location: string;
+  /** City, e.g. "Sacramento, CA". */
+  city: string;
   /** e.g. "Free". */
   cost: string;
   /** Wide photo below the event facts. */
@@ -90,10 +118,6 @@ export type EventDetail = {
   about: string[];
   /** Copy under the "What to Expect" heading. */
   whatToExpect: string[];
-  /** Note under the RSVP button, e.g. "Helps us plan enough food". */
-  rsvpNote: string;
-  /** Small pills in the "Who it's for" card. */
-  audience: string[];
   contact: { questions: string; phone: string; email: string };
 };
 
@@ -101,12 +125,14 @@ export const eventDetails: EventDetail[] = [
   {
     slug: "halloween-haunted-house",
     title: "Halloween Haunted House",
-    category: "Community",
+    description:
+      "A spooky (but family-friendly) haunted walkthrough with cider and treats.",
     status: "Upcoming",
     date: "2026-10-31",
     startTime: "4:00pm",
     endTime: "6:00pm",
     location: "St. Augustine Community Church",
+    city: "Sacramento, CA",
     cost: "Free",
     image: "/images/halloween1.png",
     about: [
@@ -115,8 +141,6 @@ export const eventDetails: EventDetail[] = [
     whatToExpect: [
       "Tour the haunted hallways room by room, then warm up with hot cider and treats in the fellowship area. A kids-friendly hour runs first, with slightly scarier walkthroughs after 5:00pm.",
     ],
-    rsvpNote: "Helps us plan enough treats",
-    audience: ["Open to everyone", "Families welcome", "Costumes encouraged"],
     contact: {
       questions: "Questions?",
       phone: "Call (916) 555-5555 or",
@@ -126,12 +150,14 @@ export const eventDetails: EventDetail[] = [
   {
     slug: "friends-giving",
     title: "Friends Giving Dinner",
-    category: "Community",
+    description:
+      "A family-style dinner with residents, graduates, families and friends.",
     status: "Upcoming",
     date: "2026-11-24",
     startTime: "4:00pm",
     endTime: "6:00pm",
     location: "Grace House",
+    city: "Sacramento, CA",
     cost: "Free",
     image: "/images/dinner1.png",
     about: [
@@ -140,8 +166,6 @@ export const eventDetails: EventDetail[] = [
     whatToExpect: [
       "Dinner is served family style at long tables. You do not need to bring anything. A few residents will share a little of their story, and then it is just a good meal.",
     ],
-    rsvpNote: "Helps us plan enough food",
-    audience: ["Open to everyone", "Families welcome", "Children welcome"],
     contact: {
       questions: "Questions?",
       phone: "Call (916) 555-5555 or",
@@ -151,12 +175,14 @@ export const eventDetails: EventDetail[] = [
   {
     slug: "christmas-dinner",
     title: "Christmas Dinner",
-    category: "Community",
+    description:
+      "A warm holiday meal so no one spends Christmas evening alone.",
     status: "Upcoming",
     date: "2026-12-25",
     startTime: "4:00pm",
     endTime: "6:00pm",
     location: "Grace House",
+    city: "Sacramento, CA",
     cost: "Free",
     image: "/images/christmas1.png",
     about: [
@@ -165,8 +191,6 @@ export const eventDetails: EventDetail[] = [
     whatToExpect: [
       "A festive family-style dinner with holiday decorations, carols between courses, and a small gift for every guest. Just come as you are; the house provides everything.",
     ],
-    rsvpNote: "Helps us plan enough food",
-    audience: ["Open to everyone", "Families welcome", "Gifts provided"],
     contact: {
       questions: "Questions?",
       phone: "Call (916) 555-5555 or",
@@ -176,12 +200,14 @@ export const eventDetails: EventDetail[] = [
   {
     slug: "spring-open-house",
     title: "Spring Open House",
-    category: "Community",
+    description:
+      "Tour the house and meet the people behind a season of recovery.",
     status: "Upcoming",
     date: "2027-03-20",
     startTime: "4:00pm",
     endTime: "6:00pm",
     location: "Grace House",
+    city: "Sacramento, CA",
     cost: "Free",
     image: "/images/spring1.png",
     about: [
@@ -190,8 +216,6 @@ export const eventDetails: EventDetail[] = [
     whatToExpect: [
       "Guided tours of the rooms and common spaces run every half hour, followed by coffee and refreshments with staff, residents and alumni. Ask anything — this is your chance to see the house for yourself.",
     ],
-    rsvpNote: "Helps us plan enough refreshments",
-    audience: ["Open to everyone", "Families welcome", "Guided tours"],
     contact: {
       questions: "Questions?",
       phone: "Call (916) 555-5555 or",

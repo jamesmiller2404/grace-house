@@ -9,9 +9,10 @@
  */
 export type StoryItem = {
   name: string;
-  /** Small gold pill label, e.g. "Graduate - 2026". */
+  /** Small gold pill label — one of "Graduate", "Volunteer", "Staff". */
   tag: string;
-  /** ISO date string (YYYY-MM-DD) — e.g. the person's graduation date. */
+  /** ISO date string — e.g. the person's graduation date.
+   *  Accepts "MM/DD/YYYY" (full date) or "MM/YYYY" (month and year only). */
   date: string;
   /** Short pull quote shown on the card. */
   excerpt: string;
@@ -30,8 +31,8 @@ export type StoryItem = {
 export const stories: StoryItem[] = [
   {
     name: "Maria",
-    tag: "Graduate - 2026",
-    date: "2026-05-30",
+    tag: "Graduate",
+    date: "05/30/2026",
     excerpt: "“I finally felt like I belonged somewhere.”",
     image: "/images/person1.jpg",
     href: "/stories/maria",
@@ -40,8 +41,8 @@ export const stories: StoryItem[] = [
   },
   {
     name: "John",
-    tag: "Graduate - 2026",
-    date: "2026-06-30",
+    tag: "Graduate",
+    date: "06/30/2026",
     excerpt: "“I've made life-long friends at Grace House.”",
     image: "/images/person2.jpg",
     href: "/stories/john",
@@ -50,12 +51,42 @@ export const stories: StoryItem[] = [
   },
   {
     name: "Brandon",
-    tag: "Graduate - 2026",
-    date: "2026-08-15",
+    tag: "Graduate",
+    date: "08/15/2026",
     excerpt: "“Grace House taught me who I am.”",
     image: "/images/person3.jpg",
     href: "/stories/brandon",
     readLabel: "Read his story",
+    pillarIndex: 2,
+  },
+  {
+    name: "Denise",
+    tag: "Staff",
+    date: "03/2019",
+    excerpt: "“Every graduate who walks out that door is family now.”",
+    image: "/images/noPhotoAvailable_horizontall.png",
+    href: "/stories/denise",
+    readLabel: "Read her story",
+    pillarIndex: 0,
+  },
+  {
+    name: "Marcus",
+    tag: "Staff",
+    date: "08/12/2021",
+    excerpt: "“I run the house the way someone once ran it for me.”",
+    image: "/images/noPhotoAvailable_horizontall.png",
+    href: "/stories/marcus",
+    readLabel: "Read his story",
+    pillarIndex: 1,
+  },
+  {
+    name: "Elena",
+    tag: "Volunteer",
+    date: "01/15/2023",
+    excerpt: "“I came to serve dinner. I stayed for the people.”",
+    image: "/images/noPhotoAvailable_horizontall.png",
+    href: "/stories/elena",
+    readLabel: "Read her story",
     pillarIndex: 2,
   },
 ];

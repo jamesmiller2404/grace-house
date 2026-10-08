@@ -8,6 +8,7 @@ import ViewControls, {
   type ViewMode,
   type SortState,
 } from "@/components/ViewControls";
+import { formatStoryDate, storyDateLabel } from "@/lib/formatStoryDate";
 import type { StoryItem } from "@/content/stories";
 import { pillars } from "@/content/pillars";
 
@@ -28,10 +29,30 @@ function stripQuotes(text: string): string {
   return text.replace(/[“”"'’]/g, "");
 }
 
-/** Render the ISO graduation date the way the mockup shows it: 05-30-2026. */
-function formatGraduationDate(iso: string): string {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
-  return match ? `${match[2]}-${match[3]}-${match[1]}` : iso;
+/** Render the story date (MM/DD/YYYY or MM/YYYY) the way the mockup shows it: 05-30-2026. */
+function formatGraduationDate(date: string): string {
+  const full = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(date);
+  if (full) {
+    return `${full[1].padStart(2, "0")}-${full[2].padStart(2, "0")}-${full[3]}`;
+  }
+  const monthYear = /^(\d{1,2})\/(\d{4})$/.exec(date);
+  if (monthYear) {
+    return `${monthYear[1].padStart(2, "0")}-${monthYear[2]}`;
+  }
+  return date;
+}
+
+/** Sort key for a story date — handles MM/DD/YYYY and MM/YYYY. */
+function dateSortKey(date: string): string {
+  const full = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(date);
+  if (full) {
+    return `${full[3]}${full[1].padStart(2, "0")}${full[2].padStart(2, "0")}`;
+  }
+  const monthYear = /^(\d{1,2})\/(\d{4})$/.exec(date);
+  if (monthYear) {
+    return `${monthYear[2]}${monthYear[1].padStart(2, "0")}00`;
+  }
+  return date;
 }
 
 /**
@@ -62,7 +83,7 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
         cmp = a.name.localeCompare(b.name);
         break;
       case "date":
-        cmp = a.date.localeCompare(b.date); // ISO strings sort chronologically
+        cmp = dateSortKey(a.date).localeCompare(dateSortKey(b.date));
         break;
       case "quote":
         cmp = stripQuotes(a.excerpt).localeCompare(stripQuotes(b.excerpt));
@@ -105,6 +126,11 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
                   <h2 className="font-heading text-anchor mt-4 text-3xl italic">
                     {story.name}
                   </h2>
+                  {story.date && (
+                    <p className="text-ink/70 mt-1 text-sm font-semibold">
+                      {storyDateLabel(story.tag)} {formatStoryDate(story.date)}
+                    </p>
+                  )}
                   <p className="mt-2 text-base italic">{story.excerpt}</p>
                   <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold">
                     {story.readLabel}
