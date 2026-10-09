@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import UpcomingEvents from "@/sections/UpcomingEvents";
-import { upcomingEvents } from "@/content/events";
+import { getUpcomingEvents } from "@/payload/queries";
 
 export const metadata: Metadata = {
   title: "Upcoming Events — Grace House",
@@ -8,18 +8,21 @@ export const metadata: Metadata = {
 };
 
 /**
- * A dedicated page listing all upcoming events. Reuses the same
+ * A dedicated page listing all upcoming events from the `events` collection
+ * in the database (managed in /admin/collections/events). Reuses the same
  * `upcoming-events` section component as the homepage so both stay in sync
- * with the single source of truth in `@/content/events`.
+ * with the single source of truth: the database.
  */
-export default function EventsPage() {
+export default async function EventsPage() {
+  const events = await getUpcomingEvents();
+
   return (
     <>
       <main className="flex-1">
         <UpcomingEvents
           heading="Upcoming Events"
           subtitle="Join us"
-          events={upcomingEvents}
+          events={events}
           showControls
         />
       </main>

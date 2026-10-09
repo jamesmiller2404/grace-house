@@ -1,6 +1,5 @@
 import { site } from "./site";
 import { pillars } from "./pillars";
-import { upcomingEvents } from "./events";
 import { stories } from "./stories";
 import type { SectionConfig } from "@/sections/registry";
 
@@ -90,9 +89,10 @@ export const homePageSections: SectionConfig[] = [
     props: {
       heading: "Upcoming Events",
       subtitle: "Join us.",
-      events: upcomingEvents.slice(0, MAX_HOME_EVENTS),
+      // Filled in at render time from the Payload `events` collection
+      // (see src/payload/queries.ts); capped to MAX_HOME_EVENTS there.
+      events: [],
       cta: { label: "View all events", href: "/events" },
     },
   },
 ];
-

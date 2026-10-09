@@ -6,6 +6,11 @@ import type { CollectionConfig } from "payload";
  */
 export const Media: CollectionConfig = {
   slug: "media",
+  // Event photos are public site content — allow anonymous reads so the
+  // site's <Image> tags (via the Next image optimizer) can fetch them.
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: "alt",
     defaultColumns: ["filename", "alt", "mimeType", "updatedAt"],

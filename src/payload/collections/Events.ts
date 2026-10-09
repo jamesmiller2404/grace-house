@@ -16,6 +16,12 @@ export const Events: CollectionConfig = {
     singular: "Event",
     plural: "Events",
   },
+  // Events are public site content — allow anonymous reads of the REST API.
+  // (The site itself reads events through the Local API, which bypasses
+  // access control; this opens the public /api/events endpoint.)
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "date", "startTime", "location", "city", "cost"],

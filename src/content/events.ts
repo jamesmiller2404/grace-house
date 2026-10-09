@@ -1,9 +1,11 @@
 /**
- * Upcoming events — one source of truth for what the events section shows.
- * Later this becomes a Payload `events` collection: each entry's fields map
- * 1:1 to that collection's fields. Dates are ISO strings (YYYY-MM-DD) so the
- * admin panel can store them as dates and the section can render the
- * month / day / weekday tiles itself.
+ * Event types shared by the section components, plus the initial content
+ * used once to seed the Payload `events` collection (src/payload/seed.ts).
+ *
+ * The site no longer renders from this file: everything shown comes from
+ * the `events` collection in the database via src/payload/queries.ts and is
+ * managed in the admin panel (/admin/collections/events). The data below
+ * only runs on first boot, when the collection is empty.
  */
 export type EventItem = {
   title: string;
@@ -25,73 +27,12 @@ export type EventItem = {
   href: string;
 };
 
-export const upcomingEvents: EventItem[] = [
-  {
-    title: "Halloween Haunted House",
-    date: "2026-10-31",
-    time: "4:00 PM",
-    endTime: "6:00 PM",
-    location: "St. Augustine Community Church",
-    city: "Sacramento, CA",
-    description:
-      "A spooky (but family-friendly) haunted walkthrough with cider and treats.",
-    cost: "Free",
-    href: "/events/halloween-haunted-house",
-  },
-  {
-    title: "Friends Giving",
-    date: "2026-11-24",
-    time: "4:00 PM",
-    endTime: "6:00 PM",
-    location: "Grace House",
-    city: "Sacramento, CA",
-    description:
-      "A family-style dinner with residents, graduates, families and friends.",
-    cost: "Free",
-    href: "/events/friends-giving",
-  },
-  {
-    title: "Christmas Dinner",
-    date: "2026-12-25",
-    time: "4:00 PM",
-    endTime: "6:00 PM",
-    location: "Grace House",
-    city: "Sacramento, CA",
-    description:
-      "A warm holiday meal so no one spends Christmas evening alone.",
-    cost: "Free",
-    href: "/events/christmas-dinner",
-  },
-  {
-    title: "Spring Open House",
-    date: "2027-03-20",
-    time: "4:00 PM",
-    endTime: "6:00 PM",
-    location: "Grace House",
-    city: "Sacramento, CA",
-    description:
-      "Tour the house and meet the people behind a season of recovery.",
-    cost: "Free",
-    href: "/events/spring-open-house",
-  },
-  {
-    title: "Christmas Service",
-    date: "2026-12-25",
-    time: "6:30 PM",
-    endTime: "7:30 PM",
-    location: "Cross Roads Church",
-    city: "Sacramento, CA",
-    description: "A festive Christmas service open to the whole community.",
-    cost: "Free",
-    href: "/events/christmas-service",
-  },
-];
-
 /**
- * Full content for a single event page (mockup in
- * photoshop_assets/eventPage-genericMockup.png). Each entry maps to one
- * `/events/<slug>` page. Later this becomes a Payload `events` collection;
- * the fields here map 1:1 to that collection's fields.
+ * Full content used to seed one event page per entry (mockup in
+ * photoshop_assets/eventPage-genericMockup.png). These entries only seed
+ * the `events` collection on first boot (see src/payload/seed.ts); after
+ * that, every `/events/<slug>` page renders from the database via
+ * src/payload/queries.ts.
  */
 export type EventDetail = {
   slug: string;
@@ -223,7 +164,3 @@ export const eventDetails: EventDetail[] = [
     },
   },
 ];
-
-export function getEventDetail(slug: string): EventDetail | undefined {
-  return eventDetails.find((e) => e.slug === slug);
-}
