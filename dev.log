@@ -1,0 +1,36 @@
+▲ Next.js 16.3.8 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.26.200.251:3000
+- Environments: .env
+✓ Ready in 1472ms
+✓ Running next.config.ts took 130ms
+- Experiments (use with caution):
+  ⨯ turbopackServerFastRefresh
+
+[⣷] Pulling schema from database...
+[2K[1G[⣯] Pulling schema from database...
+[2K[1G[⣟] Pulling schema from database...
+[2K[1G[⡿] Pulling schema from database...
+[2K[1G[⢿] Pulling schema from database...
+[2K[1G[⣻] Pulling schema from database...
+[2K[1G[✓] Pulling schema from database...
+[20:02:47] [33mWARN[39m: [36mNo email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.[39m
+[20:02:48] [32mINFO[39m: [36mSeed: created 4 events from src/content/events.ts.[39m
+ GET /admin/collections/events 200 in 19.3s (next.js: 9.5s, application-code: 9.8s)
+ GET /admin/collections/events/create 200 in 468ms (next.js: 61ms, application-code: 408ms)
+ GET /admin/collections/media 200 in 411ms (next.js: 17ms, application-code: 394ms)
+[20:03:08] [32mINFO[39m: [36mYou are not allowed to perform this action.[39m
+ GET /api/events 403 in 7.8s (next.js: 7.5s, application-code: 356ms)
+[20:03:09] [32mINFO[39m: [36mYou are not allowed to perform this action.[39m
+ GET /api/events?depth=0 403 in 47ms (next.js: 29ms, application-code: 17ms)
+✓ Compiled in 61ms
+✓ Compiled in 40ms
+✓ Compiled in 41ms
+Generating import map
+No new imports found, skipping writing import map
+ GET /admin 200 in 3.2s (next.js: 558ms, application-code: 2.7s)
+ GET /api/users/me 200 in 315ms (next.js: 170ms, application-code: 145ms)
+ GET /api/payload-preferences/nav 200 in 46ms (next.js: 18ms, application-code: 28ms)
+ GET /api/users/me 200 in 40ms (next.js: 13ms, application-code: 27ms)
+ GET /admin/collections/events 200 in 277ms (next.js: 33ms, application-code: 244ms)
+^C
