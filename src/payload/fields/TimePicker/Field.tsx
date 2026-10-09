@@ -8,18 +8,24 @@ import React, { useEffect, useRef, useState } from "react";
  * Admin component for `TimeField` (src/payload/fields/TimePicker/index.ts).
  *
  * Renders a plain text input — so manual entry works exactly like before —
- * plus a "Pick a time" button that opens a popup listing every half-hour of
- * the day (12:00 AM through 11:30 PM, 48 options) like the date picker's
- * popup. Clicking an option fills the input; Escape or an outside click
- * closes it.
+ * plus a small clock-icon button that opens a floating dark popup panel
+ * (styled after photoshop_assets/timePanel.png) with every half-hour from
+ * 6:00 am around the clock to 5:30 am. Clicking an option fills the input;
+ * Escape or an outside click closes it.
  */
 
-/** All 30-minute increments of the day as 12-hour clock labels. */
+/**
+ * All 48 half-hour increments of the day as 12-hour clock labels (lowercase
+ * am/pm), starting at 6:00 am and wrapping past midnight to 5:30 am. The
+ * popup grid flows column-major (6 rows), so times run down each column
+ * exactly like the timePanel.png mockup.
+ */
 function buildTimeOptions(): string[] {
   const options: string[] = [];
-  for (let hour = 0; hour < 24; hour += 1) {
-    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
-    const period = hour < 12 ? "AM" : "PM";
+  for (let hour = 6; hour < 30; hour += 1) {
+    const hour24 = hour % 24;
+    const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+    const period = hour24 < 12 ? "am" : "pm";
     for (const minute of [0, 30]) {
       const paddedMinute = String(minute).padStart(2, "0");
       options.push(`${hour12}:${paddedMinute} ${period}`);
@@ -29,6 +35,49 @@ function buildTimeOptions(): string[] {
 }
 
 const timeOptions = buildTimeOptions();
+
+/** Mockup colors (timePanel.png). */
+const PANEL_BG = "#222222";
+const BOX_BORDER = "#414141";
+const BOX_TEXT = "#cfcfcf";
+const HOVER_FILL = "#414141";
+
+/**
+ * Popup styling that can't be done with inline styles (hover, scrollbar,
+ * current-option states). Scoped under `.time-picker-popup` so it never
+ * leaks into the rest of the admin panel.
+ */
+const popupCss = `
+.time-picker-popup .tp-option {
+  background: transparent;
+  border: 1px solid ${BOX_BORDER};
+  border-radius: 3px;
+  color: ${BOX_TEXT};
+  cursor: pointer;
+  font-family: var(--font-body, sans-serif);
+  font-size: 12.5px;
+  line-height: 1;
+  padding: 8px 2px;
+  text-align: center;
+  transition: background 0.1s ease;
+  white-space: nowrap;
+}
+.time-picker-popup .tp-option:hover {
+  background: ${HOVER_FILL};
+}
+.time-picker-popup .tp-option.tp-option-current {
+  background: ${HOVER_FILL};
+  color: #ffffff;
+  font-weight: 600;
+}
+.time-picker-popup::-webkit-scrollbar {
+  width: 8px;
+}
+.time-picker-popup::-webkit-scrollbar-thumb {
+  background: ${BOX_BORDER};
+  border-radius: 4px;
+}
+`;
 
 const styles: Record<string, React.CSSProperties> = {
   input: {
@@ -43,50 +92,43 @@ const styles: Record<string, React.CSSProperties> = {
   },
   inputRow: { alignItems: "center", display: "flex", gap: 8 },
   option: {
-    background: "none",
-    border: "1px solid transparent",
-    borderRadius: 4,
-    color: "var(--theme-text)",
-    cursor: "pointer",
-    fontSize: "var(--base, 16px)",
-    lineHeight: "var(--lh-base, 24px)",
-    padding: "4px 8px",
-    textAlign: "left",
+    // Chip look is handled by the .tp-option CSS classes above; keep this
+    // entry as a base so grid alignment stays consistent.
+    display: "block",
     width: "100%",
-  },
-  optionCurrent: {
-    background: "var(--theme-elevation-100)",
-    border: "1px solid var(--theme-elevation-200)",
-    fontWeight: "bold",
   },
   popup: {
-    background: "var(--theme-bg, var(--theme-elevation-0))",
-    border: "1px solid var(--theme-elevation-150)",
-    borderRadius: "var(--style-radius-m, 4px)",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+    // Fixed positioning makes this float above the surrounding admin UI the
+    // same way the date picker's calendar card does (no clipping by
+    // scroll containers). The position values are set from the input's
+    // bounding rect when the popup opens.
+    background: PANEL_BG,
+    border: `1px solid ${BOX_BORDER}`,
+    borderRadius: 4,
+    boxShadow: "0 4px 6px -2px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.3)",
+    boxSizing: "border-box",
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    left: 0,
-    maxHeight: 260,
+    gridAutoFlow: "column",
+    gridTemplateColumns: "repeat(8, minmax(0, 1fr))",
+    gridTemplateRows: "repeat(6, auto)",
+    maxHeight: 320,
     overflowY: "auto",
-    padding: 8,
-    position: "absolute",
-    right: 0,
-    top: "calc(100% + 4px)",
-    width: "100%",
-    zIndex: 50,
+    padding: 6,
+    position: "fixed",
+    zIndex: 100,
   },
   pickButton: {
+    alignItems: "center",
     background: "var(--theme-elevation-100)",
     border: "1px solid var(--theme-elevation-150)",
     borderRadius: "var(--style-radius-m, 4px)",
     color: "var(--theme-text)",
     cursor: "pointer",
+    display: "flex",
     flexShrink: 0,
-    fontSize: "var(--base, 16px)",
-    lineHeight: "var(--lh-base, 24px)",
-    padding: "6px 12px",
-    whiteSpace: "nowrap",
+    height: 34,
+    justifyContent: "center",
+    width: 34,
   },
   wrapper: { position: "relative" },
 };
@@ -97,9 +139,37 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
   const description = admin?.description;
 
   const [popupOpen, setPopupOpen] = useState(false);
+  const [popupPosition, setPopupPosition] = useState<{
+    left: number;
+    top: number;
+    width: number;
+  }>({ left: 0, top: 0, width: 0 });
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { setValue, showError, value = "" } = useField<string>({ path });
+
+  // Anchor the popup right below the input row, floating above everything
+  // else (fixed positioning, like the date picker's calendar card).
+  useEffect(() => {
+    if (!popupOpen || !wrapperRef.current) return;
+    const update = () => {
+      const rect = wrapperRef.current?.getBoundingClientRect();
+      if (rect) {
+        setPopupPosition({
+          left: rect.left,
+          top: rect.bottom + 4,
+          width: Math.max(rect.width, 560),
+        });
+      }
+    };
+    update();
+    window.addEventListener("scroll", update, true);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [popupOpen]);
 
   // Close the popup on Escape or when clicking outside of it.
   useEffect(() => {
@@ -141,6 +211,7 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
       data-error={showError ? "true" : "false"}
       ref={wrapperRef}
     >
+      <style>{popupCss}</style>
       <label className="field-label" htmlFor={`field-${path}`}>
         {labelText}
         {required && <span className="field-required">*</span>}
@@ -150,7 +221,7 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
           <input
             id={`field-${path}`}
             onChange={(event) => setValue(event.target.value)}
-            placeholder="e.g. 4:00 PM"
+            placeholder="e.g. 4:00 pm"
             style={styles.input}
             type="text"
             value={value}
@@ -161,27 +232,48 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
             aria-label={`Pick a time for ${labelText}`}
             onClick={() => setPopupOpen((open) => !open)}
             style={styles.pickButton}
+            title={popupOpen ? "Close time picker" : "Pick a time"}
             type="button"
           >
-            {popupOpen ? "Close" : "Pick a time"}
+            {/* Small clock icon instead of a text button */}
+            <svg
+              aria-hidden="true"
+              fill="none"
+              height="16"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
           </button>
         </div>
         {popupOpen && (
-          <div className="time-picker-popup" style={styles.popup}>
+          <div
+            className="time-picker-popup"
+            style={{
+              ...styles.popup,
+              left: popupPosition.left,
+              top: popupPosition.top,
+              width: popupPosition.width,
+            }}
+          >
             {timeOptions.map((option) => {
               const isCurrent = option.toLowerCase() === currentValue;
               return (
                 <button
                   aria-pressed={isCurrent}
+                  className={`tp-option${isCurrent ? " tp-option-current" : ""}`}
                   key={option}
                   onClick={() => {
                     setValue(option);
                     setPopupOpen(false);
                   }}
-                  style={{
-                    ...styles.option,
-                    ...(isCurrent ? styles.optionCurrent : null),
-                  }}
+                  style={styles.option}
                   type="button"
                 >
                   {option}

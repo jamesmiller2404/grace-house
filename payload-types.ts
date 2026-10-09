@@ -161,11 +161,11 @@ export interface Event {
   status: 'Upcoming' | 'Past' | 'Cancelled';
   date: string;
   /**
-   * Type a time manually, or click "Pick a time".
+   * Type a time manually, or click the clock icon to pick one.
    */
   startTime: string;
   /**
-   * Type a time manually, or click "Pick a time".
+   * Type a time manually, or click the clock icon to pick one.
    */
   endTime?: string | null;
   /**

@@ -66,7 +66,8 @@ export const Events: CollectionConfig = {
         type: "text",
         required: true,
         admin: {
-          description: "Type a time manually, or click \"Pick a time\".",
+          description:
+            "Type a time manually, or click the clock icon to pick one.",
         },
       }),
     },
@@ -75,7 +76,8 @@ export const Events: CollectionConfig = {
         name: "endTime",
         type: "text",
         admin: {
-          description: "Type a time manually, or click \"Pick a time\".",
+          description:
+            "Type a time manually, or click the clock icon to pick one.",
         },
       }),
     },

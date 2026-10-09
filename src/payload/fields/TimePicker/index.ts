@@ -6,8 +6,8 @@ import type { TextField } from "payload";
  * The value is stored as plain text (e.g. "4:00 PM"), so it matches the seed
  * data and the frontend rendering exactly — but the admin panel renders a
  * custom component (`./Field.tsx`) that shows a text input (for manual entry)
- * next to a "Pick a time" popup with every half-hour of the day, like the
- * date field's picker popup.
+ * next to a half-hour time picker popup (6:00 AM onward) that opens from a
+ * small clock-icon button, like the date field's picker popup.
  *
  * Callers pass their overrides (name, required, admin.description, ...).
  * The custom admin component is preserved even when the caller overrides
