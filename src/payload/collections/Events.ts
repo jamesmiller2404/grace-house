@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { TimeField } from "@/payload/fields/TimePicker";
 
 /**
  * Upcoming events — the Payload version of `EventItem`/`EventDetail` in
@@ -60,19 +61,23 @@ export const Events: CollectionConfig = {
       },
     },
     {
-      name: "startTime",
-      type: "text",
-      required: true,
-      admin: {
-        description: 'e.g. "4:00 PM"',
-      },
+      ...TimeField({
+        name: "startTime",
+        type: "text",
+        required: true,
+        admin: {
+          description: "Type a time manually, or click \"Pick a time\".",
+        },
+      }),
     },
     {
-      name: "endTime",
-      type: "text",
-      admin: {
-        description: 'e.g. "6:00 PM"',
-      },
+      ...TimeField({
+        name: "endTime",
+        type: "text",
+        admin: {
+          description: "Type a time manually, or click \"Pick a time\".",
+        },
+      }),
     },
     {
       name: "location",
