@@ -4,6 +4,8 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import type { Event as PayloadEvent } from "../../payload-types";
 import type { EventDetail, EventItem } from "@/content/events";
+import type { MissionPage as PayloadMissionPage } from "../../payload-types";
+import { missionPage as defaultMissionPage } from "@/content/mission";
 
 /**
  * Event data access — the only place the app reads events from. Every event
@@ -115,5 +117,30 @@ export const getEventBySlug = cache(
     });
     const doc = docs.find((event) => eventSlug(event.title) === slug);
     return doc ? toEventDetail(doc) : undefined;
+  },
+);
+
+/**
+ * The Mission page copy (title + body), for the /about/mission page. The
+ * first document in the `mission-page` collection is the source of truth;
+ * if none exists yet (e.g. before the first seed), the static content in
+ * src/content/mission.ts is shown so the page never breaks.
+ */
+export const getMissionPage = cache(
+  async (): Promise<{ title: string; body: string }> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "mission-page",
+      limit: 1,
+    });
+    const doc = docs[0] as PayloadMissionPage | undefined;
+    if (doc) {
+      return { title: doc.title, body: doc.body };
+    }
+    return {
+      title: defaultMissionPage.missionHeading,
+      body: defaultMissionPage.missionStatement,
+    };
   },
 );

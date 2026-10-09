@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     events: Event;
     media: Media;
+    'mission-page': MissionPage;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -229,6 +231,25 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * The Title and body text shown on the Mission page (/about/mission).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mission-page".
+ */
+export interface MissionPage {
+  id: number;
+  /**
+   * The page heading (e.g. "Mission") and breadcrumb label.
+   */
+  title: string;
+  /**
+   * The mission statement. Use a blank line between paragraphs.
+   */
+  body: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -263,6 +284,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'mission-page';
+        value: number | MissionPage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -384,6 +409,16 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mission-page_select".
+ */
+export interface MissionPageSelect<T extends boolean = true> {
+  title?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

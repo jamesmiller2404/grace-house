@@ -4,11 +4,12 @@ import { buildConfig } from "payload";
 
 import { Events } from "@/payload/collections/Events";
 import { Media } from "@/payload/collections/Media";
+import { MissionPage } from "@/payload/collections/MissionPage";
 import { Users } from "@/payload/collections/Users";
-import { seedEvents } from "@/payload/seed";
+import { seedEvents, seedMissionPage } from "@/payload/seed";
 
 export default buildConfig({
-  collections: [Users, Events, Media],
+  collections: [Users, Events, Media, MissionPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({ pool: { connectionString: process.env.DATABASE_URI } }),
@@ -20,6 +21,10 @@ export default buildConfig({
       const { totalDocs } = await payload.count({ collection: "events" });
       if (totalDocs === 0) {
         await seedEvents(payload);
+      }
+      const mission = await payload.count({ collection: "mission-page" });
+      if (mission.totalDocs === 0) {
+        await seedMissionPage(payload);
       }
     } catch (error) {
       payload.logger.warn(

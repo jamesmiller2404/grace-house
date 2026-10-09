@@ -3,6 +3,7 @@ import path from "path";
 import type { Payload } from "payload";
 
 import { eventDetails } from "@/content/events";
+import { missionPage } from "@/content/mission";
 
 /** Mime types for the image extensions used in public/images. */
 const MIME_TYPES: Record<string, string> = {
@@ -86,5 +87,25 @@ export async function seedEvents(payload: Payload): Promise<void> {
 
   payload.logger.info(
     `Seed: created ${eventDetails.length} events from src/content/events.ts.`,
+  );
+}
+
+/**
+ * Seed the `mission-page` collection with the Mission page copy that
+ * already exists in the app (`missionPage` in src/content/mission.ts), so
+ * the admin panel starts with the real page content. Runs once, when the
+ * mission-page collection is empty.
+ */
+export async function seedMissionPage(payload: Payload): Promise<void> {
+  await payload.create({
+    collection: "mission-page",
+    data: {
+      title: missionPage.missionHeading,
+      body: missionPage.missionStatement,
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the Mission page from src/content/mission.ts.",
   );
 }
