@@ -14,4 +14,3 @@ const nextConfig: NextConfig = {
 };
 
 export default withPayload(nextConfig, { devBundleServerPackages: false });
-
