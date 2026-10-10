@@ -1,0 +1,35 @@
+databases:
+  - name: payload-db
+    plan: basic-256mb # use "free" for a short test (expires in 30 days)
+    region: oregon
+    postgresMajorVersion: "18"
+
+services:
+  - type: web
+    name: payload-app
+    runtime: node
+    plan: starter # upgrade to standard if you see out-of-memory restarts
+    region: oregon
+    autoDeploy: true
+    buildCommand: npm ci && npm run build
+    preDeployCommand: npx payload migrate
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: DATABASE_URI
+        fromDatabase: 
+          name: payload-db
+          property: connectionString
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: NEXT_PUBLIC_SERVER_URL
+        sync: false # e.g. https://yourdomain.com
+      - key: R2_BUCKET
+        sync: false
+      - key: R2_ENDPOINT
+        sync: false # https://<account_id>.r2.cloudflarestorage.com
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
