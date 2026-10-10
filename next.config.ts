@@ -11,6 +11,17 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(dirname),
   },
-};
+  images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "payload-app-nxg2.onrender.com",
+      pathname: "/api/media/file/**",
+    },
+    { protocol: "http", hostname: "localhost", pathname: "/api/media/file/**" },
+  ],
+  },
+  };
 
 export default withPayload(nextConfig, { devBundleServerPackages: false });
+
