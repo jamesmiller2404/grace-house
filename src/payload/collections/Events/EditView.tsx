@@ -114,6 +114,20 @@ const css = `
 .gh-event-edit .upload__dragAndDropText {
   display: none !important;
 }
+/* Upload field card shown after an image is chosen or changed: hide the
+   "Edit" button (it opens the Media document drawer to edit the image) —
+   only the "Remove" (x) button stays. Payload's upload field offers no
+   config switch for this, so the button is hidden with CSS. The rule is
+   intentionally NOT scoped to .gh-event-edit: this same card also renders
+   inside portal-rendered drawers (document-root modal container, outside
+   the .gh-event-edit wrapper) opened from these pages. This stylesheet
+   only exists while an Events create/edit page is mounted, so the rule
+   still never reaches other admin pages (e.g. the Media collection list).
+   The separate "Edit Image" pill inside the upload drawer is removed via
+   the Media collection's upload config (crop/focalPoint) in Media.ts. */
+.upload-relationship-details__edit {
+  display: none !important;
+}
 /* Upload dropzone buttons ("Create New" / "Choose from existing"): flat
    #515151 resting background (hover uses a separate --hover-bg, untouched)
    and the mockup's labels. The label swap hides Payload's text at font-size 0

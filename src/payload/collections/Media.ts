@@ -18,6 +18,13 @@ export const Media: CollectionConfig = {
   upload: {
     // Only allow image files — these accompany event pages.
     mimeTypes: ["image/*"],
+    // No image editing (crop / focal point adjustments) from the admin
+    // panel: the "Edit Image" button this enables in the upload drawer is
+    // unwanted on the event create/edit flow — the visible part of the
+    // image is chosen with the draggable preview (ImagePositionField)
+    // instead, so images are always used exactly as uploaded.
+    crop: false,
+    focalPoint: false,
   },
   fields: [
     {

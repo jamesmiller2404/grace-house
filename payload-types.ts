@@ -169,9 +169,6 @@ export interface Event {
    */
   image?: (number | null) | Media;
   imagePositionX?: number | null;
-  /**
-   * Drag the preview to choose which part of the image shows in the event page frame.
-   */
   imagePositionY?: number | null;
   about?:
     | {
@@ -211,8 +208,6 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * The Title and body text shown on the Mission page (/about/mission).
@@ -393,8 +388,6 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

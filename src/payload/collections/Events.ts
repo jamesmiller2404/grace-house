@@ -41,6 +41,16 @@ export const Events: CollectionConfig = {
           },
         },
       },
+      // "Cancel" button next to Save on the create/edit pages — it renders
+      // in the document controls bar (before the Save button) and navigates
+      // back to the admin dashboard.
+      edit: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/collections/Events/CancelToDashboardButton.tsx",
+          },
+        ],
+      },
     },
   },
   // Default order in the admin list view: soonest event first.
@@ -182,10 +192,6 @@ export const Events: CollectionConfig = {
         defaultValue: 50,
         min: 0,
         max: 100,
-        admin: {
-          description:
-            "Drag the preview to choose which part of the image shows in the event page frame.",
-        },
       }),
     },
     {
