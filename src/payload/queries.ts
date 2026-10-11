@@ -73,6 +73,8 @@ function toEventDetail(doc: PayloadEvent): EventDetail {
     city: doc.city ?? "",
     cost: doc.cost ?? "Free",
     image: typeof doc.image === "object" && doc.image.url ? doc.image.url : "",
+    imagePositionX: doc.imagePositionX ?? 50,
+    imagePositionY: doc.imagePositionY ?? 50,
     about: (doc.about ?? []).map((paragraph) => paragraph.text),
     whatToExpect: (doc.whatToExpect ?? []).map((paragraph) => paragraph.text),
     contact: {

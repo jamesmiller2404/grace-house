@@ -113,6 +113,12 @@ export default function EventPage({ event }: EventPageProps) {
                 priority
                 sizes="(min-width:1024px) 55vw, 100vw"
                 className="object-cover"
+                // Composition chosen by the editor in the admin panel's
+                // draggable image-position preview (object-position
+                // percentages). Defaults to centered.
+                style={{
+                  objectPosition: `${event.imagePositionX ?? 50}% ${event.imagePositionY ?? 50}%`,
+                }}
               />
             </div>
 

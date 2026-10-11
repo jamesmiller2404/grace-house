@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { ImagePositionField } from "@/payload/fields/ImagePosition";
 import { TimeField } from "@/payload/fields/TimePicker";
 
 /**
@@ -113,6 +114,32 @@ export const Events: CollectionConfig = {
       admin: {
         description: "Image shown on the event page.",
       },
+    },
+    {
+      // The horizontal half of the image composition — driven by the
+      // draggable preview on imagePositionY, so it stays out of the UI.
+      name: "imagePositionX",
+      type: "number",
+      label: "Image Position X (%)",
+      defaultValue: 50,
+      min: 0,
+      max: 100,
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      ...ImagePositionField({
+        name: "imagePositionY",
+        label: "Image Position",
+        defaultValue: 50,
+        min: 0,
+        max: 100,
+        admin: {
+          description:
+            "Drag the preview to choose which part of the image shows in the event page frame. Saved with the event.",
+        },
+      }),
     },
     {
       name: "about",

@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
     },
     { protocol: "http", hostname: "localhost", pathname: "/api/media/file/**" },
   ],
+  // Local dev serves media from this same app (http://localhost:3000/api/media/file/...),
+  // which Next 16+ blocks as a "private IP". Allow it — expected, not SSRF.
+  dangerouslyAllowLocalIP: true,
   },
   };
 

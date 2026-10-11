@@ -16,7 +16,12 @@ export default buildConfig({
   serverURL: siteURL,
   cors: [siteURL],
   csrf: [siteURL],
-  db: postgresAdapter({ pool: { connectionString: process.env.DATABASE_URI } }),
+  db: postgresAdapter({
+    pool: { connectionString: process.env.DATABASE_URI },
+    // Disable dev-time schema push so `next dev` never alters/drops columns.
+    // Schema changes are managed through migrations (`payload migrate`).
+    push: false,
+  }),
   plugins: [
     // Only enabled when R2 variables are present (Render), so local dev
     // keeps using local disk without needing credentials.

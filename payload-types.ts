@@ -186,6 +186,11 @@ export interface Event {
    * Image shown on the event page.
    */
   image: number | Media;
+  imagePositionX?: number | null;
+  /**
+   * Drag the preview to choose which part of the image shows in the event page frame. Saved with the event.
+   */
+  imagePositionY?: number | null;
   about?:
     | {
         text: string;
@@ -371,6 +376,8 @@ export interface EventsSelect<T extends boolean = true> {
   city?: T;
   cost?: T;
   image?: T;
+  imagePositionX?: T;
+  imagePositionY?: T;
   about?:
     | T
     | {

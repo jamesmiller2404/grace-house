@@ -55,6 +55,9 @@ export type EventDetail = {
   cost: string;
   /** Wide photo below the event facts. */
   image: string;
+  /** Where the image sits in the frame — CSS object-position percentages. */
+  imagePositionX?: number;
+  imagePositionY?: number;
   /** Lead copy under the "About Event" heading. */
   about: string[];
   /** Copy under the "What to Expect" heading. */
