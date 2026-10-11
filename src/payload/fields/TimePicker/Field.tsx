@@ -48,6 +48,21 @@ const HOVER_FILL = "#414141";
  * leaks into the rest of the admin panel.
  */
 const popupCss = `
+.time-picker-popup {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(6, auto);
+}
+/* On narrow (mobile) screens, reflow to 4 columns × 12 rows so the popup
+   fits the viewport width instead of being cut off. */
+@media (max-width: 640px) {
+  .time-picker-popup {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: none;
+  }
+}
 .time-picker-popup .tp-option {
   background: transparent;
   border: 1px solid ${BOX_BORDER};
@@ -107,10 +122,8 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: 4,
     boxShadow: "0 4px 6px -2px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.3)",
     boxSizing: "border-box",
-    display: "grid",
-    gridAutoFlow: "column",
-    gridTemplateColumns: "repeat(8, minmax(0, 1fr))",
-    gridTemplateRows: "repeat(6, auto)",
+    // Grid layout lives in popupCss (not here) so the narrow-viewport media
+    // query can reflow the columns on mobile without inline styles winning.
     maxHeight: 320,
     overflowY: "auto",
     padding: 6,
@@ -155,10 +168,21 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
     const update = () => {
       const rect = wrapperRef.current?.getBoundingClientRect();
       if (rect) {
+        // Keep the popup inside the viewport horizontally: shrink the
+        // minimum 560px width on narrow screens and clamp `left` so it
+        // never extends past the right edge (mobile cut-off fix).
+        const viewportWidth = window.innerWidth;
+        const margin = 8;
+        const maxWidth = viewportWidth - margin * 2;
+        const width = Math.min(Math.max(rect.width, 560), maxWidth);
+        const left = Math.min(
+          Math.max(rect.left, margin),
+          viewportWidth - margin - width,
+        );
         setPopupPosition({
-          left: rect.left,
+          left: Math.max(left, margin),
           top: rect.bottom + 4,
-          width: Math.max(rect.width, 560),
+          width,
         });
       }
     };
