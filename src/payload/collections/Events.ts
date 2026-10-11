@@ -110,9 +110,9 @@ export const Events: CollectionConfig = {
       name: "image",
       type: "upload",
       relationTo: "media",
-      required: true,
       admin: {
-        description: "Image shown on the event page.",
+        description:
+          "Optional image shown on the event page and the event card.",
       },
     },
     {

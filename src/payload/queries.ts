@@ -56,6 +56,12 @@ function toEventItem(doc: PayloadEvent): EventItem {
     description: doc.description,
     cost: doc.cost ?? "Free",
     href: `/events/${eventSlug(doc.title)}`,
+    image:
+      typeof doc.image === "object" && doc.image
+        ? doc.image.thumbnailURL ?? doc.image.url ?? ""
+        : "",
+    imagePositionX: doc.imagePositionX ?? 50,
+    imagePositionY: doc.imagePositionY ?? 50,
   };
 }
 
@@ -72,7 +78,10 @@ function toEventDetail(doc: PayloadEvent): EventDetail {
     location: doc.location,
     city: doc.city ?? "",
     cost: doc.cost ?? "Free",
-    image: typeof doc.image === "object" && doc.image.url ? doc.image.url : "",
+    image:
+      typeof doc.image === "object" && doc.image && doc.image.url
+        ? doc.image.url
+        : "",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
     about: (doc.about ?? []).map((paragraph) => paragraph.text),

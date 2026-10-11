@@ -25,6 +25,11 @@ export type EventItem = {
   cost: string;
   /** Where "View event" links to. */
   href: string;
+  /** Event image URL for the card thumbnail (absent when there is none). */
+  image?: string;
+  /** Composition of the thumbnail, same as the event page's image frame. */
+  imagePositionX?: number;
+  imagePositionY?: number;
 };
 
 /**

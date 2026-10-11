@@ -273,7 +273,8 @@ const ImagePositionField: React.FC<NumberFieldClientProps> = ({
         )}
         {!media && (
           <div style={styles.empty}>
-            Choose an image above to position it in the event page frame.
+            An event image is optional — choose one above to position it in
+            the event page frame.
           </div>
         )}
       </div>

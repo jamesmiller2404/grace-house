@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import ViewControls, {
@@ -253,8 +254,28 @@ export default function UpcomingEvents({
                     href={event.href}
                     className="group flex h-full flex-col focus-visible:outline-terra focus-visible:outline-2"
                   >
-                    {/* Date tile */}
-                    {date && <DateTile date={date} />}
+                    {/* Date tile + small image thumbnail side by side.
+                        The thumbnail matches the date tile's height and
+                        uses the same object-position values chosen in the
+                        admin panel. Skipped when an event has no image so
+                        the date tile keeps its normal size. */}
+                    <div className="flex items-stretch gap-3">
+                      {date && <DateTile date={date} />}
+                      {event.image && (
+                        <div className="border-ink/40 relative min-w-0 flex-1 overflow-hidden rounded-md border-2">
+                          <Image
+                            src={event.image}
+                            alt={event.title}
+                            fill
+                            sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                            className="object-cover"
+                            style={{
+                              objectPosition: `${event.imagePositionX ?? 50}% ${event.imagePositionY ?? 50}%`,
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
 
                     {/* Title */}
                     <h3 className="font-heading text-anchor group-hover:text-terra mt-4 text-3xl leading-tight">

@@ -105,22 +105,26 @@ export default function EventPage({ event }: EventPageProps) {
                 </div>
               </dl>
             </header>
-            <div className="border-ink relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-lg border-2">
-              <Image
-                src={event.image}
-                alt={event.title}
-                fill
-                priority
-                sizes="(min-width:1024px) 55vw, 100vw"
-                className="object-cover"
-                // Composition chosen by the editor in the admin panel's
-                // draggable image-position preview (object-position
-                // percentages). Defaults to centered.
-                style={{
-                  objectPosition: `${event.imagePositionX ?? 50}% ${event.imagePositionY ?? 50}%`,
-                }}
-              />
-            </div>
+            {/* Optional event photo — skipped entirely when the event has
+                no image, so the page composes cleanly without it. */}
+            {event.image && (
+              <div className="border-ink relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-lg border-2">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  priority
+                  sizes="(min-width:1024px) 55vw, 100vw"
+                  className="object-cover"
+                  // Composition chosen by the editor in the admin panel's
+                  // draggable image-position preview (object-position
+                  // percentages). Defaults to centered.
+                  style={{
+                    objectPosition: `${event.imagePositionX ?? 50}% ${event.imagePositionY ?? 50}%`,
+                  }}
+                />
+              </div>
+            )}
 
             <section className="mt-10">
               <h2 className="font-heading text-anchor text-3xl">About Event</h2>

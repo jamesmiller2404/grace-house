@@ -183,9 +183,9 @@ export interface Event {
    */
   cost?: string | null;
   /**
-   * Image shown on the event page.
+   * Optional image shown on the event page and the event card.
    */
-  image: number | Media;
+  image?: (number | null) | Media;
   imagePositionX?: number | null;
   /**
    * Drag the preview to choose which part of the image shows in the event page frame. Saved with the event.

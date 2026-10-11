@@ -1,0 +1,17 @@
+/**
+ * Payload admin panel custom styles.
+ *
+ * Payload wraps all of its admin CSS in the `@layer payload-default` layer,
+ * so any unlayered CSS here automatically wins over it regardless of
+ * specificity. See https://payloadcms.com/docs/admin/customizing-css
+ */
+
+/* The admin page background: Payload paints `html { background: var(--theme-bg) }`
+   and defaults `--theme-bg` to `var(--theme-elevation-0)` on :root. */
+:root {
+  --theme-bg: #a1a1a1;
+}
+
+html {
+  background: #a1a1a1;
+}
