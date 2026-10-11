@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { ImagePositionField } from "@/payload/fields/ImagePosition";
+import { StatusSelectField } from "@/payload/fields/StatusSelect";
 import { TimeField } from "@/payload/fields/TimePicker";
 
 /**
@@ -60,14 +61,17 @@ export const Events: CollectionConfig = {
           },
         },
         {
-          name: "status",
-          type: "select",
-          options: ["Upcoming", "Past", "Cancelled"],
-          defaultValue: "Upcoming",
-          required: true,
-          admin: {
-            width: "25%",
-          },
+          // Plain dropdown (not Payload's default searchable combobox) —
+          // see src/payload/fields/StatusSelect.
+          ...StatusSelectField({
+            name: "status",
+            options: ["Upcoming", "Past", "Cancelled"],
+            defaultValue: "Upcoming",
+            required: true,
+            admin: {
+              width: "25%",
+            },
+          }),
         },
       ],
     },

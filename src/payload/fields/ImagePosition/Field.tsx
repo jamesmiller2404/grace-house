@@ -32,7 +32,7 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: "hidden",
     borderRadius: "var(--style-radius-m, 4px)",
     border: "1px solid var(--theme-elevation-150)",
-    background: "var(--theme-elevation-50)",
+    background: "linear-gradient(126deg, #535353, #202020)",
     touchAction: "none",
     cursor: "grab",
     userSelect: "none",
@@ -52,7 +52,7 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     padding: 16,
     textAlign: "center",
-    fontSize: 13,
+    fontSize: 32.5,
     color: "var(--theme-elevation-500)",
   },
   hint: {
@@ -271,12 +271,7 @@ const ImagePositionField: React.FC<NumberFieldClientProps> = ({
             }}
           />
         )}
-        {!media && (
-          <div style={styles.empty}>
-            An event image is optional — choose one above to position it in
-            the event page frame.
-          </div>
-        )}
+        {!media && <div style={styles.empty}>Image</div>}
       </div>
       {media && layout && (
         <div style={styles.hint}>
