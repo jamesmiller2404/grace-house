@@ -27,89 +27,132 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "date", "startTime", "location", "city", "cost"],
+    // Custom Edit view wrapper that paints the mockup frame
+    // (photoshop_assets/adminPanelMockup1.png): #111115 page background,
+    // rounded #2d2d33 panel around the fields, #101012 input boxes.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/collections/Events/EditView.tsx",
+            },
+          },
+        },
+      },
+    },
   },
   // Default order in the admin list view: soonest event first.
   defaultSort: "date",
   fields: [
+    // Title (wide) + Status dropdown (top right), like the mockup's first row.
     {
-      name: "title",
-      type: "text",
-      required: true,
+      type: "row",
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          required: true,
+          label: false,
+          admin: {
+            placeholder: "Title...",
+            width: "75%",
+          },
+        },
+        {
+          name: "status",
+          type: "select",
+          options: ["Upcoming", "Past", "Cancelled"],
+          defaultValue: "Upcoming",
+          required: true,
+          admin: {
+            width: "25%",
+          },
+        },
+      ],
     },
     {
       name: "description",
       type: "textarea",
       required: true,
+      label: false,
       admin: {
-        description: "One-line description shown on cards and under the title.",
+        placeholder: "One-line description...",
       },
     },
+    // Date + Start Time + End Time share one row in the mockup.
     {
-      name: "status",
-      type: "select",
-      options: ["Upcoming", "Past", "Cancelled"],
-      defaultValue: "Upcoming",
-      required: true,
-    },
-    {
-      name: "date",
-      type: "date",
-      required: true,
-      admin: {
-        date: {
-          pickerAppearance: "dayOnly",
+      type: "row",
+      fields: [
+        {
+          name: "date",
+          type: "date",
+          required: true,
+          label: false,
+          admin: {
+            placeholder: "Date...",
+            width: "33%",
+            date: {
+              pickerAppearance: "dayOnly",
+            },
+          },
         },
-      },
-    },
-    {
-      ...TimeField({
-        name: "startTime",
-        type: "text",
-        required: true,
-        admin: {
-          description:
-            "Type a time manually, or click the clock icon to pick one.",
+        {
+          ...TimeField({
+            name: "startTime",
+            type: "text",
+            required: true,
+            label: false,
+            admin: {
+              placeholder: "Start Time...",
+              width: "33%",
+            },
+          }),
         },
-      }),
-    },
-    {
-      ...TimeField({
-        name: "endTime",
-        type: "text",
-        admin: {
-          description:
-            "Type a time manually, or click the clock icon to pick one.",
+        {
+          ...TimeField({
+            name: "endTime",
+            type: "text",
+            label: false,
+            admin: {
+              placeholder: "End Time...",
+              width: "33%",
+            },
+          }),
         },
-      }),
+      ],
     },
     {
       name: "location",
       type: "text",
-      label: "Venue",
       required: true,
+      label: false,
       admin: {
-        description: 'e.g. "Grace House"',
+        placeholder: "Location...",
       },
     },
     {
       name: "city",
       type: "text",
+      label: false,
       admin: {
-        description: 'e.g. "Sacramento, CA"',
+        placeholder: "Address...",
       },
     },
     {
       name: "cost",
       type: "text",
       defaultValue: "Free",
+      label: false,
       admin: {
-        description: 'e.g. "Free"',
+        placeholder: "Cost... (e.g. Free)",
       },
     },
     {
       name: "image",
       type: "upload",
       relationTo: "media",
+      label: false,
       admin: {
         description:
           "Optional image shown on the event page and the event card.",
@@ -131,13 +174,13 @@ export const Events: CollectionConfig = {
     {
       ...ImagePositionField({
         name: "imagePositionY",
-        label: "Image Position",
+        label: false,
         defaultValue: 50,
         min: 0,
         max: 100,
         admin: {
           description:
-            "Drag the preview to choose which part of the image shows in the event page frame. Saved with the event.",
+            "Drag the preview to choose which part of the image shows in the event page frame.",
         },
       }),
     },
@@ -153,6 +196,10 @@ export const Events: CollectionConfig = {
           name: "text",
           type: "textarea",
           required: true,
+          label: false,
+          admin: {
+            placeholder: "Add more information...",
+          },
         },
       ],
     },
@@ -168,23 +215,33 @@ export const Events: CollectionConfig = {
           name: "text",
           type: "textarea",
           required: true,
+          label: false,
+          admin: {
+            placeholder: "What to Expect...",
+          },
         },
       ],
     },
     {
       name: "contact",
       type: "group",
+      label: "Contact",
       fields: [
         {
           name: "phone",
           type: "text",
+          label: false,
           admin: {
-            description: 'e.g. "(916) 555-5555"',
+            placeholder: "Phone Number",
           },
         },
         {
           name: "email",
           type: "email",
+          label: false,
+          admin: {
+            placeholder: "Email",
+          },
         },
       ],
     },

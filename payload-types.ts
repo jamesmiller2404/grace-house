@@ -156,31 +156,13 @@ export interface User {
 export interface Event {
   id: number;
   title: string;
-  /**
-   * One-line description shown on cards and under the title.
-   */
-  description: string;
   status: 'Upcoming' | 'Past' | 'Cancelled';
+  description: string;
   date: string;
-  /**
-   * Type a time manually, or click the clock icon to pick one.
-   */
   startTime: string;
-  /**
-   * Type a time manually, or click the clock icon to pick one.
-   */
   endTime?: string | null;
-  /**
-   * e.g. "Grace House"
-   */
   location: string;
-  /**
-   * e.g. "Sacramento, CA"
-   */
   city?: string | null;
-  /**
-   * e.g. "Free"
-   */
   cost?: string | null;
   /**
    * Optional image shown on the event page and the event card.
@@ -188,7 +170,7 @@ export interface Event {
   image?: (number | null) | Media;
   imagePositionX?: number | null;
   /**
-   * Drag the preview to choose which part of the image shows in the event page frame. Saved with the event.
+   * Drag the preview to choose which part of the image shows in the event page frame.
    */
   imagePositionY?: number | null;
   about?:
@@ -204,9 +186,6 @@ export interface Event {
       }[]
     | null;
   contact?: {
-    /**
-     * e.g. "(916) 555-5555"
-     */
     phone?: string | null;
     email?: string | null;
   };
@@ -367,8 +346,8 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
   status?: T;
+  description?: T;
   date?: T;
   startTime?: T;
   endTime?: T;

@@ -150,6 +150,13 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
   const { field, path } = props;
   const { admin, label, required } = field;
   const description = admin?.description;
+  // Mockup-style fields show no label above the box — the placeholder
+  // carries the meaning instead (e.g. "Start Time..."). Configured via
+  // `label: false` on the field (this Payload version has no hideLabel).
+  // The cast is needed because TextField's label type omits `false`.
+  const hideLabel = (label as unknown) === false;
+  const placeholder =
+    typeof admin?.placeholder === "string" ? admin.placeholder : "e.g. 4:00 pm";
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState<{
@@ -236,16 +243,19 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
       ref={wrapperRef}
     >
       <style>{popupCss}</style>
-      <label className="field-label" htmlFor={`field-${path}`}>
-        {labelText}
-        {required && <span className="field-required">*</span>}
-      </label>
+      {!hideLabel && (
+        <label className="field-label" htmlFor={`field-${path}`}>
+          {labelText}
+          {required && <span className="field-required">*</span>}
+        </label>
+      )}
       <div style={styles.wrapper}>
         <div style={styles.inputRow}>
           <input
             id={`field-${path}`}
+            aria-label={hideLabel ? labelText : undefined}
             onChange={(event) => setValue(event.target.value)}
-            placeholder="e.g. 4:00 pm"
+            placeholder={placeholder}
             style={styles.input}
             type="text"
             value={value}

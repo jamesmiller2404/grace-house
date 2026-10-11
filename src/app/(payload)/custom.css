@@ -4,14 +4,59 @@
  * Payload wraps all of its admin CSS in the `@layer payload-default` layer,
  * so any unlayered CSS here automatically wins over it regardless of
  * specificity. See https://payloadcms.com/docs/admin/customizing-css
+ *
+ * The whole admin panel — the base theme, the left sidebar and the top
+ * header — is painted from the same dark scheme as the "Create New Event"
+ * form (src/payload/collections/Events/EditView.tsx, from
+ * photoshop_assets/adminPanelMockup1.png):
+ *
+ *   page background  #111115      dropdown menus   #222222
+ *   panels/borders   #2d2d33      input boxes      #101012
+ *   hover fill       #414141      primary text     #f0f0f3
+ *   helper text      #9d9da4
+ *
+ * Payload derives every admin surface (page background, sidebar nav and its
+ * borders, header, list views, form fields, buttons) from the --theme-*
+ * custom properties, so remapping them here restyles the entire panel. The
+ * values are unlayered on :root, so they beat Payload's own
+ * `html[data-theme=...]` definitions whether the admin theme preference is
+ * light or dark — the admin always stays in this scheme.
  */
 
-/* The admin page background: Payload paints `html { background: var(--theme-bg) }`
-   and defaults `--theme-bg` to `var(--theme-elevation-0)` on :root. */
 :root {
-  --theme-bg: #a1a1a1;
+  /* Page background and core text colors.
+     Payload paints `html { background: var(--theme-bg) }`, and defaults
+     --theme-bg to var(--theme-elevation-0) on :root. */
+  --theme-bg: #111115;
+  --theme-text: #f0f0f3;
+  --theme-input-bg: #101012;
+
+  /* Payload's elevation scale, remapped to the Create New Event scheme.
+     Low steps are dark surfaces, high steps are light (text on dark),
+     mirroring the direction of Payload's built-in dark theme. */
+  --theme-elevation-0: #111115; /* page background */
+  --theme-elevation-50: #1a1a1c; /* subtle layer above the page */
+  --theme-elevation-100: #222222; /* dropdown menus, secondary fills */
+  --theme-elevation-150: #2d2d33; /* borders, the form "frame" */
+  --theme-elevation-200: #343434; /* secondary fills (input borders) */
+  --theme-elevation-250: #3b3b3b;
+  --theme-elevation-300: #414141; /* hover fills */
+  --theme-elevation-350: #4f4f55;
+  --theme-elevation-400: #6e6e76; /* muted labels (sidebar group headers) */
+  --theme-elevation-450: #86868f;
+  --theme-elevation-500: #9d9da4; /* helper text */
+  --theme-elevation-550: #a7a7ae;
+  --theme-elevation-600: #b1b1b8;
+  --theme-elevation-650: #babac1;
+  --theme-elevation-700: #c4c4cb;
+  --theme-elevation-750: #ceced4;
+  --theme-elevation-800: #d8d8de; /* primary (Save) button fill */
+  --theme-elevation-850: #e2e2e6;
+  --theme-elevation-900: #eaeaed;
+  --theme-elevation-950: #eeeff1;
+  --theme-elevation-1000: #f0f0f3; /* primary text */
 }
 
 html {
-  background: #a1a1a1;
+  background: #111115;
 }
