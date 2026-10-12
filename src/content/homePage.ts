@@ -1,6 +1,7 @@
 import { site } from "./site";
 import { pillars } from "./pillars";
 import { stories } from "./stories";
+import { heroDefaults } from "./hero";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
@@ -23,10 +24,11 @@ export const MAX_HOME_EVENTS = 3;
 export const homePageSections: SectionConfig[] = [
   {
     type: "hero",
+    // Heading, subline and image are editable in the admin panel
+    // (/admin/collections/hero); these defaults are the fallback before the
+    // database has a hero document.
     props: {
-      eyebrow: "Faith-Based Recovery",
-      heading: "Hope Starts Here",
-      image: "/images/hero1a.jpg",
+      ...heroDefaults,
       primaryCta: { label: "Our Home", href: "#welcome" },
       secondaryCta: { label: "Our Stories", href: "/#stories" },
     },

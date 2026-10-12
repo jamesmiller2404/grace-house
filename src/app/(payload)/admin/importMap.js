@@ -4,6 +4,9 @@ import { default as default_d2ad3e3f48e6de33e184359a387bbb6b } from '../../../..
 import { default as default_ba23fe87f40460cfacd78b7ad3ca2ada } from '../../../../src/payload/collections/Events/CancelToDashboardButton.tsx'
 import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../../src/payload/collections/Events/DoneToListButton.tsx'
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
+import { default as default_4d09e2f6f2f389b7998294f488a949c3 } from '../../../../src/payload/collections/Hero/CancelToDashboardButton.tsx'
+import { default as default_80a0d172a23972da09ad94e08fdfb662 } from '../../../../src/payload/collections/Hero/DoneToListButton.tsx'
+import { default as default_f86ff8bf4def5733eab024d2a90762d5 } from '../../../../src/payload/collections/Hero/EditView.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -14,5 +17,8 @@ export const importMap = {
   "./src/payload/collections/Events/CancelToDashboardButton.tsx#default": default_ba23fe87f40460cfacd78b7ad3ca2ada,
   "./src/payload/collections/Events/DoneToListButton.tsx#default": default_efa9dffc52114b53adee79502de11280,
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
+  "./src/payload/collections/Hero/CancelToDashboardButton.tsx#default": default_4d09e2f6f2f389b7998294f488a949c3,
+  "./src/payload/collections/Hero/DoneToListButton.tsx#default": default_80a0d172a23972da09ad94e08fdfb662,
+  "./src/payload/collections/Hero/EditView.tsx#default": default_f86ff8bf4def5733eab024d2a90762d5,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

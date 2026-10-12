@@ -71,6 +71,7 @@ export interface Config {
     events: Event;
     media: Media;
     'mission-page': MissionPage;
+    hero: Hero;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -229,6 +231,29 @@ export interface MissionPage {
   createdAt: string;
 }
 /**
+ * The front page hero: the main heading, the subline beneath it, and the background image.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: number;
+  /**
+   * The main heading over the hero image (e.g. "Hope Starts Here").
+   */
+  heading: string;
+  /**
+   * The subline shown beneath the heading (e.g. "Faith-Based Recovery").
+   */
+  eyebrow?: string | null;
+  /**
+   * The background image behind the hero text. Optional — the site falls back to the default image when empty.
+   */
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -267,6 +292,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'mission-page';
         value: number | MissionPage;
+      } | null)
+    | ({
+        relationTo: 'hero';
+        value: number | Hero;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -396,6 +425,17 @@ export interface MediaSelect<T extends boolean = true> {
 export interface MissionPageSelect<T extends boolean = true> {
   title?: T;
   body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  heading?: T;
+  eyebrow?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -4,6 +4,7 @@ import * as migration_20261010_172832_add_media_objectkey from './20261010_17283
 import * as migration_20261011_022929_add_event_image_position from './20261011_022929_add_event_image_position';
 import * as migration_20261011_034500_make_event_image_optional from './20261011_034500_make_event_image_optional';
 import * as migration_20261012_051759_make_event_description_and_start_time_optional from './20261012_051759_make_event_description_and_start_time_optional';
+import * as migration_20261012_084452_hero from './20261012_084452_hero';
 
 export const migrations = [
   {
@@ -24,16 +25,21 @@ export const migrations = [
   {
     up: migration_20261011_022929_add_event_image_position.up,
     down: migration_20261011_022929_add_event_image_position.down,
-    name: '20261011_022929_add_event_image_position'
+    name: '20261011_022929_add_event_image_position',
   },
   {
     up: migration_20261011_034500_make_event_image_optional.up,
     down: migration_20261011_034500_make_event_image_optional.down,
-    name: '20261011_034500_make_event_image_optional'
+    name: '20261011_034500_make_event_image_optional',
   },
   {
     up: migration_20261012_051759_make_event_description_and_start_time_optional.up,
     down: migration_20261012_051759_make_event_description_and_start_time_optional.down,
-    name: '20261012_051759_make_event_description_and_start_time_optional'
+    name: '20261012_051759_make_event_description_and_start_time_optional',
+  },
+  {
+    up: migration_20261012_084452_hero.up,
+    down: migration_20261012_084452_hero.down,
+    name: '20261012_084452_hero'
   },
 ];

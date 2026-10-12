@@ -3,6 +3,7 @@ import path from "path";
 import type { Payload } from "payload";
 
 import { eventDetails } from "@/content/events";
+import { heroDefaults } from "@/content/hero";
 import { missionPage } from "@/content/mission";
 
 /** Mime types for the image extensions used in public/images. */
@@ -107,5 +108,55 @@ export async function seedMissionPage(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the Mission page from src/content/mission.ts.",
+  );
+}
+
+/**
+ * Seed the `hero` collection with the front page hero copy that already
+ * exists in the app (the hero section in src/content/homePage.ts), uploading
+ * its background image from public/images as a media document. Runs once,
+ * when the hero collection is empty.
+ */
+export async function seedHero(payload: Payload): Promise<void> {
+  // Upload the default hero image (e.g. /images/hero1a.jpg from public/).
+  let imageId: number | undefined;
+  try {
+    const filePath = path.resolve(
+      "public",
+      heroDefaults.image.replace(/^[/\\]/, ""),
+    );
+    const data = await readFile(filePath);
+    const extension = path.extname(filePath).toLowerCase();
+    const media = await payload.create({
+      collection: "media",
+      data: {
+        alt: "Grace House front page hero image",
+      },
+      file: {
+        data,
+        mimetype: MIME_TYPES[extension] ?? "application/octet-stream",
+        name: path.basename(filePath),
+        size: data.byteLength,
+      },
+    });
+    imageId = media.id;
+  } catch (error) {
+    payload.logger.error(
+      `Seed: could not upload the hero image "${heroDefaults.image}" — seeding the Hero without it.`,
+    );
+    payload.logger.debug({ error });
+  }
+
+  await payload.create({
+    collection: "hero",
+    data: {
+      heading: heroDefaults.heading,
+      eyebrow: heroDefaults.eyebrow,
+      image: imageId,
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the front page Hero from src/content/homePage.ts.",
   );
 }

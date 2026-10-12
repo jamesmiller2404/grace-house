@@ -6,6 +6,8 @@ import type { Event as PayloadEvent } from "../../payload-types";
 import type { EventDetail, EventItem } from "@/content/events";
 import type { MissionPage as PayloadMissionPage } from "../../payload-types";
 import { missionPage as defaultMissionPage } from "@/content/mission";
+import type { Hero as PayloadHero } from "../../payload-types";
+import { heroDefaults } from "@/content/hero";
 
 /**
  * Event data access — the only place the app reads events from. Every event
@@ -157,5 +159,35 @@ export const getMissionPage = cache(
       title: defaultMissionPage.missionHeading,
       body: defaultMissionPage.missionStatement,
     };
+  },
+);
+
+/**
+ * The front-page hero content (heading, subline and background image), for the
+ * homepage hero section. The first document in the `hero` collection is the
+ * source of truth; if none exists yet (e.g. before the first seed), or a field
+ * is empty, the static defaults in src/content/hero.ts are used so the hero
+ * never breaks.
+ */
+export const getHero = cache(
+  async (): Promise<{ heading: string; eyebrow: string; image: string }> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "hero",
+      limit: 1,
+    });
+    const doc = docs[0] as PayloadHero | undefined;
+    if (doc) {
+      return {
+        heading: doc.heading,
+        eyebrow: doc.eyebrow ?? heroDefaults.eyebrow,
+        image:
+          typeof doc.image === "object" && doc.image && doc.image.url
+            ? doc.image.url
+            : heroDefaults.image,
+      };
+    }
+    return heroDefaults;
   },
 );

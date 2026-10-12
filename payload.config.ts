@@ -4,15 +4,16 @@ import { s3Storage } from "@payloadcms/storage-s3";
 import { buildConfig } from "payload";
 
 import { Events } from "@/payload/collections/Events";
+import { Hero } from "@/payload/collections/Hero";
 import { Media } from "@/payload/collections/Media";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Users } from "@/payload/collections/Users";
-import { seedEvents, seedMissionPage } from "@/payload/seed";
+import { seedEvents, seedHero, seedMissionPage } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage],
+  collections: [Users, Events, Media, MissionPage, Hero],
   serverURL: siteURL,
   cors: [siteURL],
   csrf: [siteURL],
@@ -57,6 +58,10 @@ export default buildConfig({
       const mission = await payload.count({ collection: "mission-page" });
       if (mission.totalDocs === 0) {
         await seedMissionPage(payload);
+      }
+      const hero = await payload.count({ collection: "hero" });
+      if (hero.totalDocs === 0) {
+        await seedHero(payload);
       }
     } catch (error) {
       payload.logger.warn(
