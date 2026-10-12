@@ -4,6 +4,7 @@ import type { Payload } from "payload";
 
 import { eventDetails } from "@/content/events";
 import { heroDefaults } from "@/content/hero";
+import { introDefaults } from "@/content/intro";
 import { missionPage } from "@/content/mission";
 
 /** Mime types for the image extensions used in public/images. */
@@ -158,5 +159,32 @@ export async function seedHero(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the front page Hero from src/content/homePage.ts.",
+  );
+}
+
+/**
+ * Seed the `intro` collection with the "What is Grace House" copy that already
+ * exists in the app (`introDefaults` in src/content/intro.ts), so the admin
+ * panel starts with the real section content. Runs once, when the intro
+ * collection is empty.
+ */
+export async function seedIntro(payload: Payload): Promise<void> {
+  await payload.create({
+    collection: "intro",
+    data: {
+      heading: introDefaults.heading,
+      body: introDefaults.body,
+      pullQuote: introDefaults.pullQuote,
+      linkLabel: introDefaults.linkLabel,
+      linkHref: introDefaults.linkHref,
+      bgColor: introDefaults.bgColor,
+      textColor: introDefaults.textColor,
+      linkColor: introDefaults.linkColor,
+      linkHoverColor: introDefaults.linkHoverColor,
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the front page Intro section from src/content/intro.ts.",
   );
 }

@@ -8,6 +8,8 @@ import type { MissionPage as PayloadMissionPage } from "../../payload-types";
 import { missionPage as defaultMissionPage } from "@/content/mission";
 import type { Hero as PayloadHero } from "../../payload-types";
 import { heroDefaults } from "@/content/hero";
+import type { Intro as PayloadIntro } from "../../payload-types";
+import { introDefaults, type IntroContent } from "@/content/intro";
 
 /**
  * Event data access — the only place the app reads events from. Every event
@@ -62,7 +64,7 @@ function toEventItem(doc: PayloadEvent): EventItem {
     href: `/events/${eventSlug(doc.title)}`,
     image:
       typeof doc.image === "object" && doc.image
-        ? doc.image.thumbnailURL ?? doc.image.url ?? ""
+        ? (doc.image.thumbnailURL ?? doc.image.url ?? "")
         : "",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
@@ -191,3 +193,34 @@ export const getHero = cache(
     return heroDefaults;
   },
 );
+
+/**
+ * The "What is Grace House" (Intro) section content for the home page: the
+ * heading, body, link and colors. The first document in the `intro` collection
+ * is the source of truth; if none exists yet (e.g. before the first seed), or a
+ * field is empty, the static defaults in src/content/intro.ts are used so the
+ * section never breaks.
+ */
+export const getIntro = cache(async (): Promise<IntroContent> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "intro",
+    limit: 1,
+  });
+  const doc = docs[0] as PayloadIntro | undefined;
+  if (doc) {
+    return {
+      heading: doc.heading,
+      body: doc.body,
+      pullQuote: doc.pullQuote ?? introDefaults.pullQuote,
+      linkLabel: doc.linkLabel ?? introDefaults.linkLabel,
+      linkHref: doc.linkHref ?? introDefaults.linkHref,
+      bgColor: doc.bgColor ?? introDefaults.bgColor,
+      textColor: doc.textColor ?? introDefaults.textColor,
+      linkColor: doc.linkColor ?? introDefaults.linkColor,
+      linkHoverColor: doc.linkHoverColor ?? introDefaults.linkHoverColor,
+    };
+  }
+  return introDefaults;
+});

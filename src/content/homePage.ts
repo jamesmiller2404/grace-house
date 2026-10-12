@@ -2,6 +2,7 @@ import { site } from "./site";
 import { pillars } from "./pillars";
 import { stories } from "./stories";
 import { heroDefaults } from "./hero";
+import { introDefaults } from "./intro";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
@@ -56,11 +57,11 @@ export const homePageSections: SectionConfig[] = [
   },
   {
     type: "welcome",
+    // Heading, body, link and colors are editable in the admin panel
+    // (/admin/collections/intro); these defaults are the fallback before the
+    // database has an intro document.
     props: {
-      heading: "What is Grace House",
-      body: "Grace House NorCal is a faith-based discipleship program in Sacramento, California, dedicated to helping men and women overcome life’s challenges, rebuild their lives, and discover lasting hope through spiritual growth, personal accountability, and strong moral values. Through compassionate support and lasting relationships, we strive...",
-      pullQuote: "to see families restored and give hope to the hopeless.",
-      cta: { label: "Read our mission", href: "/about/mission" },
+      ...introDefaults,
     },
   },
   {

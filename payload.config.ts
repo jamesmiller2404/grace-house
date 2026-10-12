@@ -5,15 +5,21 @@ import { buildConfig } from "payload";
 
 import { Events } from "@/payload/collections/Events";
 import { Hero } from "@/payload/collections/Hero";
+import { Intro } from "@/payload/collections/Intro";
 import { Media } from "@/payload/collections/Media";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Users } from "@/payload/collections/Users";
-import { seedEvents, seedHero, seedMissionPage } from "@/payload/seed";
+import {
+  seedEvents,
+  seedHero,
+  seedIntro,
+  seedMissionPage,
+} from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero],
+  collections: [Users, Events, Media, MissionPage, Hero, Intro],
   serverURL: siteURL,
   cors: [siteURL],
   csrf: [siteURL],
@@ -62,6 +68,10 @@ export default buildConfig({
       const hero = await payload.count({ collection: "hero" });
       if (hero.totalDocs === 0) {
         await seedHero(payload);
+      }
+      const intro = await payload.count({ collection: "intro" });
+      if (intro.totalDocs === 0) {
+        await seedIntro(payload);
       }
     } catch (error) {
       payload.logger.warn(
