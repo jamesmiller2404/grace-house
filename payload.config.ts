@@ -9,9 +9,11 @@ import { Intro } from "@/payload/collections/Intro";
 import { Media } from "@/payload/collections/Media";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Users } from "@/payload/collections/Users";
+import { HomeLayout } from "@/payload/globals/HomeLayout";
 import {
   seedEvents,
   seedHero,
+  seedHomeLayout,
   seedIntro,
   seedMissionPage,
 } from "@/payload/seed";
@@ -20,6 +22,7 @@ const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 export default buildConfig({
   collections: [Users, Events, Media, MissionPage, Hero, Intro],
+  globals: [HomeLayout],
   serverURL: siteURL,
   cors: [siteURL],
   csrf: [siteURL],
@@ -73,6 +76,7 @@ export default buildConfig({
       if (intro.totalDocs === 0) {
         await seedIntro(payload);
       }
+      await seedHomeLayout(payload);
     } catch (error) {
       payload.logger.warn(
         "Seed: skipped (could not check the events collection).",

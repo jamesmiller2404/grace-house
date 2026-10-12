@@ -95,8 +95,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'home-layout': HomeLayout;
+  };
+  globalsSelect: {
+    'home-layout': HomeLayoutSelect<false> | HomeLayoutSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -548,6 +552,44 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Choose which sections appear on the home page and in what order. Drag a section to reorder it, or open its "..." menu and use Move Up / Move Down (the easiest way on a phone). Untick "Show on home page" to hide a section without removing it.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-layout".
+ */
+export interface HomeLayout {
+  id: number;
+  sections: {
+    /**
+     * Which home page section this row controls.
+     */
+    section: 'hero' | 'help-strip' | 'welcome' | 'four-pillars' | 'stories' | 'upcoming-events';
+    /**
+     * Untick to hide this section without removing it from the order.
+     */
+    enabled?: boolean | null;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-layout_select".
+ */
+export interface HomeLayoutSelect<T extends boolean = true> {
+  sections?:
+    | T
+    | {
+        section?: T;
+        enabled?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

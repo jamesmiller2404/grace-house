@@ -1,45 +1,66 @@
 import SectionRenderer from "@/sections/SectionRenderer";
 import { homePageSections, MAX_HOME_EVENTS } from "@/content/homePage";
-import { getHero, getIntro, getUpcomingEvents } from "@/payload/queries";
+import {
+  getHero,
+  getHomeLayout,
+  getIntro,
+  getUpcomingEvents,
+} from "@/payload/queries";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
- * The front page is fully layout-driven: whatever sections appear in the
- * layout data get rendered in order. Adding, removing, hiding or reordering
- * a section never requires touching this file. Content that lives in the
- * database — the hero (from the `hero` collection), the "What is Grace House"
- * intro (from the `intro` collection) and upcoming events (from the `events`
- * collection) — is injected into its section here at render time.
+ * The front page is fully layout-driven: the order in which the sections
+ * appear — and which of them appear at all — is owned by the admin panel's
+ * "Home Page Layout" page (the `home-layout` global). Each saved row names a
+ * section type; here it is mapped to the static config that carries that
+ * section's props (src/content/homePage.ts) and hidden rows are dropped.
+ *
+ * Content that lives in the database — the hero (from the `hero` collection),
+ * the "What is Grace House" intro (from the `intro` collection) and upcoming
+ * events (from the `events` collection) — is injected into its section here at
+ * render time.
  */
 export default async function Home() {
-  const [events, hero, intro] = await Promise.all([
+  const [events, hero, intro, layout] = await Promise.all([
     getUpcomingEvents(),
     getHero(),
     getIntro(),
+    getHomeLayout(),
   ]);
 
-  const sections: SectionConfig[] = homePageSections.map((section) => {
-    // Overlay the editable hero heading / subline / image from the database.
-    if (section.type === "hero") {
-      return { ...section, props: { ...section.props, ...hero } };
-    }
-    // Overlay the editable "What is Grace House" copy and colors.
-    if (section.type === "welcome") {
-      return { ...section, props: { ...section.props, ...intro } };
-    }
-    // Fill the upcoming-events section with live data from the database,
-    // capped to the homepage's preview limit.
-    if (section.type === "upcoming-events") {
-      return {
-        ...section,
-        props: {
-          ...section.props,
-          events: events.slice(0, MAX_HOME_EVENTS),
-        },
-      };
-    }
-    return section;
-  });
+  // The static section configs, keyed by type, supply each section's props.
+  const byType = new Map<string, SectionConfig>(
+    homePageSections.map((section) => [section.type, section]),
+  );
+
+  const sections: SectionConfig[] = layout
+    // Skip sections the editor has hidden.
+    .filter((row) => row.enabled !== false)
+    // Resolve each saved row to its section config; unknown types are dropped.
+    .map((row) => byType.get(row.section))
+    .filter((section): section is SectionConfig => section !== undefined)
+    .map((section) => {
+      // Overlay the editable hero heading / subline / image from the database.
+      if (section.type === "hero") {
+        return { ...section, props: { ...section.props, ...hero } };
+      }
+      // Overlay the editable "What is Grace House" copy and colors.
+      if (section.type === "welcome") {
+        return { ...section, props: { ...section.props, ...intro } };
+      }
+      // Fill the upcoming-events section with live data from the database,
+      // capped to the homepage's preview limit.
+      if (section.type === "upcoming-events") {
+        return {
+          ...section,
+          props: {
+            ...section.props,
+            events: events.slice(0, MAX_HOME_EVENTS),
+          },
+        };
+      }
+      return section;
+    });
 
   return (
     <>

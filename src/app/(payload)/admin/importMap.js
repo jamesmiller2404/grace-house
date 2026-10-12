@@ -10,6 +10,7 @@ import { default as default_f86ff8bf4def5733eab024d2a90762d5 } from '../../../..
 import { default as default_7ea838f270343e88888a38a48d4cda40 } from '../../../../src/payload/collections/Intro/CancelToDashboardButton.tsx'
 import { default as default_c08b9bff2a0c3541856fdc48248abffe } from '../../../../src/payload/collections/Intro/DoneToListButton.tsx'
 import { default as default_6cfbfdf24b870de17c04b8faea76d0a4 } from '../../../../src/payload/collections/Intro/EditView.tsx'
+import { default as default_c3f9d01435ae13c1ccc55c2c02b3a4c4 } from '../../../../src/payload/globals/HomeLayout/RowLabel.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -26,5 +27,6 @@ export const importMap = {
   "./src/payload/collections/Intro/CancelToDashboardButton.tsx#default": default_7ea838f270343e88888a38a48d4cda40,
   "./src/payload/collections/Intro/DoneToListButton.tsx#default": default_c08b9bff2a0c3541856fdc48248abffe,
   "./src/payload/collections/Intro/EditView.tsx#default": default_6cfbfdf24b870de17c04b8faea76d0a4,
+  "./src/payload/globals/HomeLayout/RowLabel.tsx#default": default_c3f9d01435ae13c1ccc55c2c02b3a4c4,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

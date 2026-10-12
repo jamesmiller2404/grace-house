@@ -10,6 +10,11 @@ import type { Hero as PayloadHero } from "../../payload-types";
 import { heroDefaults } from "@/content/hero";
 import type { Intro as PayloadIntro } from "../../payload-types";
 import { introDefaults, type IntroContent } from "@/content/intro";
+import type { HomeLayout as PayloadHomeLayout } from "../../payload-types";
+import {
+  defaultHomeLayout,
+  type HomeLayoutSection,
+} from "@/content/homeLayout";
 
 /**
  * Event data access — the only place the app reads events from. Every event
@@ -228,4 +233,28 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
     };
   }
   return introDefaults;
+});
+
+/**
+ * The home page section order + visibility, for the front page. The
+ * `home-layout` global is the source of truth: it lists each section in the
+ * order an editor saved, with a flag for whether it is shown. When the global
+ * is still empty (e.g. before the first seed) the static default order in
+ * src/content/homeLayout.ts is used, so the page never breaks.
+ */
+export const getHomeLayout = cache(async (): Promise<HomeLayoutSection[]> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const doc = (await payload.findGlobal({
+    slug: "home-layout",
+  })) as PayloadHomeLayout | null;
+
+  const sections = doc?.sections;
+  if (Array.isArray(sections) && sections.length > 0) {
+    return sections.map((row) => ({
+      section: row.section as HomeLayoutSection["section"],
+      enabled: row.enabled ?? true,
+    }));
+  }
+  return defaultHomeLayout;
 });

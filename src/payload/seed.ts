@@ -4,6 +4,7 @@ import type { Payload } from "payload";
 
 import { eventDetails } from "@/content/events";
 import { heroDefaults } from "@/content/hero";
+import { defaultHomeLayout } from "@/content/homeLayout";
 import { introDefaults } from "@/content/intro";
 import { missionPage } from "@/content/mission";
 
@@ -186,5 +187,28 @@ export async function seedIntro(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the front page Intro section from src/content/intro.ts.",
+  );
+}
+
+/**
+ * Seed the `home-layout` global with the home page section order that already
+ * exists in the app (`defaultHomeLayout` in src/content/homeLayout.ts), so the
+ * admin panel (/admin/globals/home-layout) starts with every section listed,
+ * shown and in the current order. Only writes when the layout is still empty,
+ * so it never overwrites an editor's saved order.
+ */
+export async function seedHomeLayout(payload: Payload): Promise<void> {
+  const current = await payload.findGlobal({ slug: "home-layout" });
+  if (current.sections && current.sections.length > 0) return;
+
+  await payload.updateGlobal({
+    slug: "home-layout",
+    data: {
+      sections: defaultHomeLayout,
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the home page layout from src/content/homeLayout.ts.",
   );
 }

@@ -2,7 +2,7 @@ export const pillars = [
   {
     title: "Forgive Yourself",
     text: "Forgive yourself for all the pain and misery you caused while you were in your addictions.",
-    image: "/images/pillar-1.jpg",
+    image: "/images/pillar-1a.jpg",
   },
   {
     title: "God's Timing",
