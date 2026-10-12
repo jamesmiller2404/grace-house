@@ -30,7 +30,8 @@ export const Events: CollectionConfig = {
     defaultColumns: ["title", "date", "startTime", "location", "city", "cost"],
     // Custom Edit view wrapper that paints the mockup frame
     // (photoshop_assets/adminPanelMockup1.png): #111115 page background,
-    // rounded #2d2d33 panel around the fields, #101012 input boxes.
+    // rounded #2d2d33 panel around the fields, #101012 input boxes — the
+    // DARK scheme. The same elements are repainted for the Light theme.
     components: {
       views: {
         edit: {

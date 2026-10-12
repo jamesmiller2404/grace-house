@@ -15,17 +15,14 @@ import React from "react";
  *  - text field boxes filled #101012 with #f0f0f3 text/placeholders
  *  - select dropdowns (Status) filled #101012 with a #222222 options menu
  *
+ * Those are the DARK scheme. When the admin theme is Light (Payload's
+ * Light / Dark / Auto selector in Account -> Settings) the same elements are
+ * repainted from the light palette defined in the stylesheet below.
+ *
  * All field arrangement (which fields share a row, placeholder text, hidden
  * labels) lives in `src/payload/collections/Events.ts`; this component only
  * provides the paint. Payload's save/validate/versioning flow is untouched.
  */
-
-const BG = "#111115";
-const FRAME = "#2d2d33";
-const FIELD = "#101012";
-const TEXT = "#f0f0f3";
-const MENU_BG = "#222222";
-const HOVER = "#414141";
 
 /**
  * Scoped under `.gh-event-edit` so it never leaks into the rest of the admin
@@ -33,22 +30,48 @@ const HOVER = "#414141";
  * used by the custom TimePicker/ImagePosition field components.
  */
 const css = `
+/* The Events form palette. The values on .gh-event-edit are the DARK scheme
+   (the original mockup); the html[data-theme='light'] block below repaints
+   the same variables for the Light theme. The custom field components
+   (TimePicker popup, ImagePosition preview) read these variables too. */
 .gh-event-edit {
-  background: ${BG};
+  --gh-ev-bg: #111115; /* page background */
+  --gh-ev-frame: #2d2d33; /* the rounded form frame */
+  --gh-ev-field: #101012; /* text field boxes */
+  --gh-ev-field-text: #f0f0f3; /* text typed into the fields */
+  --gh-ev-text: #f0f0f3; /* labels, menu options, general text */
+  --gh-ev-menu: #222222; /* Status dropdown options menu */
+  --gh-ev-hover: #414141; /* dropdown hover / current option */
+  --gh-ev-upload: #515151; /* Upload / Choose from Media buttons */
+  --gh-ev-help: #9d9da4; /* field helper text */
+  --gh-ev-placeholder: linear-gradient(126deg, #535353, #202020); /* image preview */
+  background: var(--gh-ev-bg);
   min-height: 100%;
   padding-bottom: 40px;
+}
+html[data-theme='light'] .gh-event-edit {
+  --gh-ev-bg: #bab3d2;
+  --gh-ev-frame: #bbc0ff;
+  --gh-ev-field: #8787a9;
+  --gh-ev-field-text: #525267;
+  --gh-ev-text: #000000;
+  --gh-ev-menu: #bbc0ff;
+  --gh-ev-hover: #8787a9;
+  --gh-ev-upload: #717dbc;
+  --gh-ev-help: #525267;
+  --gh-ev-placeholder: linear-gradient(126deg, #c4bedd, #8787a9);
 }
 /* The rounded frame that holds every form field. The document meta
    (breadcrumb, Last Modified / Created, Save) renders above this wrapper,
    so it stays on the page background like the mockup. */
 .gh-event-edit .collection-edit__main-wrapper {
-  background: ${FRAME};
+  background: var(--gh-ev-frame);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;
 }
 .gh-event-edit .field-label {
-  color: ${TEXT};
+  color: var(--gh-ev-text);
 }
 /* Required-field markers (Title, Date, Location). These three keep the
    mockup's placeholder-only look (label: false in Events.ts), so Payload's
@@ -81,37 +104,37 @@ const css = `
 /* Text boxes and textareas */
 .gh-event-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-event-edit textarea {
-  background: ${FIELD} !important;
-  border: 1px solid ${FIELD} !important;
+  background: var(--gh-ev-field) !important;
+  border: 1px solid var(--gh-ev-field) !important;
   border-radius: 8px !important;
-  color: ${TEXT};
+  color: var(--gh-ev-field-text);
 }
 .gh-event-edit input::placeholder,
 .gh-event-edit textarea::placeholder {
-  color: ${TEXT};
+  color: var(--gh-ev-field-text);
   opacity: 0.33;
 }
 /* Select dropdowns (Status) — react-select "rs__" classes */
 .gh-event-edit .rs__control {
-  background: ${FIELD};
-  border-color: ${FIELD};
+  background: var(--gh-ev-field);
+  border-color: var(--gh-ev-field);
   border-radius: 8px;
-  color: ${TEXT};
+  color: var(--gh-ev-field-text);
 }
 .gh-event-edit .rs__single-value,
 .gh-event-edit .rs__placeholder,
 .gh-event-edit .rs__indicator {
-  color: ${TEXT};
+  color: var(--gh-ev-field-text);
 }
 .gh-event-edit .rs__menu {
-  background: ${MENU_BG};
+  background: var(--gh-ev-menu);
 }
 .gh-event-edit .rs__option {
-  color: ${TEXT};
+  color: var(--gh-ev-text);
 }
 .gh-event-edit .rs__option--is-focused,
 .gh-event-edit .rs__option--is-selected {
-  background: ${HOVER};
+  background: var(--gh-ev-hover);
 }
 /* Status label + dropdown on one line (desktop AND mobile). Payload lays the
    select field out as a column (label above the control) and, inside rows,
@@ -157,13 +180,14 @@ const css = `
   display: none !important;
 }
 /* Upload dropzone buttons ("Create New" / "Choose from existing"): flat
-   #515151 resting background (hover uses a separate --hover-bg, untouched)
-   and the mockup's labels. The label swap hides Payload's text at font-size 0
-   and re-shows the new wording via a pseudo-element at the same size, so the
-   global i18n strings (shared with list-page "Create New" buttons) stay put. */
+   resting background (--gh-ev-upload; hover uses a separate --hover-bg,
+   untouched) and the mockup's labels. The label swap hides Payload's text at
+   font-size 0 and re-shows the new wording via a pseudo-element at the same
+   size, so the global i18n strings (shared with list-page "Create New"
+   buttons) stay put. */
 .gh-event-edit .upload__createNewToggler,
 .gh-event-edit .upload__listToggler {
-  --bg-color: #515151;
+  --bg-color: var(--gh-ev-upload);
 }
 .gh-event-edit .upload__createNewToggler .btn__label,
 .gh-event-edit .upload__listToggler .btn__label {
@@ -198,7 +222,7 @@ const css = `
 }
 /* Field helper text */
 .gh-event-edit .field-description {
-  color: #9d9da4;
+  color: var(--gh-ev-help);
 }
 `;
 

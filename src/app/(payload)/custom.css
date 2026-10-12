@@ -5,35 +5,39 @@
  * so any unlayered CSS here automatically wins over it regardless of
  * specificity. See https://payloadcms.com/docs/admin/customizing-css
  *
- * The whole admin panel — the base theme, the left sidebar and the top
- * header — is painted from the same dark scheme as the "Create New Event"
- * form (src/payload/collections/Events/EditView.tsx, from
- * photoshop_assets/adminPanelMockup1.png):
- *
- *   page background  #111115      dropdown menus   #222222
- *   panels/borders   #2d2d33      input boxes      #101012
- *   hover fill       #414141      primary text     #f0f0f3
- *   helper text      #9d9da4
- *
  * Payload derives every admin surface (page background, sidebar nav and its
  * borders, header, list views, form fields, buttons) from the --theme-*
- * custom properties, so remapping them here restyles the entire panel. The
- * values are unlayered on :root, so they beat Payload's own
- * `html[data-theme=...]` definitions whether the admin theme preference is
- * light or dark — the admin always stays in this scheme.
+ * custom properties. It sets `data-theme` on <html> — server-side, and again
+ * when the Light / Dark / Auto selector in Account -> Settings changes — so
+ * the panel is painted from one of the two schemes below:
+ *
+ *   DARK (the original scheme)      LIGHT
+ *   page background  #111115        #bab3d2
+ *   panels/borders   #2d2d33        #8787a9
+ *   input boxes      #101012        #8787a9
+ *   dropdown menus   #222222        #bbc0ff
+ *   hover fill       #414141        #8787a9
+ *   primary text     #f0f0f3        #000000
+ *   helper text      #9d9da4        #525267
+ *
+ * The values are unlayered, so they beat Payload's own
+ * `html[data-theme=...]` definitions. The "Create New Event" form
+ * (src/payload/collections/Events/EditView.tsx) is painted from the same two
+ * schemes, and its custom field components (TimePicker, ImagePosition) read
+ * the theme variables defined there.
  */
 
-:root {
+html[data-theme='dark'] {
   /* Page background and core text colors.
      Payload paints `html { background: var(--theme-bg) }`, and defaults
-     --theme-bg to var(--theme-elevation-0) on :root. */
+     --theme-bg to var(--theme-elevation-0). */
   --theme-bg: #111115;
   --theme-text: #f0f0f3;
   --theme-input-bg: #101012;
 
-  /* Payload's elevation scale, remapped to the Create New Event scheme.
-     Low steps are dark surfaces, high steps are light (text on dark),
-     mirroring the direction of Payload's built-in dark theme. */
+  /* Payload's elevation scale, remapped to the dark scheme. Low steps are
+     dark surfaces, high steps are light (text on dark), mirroring the
+     direction of Payload's built-in dark theme. */
   --theme-elevation-0: #111115; /* page background */
   --theme-elevation-50: #1a1a1c; /* subtle layer above the page */
   --theme-elevation-100: #222222; /* dropdown menus, secondary fills */
@@ -57,6 +61,40 @@
   --theme-elevation-1000: #f0f0f3; /* primary text */
 }
 
+html[data-theme='light'] {
+  /* Page background and core text colors. The panel background is the
+     requested #bab3d2, text is black. */
+  --theme-bg: #bab3d2;
+  --theme-text: #000000;
+  --theme-input-bg: #8787a9;
+
+  /* Payload's elevation scale, remapped to the light scheme. Low steps are
+     light surfaces, high steps are dark (text on light), the inverse of the
+     dark theme above. Accent steps (the Save button and its hover) come from
+     the requested #00aeef. */
+  --theme-elevation-0: #bab3d2; /* page background */
+  --theme-elevation-50: #c4bedd; /* subtle layer above the page */
+  --theme-elevation-100: #bbc0ff; /* dropdown menus, secondary fills */
+  --theme-elevation-150: #8787a9; /* borders, the form "frame" */
+  --theme-elevation-200: #7e7ea3; /* secondary fills (input borders) */
+  --theme-elevation-250: #75759b;
+  --theme-elevation-300: #8787a9; /* hover fills */
+  --theme-elevation-350: #6b6b91;
+  --theme-elevation-400: #62628a; /* muted labels (sidebar group headers) */
+  --theme-elevation-450: #5a5a80;
+  --theme-elevation-500: #525267; /* helper text */
+  --theme-elevation-550: #4c4c60;
+  --theme-elevation-600: #0093cc; /* primary (Save) button hover */
+  --theme-elevation-650: #008ac0;
+  --theme-elevation-700: #0080b3;
+  --theme-elevation-750: #0077a6;
+  --theme-elevation-800: #00aeef; /* primary (Save) button fill */
+  --theme-elevation-850: #2e2e3d;
+  --theme-elevation-900: #1a1a24;
+  --theme-elevation-950: #0d0d12;
+  --theme-elevation-1000: #000000; /* primary text */
+}
+
 html {
-  background: #111115;
+  background: var(--theme-bg);
 }

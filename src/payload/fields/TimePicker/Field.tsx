@@ -36,23 +36,31 @@ function buildTimeOptions(): string[] {
 
 const timeOptions = buildTimeOptions();
 
-/** Mockup colors (timePanel.png). */
-const PANEL_BG = "#222222";
-const BOX_BORDER = "#414141";
-const BOX_TEXT = "#cfcfcf";
-const HOVER_FILL = "#414141";
-
 /**
- * Popup styling that can't be done with inline styles (hover, scrollbar,
- * current-option states). Scoped under `.time-picker-popup` so it never
- * leaks into the rest of the admin panel.
+ * Popup colour variables plus the styling that can't be done with inline
+ * styles (hover, scrollbar, current-option states). Scoped under
+ * `.time-picker-popup` so it never leaks into the rest of the admin panel.
+ * The values match the DARK Events form (timePanel.png); the
+ * html[data-theme='light'] block below repaints them for the Light theme.
  */
 const popupCss = `
 .time-picker-popup {
+  --gh-tp-panel: #222222;
+  --gh-tp-border: #414141;
+  --gh-tp-text: #cfcfcf;
+  --gh-tp-hover: #414141;
+  --gh-tp-current-text: #ffffff;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(8, minmax(0, 1fr));
   grid-template-rows: repeat(6, auto);
+}
+html[data-theme='light'] .time-picker-popup {
+  --gh-tp-panel: #bbc0ff;
+  --gh-tp-border: #8787a9;
+  --gh-tp-text: #000000;
+  --gh-tp-hover: #8787a9;
+  --gh-tp-current-text: #000000;
 }
 /* On narrow (mobile) screens, reflow to 4 columns × 12 rows so the popup
    fits the viewport width instead of being cut off. */
@@ -65,9 +73,9 @@ const popupCss = `
 }
 .time-picker-popup .tp-option {
   background: transparent;
-  border: 1px solid ${BOX_BORDER};
+  border: 1px solid var(--gh-tp-border);
   border-radius: 3px;
-  color: ${BOX_TEXT};
+  color: var(--gh-tp-text);
   cursor: pointer;
   font-family: var(--font-body, sans-serif);
   font-size: 12.5px;
@@ -78,18 +86,18 @@ const popupCss = `
   white-space: nowrap;
 }
 .time-picker-popup .tp-option:hover {
-  background: ${HOVER_FILL};
+  background: var(--gh-tp-hover);
 }
 .time-picker-popup .tp-option.tp-option-current {
-  background: ${HOVER_FILL};
-  color: #ffffff;
+  background: var(--gh-tp-hover);
+  color: var(--gh-tp-current-text);
   font-weight: 600;
 }
 .time-picker-popup::-webkit-scrollbar {
   width: 8px;
 }
 .time-picker-popup::-webkit-scrollbar-thumb {
-  background: ${BOX_BORDER};
+  background: var(--gh-tp-border);
   border-radius: 4px;
 }
 `;
@@ -117,10 +125,11 @@ const styles: Record<string, React.CSSProperties> = {
     // same way the date picker's calendar card does (no clipping by
     // scroll containers). The position values are set from the input's
     // bounding rect when the popup opens.
-    background: PANEL_BG,
-    border: `1px solid ${BOX_BORDER}`,
+    background: "var(--gh-tp-panel, #222222)",
+    border: "1px solid var(--gh-tp-border, #414141)",
     borderRadius: 4,
-    boxShadow: "0 4px 6px -2px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.3)",
+    boxShadow:
+      "0 4px 6px -2px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.3)",
     boxSizing: "border-box",
     // Grid layout lives in popupCss (not here) so the narrow-viewport media
     // query can reflow the columns on mobile without inline styles winning.
@@ -230,7 +239,7 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
   const labelText =
     typeof label === "string"
       ? label
-      : Object.values(label ?? {})[0] ?? "This field";
+      : (Object.values(label ?? {})[0] ?? "This field");
   const descriptionText =
     typeof description === "string"
       ? description
@@ -301,7 +310,9 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
               return (
                 <button
                   aria-pressed={isCurrent}
-                  className={`tp-option${isCurrent ? " tp-option-current" : ""}`}
+                  className={
+                    isCurrent ? "tp-option tp-option-current" : "tp-option"
+                  }
                   key={option}
                   onClick={() => {
                     setValue(option);

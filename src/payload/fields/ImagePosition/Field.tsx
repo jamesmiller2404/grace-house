@@ -32,7 +32,8 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: "hidden",
     borderRadius: "var(--style-radius-m, 4px)",
     border: "1px solid var(--theme-elevation-150)",
-    background: "linear-gradient(126deg, #535353, #202020)",
+    background:
+      "var(--gh-ev-placeholder, linear-gradient(126deg, #535353, #202020))",
     touchAction: "none",
     cursor: "grab",
     userSelect: "none",
