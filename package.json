@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check --end-of-line auto ."
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.90.2",
