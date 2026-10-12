@@ -38,13 +38,48 @@ export const Intro: CollectionConfig = {
     defaultColumns: ["heading", "updatedAt"],
     description:
       'The "What is Grace House" section on the home page: its heading, body text, link and colors.',
+    // Custom Edit view wrapper that paints the mockup frame
+    // (photoshop_assets/adminPanelMockup1.png): the same #111115 page
+    // background, rounded #2d2d33 panel around the fields and #101012 input
+    // boxes as the Events and Hero create/edit pages. The same elements are
+    // repainted for the Light theme.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/collections/Intro/EditView.tsx",
+            },
+          },
+        },
+      },
+      // "Cancel" and "Done" buttons next to Save on the create/edit pages —
+      // they render in the document controls bar (before the Save button, in
+      // array order) so the bar reads "Cancel | Done | Save", exactly like
+      // the Events and Hero pages. Cancel returns to the admin dashboard;
+      // Done returns to the Intro list.
+      edit: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/collections/Intro/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/Intro/DoneToListButton.tsx",
+          },
+        ],
+      },
+    },
   },
   fields: [
     {
       name: "heading",
       type: "text",
       required: true,
+      // Placeholder-only look, like the Events and Hero forms (the required
+      // marker is painted by the Edit view — see ./Intro/EditView.tsx).
+      label: false,
       admin: {
+        placeholder: "Heading...",
         description: 'The section heading (e.g. "What is Grace House").',
       },
     },
@@ -52,14 +87,18 @@ export const Intro: CollectionConfig = {
       name: "body",
       type: "textarea",
       required: true,
+      label: false,
       admin: {
+        placeholder: "Body text...",
         description: "The main paragraph shown under the heading.",
       },
     },
     {
       name: "pullQuote",
       type: "text",
+      label: false,
       admin: {
+        placeholder: "Pull quote...",
         description:
           'Optional italic tail of the body sentence (e.g. "to see families restored and give hope to the hopeless.").',
       },
@@ -67,7 +106,9 @@ export const Intro: CollectionConfig = {
     {
       name: "linkLabel",
       type: "text",
+      label: false,
       admin: {
+        placeholder: "Link label...",
         description:
           'The text of the link below the paragraph (e.g. "Read our mission").',
       },
@@ -75,7 +116,9 @@ export const Intro: CollectionConfig = {
     {
       name: "linkHref",
       type: "text",
+      label: false,
       admin: {
+        placeholder: "Link URL...",
         description: 'Where the link points (e.g. "/about/mission").',
       },
     },

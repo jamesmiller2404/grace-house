@@ -197,9 +197,12 @@ export const getHero = cache(
 /**
  * The "What is Grace House" (Intro) section content for the home page: the
  * heading, body, link and colors. The first document in the `intro` collection
- * is the source of truth; if none exists yet (e.g. before the first seed), or a
- * field is empty, the static defaults in src/content/intro.ts are used so the
- * section never breaks.
+ * is the source of truth, and its text fields are passed through exactly as
+ * saved: a field left empty in the admin panel (e.g. the pull quote or the link
+ * text) renders empty on the site — no default copy is substituted. Only when
+ * no intro document exists at all (e.g. before the first seed) do the static
+ * defaults in src/content/intro.ts keep the section from breaking; the color
+ * fields fall back to those same defaults because they always carry a value.
  */
 export const getIntro = cache(async (): Promise<IntroContent> => {
   await connection();
@@ -213,9 +216,11 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
     return {
       heading: doc.heading,
       body: doc.body,
-      pullQuote: doc.pullQuote ?? introDefaults.pullQuote,
-      linkLabel: doc.linkLabel ?? introDefaults.linkLabel,
-      linkHref: doc.linkHref ?? introDefaults.linkHref,
+      // A saved-empty text field stays empty — the admin value is the whole
+      // story, so no default text is filled in here.
+      pullQuote: doc.pullQuote ?? "",
+      linkLabel: doc.linkLabel ?? "",
+      linkHref: doc.linkHref ?? "",
       bgColor: doc.bgColor ?? introDefaults.bgColor,
       textColor: doc.textColor ?? introDefaults.textColor,
       linkColor: doc.linkColor ?? introDefaults.linkColor,

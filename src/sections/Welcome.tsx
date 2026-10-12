@@ -37,9 +37,12 @@ function classFor(
 export default function Welcome({
   heading,
   body,
+  // Text fields are rendered exactly as given: an empty pull quote shows
+  // nothing and an empty link (text or href) hides the link entirely — the
+  // default copy in src/content/intro.ts is never substituted for them.
   pullQuote,
-  linkLabel = introDefaults.linkLabel,
-  linkHref = introDefaults.linkHref,
+  linkLabel,
+  linkHref,
   bgColor,
   textColor,
   linkColor,
