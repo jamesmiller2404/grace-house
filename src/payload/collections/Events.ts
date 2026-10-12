@@ -41,13 +41,17 @@ export const Events: CollectionConfig = {
           },
         },
       },
-      // "Cancel" button next to Save on the create/edit pages — it renders
-      // in the document controls bar (before the Save button) and navigates
-      // back to the admin dashboard.
+      // "Cancel" and "Done" buttons next to Save on the create/edit pages —
+      // they render in the document controls bar (before the Save button, in
+      // array order) so the bar reads "Cancel | Done | Save". Cancel returns
+      // to the admin dashboard; Done returns to the Events list.
       edit: {
         beforeDocumentControls: [
           {
             path: "./src/payload/collections/Events/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/Events/DoneToListButton.tsx",
           },
         ],
       },
@@ -86,9 +90,10 @@ export const Events: CollectionConfig = {
       ],
     },
     {
+      // Optional: an event can be saved without a one-line description —
+      // the card and the event page simply skip the line when it's empty.
       name: "description",
       type: "textarea",
-      required: true,
       label: false,
       admin: {
         placeholder: "One-line description...",
@@ -112,10 +117,11 @@ export const Events: CollectionConfig = {
           },
         },
         {
+          // Optional: an event can be saved without a start time — the card
+          // and the event page simply skip the time range when it's empty.
           ...TimeField({
             name: "startTime",
             type: "text",
-            required: true,
             label: false,
             admin: {
               placeholder: "Start Time...",

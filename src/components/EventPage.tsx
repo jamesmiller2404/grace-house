@@ -51,6 +51,9 @@ function parseISODate(iso: string): Date | undefined {
  */
 export default function EventPage({ event }: EventPageProps) {
   const date = parseISODate(event.date);
+  // Start/end times are optional in the admin panel — build the range only
+  // from the parts the event actually has ("" when neither was saved).
+  const timeRange = [event.startTime, event.endTime].filter(Boolean).join(" - ");
 
   return (
     <div className="bg-cream min-h-screen">
@@ -79,16 +82,27 @@ export default function EventPage({ event }: EventPageProps) {
                 {event.title}
               </h1>
 
-              <p className="text-ink/80 mt-3 max-w-prose text-lg">
-                {event.description}
-              </p>
+              {/* One-line description — optional in the admin panel, so the
+                  header skips the line entirely when it's empty. */}
+              {event.description && (
+                <p className="text-ink/80 mt-3 max-w-prose text-lg">
+                  {event.description}
+                </p>
+              )}
 
               <dl className="mt-6 space-y-1.5 text-lg">
                 <div className="flex flex-wrap gap-x-2">
                   <dt className="font-bold">When</dt>
                   <dd>
-                    - {date ? `${WEEKDAYS[date.getDay()]}, ${FULL_MONTHS[date.getMonth()]} ${date.getDate()}, ` : ""}
-                    {event.startTime} - {event.endTime}
+                    -{" "}
+                    {[
+                      date
+                        ? `${WEEKDAYS[date.getDay()]}, ${FULL_MONTHS[date.getMonth()]} ${date.getDate()}`
+                        : "",
+                      timeRange,
+                    ]
+                      .filter(Boolean)
+                      .join(", ")}
                   </dd>
                 </div>
                 <div className="flex flex-wrap gap-x-2">
@@ -163,8 +177,14 @@ export default function EventPage({ event }: EventPageProps) {
                   {date
                     ? `${WEEKDAYS[date.getDay()]}, ${MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
                     : ""}
-                  <br />
-                  {event.startTime} - {event.endTime}
+                  {/* Time range — optional in the admin panel, so the card
+                      skips the line entirely when it's empty. */}
+                  {timeRange && (
+                    <>
+                      <br />
+                      {timeRange}
+                    </>
+                  )}
                 </p>
               </div>
               <hr className="border-ink/15 my-4" />

@@ -282,13 +282,20 @@ export default function UpcomingEvents({
                       {event.title}
                     </h3>
 
-                    {/* One-line description */}
-                    <p className="text-ink/80 mt-2 text-base">{event.description}</p>
+                    {/* One-line description — optional in the admin panel,
+                        so the card skips the line entirely when it's empty. */}
+                    {event.description && (
+                      <p className="text-ink/80 mt-2 text-base">{event.description}</p>
+                    )}
 
-                    {/* Time range */}
-                    <p className="text-ink mt-4 text-base font-semibold">
-                      {event.time} - {event.endTime}
-                    </p>
+                    {/* Time range — optional in the admin panel (an event can
+                        be saved without a start time), so only render the
+                        line from whichever time parts the event has. */}
+                    {(event.time || event.endTime) && (
+                      <p className="text-ink mt-4 text-base font-semibold">
+                        {[event.time, event.endTime].filter(Boolean).join(" - ")}
+                      </p>
+                    )}
 
                     {/* Venue */}
                     <p className="text-ink mt-1 text-base">{event.location}</p>

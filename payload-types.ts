@@ -157,9 +157,9 @@ export interface Event {
   id: number;
   title: string;
   status: 'Upcoming' | 'Past' | 'Cancelled';
-  description: string;
+  description?: string | null;
   date: string;
-  startTime: string;
+  startTime?: string | null;
   endTime?: string | null;
   location: string;
   city?: string | null;

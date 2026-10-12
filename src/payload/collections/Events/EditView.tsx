@@ -50,6 +50,34 @@ const css = `
 .gh-event-edit .field-label {
   color: ${TEXT};
 }
+/* Required-field markers (Title, Date, Location). These three keep the
+   mockup's placeholder-only look (label: false in Events.ts), so Payload's
+   labeled-field asterisk — the red * shown next to the Status dropdown —
+   never renders for them. Paint the same marker here: a red * at the
+   top-right corner of each box, using Payload's own required-star color
+   (var(--theme-error-500), the .required rule in Payload's FieldLabel
+   styles). Text fields carry the id on the input itself (input#field-title,
+   input#field-location); the date field carries it on its
+   .field-type__wrap div (#field-date). The > .field-type__wrap child hop
+   keeps the selector from also matching the row wrappers that contain
+   these fields. */
+.gh-event-edit .field-type:has(> .field-type__wrap > input#field-title),
+.gh-event-edit .field-type:has(> .field-type__wrap > input#field-location),
+.gh-event-edit .field-type:has(> .field-type__wrap#field-date) {
+  position: relative;
+}
+.gh-event-edit .field-type:has(> .field-type__wrap > input#field-title)::after,
+.gh-event-edit .field-type:has(> .field-type__wrap > input#field-location)::after,
+.gh-event-edit .field-type:has(> .field-type__wrap#field-date)::after {
+  color: var(--theme-error-500);
+  content: "*";
+  font-size: calc(var(--base-body-size, 13) * 1px);
+  font-weight: 700;
+  line-height: 1;
+  position: absolute;
+  right: 6px;
+  top: -6px;
+}
 /* Text boxes and textareas */
 .gh-event-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-event-edit textarea {

@@ -49,11 +49,13 @@ function toEventItem(doc: PayloadEvent): EventItem {
   return {
     title: doc.title,
     date: toISODate(doc.date),
-    time: doc.startTime,
+    // Start time is optional in the admin panel — coalesce to "" so the
+    // section components can skip the time line when it's empty.
+    time: doc.startTime ?? "",
     endTime: doc.endTime ?? "",
     location: doc.location,
     city: doc.city ?? "",
-    description: doc.description,
+    description: doc.description ?? "",
     cost: doc.cost ?? "Free",
     href: `/events/${eventSlug(doc.title)}`,
     image:
@@ -70,10 +72,12 @@ function toEventDetail(doc: PayloadEvent): EventDetail {
   return {
     slug: eventSlug(doc.title),
     title: doc.title,
-    description: doc.description,
+    // The one-line description and start time are optional in the admin
+    // panel — coalesce to "" so the page can skip them when they're empty.
+    description: doc.description ?? "",
     status: doc.status,
     date: toISODate(doc.date),
-    startTime: doc.startTime,
+    startTime: doc.startTime ?? "",
     endTime: doc.endTime ?? "",
     location: doc.location,
     city: doc.city ?? "",
