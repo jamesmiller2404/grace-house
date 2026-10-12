@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getMissionPage } from "@/payload/queries";
 
@@ -39,6 +40,15 @@ export default async function MissionPage() {
           <p className="whitespace-pre-line mt-4 max-w-[60ch] text-lg leading-relaxed">
             {body}
           </p>
+
+          {/* Decorative sunrise illustration (transparent PNG) */}
+          <Image
+            src="/images/sunriseHR.png"
+            alt=""
+            width={959}
+            height={72}
+            className="mt-8 h-auto w-full max-w-[60ch]"
+          />
         </div>
       </main>
     </>

@@ -56,10 +56,9 @@ export default function Nav() {
           <Link
             href="/support"
             style={{ borderRadius: "8px" }}
-            className="bg-lift text-anchor hover:bg-gold shrink-0 px-2 py-0.5 text-center font-sans text-[11px] font-medium tracking-wider uppercase sm:px-3 sm:py-1 sm:text-[13px] lg:px-3.5 lg:py-1 lg:text-sm"
+            className="bg-lift text-anchor hover:bg-gold inline-flex shrink-0 items-center justify-center px-3 py-0.5 text-center font-sans text-[11px] font-medium tracking-wider uppercase sm:px-4 sm:py-1 sm:text-[13px] lg:px-5 lg:py-1 lg:text-sm"
           >
-            <span className="sm:hidden">Donate</span>
-            <span className="hidden sm:inline">Donate to Grace House</span>
+            <span className="translate-y-px">Donate</span>
           </Link>
 
           <nav className="hidden items-center gap-0.5 text-[14px] lg:flex lg:gap-1 lg:text-[17px] mt-[24px]" aria-label="Main">
