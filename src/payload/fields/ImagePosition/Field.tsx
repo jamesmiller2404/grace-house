@@ -5,19 +5,23 @@ import type { NumberFieldClientProps } from "payload";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * Admin component for `ImagePositionField` (./index.ts), attached to the
- * event's `imagePositionY` field.
+ * Admin component for `ImagePositionField` (./index.ts), attached to a
+ * collection's `imagePositionY` field (Events, Stories, ...).
  *
- * Shows a 16:10 preview window — the exact aspect of the event page's
- * image container — with the event's currently selected image scaled to
- * fill ("cover") it. Dragging the image with the mouse or a finger moves
- * the visible crop, mirroring exactly how the page will render the image
- * with `object-position: ${x}% ${y}%`. The drag is clamped to the image's
- * real overflow per axis, so the frame can never show empty space.
+ * Shows a preview window at the frame's aspect ratio — matching the page's
+ * image container — with the currently selected image scaled to fill
+ * ("cover") it. Dragging the image with the mouse or a finger moves the
+ * visible crop, mirroring exactly how the page will render the image with
+ * `object-position: ${x}% ${y}%`. The drag is clamped to the image's real
+ * overflow per axis, so the frame can never show empty space.
  *
- * The image itself is read from the sibling `image` upload field's form
- * state (a media id, since Events.image has a single relationTo) and its
- * url/width/height come from the public /api/media REST endpoint.
+ * The frame aspect ratio and the sibling field names are configurable per
+ * collection through the field's `clientProps` (see ImagePositionOptions in
+ * ./index.ts); the defaults match the Events collection.
+ *
+ * The image itself is read from the sibling upload field's form state (a
+ * media id, since the relation holds a single image) and its url/width/
+ * height come from the public /api/media REST endpoint.
  */
 
 const clamp = (value: number, min: number, max: number) =>
@@ -28,7 +32,6 @@ const styles: Record<string, React.CSSProperties> = {
     position: "relative",
     width: "100%",
     maxWidth: 560,
-    aspectRatio: "16 / 10",
     overflow: "hidden",
     borderRadius: "var(--style-radius-m, 4px)",
     border: "1px solid var(--theme-elevation-150)",
@@ -44,6 +47,13 @@ const styles: Record<string, React.CSSProperties> = {
     position: "absolute",
     pointerEvents: "none",
     display: "block",
+    // Payload's admin CSS ships a global `img { max-width: 100%; height: auto }`
+    // reset that would clamp this preview image to the frame's width and
+    // squeeze wide (landscape) photos, which also shifts them off-center.
+    // The preview deliberately renders the image larger than the frame on one
+    // axis so it can be dragged, so opt out of that cap.
+    maxWidth: "none",
+    maxHeight: "none",
   },
   empty: {
     position: "absolute",
@@ -68,11 +78,12 @@ const styles: Record<string, React.CSSProperties> = {
   },
 };
 
-/** Read the media id from the sibling `image` upload field's form state. */
+/** Read the media id from the sibling upload field's form state. */
 function mediaIdFromFormState(
   fields: Record<string, { value?: unknown }>,
+  imageFieldName: string,
 ): number | undefined {
-  const value = fields?.image?.value;
+  const value = fields?.[imageFieldName]?.value;
   const unwrap = (candidate: unknown): number | undefined => {
     if (typeof candidate === "number") return candidate;
     if (typeof candidate === "string" && candidate !== "") {
@@ -91,17 +102,40 @@ function mediaIdFromFormState(
 
 type MediaInfo = { url: string; width?: number | null; height?: number | null };
 
-const ImagePositionField: React.FC<NumberFieldClientProps> = ({
+/**
+ * Props a field config forwards through `admin.components.Field.clientProps`
+ * (see ImagePositionOptions in ./index.ts). All optional; the defaults match
+ * the Events collection.
+ */
+type ImagePositionClientProps = {
+  /** CSS aspect-ratio of the preview frame. Defaults to "16 / 10". */
+  aspectRatio?: string;
+  /** Name of the sibling upload field holding the image. Defaults to "image". */
+  imageField?: string;
+  /** Path of the sibling number field holding the horizontal position. Defaults to "imagePositionX". */
+  xField?: string;
+};
+
+const ImagePositionField: React.FC<
+  NumberFieldClientProps & ImagePositionClientProps
+> = ({
   path,
   field,
+  aspectRatio: aspectRatioProp,
+  imageField: imageFieldName = "image",
+  xField: xFieldPath = "imagePositionX",
 }) => {
+  // The frame the preview mimics — must match the frontend's image container.
+  const aspectRatio = aspectRatioProp ?? "16 / 10";
   // The two saved percentages. This component is attached to imagePositionY
   // and also drives the hidden imagePositionX sibling field.
   const yField = useField<number>({ path });
-  const xField = useField<number>({ path: "imagePositionX" });
-  // The sibling `image` upload field's value (a media id), re-read whenever
-  // the admin picks a different image or the form hydrates.
-  const imageId = useFormFields((fields) => mediaIdFromFormState(fields[0]));
+  const xField = useField<number>({ path: xFieldPath });
+  // The sibling upload field's value (a media id), re-read whenever the
+  // admin picks a different image or the form hydrates.
+  const imageId = useFormFields((fields) =>
+    mediaIdFromFormState(fields[0], imageFieldName),
+  );
 
   const [mediaState, setMediaState] = useState<{
     id: number | undefined;
@@ -253,6 +287,7 @@ const ImagePositionField: React.FC<NumberFieldClientProps> = ({
         onPointerUp={onPointerEnd}
         style={{
           ...styles.window,
+          aspectRatio,
           ...(dragging ? styles.windowDragging : undefined),
         }}
       >
@@ -277,7 +312,7 @@ const ImagePositionField: React.FC<NumberFieldClientProps> = ({
       {media && layout && (
         <div style={styles.hint}>
           Drag the image with your mouse or finger to set its position in the
-          event page frame
+          image frame on the page
           {layout.overflowY > 0 ? " (up/down)" : ""}
           {layout.overflowX > 0 ? " (left/right)" : ""}
           {layout.overflowX === 0 && layout.overflowY === 0
