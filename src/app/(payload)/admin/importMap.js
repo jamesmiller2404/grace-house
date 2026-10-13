@@ -10,6 +10,10 @@ import { default as default_f86ff8bf4def5733eab024d2a90762d5 } from '../../../..
 import { default as default_7ea838f270343e88888a38a48d4cda40 } from '../../../../src/payload/collections/Intro/CancelToDashboardButton.tsx'
 import { default as default_c08b9bff2a0c3541856fdc48248abffe } from '../../../../src/payload/collections/Intro/DoneToListButton.tsx'
 import { default as default_6cfbfdf24b870de17c04b8faea76d0a4 } from '../../../../src/payload/collections/Intro/EditView.tsx'
+import { default as default_ccd3294f607e0fcee28fd4ebda9d64c7 } from '../../../../src/payload/collections/Stories/BodyRowLabel.tsx'
+import { default as default_36bcfac68caf385e35e8afbdf797e0e1 } from '../../../../src/payload/collections/Stories/CancelToDashboardButton.tsx'
+import { default as default_26ae039daab2c0974bf13f4adc662368 } from '../../../../src/payload/collections/Stories/DoneToListButton.tsx'
+import { default as default_2cd92de4983d2a89abe8f915ada8e454 } from '../../../../src/payload/collections/Stories/EditView.tsx'
 import { default as default_c3f9d01435ae13c1ccc55c2c02b3a4c4 } from '../../../../src/payload/globals/HomeLayout/RowLabel.tsx'
 import { default as default_930d2638a28a6451a167cbcd06f9f842 } from '../../../../src/payload/globals/HomeLayout/CancelToDashboardButton.tsx'
 import { default as default_217a6f9983bacbbe3227d7e99a78de56 } from '../../../../src/payload/globals/HomeLayout/DoneToDashboardButton.tsx'
@@ -30,6 +34,10 @@ export const importMap = {
   "./src/payload/collections/Intro/CancelToDashboardButton.tsx#default": default_7ea838f270343e88888a38a48d4cda40,
   "./src/payload/collections/Intro/DoneToListButton.tsx#default": default_c08b9bff2a0c3541856fdc48248abffe,
   "./src/payload/collections/Intro/EditView.tsx#default": default_6cfbfdf24b870de17c04b8faea76d0a4,
+  "./src/payload/collections/Stories/BodyRowLabel.tsx#default": default_ccd3294f607e0fcee28fd4ebda9d64c7,
+  "./src/payload/collections/Stories/CancelToDashboardButton.tsx#default": default_36bcfac68caf385e35e8afbdf797e0e1,
+  "./src/payload/collections/Stories/DoneToListButton.tsx#default": default_26ae039daab2c0974bf13f4adc662368,
+  "./src/payload/collections/Stories/EditView.tsx#default": default_2cd92de4983d2a89abe8f915ada8e454,
   "./src/payload/globals/HomeLayout/RowLabel.tsx#default": default_c3f9d01435ae13c1ccc55c2c02b3a4c4,
   "./src/payload/globals/HomeLayout/CancelToDashboardButton.tsx#default": default_930d2638a28a6451a167cbcd06f9f842,
   "./src/payload/globals/HomeLayout/DoneToDashboardButton.tsx#default": default_217a6f9983bacbbe3227d7e99a78de56,

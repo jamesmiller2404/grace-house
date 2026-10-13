@@ -13,6 +13,9 @@ export type StoryProfile = {
   tag: string;
   /** Portrait photo. */
   image: string;
+  /** object-position percentages (0-100) for the hero photo frame. */
+  imagePositionX?: number;
+  imagePositionY?: number;
   /** Pull quote shown in the hero. */
   heroQuote: string;
   /** Story body: a sequence of plain paragraphs and subheadings. */

@@ -1,9 +1,14 @@
 import SectionRenderer from "@/sections/SectionRenderer";
-import { homePageSections, MAX_HOME_EVENTS } from "@/content/homePage";
+import {
+  homePageSections,
+  MAX_HOME_EVENTS,
+  MAX_HOME_STORIES,
+} from "@/content/homePage";
 import {
   getHero,
   getHomeLayout,
   getIntro,
+  getStories,
   getUpcomingEvents,
 } from "@/payload/queries";
 import type { SectionConfig } from "@/sections/registry";
@@ -16,16 +21,18 @@ import type { SectionConfig } from "@/sections/registry";
  * section's props (src/content/homePage.ts) and hidden rows are dropped.
  *
  * Content that lives in the database — the hero (from the `hero` collection),
- * the "What is Grace House" intro (from the `intro` collection) and upcoming
- * events (from the `events` collection) — is injected into its section here at
- * render time.
+ * the "What is Grace House" intro (from the `intro` collection), upcoming
+ * events (from the `events` collection) and the "Lives Changed" stories (from
+ * the `stories` collection) — is injected into its section here at render
+ * time.
  */
 export default async function Home() {
-  const [events, hero, intro, layout] = await Promise.all([
+  const [events, hero, intro, layout, stories] = await Promise.all([
     getUpcomingEvents(),
     getHero(),
     getIntro(),
     getHomeLayout(),
+    getStories(),
   ]);
 
   // The static section configs, keyed by type, supply each section's props.
@@ -56,6 +63,17 @@ export default async function Home() {
           props: {
             ...section.props,
             events: events.slice(0, MAX_HOME_EVENTS),
+          },
+        };
+      }
+      // Fill the "Lives Changed" section with live data from the database,
+      // capped to the homepage's preview limit.
+      if (section.type === "stories") {
+        return {
+          ...section,
+          props: {
+            ...section.props,
+            stories: stories.slice(0, MAX_HOME_STORIES),
           },
         };
       }

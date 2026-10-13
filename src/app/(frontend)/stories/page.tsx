@@ -1,16 +1,20 @@
 import Link from "next/link";
 import StoriesBrowser from "@/components/StoriesBrowser";
-import { stories } from "@/content/stories";
+import { getStories } from "@/payload/queries";
 
 export const metadata = {
   title: "Lives Changed — Grace House",
 };
 
 /**
- * Index of every profile/story. Cards reuse the homepage "Lives Changed"
- * card style; each card links to that person's story page.
+ * Index of every profile/story, read from the `stories` collection in the
+ * database (managed in /admin/collections/stories). Cards reuse the homepage
+ * "Lives Changed" card style; each card links to that person's story page.
+ * The page renders at request time, so admin-panel edits show up immediately.
  */
-export default function StoriesIndexPage() {
+export default async function StoriesIndexPage() {
+  const stories = await getStories();
+
   return (
     <>
       <main className="bg-sand flex-1 px-4 py-10 sm:px-6">

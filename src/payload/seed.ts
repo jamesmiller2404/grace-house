@@ -7,6 +7,10 @@ import { heroDefaults } from "@/content/hero";
 import { defaultHomeLayout } from "@/content/homeLayout";
 import { introDefaults } from "@/content/intro";
 import { missionPage } from "@/content/mission";
+import { pillars } from "@/content/pillars";
+import { stories } from "@/content/stories";
+import { storyProfiles } from "@/content/storyProfiles";
+import type { Story } from "../../payload-types";
 
 /** Mime types for the image extensions used in public/images. */
 const MIME_TYPES: Record<string, string> = {
@@ -210,5 +214,120 @@ export async function seedHomeLayout(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the home page layout from src/content/homeLayout.ts.",
+  );
+}
+
+/**
+ * Upload one image from public/ as a `media` document and return its id.
+ * Shared by seedStories (the events / hero seeds keep their own inline copies
+ * so this addition never touches their behaviour).
+ */
+async function uploadSeedImage(
+  payload: Payload,
+  imagePath: string,
+  alt: string,
+): Promise<number> {
+  const filePath = path.resolve("public", imagePath.replace(/^[/\\]/, ""));
+  const data = await readFile(filePath);
+  const extension = path.extname(filePath).toLowerCase();
+  const media = await payload.create({
+    collection: "media",
+    data: { alt },
+    file: {
+      data,
+      mimetype: MIME_TYPES[extension] ?? "application/octet-stream",
+      name: path.basename(filePath),
+      size: data.byteLength,
+    },
+  });
+  return media.id;
+}
+
+/**
+ * Seed the `stories` collection with the profiles that already exist in the
+ * app (`storyProfiles` in src/content/storyProfiles.ts, plus the card fields
+ * from `stories` in src/content/stories.ts), uploading each portrait and
+ * memory photo from public/images as a media document so every seeded story
+ * has its photos. Runs once, when the stories collection is empty.
+ */
+export async function seedStories(payload: Payload): Promise<void> {
+  for (const profile of storyProfiles) {
+    // The card fields (date, excerpt, readLabel) live in src/content/stories.ts.
+    const card = stories.find((item) => item.name === profile.name);
+
+    // 1. Upload the portrait photo (skipped if the file cannot be read).
+    let imageId: number | undefined;
+    if (profile.image) {
+      try {
+        imageId = await uploadSeedImage(
+          payload,
+          profile.image,
+          `${profile.name} — story portrait`,
+        );
+      } catch (error) {
+        payload.logger.error(
+          `Seed: could not upload the portrait "${profile.image}" for "${profile.name}" — seeding the story without it.`,
+        );
+        payload.logger.debug({ error });
+      }
+    }
+
+    // 2. Upload the memories gallery photos.
+    const memories: Array<{ image: number; alt: string; caption: string }> = [];
+    for (const memory of profile.memories) {
+      try {
+        const id = await uploadSeedImage(payload, memory.image, memory.alt);
+        memories.push({ image: id, alt: memory.alt, caption: memory.caption });
+      } catch (error) {
+        payload.logger.error(
+          `Seed: could not upload a memory photo "${memory.image}" for "${profile.name}" — skipping it.`,
+        );
+        payload.logger.debug({ error });
+      }
+    }
+
+    // 3. Create the story with all of its information.
+    await payload.create({
+      collection: "stories",
+      data: {
+        name: profile.name,
+        // Narrow the free-form tag to the role select's choices.
+        role:
+          profile.tag === "Volunteer" || profile.tag === "Staff"
+            ? profile.tag
+            : "Graduate",
+        image: imageId,
+        imagePositionX: 50,
+        imagePositionY: 50,
+        pullQuote: profile.heroQuote,
+        body: profile.body.map((block) => ({
+          type: block.type === "h2" ? "Heading" : "Paragraph",
+          text: block.text,
+        })),
+        bannerQuote: {
+          quote: profile.quoteBand.quote,
+          attribution: profile.quoteBand.attribution,
+        },
+        // The pillar that mattered most, stored by its title.
+        pillar: (pillars[profile.pillarIndex]?.title ??
+          pillars[0].title) as Story["pillar"],
+        date: card?.date,
+        excerpt: card?.excerpt,
+        readLabel: card?.readLabel,
+        closing: {
+          heading: profile.closing.heading,
+          paragraphs: profile.closing.paragraphs.map((text) => ({ text })),
+        },
+        pronouns: {
+          subject: profile.pronouns.subject,
+          possessive: profile.pronouns.possessive,
+        },
+        memories,
+      },
+    });
+  }
+
+  payload.logger.info(
+    `Seed: created ${storyProfiles.length} stories from src/content/storyProfiles.ts.`,
   );
 }

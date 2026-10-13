@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { StoryProfile as StoryProfileData } from "@/content/storyProfiles";
-import { storyProfiles } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
 import MemoriesGallery from "@/components/MemoriesGallery";
 
 export type StoryProfileProps = {
   profile: StoryProfileData;
+  /** The other profiles, for the "More lives changed..." list. */
+  others?: StoryProfileData[];
 };
 
 /**
@@ -14,7 +15,10 @@ export type StoryProfileProps = {
  * Data-driven so every `/stories/<slug>` page renders the same layout with
  * its own copy and photos.
  */
-export default function StoryProfile({ profile }: StoryProfileProps) {
+export default function StoryProfile({
+  profile,
+  others = [],
+}: StoryProfileProps) {
   const pillar = pillars[profile.pillarIndex];
 
   return (
@@ -49,6 +53,9 @@ export default function StoryProfile({ profile }: StoryProfileProps) {
               priority
               sizes="(min-width:768px) 40vw, (min-width:640px) 60vw, 100vw"
               className="object-cover"
+              style={{
+                objectPosition: `${profile.imagePositionX ?? 50}% ${profile.imagePositionY ?? 50}%`,
+              }}
             />
           </div>
           <div>
@@ -168,7 +175,7 @@ export default function StoryProfile({ profile }: StoryProfileProps) {
           More lives changed...
         </h2>
         <ul className="mt-6 flex flex-wrap gap-4">
-          {storyProfiles
+          {others
             .filter((p) => p.slug !== profile.slug)
             .map((other) => (
               <li key={other.slug}>

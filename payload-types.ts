@@ -73,6 +73,7 @@ export interface Config {
     'mission-page': MissionPage;
     hero: Hero;
     intro: Intro;
+    stories: Story;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     intro: IntroSelect<false> | IntroSelect<true>;
+    stories: StoriesSelect<false> | StoriesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -307,6 +309,96 @@ export interface Intro {
   createdAt: string;
 }
 /**
+ * The Lives Changed / Stories section: the people of Grace House — graduates, volunteers and staff — in their own words.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stories".
+ */
+export interface Story {
+  id: number;
+  name: string;
+  role: 'Graduate' | 'Volunteer' | 'Staff';
+  /**
+   * The portrait photo shown in the story hero.
+   */
+  image?: (number | null) | Media;
+  imagePositionX?: number | null;
+  imagePositionY?: number | null;
+  /**
+   * The pull quote shown in the story hero.
+   */
+  pullQuote?: string | null;
+  /**
+   * Add paragraphs and headings in the order they should appear. The first paragraph gets the drop cap on the site.
+   */
+  body: {
+    type: 'Paragraph' | 'Heading';
+    text: string;
+    id?: string | null;
+  }[];
+  /**
+   * The full-width pull-quote band on the story page.
+   */
+  bannerQuote?: {
+    quote?: string | null;
+    attribution?: string | null;
+  };
+  /**
+   * The pillar that mattered most to this person.
+   */
+  pillar: 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration';
+  /**
+   * Shown on the story card and in the list view (e.g. 05/30/2026 or 03/2019).
+   */
+  date?: string | null;
+  /**
+   * The short pull quote shown on the story card and in the list view.
+   */
+  excerpt?: string | null;
+  /**
+   * The card link text (e.g. Read her story).
+   */
+  readLabel?: string | null;
+  /**
+   * The closing section of the story page (e.g. Where she is today).
+   */
+  closing?: {
+    heading?: string | null;
+    paragraphs?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Used for copy like Read her story / shared her story.
+   */
+  pronouns?: {
+    subject?: string | null;
+    possessive?: string | null;
+  };
+  /**
+   * The personal photos shown in the memories gallery.
+   */
+  memories?:
+    | {
+        /**
+         * A personal photo.
+         */
+        image: number | Media;
+        /**
+         * Describe the photo for screen readers.
+         */
+        alt?: string | null;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -353,6 +445,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'intro';
         value: number | Intro;
+      } | null)
+    | ({
+        relationTo: 'stories';
+        value: number | Story;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -510,6 +606,62 @@ export interface IntroSelect<T extends boolean = true> {
   textColor?: T;
   linkColor?: T;
   linkHoverColor?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stories_select".
+ */
+export interface StoriesSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  image?: T;
+  imagePositionX?: T;
+  imagePositionY?: T;
+  pullQuote?: T;
+  body?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        id?: T;
+      };
+  bannerQuote?:
+    | T
+    | {
+        quote?: T;
+        attribution?: T;
+      };
+  pillar?: T;
+  date?: T;
+  excerpt?: T;
+  readLabel?: T;
+  closing?:
+    | T
+    | {
+        heading?: T;
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  pronouns?:
+    | T
+    | {
+        subject?: T;
+        possessive?: T;
+      };
+  memories?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        caption?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

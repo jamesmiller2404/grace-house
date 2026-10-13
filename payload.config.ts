@@ -8,6 +8,7 @@ import { Hero } from "@/payload/collections/Hero";
 import { Intro } from "@/payload/collections/Intro";
 import { Media } from "@/payload/collections/Media";
 import { MissionPage } from "@/payload/collections/MissionPage";
+import { Stories } from "@/payload/collections/Stories";
 import { Users } from "@/payload/collections/Users";
 import { HomeLayout } from "@/payload/globals/HomeLayout";
 import {
@@ -16,12 +17,13 @@ import {
   seedHomeLayout,
   seedIntro,
   seedMissionPage,
+  seedStories,
 } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero, Intro],
+  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories],
   globals: [HomeLayout],
   serverURL: siteURL,
   cors: [siteURL],
@@ -56,8 +58,8 @@ export default buildConfig({
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: { outputFile: "payload-types.ts" },
-  // On first init, seed the events that already exist in the app
-  // (src/content/events.ts) so the admin panel starts with real data.
+  // On first init, seed the collections that already have content in the app
+  // (src/content/*.ts) so the admin panel starts with real data.
   onInit: async (payload) => {
     try {
       const { totalDocs } = await payload.count({ collection: "events" });
@@ -75,6 +77,10 @@ export default buildConfig({
       const intro = await payload.count({ collection: "intro" });
       if (intro.totalDocs === 0) {
         await seedIntro(payload);
+      }
+      const stories = await payload.count({ collection: "stories" });
+      if (stories.totalDocs === 0) {
+        await seedStories(payload);
       }
       await seedHomeLayout(payload);
     } catch (error) {

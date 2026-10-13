@@ -7,6 +7,7 @@ import * as migration_20261012_051759_make_event_description_and_start_time_opti
 import * as migration_20261012_084452_hero from './20261012_084452_hero';
 import * as migration_20261012_172205_intro from './20261012_172205_intro';
 import * as migration_20261012_215035_home_layout from './20261012_215035_home_layout';
+import * as migration_20261013_061623_stories from './20261013_061623_stories';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20261012_215035_home_layout.up,
     down: migration_20261012_215035_home_layout.down,
-    name: '20261012_215035_home_layout'
+    name: '20261012_215035_home_layout',
+  },
+  {
+    up: migration_20261013_061623_stories.up,
+    down: migration_20261013_061623_stories.down,
+    name: '20261013_061623_stories'
   },
 ];

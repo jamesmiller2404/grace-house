@@ -15,6 +15,16 @@ import {
   defaultHomeLayout,
   type HomeLayoutSection,
 } from "@/content/homeLayout";
+import type { Story as PayloadStory } from "../../payload-types";
+import {
+  stories as defaultStories,
+  type StoryItem,
+} from "@/content/stories";
+import {
+  storyProfiles as defaultStoryProfiles,
+  type StoryProfile,
+} from "@/content/storyProfiles";
+import { pillars } from "@/content/pillars";
 
 /**
  * Event data access — the only place the app reads events from. Every event
@@ -258,3 +268,152 @@ export const getHomeLayout = cache(async (): Promise<HomeLayoutSection[]> => {
   }
   return defaultHomeLayout;
 });
+
+/**
+ * Story data access — the only place the app reads Lives Changed / Stories
+ * from. Every story shown on the site (the homepage "Lives Changed" section,
+ * the /stories index and each /stories/<slug> page) comes from the `stories`
+ * collection in the database through these helpers, so the admin panel
+ * (/admin/collections/stories) is the single source of truth. When the
+ * collection is still empty (e.g. before the first seed) the static content in
+ * src/content/stories.ts and src/content/storyProfiles.ts is used so the pages
+ * never break — the same fallback pattern as the hero / intro / mission
+ * queries above.
+ */
+
+/** "Maria" -> "maria" (the /stories/<slug> URL segment). */
+function storySlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Index (0-based) into `pillars` of a story's saved pillar title. */
+function pillarIndexFromTitle(title: string | null | undefined): number {
+  if (!title) return 0;
+  const index = pillars.findIndex((pillar) => pillar.title === title);
+  return index >= 0 ? index : 0;
+}
+
+/** Read a media document's public URL from an upload field value. */
+function mediaUrl(value: unknown): string {
+  if (value && typeof value === "object" && "url" in value) {
+    const url = (value as { url?: unknown }).url;
+    return typeof url === "string" ? url : "";
+  }
+  return "";
+}
+
+/** The story body blocks mapped to the h2/p sequence the page renders. */
+function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
+  return (doc.body ?? []).map((block) =>
+    block.type === "Heading"
+      ? { type: "h2" as const, text: block.text }
+      : { type: "p" as const, text: block.text },
+  );
+}
+
+/** Map one database story to the card/list item the sections render. */
+function toStoryItem(doc: PayloadStory): StoryItem {
+  const possessive = doc.pronouns?.possessive ?? "";
+  return {
+    name: doc.name,
+    tag: doc.role,
+    date: doc.date ?? "",
+    // Fall back to the hero pull quote when no short card quote is set.
+    excerpt: doc.excerpt ?? doc.pullQuote ?? "",
+    image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
+    href: `/stories/${storySlug(doc.name)}`,
+    readLabel:
+      doc.readLabel ??
+      (possessive ? `Read ${possessive} story` : "Read their story"),
+    pillarIndex: pillarIndexFromTitle(doc.pillar),
+  };
+}
+
+/** Map one database story to the full single-story page content. */
+function toStoryProfile(doc: PayloadStory): StoryProfile {
+  return {
+    slug: storySlug(doc.name),
+    name: doc.name,
+    tag: doc.role,
+    image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
+    imagePositionX: doc.imagePositionX ?? 50,
+    imagePositionY: doc.imagePositionY ?? 50,
+    heroQuote: doc.pullQuote ?? "",
+    body: toStoryBody(doc),
+    quoteBand: {
+      quote: doc.bannerQuote?.quote ?? "",
+      attribution: doc.bannerQuote?.attribution ?? "",
+    },
+    closing: {
+      heading: doc.closing?.heading ?? "",
+      paragraphs: (doc.closing?.paragraphs ?? []).map((p) => p.text),
+    },
+    pillarIndex: pillarIndexFromTitle(doc.pillar),
+    pronouns: {
+      subject: doc.pronouns?.subject ?? "",
+      possessive: doc.pronouns?.possessive ?? "",
+    },
+    memories: (doc.memories ?? []).map((memory) => ({
+      image: mediaUrl(memory.image),
+      alt: memory.alt ?? "",
+      caption: memory.caption ?? "",
+    })),
+  };
+}
+
+/**
+ * Every story as a card/list item, for the homepage "Lives Changed" section
+ * (capped there) and the /stories index. Ordered by name; falls back to the
+ * static src/content/stories.ts list when the collection is empty.
+ */
+export const getStories = cache(async (): Promise<StoryItem[]> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "stories",
+    limit: 100,
+    sort: "name",
+  });
+  if (docs.length === 0) return defaultStories;
+  return docs.map(toStoryItem);
+});
+
+/**
+ * Every full story profile, for the /stories/<slug> pages and their "More
+ * lives changed..." list. Falls back to the static src/content/storyProfiles.ts
+ * list when the collection is empty.
+ */
+export const getStoryProfiles = cache(async (): Promise<StoryProfile[]> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "stories",
+    limit: 100,
+    sort: "name",
+  });
+  if (docs.length === 0) return defaultStoryProfiles;
+  return docs.map(toStoryProfile);
+});
+
+/**
+ * One story profile by URL slug, for its /stories/<slug> page. The slug is
+ * derived from the name, so any story in the database gets a page
+ * automatically. Falls back to the static content before the first seed.
+ */
+export const getStoryProfileBySlug = cache(
+  async (slug: string): Promise<StoryProfile | undefined> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "stories",
+      limit: 100,
+      sort: "name",
+    });
+    const doc = docs.find((story) => storySlug(story.name) === slug);
+    if (doc) return toStoryProfile(doc);
+    return defaultStoryProfiles.find((profile) => profile.slug === slug);
+  },
+);
