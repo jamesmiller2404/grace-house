@@ -30,7 +30,7 @@ export type HomeSectionType = (typeof homeSectionTypes)[number];
  * row, matching how the sections are referred to on the site.
  */
 export const homeSectionLabels: Record<HomeSectionType, string> = {
-  hero: "Hero / Banner",
+  hero: "Hero",
   "help-strip": "Get Help Now",
   welcome: "Intro",
   "four-pillars": "The Four Pillars",

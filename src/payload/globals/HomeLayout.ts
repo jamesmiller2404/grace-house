@@ -29,6 +29,37 @@ export const HomeLayout: GlobalConfig = {
   admin: {
     description:
       'Choose which sections appear on the home page and in what order. Drag a section to reorder it, or open its "..." menu and use Move Up / Move Down (the easiest way on a phone). Untick "Show on home page" to hide a section without removing it.',
+    // Custom Edit view wrapper that paints the mockup frame
+    // (photoshop_assets/adminPanelMockup1_homePageLayout.png): the #111115
+    // page background and the rounded #2d2d33 / #414141 cards that each
+    // section row becomes, the same palette as the Events and Hero
+    // create/edit pages. The same elements are repainted for the Light theme.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/globals/HomeLayout/EditView.tsx",
+            },
+          },
+        },
+      },
+      // "Cancel" and "Done" buttons next to Save — a global renders its
+      // document controls bar from `elements` (not `edit`, which collections
+      // use), in array order before the Save button, so the bar reads
+      // "Cancel | Done | Save" like the Events and Hero pages. Both return to
+      // the admin dashboard, since a global has no list view to go back to.
+      elements: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/globals/HomeLayout/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/globals/HomeLayout/DoneToDashboardButton.tsx",
+          },
+        ],
+      },
+    },
   },
   fields: [
     {
