@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
   remotePatterns: [
     {
       protocol: "https",
-      hostname: "payload-app-nxg2.onrender.com",
+      hostname: "mockup1.offworldcreations.com",
+      // hostname: "payload-app-nxg2.onrender.com",
       pathname: "/api/media/file/**",
     },
     { protocol: "http", hostname: "localhost", pathname: "/api/media/file/**" },

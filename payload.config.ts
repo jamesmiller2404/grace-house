@@ -50,6 +50,16 @@ export default buildConfig({
               region: "auto",
               endpoint: process.env.R2_ENDPOINT,
               forcePathStyle: true,
+              // @aws-sdk/client-s3 >= 3.729 defaults to flexible checksums
+              // ("WHEN_SUPPORTED" + CRC32). Cloudflare R2 does not implement
+              // the resulting headers (`x-amz-checksum-algorithm` on
+              // PutObject, `x-amz-checksum-mode` on GetObject/HeadObject), so
+              // with the defaults every upload stalls/retries and every
+              // proxied file request 500s. Only send/validate checksums when
+              // the operation actually requires them.
+              // See https://developers.cloudflare.com/r2/api/s3/api/ (Checksum Types)
+              requestChecksumCalculation: "WHEN_REQUIRED",
+              responseChecksumValidation: "WHEN_REQUIRED",
             },
           }),
         ]
