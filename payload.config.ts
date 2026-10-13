@@ -22,12 +22,18 @@ import {
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
+const trustedOrigins = [
+    "http://localhost:3000",
+  "https://mockup1.offworldcreations.com",
+  "https://payload-app-nxg2.onrender.com",
+];
+
 export default buildConfig({
   collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories],
   globals: [HomeLayout],
   serverURL: siteURL,
-  cors: [siteURL],
-  csrf: [siteURL],
+  cors: trustedOrigins,
+  csrf: trustedOrigins,
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI },
     // Disable dev-time schema push so `next dev` never alters/drops columns.
