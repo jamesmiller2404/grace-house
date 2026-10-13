@@ -24,8 +24,13 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Grace House — Design Concept",
-  description: "Design concept for the new Grace House website.",
+  title: "Grace House Nor Cal",
+  description: "To bring hope to the hopeless.",
+  // Browser tab / home-screen icon (served from public/images/).
+  icons: {
+    icon: "/images/favicon1.png",
+    apple: "/images/favicon1.png",
+  },
   // Concept stage: keep it out of search results.
   robots: { index: false, follow: false },
 };
