@@ -14,7 +14,7 @@ export const MissionPage: CollectionConfig = {
   slug: "mission-page",
   labels: {
     singular: "Mission Page",
-    plural: "Mission Pages",
+    plural: "Mission",
   },
   // Public site content — allow anonymous reads of the REST API.
   // (The site itself reads through the Local API, which bypasses
@@ -27,13 +27,49 @@ export const MissionPage: CollectionConfig = {
     defaultColumns: ["title"],
     description:
       "The Title and body text shown on the Mission page (/about/mission).",
+    // Custom Edit view wrapper that paints the mockup frame
+    // (photoshop_assets/adminPanelMockup1.png) — the same #111115 page
+    // background, rounded #2d2d33 panel around the fields and #101012 input
+    // boxes as the Events and Hero create/edit pages. The same elements are
+    // repainted for the Light theme.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/collections/MissionPage/EditView.tsx",
+            },
+          },
+        },
+      },
+      // "Cancel" and "Done" buttons next to Save on the create/edit pages —
+      // they render in the document controls bar (before the Save button, in
+      // array order) so the bar reads "Cancel | Done | Save", exactly like
+      // the Events and Hero pages. Cancel returns to the admin dashboard;
+      // Done returns to the Mission Page list.
+      edit: {
+        beforeDocumentControls: [
+          {
+            path:
+              "./src/payload/collections/MissionPage/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/MissionPage/DoneToListButton.tsx",
+          },
+        ],
+      },
+    },
   },
   fields: [
     {
       name: "title",
       type: "text",
       required: true,
+      // Placeholder-only look, like the Events and Hero forms (the required
+      // marker is painted by the Edit view — see ./MissionPage/EditView.tsx).
+      label: false,
       admin: {
+        placeholder: "Title...",
         description:
           "The page heading (e.g. \"Mission\") and breadcrumb label.",
       },
@@ -42,7 +78,9 @@ export const MissionPage: CollectionConfig = {
       name: "body",
       type: "textarea",
       required: true,
+      label: false,
       admin: {
+        placeholder: "Body text...",
         description:
           "The mission statement. Use a blank line between paragraphs.",
       },

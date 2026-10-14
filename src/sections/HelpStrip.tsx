@@ -1,85 +1,36 @@
-"use client";
-
-import { useSyncExternalStore } from "react";
 import Link from "next/link";
 
 export type HelpStripProps = {
   heading: string;
-  openBody: string;
-  closedBody: string;
+  body: string;
   phone: string;
   phoneHref: string;
   cta: { label: string; href: string };
   ctaNote?: string;
-  hours: {
-    label: string;
-    days: number[];
-    open: number;
-    close: number;
-    timeZone: string;
-  };
-  openNowLabel: string;
-  closedLabel: string;
+  /** Office hours shown under the phone number (e.g. "Mon–Fri, 9am–5pm"). */
+  hours: string;
   facts: string[];
   crisisTitle?: string;
   crisisLines: { label: string; text: string; href: string }[];
 };
 
-const DAYS: Record<string, number> = {
-  Sun: 0,
-  Mon: 1,
-  Tue: 2,
-  Wed: 3,
-  Thu: 4,
-  Fri: 5,
-  Sat: 6,
-};
-
-// No external store to subscribe to; the snapshot is recomputed each render.
-const subscribeNoop = () => () => {};
-
-function isOfficeOpen(hours: HelpStripProps["hours"], now = new Date()) {
-  const { days, open, close, timeZone } = hours;
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    weekday: "short",
-    hour: "numeric",
-    hour12: false,
-  }).formatToParts(now);
-  const day = DAYS[parts.find((p) => p.type === "weekday")!.value];
-  const hour = Number(parts.find((p) => p.type === "hour")!.value) % 24;
-  return days.includes(day) && hour >= open && hour < close;
-}
-
 export default function HelpStrip({
   heading,
-  openBody,
-  closedBody,
+  body,
   phone,
   phoneHref,
   cta,
   ctaNote,
   hours,
-  openNowLabel,
-  closedLabel,
   facts,
   crisisTitle,
   crisisLines,
 }: HelpStripProps) {
-  // null until mounted, so server and client markup match.
-  // useSyncExternalStore gives us exactly that: getServerSnapshot returns null,
-  // and the client snapshot is computed after hydration without setState-in-effect.
-  const open = useSyncExternalStore(
-    subscribeNoop,
-    () => isOfficeOpen(hours),
-    () => null,
-  );
-  const closed = open === false;
-
   return (
     <section
+      id="help"
       aria-labelledby="help-title"
-      className="border-gold bg-sand text-ink border-b-4"
+      className="bg-sand text-ink"
     >
       <div className="mx-auto max-w-6xl px-6 py-8">
         <div className="grid gap-8 md:grid-cols-[3fr_2fr] md:gap-12">
@@ -90,7 +41,7 @@ export default function HelpStrip({
             >
               {heading}
             </h2>
-            <p className="mt-2 text-lg">{closed ? closedBody : openBody}</p>
+            <p className="mt-2 text-lg">{body}</p>
 
             <div className="mt-6">
               <div className="flex flex-wrap items-center gap-4 max-lg:w-fit max-lg:flex-col max-lg:gap-0">
@@ -124,20 +75,8 @@ export default function HelpStrip({
               </a>
             </p>
 
-            <p className="mt-4 flex items-center gap-2 font-semibold">
-              <span
-                aria-hidden
-                className={`inline-block h-3.5 w-3.5 shrink-0 rounded-full ${
-                  closed ? "bg-terra" : "bg-green-700"
-                }`}
-              />
-              <span>
-                {open === null
-                  ? `Intake line ${hours.label}`
-                  : closed
-                    ? closedLabel
-                    : `${openNowLabel} · Intake line ${hours.label}`}
-              </span>
+            <p className="mt-2 text-xl font-semibold">
+              Office hours: {hours}
             </p>
           </div>
 

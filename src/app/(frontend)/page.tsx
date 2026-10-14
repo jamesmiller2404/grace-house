@@ -40,6 +40,13 @@ export default async function Home() {
     homePageSections.map((section) => [section.type, section]),
   );
 
+  // Whether the "Get Help Now" strip is shown on the home page. The hero's
+  // "Get Help" button links to the on-page strip when it is; when an editor
+  // hides the strip, the button falls back to the standalone /get-help page.
+  const helpStripVisible = layout.some(
+    (row) => row.section === "help-strip" && row.enabled !== false,
+  );
+
   const sections: SectionConfig[] = layout
     // Skip sections the editor has hidden.
     .filter((row) => row.enabled !== false)
@@ -49,7 +56,20 @@ export default async function Home() {
     .map((section) => {
       // Overlay the editable hero heading / subline / image from the database.
       if (section.type === "hero") {
-        return { ...section, props: { ...section.props, ...hero } };
+        return {
+          ...section,
+          props: {
+            ...section.props,
+            ...hero,
+            // Point the "Get Help" button at the "Get Help Now" strip when it
+            // is shown; otherwise send visitors to the standalone /get-help
+            // page so the button always leads somewhere useful.
+            primaryCta: {
+              label: section.props.primaryCta?.label ?? "Get Help",
+              href: helpStripVisible ? "#help" : "/get-help",
+            },
+          },
+        };
       }
       // Overlay the editable "What is Grace House" copy and colors.
       if (section.type === "welcome") {

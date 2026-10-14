@@ -309,7 +309,7 @@ export interface Intro {
   createdAt: string;
 }
 /**
- * The Lives Changed / Stories section: the people of Grace House — graduates, volunteers and staff — in their own words.
+ * The Lives Changed section: the people of Grace House — graduates, volunteers and staff — in their own words.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "stories".

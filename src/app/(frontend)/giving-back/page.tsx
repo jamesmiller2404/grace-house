@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
@@ -58,6 +59,15 @@ export default function GivingBackPage() {
             Sylvan Oaks Library located at 6700 Auburn Blvd, Citrus Heights, CA
             95621.
           </p>
+
+          {/* Sunrise divider */}
+          <Image
+            src="/images/sunriseHR.png"
+            alt=""
+            width={959}
+            height={72}
+            className="mt-8 h-auto w-full max-w-3xl"
+          />
 
          
         </div>

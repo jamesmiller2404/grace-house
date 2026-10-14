@@ -29,7 +29,7 @@ export const Stories: CollectionConfig = {
   slug: "stories",
   labels: {
     singular: "Story",
-    plural: "Stories",
+    plural: "Lives Changed",
   },
   // Public site content — allow anonymous reads of the REST API.
   // (The site itself reads through the Local API, which bypasses access
@@ -41,7 +41,7 @@ export const Stories: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["name", "role", "date", "pillar"],
     description:
-      "The Lives Changed / Stories section: the people of Grace House — graduates, volunteers and staff — in their own words.",
+      "The Lives Changed section: the people of Grace House — graduates, volunteers and staff — in their own words.",
     // Custom Edit view wrapper that paints the mockup frame
     // (photoshop_assets/adminPanelMockup1.png): the same #111115 page
     // background, rounded #2d2d33 panel around the fields and #101012 input

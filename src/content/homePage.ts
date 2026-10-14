@@ -1,8 +1,8 @@
-import { site } from "./site";
 import { pillars } from "./pillars";
 import { stories } from "./stories";
 import { heroDefaults } from "./hero";
 import { introDefaults } from "./intro";
+import { helpStripDefaults } from "./helpStrip";
 import type { SectionConfig } from "@/sections/registry";
 
 /**
@@ -30,29 +30,16 @@ export const homePageSections: SectionConfig[] = [
     // database has a hero document.
     props: {
       ...heroDefaults,
-      primaryCta: { label: "Our Home", href: "#welcome" },
+      primaryCta: { label: "Get Help", href: "#help" },
       secondaryCta: { label: "Our Stories", href: "/#stories" },
     },
   },
   {
     type: "help-strip",
+    // Heading, phone, assessment link and crisis resources are shared with the
+    // standalone /get-help page via src/content/helpStrip.ts.
     props: {
-      heading: "Need help now?",
-      openBody:
-        "Our office is open. You don't have to figure this out alone. Talk to a real person. Or you can fill out the assessment below and we will contact you within two business days.",
-      closedBody:
-        "Our office is currently closed. You can fill out the assessment below and we will contact you within two business days.",
-      phone: site.phone,
-      phoneHref: site.phoneHref,
-      cta: { label: "Start Assessment", href: "/assessment" },
-      ctaNote: "Fill out the Grace House Assessment Form",
-      hours: site.hours,
-      openNowLabel: "We're open now",
-      closedLabel:
-        "The office is closed. Leave a message and we'll call back within two business days.",
-      facts: site.facts,
-      crisisTitle: "RESOURCES THAT ARE AVAILABLE 24/7",
-      crisisLines: site.crisisLines,
+      ...helpStripDefaults,
     },
   },
   {

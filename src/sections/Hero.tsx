@@ -19,7 +19,7 @@ export default function Hero({
   secondaryCta,
 }: HeroProps) {
   return (
-    <section className="relative isolate overflow-hidden text-center">
+    <section className="relative isolate overflow-hidden border-gold border-b-4 text-center">
       {/* Drop your Photoshop export at public/images/hero1a.jpg (shorter crop) */}
       <Image
         src={image}
