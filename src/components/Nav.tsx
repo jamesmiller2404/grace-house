@@ -5,9 +5,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { site } from "@/content/site";
+import type { CustomNavLink } from "@/content/customPages";
 
-export default function Nav() {
+/**
+ * The header nav. `customLinks` carries the enabled custom (spare) pages
+ * from the admin panel; when any page is enabled they appear as one extra
+ * "More" dropdown at the end of the menu (and in the mobile menu), styled
+ * exactly like the "About" dropdown. With every spare page disabled the
+ * "More" dropdown vanishes and the nav reads exactly as before.
+ */
+export default function Nav({
+  customLinks = [],
+}: {
+  customLinks?: CustomNavLink[];
+}) {
   const mobileMenuRef = useRef<HTMLDetailsElement>(null);
+
+  // The rendered menu: the static items plus a "More" dropdown only when at
+  // least one custom page is enabled.
+  const nav = [
+    ...site.nav,
+    ...(customLinks.length > 0
+      ? [{ label: "More", children: customLinks.map((link) => ({ label: link.label, href: link.href })) }]
+      : []),
+  ];
 
   // Close the mobile menu when tapping/clicking outside of it.
   useEffect(() => {
@@ -62,7 +83,7 @@ export default function Nav() {
           </Link>
 
           <nav className="hidden items-center gap-0.5 text-[14px] lg:flex lg:gap-1 lg:text-[17px] mt-[24px]" aria-label="Main">
-            {site.nav.map((l) =>
+            {nav.map((l) =>
               l.children ? (
                 <div
                   key={l.label}
@@ -120,7 +141,7 @@ export default function Nav() {
               Menu
             </summary>
             <div className="bg-anchor ring-cream/20 absolute right-0 z-10 mt-2 w-44 rounded-md p-3 shadow-lg ring-1" onClick={closeMobileMenu}>
-              {site.nav.map((l) => (
+              {nav.map((l) => (
                 <div key={l.label}>
                   {l.children ? (
                     <div className="py-2 font-medium">{l.label}</div>

@@ -28,8 +28,7 @@ export default function BoardPage() {
         <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
         <h1 className="font-heading text-ink text-5xl">Board Members</h1>
         <p className="text-ink/70 mt-4 max-w-[60ch] leading-relaxed">
-          Placeholder page — meet the Grace House Board of Directors, coming
-          soon.
+          Placeholder page.
         </p>
       </div>
     </main>

@@ -7,9 +7,11 @@ import { heroDefaults } from "@/content/hero";
 import { defaultHomeLayout } from "@/content/homeLayout";
 import { introDefaults } from "@/content/intro";
 import { missionPage } from "@/content/mission";
+import { donateDefaults } from "@/content/donate";
 import { pillars } from "@/content/pillars";
 import { stories } from "@/content/stories";
 import { storyProfiles } from "@/content/storyProfiles";
+import { MAX_CUSTOM_PAGES } from "@/payload/collections/CustomPages";
 import type { Story } from "../../payload-types";
 
 /** Mime types for the image extensions used in public/images. */
@@ -329,5 +331,54 @@ export async function seedStories(payload: Payload): Promise<void> {
 
   payload.logger.info(
     `Seed: created ${storyProfiles.length} stories from src/content/storyProfiles.ts.`,
+  );
+}
+
+/**
+ * Seed the `donate` collection with the Donate page copy that already exists
+ * in the app (`donateDefaults` in src/content/donate.ts), so the admin panel
+ * starts with the real page content. Runs once, when the donate collection is
+ * empty.
+ */
+export async function seedDonate(payload: Payload): Promise<void> {
+  const d = donateDefaults;
+  await payload.create({
+    collection: "donate",
+    data: {
+      title: d.title,
+      intro: d.intro,
+      paypal: d.paypal,
+      venmo: d.venmo,
+      note: d.note,
+      blocks: d.blocks,
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the Donate page from src/content/donate.ts.",
+  );
+}
+
+/**
+ * Seed the `custom-pages` collection with the three pre-wired spare pages —
+ * "Spare Page 1/2/3", each disabled (hidden from the header's "More"
+ * dropdown, URL 404s) and empty, ready for an editor to put to work. Runs
+ * once, when the collection is empty, and tops up any missing spare page
+ * numbers afterwards so the collection always offers all three.
+ */
+export async function seedCustomPages(payload: Payload): Promise<void> {
+  for (let i = 1; i <= MAX_CUSTOM_PAGES; i++) {
+    await payload.create({
+      collection: "custom-pages",
+      data: {
+        title: `Spare Page ${i}`,
+        enabled: false,
+        blocks: [],
+      },
+    });
+  }
+
+  payload.logger.info(
+    "Seed: created the three spare custom pages (hidden until used).",
   );
 }

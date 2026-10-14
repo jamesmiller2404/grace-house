@@ -6,6 +6,10 @@ import type { Event as PayloadEvent } from "../../payload-types";
 import type { EventDetail, EventItem } from "@/content/events";
 import type { MissionPage as PayloadMissionPage } from "../../payload-types";
 import { missionPage as defaultMissionPage } from "@/content/mission";
+import {
+  donateDefaults,
+  type DonatePage,
+} from "@/content/donate";
 import type { Hero as PayloadHero } from "../../payload-types";
 import { heroDefaults } from "@/content/hero";
 import type { Intro as PayloadIntro } from "../../payload-types";
@@ -15,6 +19,14 @@ import {
   defaultHomeLayout,
   type HomeLayoutSection,
 } from "@/content/homeLayout";
+import type { CustomPage as PayloadCustomPage } from "../../payload-types";
+import {
+  customPageSlug,
+  type CustomPageBlock,
+  type CustomPageContent,
+  type CustomNavLink,
+} from "@/content/customPages";
+import { MAX_CUSTOM_PAGES } from "@/payload/collections/CustomPages";
 import type { Story as PayloadStory } from "../../payload-types";
 import {
   stories as defaultStories,
@@ -178,6 +190,59 @@ export const getMissionPage = cache(
     };
   },
 );
+
+/**
+ * The Donate page content, for the /support page. The first document in the
+ * `donate` collection is the source of truth; if none exists yet (e.g. before
+ * the first seed), the static content in src/content/donate.ts is shown so the
+ * page never breaks. Each optional field falls back to its default value, so
+ * a half-filled document still renders the current copy for everything the
+ * editor has not touched.
+ */
+export const getDonate = cache(async (): Promise<DonatePage> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "donate",
+    limit: 1,
+  });
+  const doc = docs[0];
+  if (!doc) return donateDefaults;
+  const d = donateDefaults;
+  return {
+    title: doc.title || d.title,
+    intro: doc.intro || d.intro,
+    paypal: {
+      heading: doc.paypal?.heading || d.paypal.heading,
+      bodyStart: doc.paypal?.bodyStart ?? d.paypal.bodyStart,
+      email: doc.paypal?.email ?? d.paypal.email,
+      bodyEnd: doc.paypal?.bodyEnd ?? d.paypal.bodyEnd,
+      buttonLabel: doc.paypal?.buttonLabel || d.paypal.buttonLabel,
+      buttonHref: doc.paypal?.buttonHref || d.paypal.buttonHref,
+    },
+    venmo: {
+      heading: doc.venmo?.heading || d.venmo.heading,
+      bodyStart: doc.venmo?.bodyStart ?? d.venmo.bodyStart,
+      username: doc.venmo?.username ?? d.venmo.username,
+      bodyEnd: doc.venmo?.bodyEnd ?? d.venmo.bodyEnd,
+      buttonLabel: doc.venmo?.buttonLabel || d.venmo.buttonLabel,
+      buttonHref: doc.venmo?.buttonHref || d.venmo.profileHref,
+      profileHref: doc.venmo?.profileHref || d.venmo.profileHref,
+    },
+    note: {
+      text: doc.note?.text ?? d.note.text,
+      phone: doc.note?.phone ?? d.note.phone,
+      phoneHref: doc.note?.phoneHref ?? d.note.phoneHref,
+    },
+    blocks:
+      doc.blocks?.map((block) => ({
+        type: block.type === "Heading" ? "Heading" : "Paragraph",
+        text: block.text,
+        linkLabel: block.linkLabel ?? undefined,
+        linkHref: block.linkHref ?? undefined,
+      })) ?? d.blocks,
+  };
+});
 
 /**
  * The front-page hero content (heading, subline and background image), for the
@@ -415,5 +480,92 @@ export const getStoryProfileBySlug = cache(
     const doc = docs.find((story) => storySlug(story.name) === slug);
     if (doc) return toStoryProfile(doc);
     return defaultStoryProfiles.find((profile) => profile.slug === slug);
+  },
+);
+
+/**
+ * Custom (spare) page data access — the only place the app reads the
+ * `custom-pages` collection from. The three pre-wired spare pages are
+ * managed in the admin panel (/admin/collections/custom-pages); a page only
+ * exists to the public while its "Show in header menu" checkbox is ticked,
+ * so every query here filters on `enabled`.
+ */
+
+/** Map one database custom page to the content the page renderer shows. */
+function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
+  return {
+    title: doc.title,
+    slug: customPageSlug(doc.title),
+    blocks: (doc.blocks ?? []).flatMap((block): CustomPageBlock[] => {
+      // Photo rows render their Media image (with an optional caption).
+      // A photo row with no image picked yet is skipped.
+      if (block.type === "Photo") {
+        const image = mediaUrl(block.image);
+        if (!image) return [];
+        return [
+          {
+            type: "photo",
+            image,
+            alt:
+              typeof block.image === "object" && block.image
+                ? (block.image.alt ?? "")
+                : "",
+            caption: block.caption ?? undefined,
+          },
+        ];
+      }
+      // Paragraph/Heading rows render their text with the optional link.
+      // An empty-text row (half-filled in the admin panel) is skipped.
+      const text = block.text ?? "";
+      if (!text.trim()) return [];
+      return [
+        {
+          type: block.type === "Heading" ? "heading" : "paragraph",
+          text,
+          linkLabel: block.linkLabel ?? undefined,
+          linkHref: block.linkHref ?? undefined,
+        },
+      ];
+    }),
+  };
+}
+
+/**
+ * The enabled custom pages as header "More" dropdown entries (label + URL),
+ * for the site layout to hand to the nav. Disabled spare pages never appear.
+ */
+export const getCustomNavItems = cache(
+  async (): Promise<CustomNavLink[]> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "custom-pages",
+      limit: MAX_CUSTOM_PAGES,
+      where: { enabled: { equals: true } },
+    });
+    return docs.map((doc) => ({
+      label: doc.title,
+      href: `/pages/${customPageSlug(doc.title)}`,
+    }));
+  },
+);
+
+/**
+ * One enabled custom page by URL slug, for its /pages/<slug> page. The slug
+ * is derived from the title, so a renamed page moves to a new URL. Disabled
+ * (or unknown) slugs return undefined — the page renderer turns that into a
+ * 404, so a spare page stays invisible until it is switched on.
+ */
+export const getCustomPageBySlug = cache(
+  async (slug: string): Promise<CustomPageContent | undefined> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "custom-pages",
+      limit: MAX_CUSTOM_PAGES,
+      where: { enabled: { equals: true } },
+    });
+    const doc = docs.find((page) => customPageSlug(page.title) === slug);
+    return doc ? toCustomPageContent(doc) : undefined;
   },
 );

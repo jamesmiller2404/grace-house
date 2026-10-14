@@ -10,6 +10,8 @@ import { Media } from "@/payload/collections/Media";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Stories } from "@/payload/collections/Stories";
 import { Users } from "@/payload/collections/Users";
+import { Donate } from "@/payload/collections/Donate";
+import { CustomPages } from "@/payload/collections/CustomPages";
 import { HomeLayout } from "@/payload/globals/HomeLayout";
 import {
   seedEvents,
@@ -18,6 +20,8 @@ import {
   seedIntro,
   seedMissionPage,
   seedStories,
+  seedDonate,
+  seedCustomPages,
 } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -29,7 +33,7 @@ const trustedOrigins = [
 ];
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories],
+  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages],
   globals: [HomeLayout],
   serverURL: siteURL,
   cors: trustedOrigins,
@@ -97,6 +101,14 @@ export default buildConfig({
       const stories = await payload.count({ collection: "stories" });
       if (stories.totalDocs === 0) {
         await seedStories(payload);
+      }
+      const donate = await payload.count({ collection: "donate" });
+      if (donate.totalDocs === 0) {
+        await seedDonate(payload);
+      }
+      const customPages = await payload.count({ collection: "custom-pages" });
+      if (customPages.totalDocs === 0) {
+        await seedCustomPages(payload);
       }
       await seedHomeLayout(payload);
     } catch (error) {

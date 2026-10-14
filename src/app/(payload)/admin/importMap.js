@@ -17,6 +17,14 @@ import { default as default_ccd3294f607e0fcee28fd4ebda9d64c7 } from '../../../..
 import { default as default_36bcfac68caf385e35e8afbdf797e0e1 } from '../../../../src/payload/collections/Stories/CancelToDashboardButton.tsx'
 import { default as default_26ae039daab2c0974bf13f4adc662368 } from '../../../../src/payload/collections/Stories/DoneToListButton.tsx'
 import { default as default_2cd92de4983d2a89abe8f915ada8e454 } from '../../../../src/payload/collections/Stories/EditView.tsx'
+import { default as default_5b3049fd892558b24300e9b5bc176dc4 } from '../../../../src/payload/collections/Donate/BlockRowLabel.tsx'
+import { default as default_63c5fb8fd23bae5f71a0d607c694ede4 } from '../../../../src/payload/collections/Donate/CancelToDashboardButton.tsx'
+import { default as default_f9fe33a23084e1f0fe7274419542dc1c } from '../../../../src/payload/collections/Donate/DoneToListButton.tsx'
+import { default as default_b480e6a4623521c97ef432b42617b6f5 } from '../../../../src/payload/collections/Donate/EditView.tsx'
+import { default as default_2cca5cc940b58ed57d9c98c3075e0d7d } from '../../../../src/payload/collections/CustomPages/BlockRowLabel.tsx'
+import { default as default_3baff53da50f9c5ccb5f6c18d399aca9 } from '../../../../src/payload/collections/CustomPages/CancelToDashboardButton.tsx'
+import { default as default_17ca3f6b2636ac0759afd28b5fbd9451 } from '../../../../src/payload/collections/CustomPages/DoneToListButton.tsx'
+import { default as default_58e59a9c023b9646ed7227811de2e9fa } from '../../../../src/payload/collections/CustomPages/EditView.tsx'
 import { default as default_c3f9d01435ae13c1ccc55c2c02b3a4c4 } from '../../../../src/payload/globals/HomeLayout/RowLabel.tsx'
 import { default as default_930d2638a28a6451a167cbcd06f9f842 } from '../../../../src/payload/globals/HomeLayout/CancelToDashboardButton.tsx'
 import { default as default_217a6f9983bacbbe3227d7e99a78de56 } from '../../../../src/payload/globals/HomeLayout/DoneToDashboardButton.tsx'
@@ -44,6 +52,14 @@ export const importMap = {
   "./src/payload/collections/Stories/CancelToDashboardButton.tsx#default": default_36bcfac68caf385e35e8afbdf797e0e1,
   "./src/payload/collections/Stories/DoneToListButton.tsx#default": default_26ae039daab2c0974bf13f4adc662368,
   "./src/payload/collections/Stories/EditView.tsx#default": default_2cd92de4983d2a89abe8f915ada8e454,
+  "./src/payload/collections/Donate/BlockRowLabel.tsx#default": default_5b3049fd892558b24300e9b5bc176dc4,
+  "./src/payload/collections/Donate/CancelToDashboardButton.tsx#default": default_63c5fb8fd23bae5f71a0d607c694ede4,
+  "./src/payload/collections/Donate/DoneToListButton.tsx#default": default_f9fe33a23084e1f0fe7274419542dc1c,
+  "./src/payload/collections/Donate/EditView.tsx#default": default_b480e6a4623521c97ef432b42617b6f5,
+  "./src/payload/collections/CustomPages/BlockRowLabel.tsx#default": default_2cca5cc940b58ed57d9c98c3075e0d7d,
+  "./src/payload/collections/CustomPages/CancelToDashboardButton.tsx#default": default_3baff53da50f9c5ccb5f6c18d399aca9,
+  "./src/payload/collections/CustomPages/DoneToListButton.tsx#default": default_17ca3f6b2636ac0759afd28b5fbd9451,
+  "./src/payload/collections/CustomPages/EditView.tsx#default": default_58e59a9c023b9646ed7227811de2e9fa,
   "./src/payload/globals/HomeLayout/RowLabel.tsx#default": default_c3f9d01435ae13c1ccc55c2c02b3a4c4,
   "./src/payload/globals/HomeLayout/CancelToDashboardButton.tsx#default": default_930d2638a28a6451a167cbcd06f9f842,
   "./src/payload/globals/HomeLayout/DoneToDashboardButton.tsx#default": default_217a6f9983bacbbe3227d7e99a78de56,

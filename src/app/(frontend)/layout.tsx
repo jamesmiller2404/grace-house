@@ -6,6 +6,7 @@ import {
 } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { getCustomNavItems } from "@/payload/queries";
 import "./globals.css";
 
 // DM Serif Display ships in one weight only (400)
@@ -35,15 +36,19 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // The enabled custom (spare) pages become the header's "More" dropdown.
+  // Empty while every spare page is disabled — the dropdown then vanishes.
+  const customLinks = await getCustomNavItems();
+
   return (
     <html lang="en" className={`${dmSerif.variable} ${source.variable} ${cormorant.variable}`}>
       <body className="flex min-h-screen flex-col">
-        <Nav />
+        <Nav customLinks={customLinks} />
         {children}
         <Footer />
       </body>

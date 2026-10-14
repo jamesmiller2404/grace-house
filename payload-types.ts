@@ -74,6 +74,8 @@ export interface Config {
     hero: Hero;
     intro: Intro;
     stories: Story;
+    donate: Donate;
+    'custom-pages': CustomPage;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +90,8 @@ export interface Config {
     hero: HeroSelect<false> | HeroSelect<true>;
     intro: IntroSelect<false> | IntroSelect<true>;
     stories: StoriesSelect<false> | StoriesSelect<true>;
+    donate: DonateSelect<false> | DonateSelect<true>;
+    'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -399,6 +403,161 @@ export interface Story {
   createdAt: string;
 }
 /**
+ * The Donate page (/support): the title and intro, the PayPal and Venmo cards, the 501(c)(3) note and the content sections (generic headings and paragraphs).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donate".
+ */
+export interface Donate {
+  id: number;
+  /**
+   * The page heading (e.g. "Donate to Grace House") and breadcrumb label.
+   */
+  title: string;
+  /**
+   * The paragraph shown under the heading.
+   */
+  intro: string;
+  paypal: {
+    /**
+     * The PayPal card's heading.
+     */
+    heading: string;
+    /**
+     * The sentence before the email link (e.g. "...you can do so directly via PayPal using").
+     */
+    bodyStart?: string | null;
+    /**
+     * The PayPal email, shown as a mailto link.
+     */
+    email?: string | null;
+    /**
+     * The text after the email link (e.g. "or click the following button.").
+     */
+    bodyEnd?: string | null;
+    /**
+     * The card's donate button text.
+     */
+    buttonLabel: string;
+    /**
+     * The PayPal donation URL. The button opens it in a new tab.
+     */
+    buttonHref: string;
+  };
+  venmo: {
+    /**
+     * The Venmo card's heading.
+     */
+    heading: string;
+    /**
+     * The sentence before the username link (e.g. "...you can do so via Venmo with the username").
+     */
+    bodyStart?: string | null;
+    /**
+     * The Venmo username, shown as a link to the profile.
+     */
+    username?: string | null;
+    /**
+     * The Venmo profile URL. The username link and the donate button open it in a new tab.
+     */
+    profileHref: string;
+    /**
+     * The text after the username link (e.g. ".").
+     */
+    bodyEnd?: string | null;
+    /**
+     * The card's donate button text.
+     */
+    buttonLabel: string;
+    /**
+     * The Venmo URL the donate button opens in a new tab (usually the profile URL).
+     */
+    buttonHref: string;
+  };
+  note?: {
+    /**
+     * The nonprofit note, without the phone number (it renders after the text).
+     */
+    text?: string | null;
+    /**
+     * The phone number shown as a tel: link.
+     */
+    phone?: string | null;
+    /**
+     * Where the phone link points.
+     */
+    phoneHref?: string | null;
+  };
+  /**
+   * Add headings and paragraphs in the order they should appear. Newlines render as line breaks (e.g. "Hours:\nWednesdays: 11am to 4pm."). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.
+   */
+  blocks?:
+    | {
+        type: 'Paragraph' | 'Heading';
+        text: string;
+        /**
+         * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
+         */
+        linkLabel?: string | null;
+        /**
+         * Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.
+         */
+        linkHref?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Spare pages you can use for anything. Tick "Show in header menu", name the page and add heading/paragraph/photo blocks — the page goes live at /pages/<page-name> and its name appears in the header's "More" dropdown.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "custom-pages".
+ */
+export interface CustomPage {
+  id: number;
+  /**
+   * Tick to publish this page and add its name to the header's "More" dropdown. Leave unticked to keep it hidden while you work on it.
+   */
+  enabled?: boolean | null;
+  /**
+   * The page name — it becomes the heading on the page, the link label in the "More" dropdown and the URL (/pages/<page-name>). Renaming the page moves its URL.
+   */
+  title: string;
+  /**
+   * Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text. A "Photo" block shows an image from the Media collection.
+   */
+  blocks?:
+    | {
+        type: 'Paragraph' | 'Heading' | 'Photo';
+        /**
+         * The paragraph or heading text. Use a blank line between paragraphs.
+         */
+        text?: string | null;
+        /**
+         * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
+         */
+        linkLabel?: string | null;
+        /**
+         * Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.
+         */
+        linkHref?: string | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Text shown in small type under the photo.
+         */
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -449,6 +608,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'stories';
         value: number | Story;
+      } | null)
+    | ({
+        relationTo: 'donate';
+        value: number | Donate;
+      } | null)
+    | ({
+        relationTo: 'custom-pages';
+        value: number | CustomPage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -659,6 +826,74 @@ export interface StoriesSelect<T extends boolean = true> {
     | {
         image?: T;
         alt?: T;
+        caption?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donate_select".
+ */
+export interface DonateSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  paypal?:
+    | T
+    | {
+        heading?: T;
+        bodyStart?: T;
+        email?: T;
+        bodyEnd?: T;
+        buttonLabel?: T;
+        buttonHref?: T;
+      };
+  venmo?:
+    | T
+    | {
+        heading?: T;
+        bodyStart?: T;
+        username?: T;
+        profileHref?: T;
+        bodyEnd?: T;
+        buttonLabel?: T;
+        buttonHref?: T;
+      };
+  note?:
+    | T
+    | {
+        text?: T;
+        phone?: T;
+        phoneHref?: T;
+      };
+  blocks?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        linkLabel?: T;
+        linkHref?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "custom-pages_select".
+ */
+export interface CustomPagesSelect<T extends boolean = true> {
+  enabled?: T;
+  title?: T;
+  blocks?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        linkLabel?: T;
+        linkHref?: T;
+        image?: T;
         caption?: T;
         id?: T;
       };

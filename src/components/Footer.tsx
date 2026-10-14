@@ -66,6 +66,12 @@ export default function Footer() {
           >
             {site.phone}
           </a>
+          <a
+            href={`mailto:${site.email}`}
+            className="text-gold mt-2 block break-all text-lg font-semibold hover:underline"
+          >
+            {site.email}
+          </a>
           <p className="mt-2 text-cream/85 leading-relaxed">
             Mon–Fri, 9am–5pm
             <br />
