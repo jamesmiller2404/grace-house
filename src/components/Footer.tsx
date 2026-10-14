@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { site } from "@/content/site";
 
 /**
@@ -128,33 +127,25 @@ export default function Footer() {
               Accessibility
             </a>
           </p>
-          {/*
-           * Discrete staff entrance to the Payload admin (/admin/login is the
-           * login screen). Kept muted so it doesn't read as public navigation.
-           * prefetch={false} keeps the admin bundle out of every public page
-           * load; it still navigates client-side once clicked.
-           */}
-          <Link
-            href="/admin/login"
-            prefetch={false}
-            aria-label="Admin login"
-            title="Admin login"
-            className="text-cream/40 hover:text-lift inline-flex items-center gap-1.5 text-xs transition-colors"
+          {/* Site credit: Offworld Creations brand logo, linking to the
+           * studio's site. Rendered at 44x26 (from the 200x119 source) so it
+           * fits the slim legal row without dominating it, at 50% opacity to
+           * keep it subtle. */}
+          <a
+            href="https://offworldcreations.carrd.co"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Site by Offworld Creations"
+            title="Site by Offworld Creations"
+            className="flex flex-col items-center opacity-50 transition-opacity"
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-3.5 w-3.5 shrink-0"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Admin
-          </Link>
+            <Image
+              src="/images/offworldcreations_logo_transparent2.png"
+              alt="Offworld Creations logo"
+              width={44}
+              height={26}
+            />
+          </a>
         </div>
       </div>
     </footer>

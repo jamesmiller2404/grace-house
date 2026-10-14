@@ -77,6 +77,14 @@ export default buildConfig({
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
+  // Keep the admin panel (dashboard, login, collections) out of search results.
+  // Payload's per-view generateMetadata spreads admin.meta into the Next
+  // metadata of every admin page, emitting the robots tag there.
+  admin: {
+    meta: {
+      robots: "noindex, nofollow",
+    },
+  },
   typescript: { outputFile: "payload-types.ts" },
   // On first init, seed the collections that already have content in the app
   // (src/content/*.ts) so the admin panel starts with real data.
