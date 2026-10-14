@@ -33,3 +33,15 @@ services:
         sync: false
       - key: R2_SECRET_ACCESS_KEY
         sync: false
+      # Gmail SMTP for the admin "Forgot Password" emails (Payload email adapter).
+      # Requires 2-Step Verification + a 16-char App Password on the Google account.
+      - key: SMTP_HOST
+        sync: false # smtp.gmail.com
+      - key: SMTP_PORT
+        sync: false # 465
+      - key: SMTP_USER
+        sync: false # client Gmail address
+      - key: SMTP_PASS
+        sync: false # Gmail app password (NOT the Gmail password)
+      - key: PAYLOAD_FROM_EMAIL
+        sync: false # must match SMTP_USER (Gmail requirement)

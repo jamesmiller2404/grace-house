@@ -1,3 +1,4 @@
+import { nodemailerAdapter } from "@payloadcms/email-nodemailer";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
@@ -75,6 +76,27 @@ export default buildConfig({
         ]
       : []),
   ],
+  // Gmail SMTP adapter for transactional emails (admin "Forgot Password").
+  // Only enabled when SMTP variables are present, so local dev still boots
+  // (and password resets simply can't send mail) without credentials.
+  ...(process.env.SMTP_HOST
+    ? {
+        email: await nodemailerAdapter({
+          defaultFromAddress:
+            process.env.PAYLOAD_FROM_EMAIL || process.env.SMTP_USER!,
+          defaultFromName: "Grace House",
+          transportOptions: {
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT) || 465,
+            secure: (Number(process.env.SMTP_PORT) || 465) === 465,
+            auth: {
+              user: process.env.SMTP_USER!,
+              pass: process.env.SMTP_PASS!,
+            },
+          },
+        }),
+      }
+    : []),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   // Keep the admin panel (dashboard, login, collections) out of search results.
