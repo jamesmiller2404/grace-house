@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { formatStoryDate, storyDateLabel } from "@/lib/formatStoryDate";
 import type { StoryProfile as StoryProfileData } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
 import MemoriesGallery from "@/components/MemoriesGallery";
@@ -23,9 +24,6 @@ export default function StoryProfile({
 
   return (
     <div className="bg-sand">
-      {/* Thin gold bar across the very top */}
-      <div className="bg-gold h-1.5 w-full" aria-hidden />
-
       {/* Breadcrumb — Lives Changed › <profile name> */}
       <nav
         aria-label="Breadcrumb"
@@ -65,6 +63,11 @@ export default function StoryProfile({
             <span className="bg-lift text-ink mt-4 inline-block rounded-md px-4 py-1.5 text-sm font-bold tracking-[0.05em] uppercase">
               {profile.tag}
             </span>
+            {profile.date && (
+              <p className="text-ink/70 mt-2 text-sm font-semibold">
+                {storyDateLabel(profile.tag)} {formatStoryDate(profile.date)}
+              </p>
+            )}
             <blockquote className="mt-6 flex gap-3">
               <span className="bg-gold w-1 shrink-0 self-stretch" aria-hidden />
               <p className="font-heading text-anchor text-2xl leading-snug sm:text-3xl">

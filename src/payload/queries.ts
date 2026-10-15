@@ -644,6 +644,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
     slug: storySlug(doc.name),
     name: doc.name,
     tag: doc.role,
+    date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,

@@ -11,6 +11,12 @@ export type StoryProfile = {
   name: string;
   /** Gold pill label — one of "Graduate", "Volunteer", "Staff". */
   tag: string;
+  /**
+   * The date shown under the name on the profile page — the graduation date
+   * for graduates, or the date they began for staff and volunteers.
+   * Accepts "MM/DD/YYYY" (full date) or "MM/YYYY" (month and year only).
+   */
+  date?: string;
   /** Portrait photo. */
   image: string;
   /** object-position percentages (0-100) for the hero photo frame. */
@@ -37,6 +43,7 @@ export const storyProfiles: StoryProfile[] = [
     slug: "maria",
     name: "Maria",
     tag: "Graduate",
+    date: "05/30/2026",
     image: "/images/person1.jpg",
     heroQuote: "Grace House gave me my life back.",
     body: [
@@ -107,6 +114,7 @@ export const storyProfiles: StoryProfile[] = [
     slug: "john",
     name: "John",
     tag: "Graduate",
+    date: "06/30/2026",
     image: "/images/person2.jpg",
     heroQuote: "I've made life-long friends at Grace House.",
     body: [
@@ -158,6 +166,7 @@ export const storyProfiles: StoryProfile[] = [
     slug: "brandon",
     name: "Brandon",
     tag: "Graduate",
+    date: "08/15/2026",
     image: "/images/person3.jpg",
     heroQuote: "Grace House taught me who I am.",
     body: [
@@ -209,6 +218,7 @@ export const storyProfiles: StoryProfile[] = [
     slug: "denise",
     name: "Denise",
     tag: "Staff",
+    date: "03/2019",
     image: "/images/noPhotoAvailable_vertical.png",
     heroQuote: "Every graduate who walks out that door is family now.",
     body: [
@@ -261,6 +271,7 @@ export const storyProfiles: StoryProfile[] = [
     slug: "marcus",
     name: "Marcus",
     tag: "Staff",
+    date: "08/12/2021",
     image: "/images/noPhotoAvailable_vertical.png",
     heroQuote: "I run the house the way someone once ran it for me.",
     body: [
@@ -314,6 +325,7 @@ export const storyProfiles: StoryProfile[] = [
     slug: "elena",
     name: "Elena",
     tag: "Volunteer",
+    date: "01/15/2023",
     image: "/images/noPhotoAvailable_vertical.png",
     heroQuote: "I came to serve dinner. I stayed for the people.",
     body: [
