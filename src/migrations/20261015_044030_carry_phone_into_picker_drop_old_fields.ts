@@ -15,7 +15,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   //    contact-info global (`registered:<id>` — the Get Help Now strip then
   //    follows the number if it's edited in the Contact Info panel) or, when
   //    nothing matches (e.g. the global is still empty on a fresh install), a
-  //    custom picker value carrying the old number itself.
+  //    custom picker value carrying the old number itself. The registered
+  //    numbers are read straight from their table (see below), not through the
+  //    Local API — see the note on the read for why.
   // 4. Mark the choice required. Rows with no old number (not possible while
   //    `phone` was required, but guarded anyway) get a bare custom choice so
   //    this cannot fail; the front end falls back to the first registered
@@ -33,8 +35,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    ALTER TABLE "get_help_now" DROP COLUMN "phone";
   ALTER TABLE "get_help_now" DROP COLUMN "phone_href";`)
 
-  const contact = await payload.findGlobal({ slug: 'contact-info', req })
-  const registered = (contact.phoneNumbers ?? []) as {
+  // The registered numbers are read straight from their table (read-only),
+  // NOT through `payload.findGlobal({ slug: 'contact-info' })`: the Local API
+  // builds its query from the CURRENT config, which declares all three
+  // contact-info lists (phoneNumbers, emails and addresses), while this
+  // migration runs before 20261015_064117_contact_info_addresses creates the
+  // `contact_info_addresses` table. On a fresh database — the Render deploy,
+  // where `npx payload migrate` runs before any seed — that query selects a
+  // table that does not exist yet and the migration (and so the deploy) fails.
+  const registeredResult = await db.execute(
+    sql`SELECT "id", "value" FROM "contact_info_phone_numbers" ORDER BY "_order" ASC`,
+  )
+  const registered = ((registeredResult as unknown as { rows?: unknown[] })
+    .rows ?? (registeredResult as unknown as unknown[])) as {
     id: string
     value: string
   }[]
