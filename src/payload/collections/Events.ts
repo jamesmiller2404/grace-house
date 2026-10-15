@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { ContactSelectField } from "@/payload/fields/ContactSelect";
 import { ImagePositionField } from "@/payload/fields/ImagePosition";
 import { StatusSelectField } from "@/payload/fields/StatusSelect";
 import { TimeField } from "@/payload/fields/TimePicker";
@@ -239,25 +240,54 @@ export const Events: CollectionConfig = {
         },
       ],
     },
+    // Contact — the phone number and email shown on the event page's
+    // "Contact" card. Both are pickers of the entries registered in the
+    // Contact Info panel (/admin/globals/contact-info): picking a registered
+    // entry stores a live reference (edit it there and every event using it
+    // follows), and "Other (enter manually)" covers a one-off contact point.
+    // Leaving a picker unset is fine — the event then shows the first
+    // registered entry (see src/payload/queries.ts -> getEventBySlug).
     {
       name: "contact",
       type: "group",
       label: "Contact",
       fields: [
-        {
-          name: "phone",
-          type: "text",
+        ContactSelectField("phone", {
+          name: "phoneChoice",
           label: false,
           admin: {
             placeholder: "Phone Number",
+            description:
+              "The phone number shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered number.",
+          },
+        }),
+        {
+          name: "phoneCustom",
+          type: "text",
+          label: false,
+          admin: {
+            placeholder: "Custom phone number",
+            // Only shown when "Other (enter manually)" is the picked choice.
+            condition: (_data, sibling) => sibling?.phoneChoice === "custom",
           },
         },
-        {
-          name: "email",
-          type: "email",
+        ContactSelectField("email", {
+          name: "emailChoice",
           label: false,
           admin: {
             placeholder: "Email",
+            description:
+              "The email address shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered address.",
+          },
+        }),
+        {
+          name: "emailCustom",
+          type: "email",
+          label: false,
+          admin: {
+            placeholder: "Custom email",
+            // Only shown when "Other (enter manually)" is the picked choice.
+            condition: (_data, sibling) => sibling?.emailChoice === "custom",
           },
         },
       ],

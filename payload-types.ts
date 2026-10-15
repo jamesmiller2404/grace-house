@@ -105,9 +105,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-layout': HomeLayout;
+    'contact-info': ContactInfo;
+    footer: Footer;
   };
   globalsSelect: {
     'home-layout': HomeLayoutSelect<false> | HomeLayoutSelect<true>;
+    'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   widgets: {
@@ -199,8 +203,16 @@ export interface Event {
       }[]
     | null;
   contact?: {
-    phone?: string | null;
-    email?: string | null;
+    /**
+     * The phone number shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered number.
+     */
+    phoneChoice?: string | null;
+    phoneCustom?: string | null;
+    /**
+     * The email address shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered address.
+     */
+    emailChoice?: string | null;
+    emailCustom?: string | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -560,7 +572,7 @@ export interface CustomPage {
   createdAt: string;
 }
 /**
- * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
+ * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number (picked from the Contact Info panel or entered manually) and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "get-help-now".
@@ -596,13 +608,13 @@ export interface GetHelpNow {
    */
   ctaNote?: string | null;
   /**
-   * The phone number shown after "or call".
+   * The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.
    */
-  phone: string;
+  phoneChoice: string;
   /**
-   * The link behind the phone number (e.g. "tel:+19164700408").
+   * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
    */
-  phoneHref: string;
+  phoneCustom?: string | null;
   /**
    * The office hours shown under the phone number.
    */
@@ -797,8 +809,10 @@ export interface EventsSelect<T extends boolean = true> {
   contact?:
     | T
     | {
-        phone?: T;
-        email?: T;
+        phoneChoice?: T;
+        phoneCustom?: T;
+        emailChoice?: T;
+        emailCustom?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -993,8 +1007,8 @@ export interface GetHelpNowSelect<T extends boolean = true> {
   ctaLabel?: T;
   ctaHref?: T;
   ctaNote?: T;
-  phone?: T;
-  phoneHref?: T;
+  phoneChoice?: T;
+  phoneCustom?: T;
   hours?: T;
   facts?:
     | T
@@ -1077,6 +1091,91 @@ export interface HomeLayout {
   createdAt?: string | null;
 }
 /**
+ * The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for. Reorder rows by dragging, or with the '...' menu's Move Up / Move Down.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info".
+ */
+export interface ContactInfo {
+  id: number;
+  phoneNumbers?:
+    | {
+        /**
+         * What this number is for — e.g. "Office", "Intake", "Donations".
+         */
+        label?: string | null;
+        /**
+         * The phone number as it should be shown — e.g. (916) 470-0408.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  emails?:
+    | {
+        /**
+         * What this address is for — e.g. "Office", "Intake", "Volunteers".
+         */
+        label?: string | null;
+        /**
+         * The email address — e.g. gracehouse6121@gmail.com.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  addresses?:
+    | {
+        /**
+         * What this address is — e.g. "Grace House", "Church", "Mailing Address".
+         */
+        label?: string | null;
+        /**
+         * The address as it should be shown — e.g. 6121 Marwick Way, Carmichael, CA 95608.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * The phone number, email address and street address shown in the footer's 'Get Help' column. Pick each one from the entries registered in the Contact Info panel (editing them there updates the footer automatically), or choose 'Other (enter manually)' for a one-off.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  /**
+   * The phone number shown in the footer. Pick one registered in the Contact Info panel, or enter a custom one.
+   */
+  phoneChoice: string;
+  /**
+   * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
+   */
+  phoneCustom?: string | null;
+  /**
+   * The email address shown in the footer. Pick one registered in the Contact Info panel, or enter a custom one.
+   */
+  emailChoice: string;
+  /**
+   * The custom email address — e.g. gracehouse6121@gmail.com. The mailto: link is derived automatically.
+   */
+  emailCustom?: string | null;
+  /**
+   * The address shown in the footer below the office hours. Pick one registered in the Contact Info panel, or enter a custom one.
+   */
+  addressChoice: string;
+  /**
+   * The custom address — e.g. 6121 Marwick Way, Carmichael, CA 95608.
+   */
+  addressCustom?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-layout_select".
  */
@@ -1088,6 +1187,51 @@ export interface HomeLayoutSelect<T extends boolean = true> {
         enabled?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info_select".
+ */
+export interface ContactInfoSelect<T extends boolean = true> {
+  phoneNumbers?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  emails?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  addresses?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  phoneChoice?: T;
+  phoneCustom?: T;
+  emailChoice?: T;
+  emailCustom?: T;
+  addressChoice?: T;
+  addressCustom?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

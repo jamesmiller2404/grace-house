@@ -1,6 +1,8 @@
 import { default as default_8fb18f05fb7e1dc39f9754122148e2b2 } from '../../../../src/payload/fields/StatusSelect/Field.tsx'
 import { default as default_d42955c86c375058446f6a8864360da8 } from '../../../../src/payload/fields/TimePicker/Field.tsx'
 import { default as default_d2ad3e3f48e6de33e184359a387bbb6b } from '../../../../src/payload/fields/ImagePosition/Field.tsx'
+import { default as default_4e49b4194b19d8eb6aa0d3e1c3a2d3d1 } from '../../../../src/payload/fields/ContactSelect/PhoneField.tsx'
+import { default as default_bcf58fb3c735697e29276de8c79cca4d } from '../../../../src/payload/fields/ContactSelect/EmailField.tsx'
 import { default as default_ba23fe87f40460cfacd78b7ad3ca2ada } from '../../../../src/payload/collections/Events/CancelToDashboardButton.tsx'
 import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../../src/payload/collections/Events/DoneToListButton.tsx'
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
@@ -32,6 +34,9 @@ import { default as default_c3f9d01435ae13c1ccc55c2c02b3a4c4 } from '../../../..
 import { default as default_930d2638a28a6451a167cbcd06f9f842 } from '../../../../src/payload/globals/HomeLayout/CancelToDashboardButton.tsx'
 import { default as default_217a6f9983bacbbe3227d7e99a78de56 } from '../../../../src/payload/globals/HomeLayout/DoneToDashboardButton.tsx'
 import { default as default_47a19b3e1542a7bcf331e67fff7b9eeb } from '../../../../src/payload/globals/HomeLayout/EditView.tsx'
+import { default as default_9fe6a6fc6eeda119f61b00cb1da3fa74 } from '../../../../src/payload/globals/ContactInfo/RowLabel.tsx'
+import { default as default_d157d8df42a1320ad842e0b0c59b6996 } from '../../../../src/payload/fields/ContactSelect/AddressField.tsx'
+import { default as default_42a288946efec5e795c971376ff074e7 } from '../../../../src/payload/components/AccountAvatar.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -39,6 +44,8 @@ export const importMap = {
   "./src/payload/fields/StatusSelect/Field.tsx#default": default_8fb18f05fb7e1dc39f9754122148e2b2,
   "./src/payload/fields/TimePicker/Field.tsx#default": default_d42955c86c375058446f6a8864360da8,
   "./src/payload/fields/ImagePosition/Field.tsx#default": default_d2ad3e3f48e6de33e184359a387bbb6b,
+  "./src/payload/fields/ContactSelect/PhoneField.tsx#default": default_4e49b4194b19d8eb6aa0d3e1c3a2d3d1,
+  "./src/payload/fields/ContactSelect/EmailField.tsx#default": default_bcf58fb3c735697e29276de8c79cca4d,
   "./src/payload/collections/Events/CancelToDashboardButton.tsx#default": default_ba23fe87f40460cfacd78b7ad3ca2ada,
   "./src/payload/collections/Events/DoneToListButton.tsx#default": default_efa9dffc52114b53adee79502de11280,
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
@@ -70,5 +77,8 @@ export const importMap = {
   "./src/payload/globals/HomeLayout/CancelToDashboardButton.tsx#default": default_930d2638a28a6451a167cbcd06f9f842,
   "./src/payload/globals/HomeLayout/DoneToDashboardButton.tsx#default": default_217a6f9983bacbbe3227d7e99a78de56,
   "./src/payload/globals/HomeLayout/EditView.tsx#default": default_47a19b3e1542a7bcf331e67fff7b9eeb,
+  "./src/payload/globals/ContactInfo/RowLabel.tsx#default": default_9fe6a6fc6eeda119f61b00cb1da3fa74,
+  "./src/payload/fields/ContactSelect/AddressField.tsx#default": default_d157d8df42a1320ad842e0b0c59b6996,
+  "./src/payload/components/AccountAvatar.tsx#default": default_42a288946efec5e795c971376ff074e7,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

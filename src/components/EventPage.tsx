@@ -159,9 +159,9 @@ export default function EventPage({ event }: EventPageProps) {
             </section>
           </div>
 
-          {/* Right column: date card, then who it's for + contact */}
-          <div className="space-y-6 lg:pt-1">
-            <div className="border-gold rounded-lg border-2 bg-white p-6 shadow-sm">
+          {/* Right column: date card, then contact */}
+          <div className="space-y-4 lg:pt-1">
+            <div className="border-gold rounded-lg border-2 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-4">
                 {date && (
                   <div className="bg-ink flex h-16 w-14 shrink-0 flex-col items-center justify-center rounded-md text-center">
@@ -187,30 +187,11 @@ export default function EventPage({ event }: EventPageProps) {
                   )}
                 </p>
               </div>
-              <hr className="border-ink/15 my-4" />
-              <ul className="space-y-2 text-lg font-semibold">
-                <li>
-                  <a
-                    href="#add-to-calendar"
-                    className="text-terra hover:text-lift underline underline-offset-4"
-                  >
-                    Add to calendar
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#copy-link"
-                    className="text-terra hover:text-lift underline underline-offset-4"
-                  >
-                    Copy link to share
-                  </a>
-                </li>
-              </ul>
             </div>
 
-            <div className="border-ink rounded-lg border-2 bg-white p-6 shadow-sm">
+            <div className="border-ink rounded-lg border-2 bg-white p-5 shadow-sm">
               <h2 className="font-heading text-anchor text-xl">Contact</h2>
-              <p className="mt-3">{event.contact.questions}</p>
+              <p className="mt-2">{event.contact.questions}</p>
               <p>
                 {event.contact.phone}
                 <br />

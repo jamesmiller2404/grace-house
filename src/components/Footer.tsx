@@ -8,7 +8,32 @@ import { site } from "@/content/site";
  * Site footer, based on photoshop_assets/footer-section.png.
  * Deliberately breaks from the cream/anchor theme: near-black navy (#040d1d).
  */
-export default function Footer() {
+
+/**
+ * The contact details shown in the "Get Help" column. The site layout passes
+ * the values from the footer admin panel (/admin/globals/footer), which picks
+ * them from the Contact Info panel; the phone and email fall back to the
+ * static defaults in src/content/site.ts so the footer never breaks, even
+ * before the panel is filled in. The address has no static default — the
+ * footer simply shows no address line until one is picked/registered.
+ */
+export type FooterProps = {
+  /** Display phone number, e.g. "(916) 470-0408". */
+  phone?: string;
+  /** The tel: link behind the phone number, derived from it. */
+  phoneHref?: string;
+  /** The email address shown (its mailto: link is derived from it). */
+  email?: string;
+  /** The street address shown below the office hours. */
+  address?: string;
+};
+
+export default function Footer({
+  phone = site.phone,
+  phoneHref = site.phoneHref,
+  email = site.email,
+  address,
+}: FooterProps = {}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
@@ -60,22 +85,25 @@ export default function Footer() {
             Get Help
           </h2>
           <a
-            href={site.phoneHref}
+            href={phoneHref}
             className="text-gold mt-4 block text-2xl font-semibold"
           >
-            {site.phone}
+            {phone}
           </a>
           <a
-            href={`mailto:${site.email}`}
+            href={`mailto:${email}`}
             className="text-gold mt-2 block break-all text-lg font-semibold hover:underline"
           >
-            {site.email}
+            {email}
           </a>
           <p className="mt-2 text-cream/85 leading-relaxed">
             Mon–Fri, 9am–5pm
             <br />
             Intakes on weekdays only
           </p>
+          {address && (
+            <p className="text-cream/85 mt-2 leading-relaxed">{address}</p>
+          )}
         </div>
       </div>
 

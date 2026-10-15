@@ -13,6 +13,14 @@ import * as migration_20261014_061904_donate_generic_sections from './20261014_0
 import * as migration_20261014_065411_donate_text_blocks from './20261014_065411_donate_text_blocks';
 import * as migration_20261014_074937_custom_pages from './20261014_074937_custom_pages';
 import * as migration_20261015_001720_get_help_now from './20261015_001720_get_help_now';
+import * as migration_20261015_025500_contact_info from './20261015_025500_contact_info';
+import * as migration_20261015_043922_add_footer_and_phone_picker_columns from './20261015_043922_add_footer_and_phone_picker_columns';
+import * as migration_20261015_044030_carry_phone_into_picker_drop_old_fields from './20261015_044030_carry_phone_into_picker_drop_old_fields';
+import * as migration_20261015_064117_contact_info_addresses from './20261015_064117_contact_info_addresses';
+import * as migration_20261015_065658_footer_address_picker from './20261015_065658_footer_address_picker';
+import * as migration_20261015_065846_require_footer_address_choice from './20261015_065846_require_footer_address_choice';
+import * as migration_20261015_071434_events_contact_pickers from './20261015_071434_events_contact_pickers';
+import * as migration_20261015_071529_carry_event_contact_into_pickers from './20261015_071529_carry_event_contact_into_pickers';
 
 export const migrations = [
   {
@@ -88,6 +96,46 @@ export const migrations = [
   {
     up: migration_20261015_001720_get_help_now.up,
     down: migration_20261015_001720_get_help_now.down,
-    name: '20261015_001720_get_help_now'
+    name: '20261015_001720_get_help_now',
+  },
+  {
+    up: migration_20261015_025500_contact_info.up,
+    down: migration_20261015_025500_contact_info.down,
+    name: '20261015_025500_contact_info',
+  },
+  {
+    up: migration_20261015_043922_add_footer_and_phone_picker_columns.up,
+    down: migration_20261015_043922_add_footer_and_phone_picker_columns.down,
+    name: '20261015_043922_add_footer_and_phone_picker_columns',
+  },
+  {
+    up: migration_20261015_044030_carry_phone_into_picker_drop_old_fields.up,
+    down: migration_20261015_044030_carry_phone_into_picker_drop_old_fields.down,
+    name: '20261015_044030_carry_phone_into_picker_drop_old_fields',
+  },
+  {
+    up: migration_20261015_064117_contact_info_addresses.up,
+    down: migration_20261015_064117_contact_info_addresses.down,
+    name: '20261015_064117_contact_info_addresses',
+  },
+  {
+    up: migration_20261015_065658_footer_address_picker.up,
+    down: migration_20261015_065658_footer_address_picker.down,
+    name: '20261015_065658_footer_address_picker',
+  },
+  {
+    up: migration_20261015_065846_require_footer_address_choice.up,
+    down: migration_20261015_065846_require_footer_address_choice.down,
+    name: '20261015_065846_require_footer_address_choice',
+  },
+  {
+    up: migration_20261015_071434_events_contact_pickers.up,
+    down: migration_20261015_071434_events_contact_pickers.down,
+    name: '20261015_071434_events_contact_pickers',
+  },
+  {
+    up: migration_20261015_071529_carry_event_contact_into_pickers.up,
+    down: migration_20261015_071529_carry_event_contact_into_pickers.down,
+    name: '20261015_071529_carry_event_contact_into_pickers'
   },
 ];

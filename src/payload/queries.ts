@@ -16,6 +16,7 @@ import type { Intro as PayloadIntro } from "../../payload-types";
 import { introDefaults, type IntroContent } from "@/content/intro";
 import type { GetHelpNow as PayloadGetHelpNow } from "../../payload-types";
 import { helpStripDefaults } from "@/content/helpStrip";
+import { site } from "@/content/site";
 import type { HelpStripProps } from "@/sections/HelpStrip";
 import type { HomeLayout as PayloadHomeLayout } from "../../payload-types";
 import {
@@ -52,7 +53,12 @@ import { pillars } from "@/content/pillars";
 /** Grace House is in Sacramento, CA — the zone admin-panel dates are saved in. */
 const SITE_TIMEZONE = "America/Los_Angeles";
 
-/** Contact details shown on event pages when an event has none saved. */
+/**
+ * Last-resort contact details for event pages — only used when neither the
+ * event itself nor the Contact Info panel has a phone number / email address
+ * registered (see getEventBySlug, which resolves the event's contact pickers
+ * against the registered entries first).
+ */
 const DEFAULT_PHONE = "(916) 555-5555";
 const DEFAULT_EMAIL = "ghemail@gmail.com";
 
@@ -101,8 +107,15 @@ function toEventItem(doc: PayloadEvent): EventItem {
   };
 }
 
-/** Map one database event to the full single-event page content. */
-function toEventDetail(doc: PayloadEvent): EventDetail {
+/**
+ * Map one database event to the full single-event page content. The contact
+ * phone/email come in already resolved (getEventBySlug resolves the event's
+ * pickers against the Contact Info panel's registered entries).
+ */
+function toEventDetail(
+  doc: PayloadEvent,
+  contact: { phone: string; email: string },
+): EventDetail {
   return {
     slug: eventSlug(doc.title),
     title: doc.title,
@@ -126,8 +139,8 @@ function toEventDetail(doc: PayloadEvent): EventDetail {
     whatToExpect: (doc.whatToExpect ?? []).map((paragraph) => paragraph.text),
     contact: {
       questions: "Questions?",
-      phone: `Call ${doc.contact?.phone ?? DEFAULT_PHONE} or`,
-      email: `Email ${doc.contact?.email ?? DEFAULT_EMAIL}`,
+      phone: `Call ${contact.phone} or`,
+      email: `Email ${contact.email}`,
     },
   };
 }
@@ -155,6 +168,10 @@ export const getUpcomingEvents = cache(async (): Promise<EventItem[]> => {
 /**
  * One event by URL slug, for its /events/<slug> page. The slug is derived
  * from the title, so any event in the database gets a page automatically.
+ * The event's contact pickers are resolved against the Contact Info panel's
+ * registered phone numbers / email addresses — a picked entry follows edits
+ * made there, an unset picker uses the first registered entry, and only when
+ * the panel has none at all do the static last-resort defaults apply.
  */
 export const getEventBySlug = cache(
   async (slug: string): Promise<EventDetail | undefined> => {
@@ -165,7 +182,24 @@ export const getEventBySlug = cache(
       limit: 100,
     });
     const doc = docs.find((event) => eventSlug(event.title) === slug);
-    return doc ? toEventDetail(doc) : undefined;
+    if (!doc) return undefined;
+
+    const { phones, emails } = await getContactInfo();
+    const contact = {
+      phone:
+        resolveContact(
+          doc.contact?.phoneChoice,
+          doc.contact?.phoneCustom,
+          phones,
+        ) ?? DEFAULT_PHONE,
+      email:
+        resolveContact(
+          doc.contact?.emailChoice,
+          doc.contact?.emailCustom,
+          emails,
+        ) ?? DEFAULT_EMAIL,
+    };
+    return toEventDetail(doc, contact);
   },
 );
 
@@ -314,10 +348,142 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
 });
 
 /**
+ * Contact info data access — the only place the app reads the `contact-info`
+ * global from. The registered phone numbers, email addresses and physical
+ * addresses are managed in the admin panel (/admin/globals/contact-info);
+ * every contact point the site shows (the footer, the Get Help Now strip)
+ * picks one of them — or a custom value — so that panel is the single source
+ * of truth for contact details and nothing stays hardcoded.
+ */
+
+/** One registered phone number / email address as the site consumes it. */
+type RegisteredContact = { id: string; label: string | null; value: string };
+
+/**
+ * "(916) 470-0408" → "tel:+19164700408" — the tel: link derived from a
+ * display phone number, so editors never maintain the link by hand. 10
+ * digits get the US country code, 11 digits starting with 1 pass through,
+ * anything else links as typed.
+ */
+function telHref(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 10) return `tel:+1${digits}`;
+  if (digits.length === 11 && digits.startsWith("1")) return `tel:+${digits}`;
+  return `tel:${phone}`;
+}
+
+/**
+ * Map the Contact Info global's raw rows (whose ids Payload types as
+ * nullable, though array rows always carry one) to the RegisteredContact the
+ * site consumes — rows without an id (never in practice) are dropped.
+ */
+function toRegisteredContacts(
+  rows: { id?: string | null; label?: string | null; value: string }[],
+): RegisteredContact[] {
+  return rows
+    .filter((row) => row.id)
+    .map((row) => ({
+      id: row.id as string,
+      label: row.label ?? null,
+      value: row.value,
+    }));
+}
+
+/** The registered phone numbers, email addresses and street addresses, in panel order. */
+export const getContactInfo = cache(
+  async (): Promise<{
+    phones: RegisteredContact[];
+    emails: RegisteredContact[];
+    addresses: RegisteredContact[];
+  }> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const global = await payload.findGlobal({ slug: "contact-info" });
+    return {
+      phones: toRegisteredContacts(global.phoneNumbers ?? []),
+      emails: toRegisteredContacts(global.emails ?? []),
+      // Physical addresses share the { label, value } row shape with the
+      // phone/email lists; nothing consumes them yet — they are read here so
+      // this stays the only place the app touches the global.
+      addresses: toRegisteredContacts(global.addresses ?? []),
+    };
+  },
+);
+
+/**
+ * Resolve one picker's stored choice against the registered list — the
+ * shared fallback chain of the footer (getFooterContact) and the Get Help
+ * Now strip (getHelpStrip). A `registered:<id>` choice whose row still
+ * exists returns that row's value (a live reference: edit the number once in
+ * the Contact Info panel and every picker follows). A custom choice
+ * returns the custom value; a row deleted since it was picked (or no valid
+ * choice at all) falls back to the first registered entry, then to null so
+ * the caller can use its own static default.
+ */
+function resolveContact(
+  choice: string | null | undefined,
+  custom: string | null | undefined,
+  registered: RegisteredContact[],
+): string | null {
+  if (choice?.startsWith("registered:")) {
+    const id = choice.slice("registered:".length);
+    const match = registered.find((entry) => entry.id === id);
+    if (match) return match.value;
+  }
+  if (choice === "custom" && custom?.trim()) return custom.trim();
+  return registered[0]?.value ?? null;
+}
+
+/**
+ * The phone number, email address and street address shown in the footer's
+ * "Get Help" column — the choices made in the footer admin panel
+ * (/admin/globals/footer), picked from the numbers/addresses registered in
+ * Contact Info (or entered as custom values). The phone and email fall back
+ * to the first registered entry, then to the static defaults in
+ * src/content/site.ts, so the footer never breaks even before the panel is
+ * filled in; the address has no static default — it comes back undefined and
+ * the footer shows no address line until one is picked/registered. The tel:
+ * and mailto: links are derived from the chosen values, never stored.
+ */
+export const getFooterContact = cache(
+  async (): Promise<{
+    phone: string;
+    phoneHref: string;
+    email: string;
+    address?: string;
+  }> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const footer = await payload.findGlobal({ slug: "footer" });
+    const { phones, emails, addresses } = await getContactInfo();
+    const phone =
+      resolveContact(footer.phoneChoice, footer.phoneCustom, phones) ??
+      site.phone;
+    const email =
+      resolveContact(footer.emailChoice, footer.emailCustom, emails) ??
+      site.email;
+    const address = resolveContact(
+      footer.addressChoice,
+      footer.addressCustom,
+      addresses,
+    );
+    return {
+      phone,
+      phoneHref: telHref(phone),
+      email,
+      ...(address ? { address } : {}),
+    };
+  },
+);
+
+/**
  * The "Get Help Now" strip content — the heading, phone number, quick facts,
  * crisis resources and the assessment call-to-action. The first document in
  * the `get-help-now` collection (managed at /admin/collections/get-help-now)
- * is the source of truth; if none exists yet (e.g. before the first seed) the
+ * is the source of truth — except the phone number, which is picked there
+ * from the numbers registered in the Contact Info panel (or entered
+ * manually) and resolved through getContactInfo above. If no document exists
+ * yet (e.g. before the first seed) the
  * static defaults in src/content/helpStrip.ts are used so the strip never
  * breaks.
  *
@@ -338,6 +504,13 @@ export const getHelpStrip = cache(async (): Promise<HelpStripProps> => {
   if (!doc) return helpStripDefaults;
 
   const showAssessment = doc.showAssessment !== false;
+  // The phone picked in the panel — a registered number (a live reference to
+  // the Contact Info panel) or a custom one — with the tel: link derived from
+  // it; falls back to the first registered number, then to the static default.
+  const { phones } = await getContactInfo();
+  const phone =
+    resolveContact(doc.phoneChoice, doc.phoneCustom, phones) ??
+    helpStripDefaults.phone;
   return {
     heading: doc.heading,
     body: doc.body,
@@ -355,8 +528,8 @@ export const getHelpStrip = cache(async (): Promise<HelpStripProps> => {
           cta: undefined,
           ctaNote: undefined,
         }),
-    phone: doc.phone,
-    phoneHref: doc.phoneHref,
+    phone,
+    phoneHref: telHref(phone),
     hours: doc.hours,
     facts: (doc.facts ?? []).map((fact) => fact.text),
     crisisTitle: doc.crisisTitle ?? undefined,

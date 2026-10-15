@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
 
+import { ContactSelectField } from "@/payload/fields/ContactSelect";
+
 /**
  * "Get Help Now" strip — the Payload version of `helpStripDefaults` in
  * `src/content/helpStrip.ts` (each field maps 1:1 to the HelpStrip section's
@@ -9,7 +11,8 @@ import type { CollectionConfig } from "payload";
  *
  * The admin panel (/admin/collections/get-help-now) gives an editor:
  *  - the main heading ("Need help now?") and the opening line
- *  - the phone number, its link, and the office hours shown beneath it
+ *  - the phone number (picked from the numbers registered in the Contact Info
+ *    panel, or entered manually) and the office hours shown beneath it
  *  - the checklist of quick facts (✓ lines) on the right
  *  - the 24/7 crisis-resources heading and its three lines
  *  - the "Show assessment call-to-action" checkbox — untick it to hide the
@@ -33,9 +36,9 @@ export const GetHelpNow: CollectionConfig = {
   },
   admin: {
     useAsTitle: "heading",
-    defaultColumns: ["heading", "phone", "showAssessment", "updatedAt"],
+    defaultColumns: ["heading", "phoneChoice", "showAssessment", "updatedAt"],
     description:
-      'The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.',
+      'The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number (picked from the Contact Info panel or entered manually) and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.',
     // Custom Edit view wrapper that paints the mockup frame
     // (photoshop_assets/adminPanelMockup1.png) — the same #111115 page
     // background, rounded #2d2d33 panel around the fields and #101012 input
@@ -147,25 +150,32 @@ export const GetHelpNow: CollectionConfig = {
         condition: (_data, sibling) => sibling?.showAssessment !== false,
       },
     },
-    // Phone + hours, shown beneath the button.
-    {
-      name: "phone",
-      type: "text",
+    // Phone + hours, shown beneath the button. The phone is a picker of the
+    // numbers registered in the Contact Info panel (a live reference — edit
+    // the number there and this strip follows) with an "Other (enter
+    // manually)" choice; the tel: link is derived at render time
+    // (src/payload/queries.ts), so there is no link field to keep in sync.
+    ContactSelectField("phone", {
+      name: "phoneChoice",
       required: true,
       label: "Phone number",
       admin: {
         placeholder: "(916) 470-0408",
-        description: 'The phone number shown after "or call".',
+        description:
+          'The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.',
       },
-    },
+    }),
     {
-      name: "phoneHref",
+      name: "phoneCustom",
       type: "text",
-      required: true,
-      label: "Phone link",
+      label: "Custom phone number",
       admin: {
-        placeholder: "tel:+19164700408",
-        description: 'The link behind the phone number (e.g. "tel:+19164700408").',
+        placeholder: "(916) 470-0408",
+        description:
+          "The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.",
+        // Only shown (and only validated) when "Other (enter manually)" is
+        // the picked choice — Payload skips validation of hidden fields.
+        condition: (_data, sibling) => sibling?.phoneChoice === "custom",
       },
     },
     {

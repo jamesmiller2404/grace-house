@@ -15,6 +15,8 @@ import { Donate } from "@/payload/collections/Donate";
 import { CustomPages } from "@/payload/collections/CustomPages";
 import { GetHelpNow } from "@/payload/collections/GetHelpNow";
 import { HomeLayout } from "@/payload/globals/HomeLayout";
+import { ContactInfo } from "@/payload/globals/ContactInfo";
+import { Footer } from "@/payload/globals/Footer";
 import {
   seedEvents,
   seedHero,
@@ -25,6 +27,8 @@ import {
   seedDonate,
   seedCustomPages,
   seedGetHelpNow,
+  seedContactInfo,
+  seedFooter,
 } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -37,7 +41,7 @@ const trustedOrigins = [
 
 export default buildConfig({
   collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow],
-  globals: [HomeLayout],
+  globals: [HomeLayout, ContactInfo, Footer],
   serverURL: siteURL,
   cors: trustedOrigins,
   csrf: trustedOrigins,
@@ -108,12 +112,25 @@ export default buildConfig({
     meta: {
       robots: "noindex, nofollow",
     },
+    // Custom avatar for the account icon in the upper-right corner of the
+    // admin panel (the icon that links to /admin/account): keeps Payload's
+    // person icon and adds the logged-in user's name and access level
+    // (admin / editor) beneath it.
+    // See src/payload/components/AccountAvatar.tsx
+    avatar: {
+      Component: {
+        path: "./src/payload/components/AccountAvatar.tsx",
+      },
+    },
   },
   typescript: { outputFile: "payload-types.ts" },
   // On first init, seed the collections that already have content in the app
   // (src/content/*.ts) so the admin panel starts with real data.
   onInit: async (payload) => {
     try {
+      // Contact Info first — the events, footer and Get Help Now seeds below
+      // pick their phone/email from the numbers/emails it registers.
+      await seedContactInfo(payload);
       const { totalDocs } = await payload.count({ collection: "events" });
       if (totalDocs === 0) {
         await seedEvents(payload);
@@ -142,10 +159,13 @@ export default buildConfig({
       if (customPages.totalDocs === 0) {
         await seedCustomPages(payload);
       }
+      // Contact Info is seeded at the top of this function; the footer and
+      // Get Help Now seeds below pick their phone/email from its rows.
       const getHelpNow = await payload.count({ collection: "get-help-now" });
       if (getHelpNow.totalDocs === 0) {
         await seedGetHelpNow(payload);
       }
+      await seedFooter(payload);
       await seedHomeLayout(payload);
     } catch (error) {
       payload.logger.warn(

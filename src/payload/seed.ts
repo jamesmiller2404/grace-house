@@ -25,18 +25,31 @@ const MIME_TYPES: Record<string, string> = {
   ".svg": "image/svg+xml",
 };
 
-/** Phone/email from the existing event pages in src/content/events.ts. */
-const CONTACT_PHONE = "(916) 555-5555";
-const CONTACT_EMAIL = "ghemail@gmail.com";
-
 /**
  * Seed the `events` and `media` collections with the events that already
  * exist in the app (`eventDetails` in src/content/events.ts), uploading the
  * referenced images from public/images as media documents so every seeded
  * event has its accompanying image. Runs once, when the events collection
- * is empty.
+ * is empty. Every seeded event's contact pickers point at the phone number
+ * and email address registered in the Contact Info panel (see
+ * seedContactInfo, which runs before this on a first boot).
  */
 export async function seedEvents(payload: Payload): Promise<void> {
+  // The contact pickers every seeded event starts with: the entries
+  // registered in the Contact Info panel as live references — or custom
+  // entries when the panel is still empty, so the pages always show the
+  // organization's real contact details.
+  const contactPhone = await registeredOrCustom(
+    payload,
+    "phoneNumbers",
+    CONTACT_INFO_PHONE,
+  );
+  const contactEmail = await registeredOrCustom(
+    payload,
+    "emails",
+    CONTACT_INFO_EMAIL,
+  );
+
   for (const detail of eventDetails) {
     // 1. Upload the event image (e.g. /images/halloween1.png from public/).
     let imageId: number | undefined;
@@ -88,8 +101,10 @@ export async function seedEvents(payload: Payload): Promise<void> {
         about: detail.about.map((text) => ({ text })),
         whatToExpect: detail.whatToExpect.map((text) => ({ text })),
         contact: {
-          phone: CONTACT_PHONE,
-          email: CONTACT_EMAIL,
+          phoneChoice: contactPhone.choice,
+          ...(contactPhone.custom ? { phoneCustom: contactPhone.custom } : {}),
+          emailChoice: contactEmail.choice,
+          ...(contactEmail.custom ? { emailCustom: contactEmail.custom } : {}),
         },
       },
     });
@@ -205,6 +220,17 @@ export async function seedIntro(payload: Payload): Promise<void> {
  * empty.
  */
 export async function seedGetHelpNow(payload: Payload): Promise<void> {
+  // The phone picked for the strip: the registered number matching the
+  // strip's default phone (a live reference — edit it in the Contact Info
+  // panel and the strip follows; see registeredOrCustom), or a custom entry
+  // when Contact Info has no such number yet, so the strip shows the right
+  // number either way.
+  const phoneChoice = await registeredOrCustom(
+    payload,
+    "phoneNumbers",
+    helpStripDefaults.phone,
+  );
+
   await payload.create({
     collection: "get-help-now",
     data: {
@@ -215,8 +241,8 @@ export async function seedGetHelpNow(payload: Payload): Promise<void> {
       ctaLabel: helpStripDefaults.cta?.label,
       ctaHref: helpStripDefaults.cta?.href,
       ctaNote: helpStripDefaults.ctaNote,
-      phone: helpStripDefaults.phone,
-      phoneHref: helpStripDefaults.phoneHref,
+      phoneChoice: phoneChoice.choice,
+      ...(phoneChoice.custom ? { phoneCustom: phoneChoice.custom } : {}),
       hours: helpStripDefaults.hours,
       facts: helpStripDefaults.facts.map((text) => ({ text })),
       crisisTitle: helpStripDefaults.crisisTitle,
@@ -249,6 +275,143 @@ export async function seedHomeLayout(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the home page layout from src/content/homeLayout.ts.",
+  );
+}
+
+/**
+ * The organization's main contact points — the values seeded into the
+ * Contact Info global (seedContactInfo) and picked from there for the footer
+ * (seedFooter) and the Get Help Now strip (seedGetHelpNow).
+ */
+const CONTACT_INFO_PHONE = "(916) 470-0408";
+const CONTACT_INFO_EMAIL = "gracehouse6121@gmail.com";
+/** The label + street address of the main location. */
+const CONTACT_INFO_ADDRESS_LABEL = "Grace House";
+const CONTACT_INFO_ADDRESS = "6121 Marwick Way, Carmichael, CA 95608";
+
+/**
+ * The picker choice a seed uses for a contact point: when the Contact Info
+ * global already registers a row with this value (e.g. "(916) 470-0408"),
+ * the choice is a live reference to that row (`registered:<id>` — edit the
+ * number in the Contact Info panel and every picker follows); otherwise it's
+ * a custom choice carrying the value itself, so the seeded page shows the
+ * right contact point either way. Used by seedFooter and seedGetHelpNow,
+ * which both run after seedContactInfo has filled the global.
+ */
+async function registeredOrCustom(
+  payload: Payload,
+  globalKey: "phoneNumbers" | "emails" | "addresses",
+  value: string,
+): Promise<{ choice: string; custom?: string }> {
+  const contact = await payload.findGlobal({ slug: "contact-info" });
+  const rows = (contact[globalKey] ?? []) as { id: string; value: string }[];
+  const match = rows.find((row) => row.value === value);
+  return match
+    ? { choice: `registered:${match.id}` }
+    : { choice: "custom", custom: value };
+}
+
+/**
+ * Seed the `contact-info` global with the organization's current contact
+ * points — one phone number, one email address (both labelled "Office") and
+ * the main street address (labelled "Grace House") — so the admin panel
+ * (/admin/globals/contact-info) starts with real data. Each list that is
+ * still empty is seeded (updateGlobal merges, so lists that already have
+ * rows are left untouched — the panel may already have been filled in part,
+ * e.g. numbers seeded before addresses existed). Runs before the footer and
+ * Get Help Now seeds, which pick their phone/email from the rows registered
+ * here.
+ */
+export async function seedContactInfo(payload: Payload): Promise<void> {
+  const current = await payload.findGlobal({ slug: "contact-info" });
+  const data: {
+    phoneNumbers?: { label: string; value: string }[];
+    emails?: { label: string; value: string }[];
+    addresses?: { label: string; value: string }[];
+  } = {};
+  if (!(current.phoneNumbers && current.phoneNumbers.length > 0)) {
+    data.phoneNumbers = [{ label: "Office", value: CONTACT_INFO_PHONE }];
+  }
+  if (!(current.emails && current.emails.length > 0)) {
+    data.emails = [{ label: "Office", value: CONTACT_INFO_EMAIL }];
+  }
+  if (!(current.addresses && current.addresses.length > 0)) {
+    data.addresses = [
+      {
+        label: CONTACT_INFO_ADDRESS_LABEL,
+        value: CONTACT_INFO_ADDRESS,
+      },
+    ];
+  }
+  if (!data.phoneNumbers && !data.emails && !data.addresses) {
+    return;
+  }
+
+  await payload.updateGlobal({ slug: "contact-info", data });
+
+  payload.logger.info(
+    "Seed: filled the empty contact-info lists (phone, email, addresses).",
+  );
+}
+
+/**
+ * Seed the `footer` global with the footer's contact choices — the phone
+ * number, email address and street address registered in the Contact Info
+ * panel (see seedContactInfo), picked as live references so the footer
+ * follows them. Each choice that is still unset is seeded (updateGlobal
+ * merges, so choices already made are left untouched — the panel may already
+ * have been filled in part, e.g. phone/email picked before the address
+ * picker existed).
+ */
+export async function seedFooter(payload: Payload): Promise<void> {
+  const current = await payload.findGlobal({ slug: "footer" });
+  const data: {
+    phoneChoice?: string;
+    phoneCustom?: string;
+    emailChoice?: string;
+    emailCustom?: string;
+    addressChoice?: string;
+    addressCustom?: string;
+  } = {};
+  if (!current.phoneChoice) {
+    const phone = await registeredOrCustom(
+      payload,
+      "phoneNumbers",
+      CONTACT_INFO_PHONE,
+    );
+    data.phoneChoice = phone.choice;
+    if (phone.custom) data.phoneCustom = phone.custom;
+  }
+  if (!current.emailChoice) {
+    const email = await registeredOrCustom(
+      payload,
+      "emails",
+      CONTACT_INFO_EMAIL,
+    );
+    data.emailChoice = email.choice;
+    if (email.custom) data.emailCustom = email.custom;
+  }
+  if (!current.addressChoice) {
+    const address = await registeredOrCustom(
+      payload,
+      "addresses",
+      CONTACT_INFO_ADDRESS,
+    );
+    data.addressChoice = address.choice;
+    if (address.custom) data.addressCustom = address.custom;
+  }
+  if (
+    !data.phoneChoice &&
+    !data.emailChoice &&
+    !data.addressChoice
+  ) {
+    return;
+  }
+
+  await payload.updateGlobal({ slug: "footer", data });
+
+  payload.logger.info(
+    "Seed: filled the unset footer contact choices (phone, email, address).",
   );
 }
 

@@ -6,7 +6,7 @@ import {
 } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { getCustomNavItems } from "@/payload/queries";
+import { getCustomNavItems, getFooterContact } from "@/payload/queries";
 import "./globals.css";
 
 // DM Serif Display ships in one weight only (400)
@@ -45,12 +45,22 @@ export default async function RootLayout({
   // Empty while every spare page is disabled — the dropdown then vanishes.
   const customLinks = await getCustomNavItems();
 
+  // The phone number, email address and street address the footer shows,
+  // picked in the footer admin panel (/admin/globals/footer) from the Contact
+  // Info panel's registered entries — with the same fallback chain there.
+  const footerContact = await getFooterContact();
+
   return (
     <html lang="en" className={`${dmSerif.variable} ${source.variable} ${cormorant.variable}`}>
       <body className="flex min-h-screen flex-col">
         <Nav customLinks={customLinks} />
         {children}
-        <Footer />
+        <Footer
+          phone={footerContact.phone}
+          phoneHref={footerContact.phoneHref}
+          email={footerContact.email}
+          address={footerContact.address}
+        />
       </body>
     </html>
   );
