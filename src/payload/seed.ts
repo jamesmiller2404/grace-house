@@ -5,6 +5,7 @@ import type { Payload } from "payload";
 import { eventDetails } from "@/content/events";
 import { heroDefaults } from "@/content/hero";
 import { defaultHomeLayout } from "@/content/homeLayout";
+import { helpStripDefaults } from "@/content/helpStrip";
 import { introDefaults } from "@/content/intro";
 import { missionPage } from "@/content/mission";
 import { donateDefaults } from "@/content/donate";
@@ -193,6 +194,38 @@ export async function seedIntro(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the front page Intro section from src/content/intro.ts.",
+  );
+}
+
+/**
+ * Seed the `get-help-now` collection with the "Get Help Now" strip copy that
+ * already exists in the app (`helpStripDefaults` in src/content/helpStrip.ts),
+ * so the admin panel starts with the real strip content — including the
+ * assessment call-to-action switched on. Runs once, when the collection is
+ * empty.
+ */
+export async function seedGetHelpNow(payload: Payload): Promise<void> {
+  await payload.create({
+    collection: "get-help-now",
+    data: {
+      heading: helpStripDefaults.heading,
+      body: helpStripDefaults.body,
+      showAssessment: true,
+      assessmentNote: helpStripDefaults.assessmentNote,
+      ctaLabel: helpStripDefaults.cta?.label,
+      ctaHref: helpStripDefaults.cta?.href,
+      ctaNote: helpStripDefaults.ctaNote,
+      phone: helpStripDefaults.phone,
+      phoneHref: helpStripDefaults.phoneHref,
+      hours: helpStripDefaults.hours,
+      facts: helpStripDefaults.facts.map((text) => ({ text })),
+      crisisTitle: helpStripDefaults.crisisTitle,
+      crisisLines: helpStripDefaults.crisisLines,
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the Get Help Now strip from src/content/helpStrip.ts.",
   );
 }
 

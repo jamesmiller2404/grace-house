@@ -6,6 +6,7 @@ import {
 } from "@/content/homePage";
 import {
   getHero,
+  getHelpStrip,
   getHomeLayout,
   getIntro,
   getStories,
@@ -27,9 +28,10 @@ import type { SectionConfig } from "@/sections/registry";
  * time.
  */
 export default async function Home() {
-  const [events, hero, intro, layout, stories] = await Promise.all([
+  const [events, hero, helpStrip, intro, layout, stories] = await Promise.all([
     getUpcomingEvents(),
     getHero(),
+    getHelpStrip(),
     getIntro(),
     getHomeLayout(),
     getStories(),
@@ -70,6 +72,12 @@ export default async function Home() {
             },
           },
         };
+      }
+      // Overlay the editable "Get Help Now" strip content (heading, phone,
+      // quick facts, crisis resources, and whether the assessment
+      // call-to-action is shown at all) from the database.
+      if (section.type === "help-strip") {
+        return { ...section, props: { ...section.props, ...helpStrip } };
       }
       // Overlay the editable "What is Grace House" copy and colors.
       if (section.type === "welcome") {

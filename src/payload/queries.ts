@@ -14,6 +14,9 @@ import type { Hero as PayloadHero } from "../../payload-types";
 import { heroDefaults } from "@/content/hero";
 import type { Intro as PayloadIntro } from "../../payload-types";
 import { introDefaults, type IntroContent } from "@/content/intro";
+import type { GetHelpNow as PayloadGetHelpNow } from "../../payload-types";
+import { helpStripDefaults } from "@/content/helpStrip";
+import type { HelpStripProps } from "@/sections/HelpStrip";
 import type { HomeLayout as PayloadHomeLayout } from "../../payload-types";
 import {
   defaultHomeLayout,
@@ -308,6 +311,61 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
     };
   }
   return introDefaults;
+});
+
+/**
+ * The "Get Help Now" strip content — the heading, phone number, quick facts,
+ * crisis resources and the assessment call-to-action. The first document in
+ * the `get-help-now` collection (managed at /admin/collections/get-help-now)
+ * is the source of truth; if none exists yet (e.g. before the first seed) the
+ * static defaults in src/content/helpStrip.ts are used so the strip never
+ * breaks.
+ *
+ * When the document's "Show assessment call-to-action" checkbox is unticked,
+ * the assessment sentence, the Start Assessment button and its note come
+ * back as undefined — the HelpStrip section renders without them. The
+ * undefined keys are returned deliberately (not omitted) so the caller's
+ * `{...defaults, ...this}` spread also clears the static default values.
+ */
+export const getHelpStrip = cache(async (): Promise<HelpStripProps> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "get-help-now",
+    limit: 1,
+  });
+  const doc = docs[0] as PayloadGetHelpNow | undefined;
+  if (!doc) return helpStripDefaults;
+
+  const showAssessment = doc.showAssessment !== false;
+  return {
+    heading: doc.heading,
+    body: doc.body,
+    ...(showAssessment
+      ? {
+          assessmentNote: doc.assessmentNote ?? undefined,
+          cta: {
+            label: doc.ctaLabel ?? helpStripDefaults.cta!.label,
+            href: doc.ctaHref ?? helpStripDefaults.cta!.href,
+          },
+          ctaNote: doc.ctaNote ?? undefined,
+        }
+      : {
+          assessmentNote: undefined,
+          cta: undefined,
+          ctaNote: undefined,
+        }),
+    phone: doc.phone,
+    phoneHref: doc.phoneHref,
+    hours: doc.hours,
+    facts: (doc.facts ?? []).map((fact) => fact.text),
+    crisisTitle: doc.crisisTitle ?? undefined,
+    crisisLines: (doc.crisisLines ?? []).map((line) => ({
+      label: line.label,
+      text: line.text,
+      href: line.href,
+    })),
+  };
 });
 
 /**

@@ -12,6 +12,7 @@ import * as migration_20261014_055905_donate_page from './20261014_055905_donate
 import * as migration_20261014_061904_donate_generic_sections from './20261014_061904_donate_generic_sections';
 import * as migration_20261014_065411_donate_text_blocks from './20261014_065411_donate_text_blocks';
 import * as migration_20261014_074937_custom_pages from './20261014_074937_custom_pages';
+import * as migration_20261015_001720_get_help_now from './20261015_001720_get_help_now';
 
 export const migrations = [
   {
@@ -82,6 +83,11 @@ export const migrations = [
   {
     up: migration_20261014_074937_custom_pages.up,
     down: migration_20261014_074937_custom_pages.down,
-    name: '20261014_074937_custom_pages'
+    name: '20261014_074937_custom_pages',
+  },
+  {
+    up: migration_20261015_001720_get_help_now.up,
+    down: migration_20261015_001720_get_help_now.down,
+    name: '20261015_001720_get_help_now'
   },
 ];

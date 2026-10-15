@@ -76,6 +76,7 @@ export interface Config {
     stories: Story;
     donate: Donate;
     'custom-pages': CustomPage;
+    'get-help-now': GetHelpNow;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     stories: StoriesSelect<false> | StoriesSelect<true>;
     donate: DonateSelect<false> | DonateSelect<true>;
     'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
+    'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -558,6 +560,81 @@ export interface CustomPage {
   createdAt: string;
 }
 /**
+ * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-help-now".
+ */
+export interface GetHelpNow {
+  id: number;
+  /**
+   * The strip's main heading (e.g. "Need help now?").
+   */
+  heading: string;
+  /**
+   * The opening line (e.g. "You don't have to figure this out alone. Talk to a real person.").
+   */
+  body: string;
+  /**
+   * Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.
+   */
+  showAssessment?: boolean | null;
+  /**
+   * The sentence shown after the opening line (e.g. "Or you can fill out the assessment below and we will contact you within two business days.").
+   */
+  assessmentNote?: string | null;
+  /**
+   * The assessment button text (e.g. "Start Assessment").
+   */
+  ctaLabel?: string | null;
+  /**
+   * Where the assessment button links to (e.g. "/assessment").
+   */
+  ctaHref?: string | null;
+  /**
+   * The note next to the button (e.g. "Fill out the Grace House Assessment Form").
+   */
+  ctaNote?: string | null;
+  /**
+   * The phone number shown after "or call".
+   */
+  phone: string;
+  /**
+   * The link behind the phone number (e.g. "tel:+19164700408").
+   */
+  phoneHref: string;
+  /**
+   * The office hours shown under the phone number.
+   */
+  hours: string;
+  /**
+   * The ✓ lines shown on the right of the strip.
+   */
+  facts?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The heading above the crisis resources (e.g. "RESOURCES THAT ARE AVAILABLE 24/7").
+   */
+  crisisTitle?: string | null;
+  /**
+   * The 24/7 crisis resources shown at the bottom of the strip.
+   */
+  crisisLines?:
+    | {
+        label: string;
+        text: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -616,6 +693,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'custom-pages';
         value: number | CustomPage;
+      } | null)
+    | ({
+        relationTo: 'get-help-now';
+        value: number | GetHelpNow;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -895,6 +976,39 @@ export interface CustomPagesSelect<T extends boolean = true> {
         linkHref?: T;
         image?: T;
         caption?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-help-now_select".
+ */
+export interface GetHelpNowSelect<T extends boolean = true> {
+  heading?: T;
+  body?: T;
+  showAssessment?: T;
+  assessmentNote?: T;
+  ctaLabel?: T;
+  ctaHref?: T;
+  ctaNote?: T;
+  phone?: T;
+  phoneHref?: T;
+  hours?: T;
+  facts?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  crisisTitle?: T;
+  crisisLines?:
+    | T
+    | {
+        label?: T;
+        text?: T;
+        href?: T;
         id?: T;
       };
   updatedAt?: T;

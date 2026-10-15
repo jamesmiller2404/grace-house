@@ -13,6 +13,7 @@ import { Stories } from "@/payload/collections/Stories";
 import { Users } from "@/payload/collections/Users";
 import { Donate } from "@/payload/collections/Donate";
 import { CustomPages } from "@/payload/collections/CustomPages";
+import { GetHelpNow } from "@/payload/collections/GetHelpNow";
 import { HomeLayout } from "@/payload/globals/HomeLayout";
 import {
   seedEvents,
@@ -23,6 +24,7 @@ import {
   seedStories,
   seedDonate,
   seedCustomPages,
+  seedGetHelpNow,
 } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -34,7 +36,7 @@ const trustedOrigins = [
 ];
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages],
+  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow],
   globals: [HomeLayout],
   serverURL: siteURL,
   cors: trustedOrigins,
@@ -139,6 +141,10 @@ export default buildConfig({
       const customPages = await payload.count({ collection: "custom-pages" });
       if (customPages.totalDocs === 0) {
         await seedCustomPages(payload);
+      }
+      const getHelpNow = await payload.count({ collection: "get-help-now" });
+      if (getHelpNow.totalDocs === 0) {
+        await seedGetHelpNow(payload);
       }
       await seedHomeLayout(payload);
     } catch (error) {

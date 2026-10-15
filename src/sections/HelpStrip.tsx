@@ -3,9 +3,19 @@ import Link from "next/link";
 export type HelpStripProps = {
   heading: string;
   body: string;
+  /**
+   * The assessment sentence ("Or you can fill out the assessment below...")
+   * shown right after the body while the assessment call-to-action is on.
+   */
+  assessmentNote?: string;
   phone: string;
   phoneHref: string;
-  cta: { label: string; href: string };
+  /**
+   * The assessment button. Optional — when the admin panel's "Show assessment
+   * call-to-action" checkbox is unticked the button (and its note) are omitted
+   * and the strip renders without them.
+   */
+  cta?: { label: string; href: string };
   ctaNote?: string;
   /** Office hours shown under the phone number (e.g. "Mon–Fri, 9am–5pm"). */
   hours: string;
@@ -17,6 +27,7 @@ export type HelpStripProps = {
 export default function HelpStrip({
   heading,
   body,
+  assessmentNote,
   phone,
   phoneHref,
   cta,
@@ -41,32 +52,37 @@ export default function HelpStrip({
             >
               {heading}
             </h2>
-            <p className="mt-2 text-lg">{body}</p>
+            <p className="mt-2 text-lg">
+              {body}
+              {assessmentNote && ` ${assessmentNote}`}
+            </p>
 
-            <div className="mt-6">
-              <div className="flex flex-wrap items-center gap-4 max-lg:w-fit max-lg:flex-col max-lg:gap-0">
-                <Link
-                  href={cta.href}
-                  className="bg-terra hover:bg-terra/90 rounded-md px-4 py-2 text-lg font-bold text-white transition-colors"
-                >
-                  {cta.label}
-                </Link>
-                {ctaNote && (
-                  <span className="text-base font-bold max-lg:hidden">← {ctaNote}</span>
-                )}
-                {ctaNote && (
-                  <div className="mt-2 lg:hidden">
-                    <span
-                      aria-hidden="true"
-                      className="block text-center text-base font-bold leading-none"
-                    >
-                      ↑
-                    </span>
-                    <span className="text-base font-bold">{ctaNote}</span>
-                  </div>
-                )}
+            {cta && (
+              <div className="mt-6">
+                <div className="flex flex-wrap items-center gap-4 max-lg:w-fit max-lg:flex-col max-lg:gap-0">
+                  <Link
+                    href={cta.href}
+                    className="bg-terra hover:bg-terra/90 rounded-md px-4 py-2 text-lg font-bold text-white transition-colors"
+                  >
+                    {cta.label}
+                  </Link>
+                  {ctaNote && (
+                    <span className="text-base font-bold max-lg:hidden">← {ctaNote}</span>
+                  )}
+                  {ctaNote && (
+                    <div className="mt-2 lg:hidden">
+                      <span
+                        aria-hidden="true"
+                        className="block text-center text-base font-bold leading-none"
+                      >
+                        ↑
+                      </span>
+                      <span className="text-base font-bold">{ctaNote}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             <p className="mt-5 text-2xl font-bold">
               or call{" "}
