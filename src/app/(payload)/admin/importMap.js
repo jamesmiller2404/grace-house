@@ -35,7 +35,13 @@ import { default as default_930d2638a28a6451a167cbcd06f9f842 } from '../../../..
 import { default as default_217a6f9983bacbbe3227d7e99a78de56 } from '../../../../src/payload/globals/HomeLayout/DoneToDashboardButton.tsx'
 import { default as default_47a19b3e1542a7bcf331e67fff7b9eeb } from '../../../../src/payload/globals/HomeLayout/EditView.tsx'
 import { default as default_9fe6a6fc6eeda119f61b00cb1da3fa74 } from '../../../../src/payload/globals/ContactInfo/RowLabel.tsx'
+import { default as default_54f1c6c3a43494333fb0af7bc55fc5c7 } from '../../../../src/payload/globals/ContactInfo/CancelToDashboardButton.tsx'
+import { default as default_fbef3a9f78b89c9bef00041d2511dcff } from '../../../../src/payload/globals/ContactInfo/DoneToDashboardButton.tsx'
+import { default as default_23ec79c596e257b85332156ded05ce90 } from '../../../../src/payload/globals/ContactInfo/EditView.tsx'
 import { default as default_d157d8df42a1320ad842e0b0c59b6996 } from '../../../../src/payload/fields/ContactSelect/AddressField.tsx'
+import { default as default_6223d9783f0348abfa2d228d3182c222 } from '../../../../src/payload/globals/Footer/CancelToDashboardButton.tsx'
+import { default as default_735fc14cf0f8527882a31dd8143c8477 } from '../../../../src/payload/globals/Footer/DoneToDashboardButton.tsx'
+import { default as default_3f563e9fff31c0ab9083f7e40b5d1d9d } from '../../../../src/payload/globals/Footer/EditView.tsx'
 import { default as default_42a288946efec5e795c971376ff074e7 } from '../../../../src/payload/components/AccountAvatar.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -78,7 +84,13 @@ export const importMap = {
   "./src/payload/globals/HomeLayout/DoneToDashboardButton.tsx#default": default_217a6f9983bacbbe3227d7e99a78de56,
   "./src/payload/globals/HomeLayout/EditView.tsx#default": default_47a19b3e1542a7bcf331e67fff7b9eeb,
   "./src/payload/globals/ContactInfo/RowLabel.tsx#default": default_9fe6a6fc6eeda119f61b00cb1da3fa74,
+  "./src/payload/globals/ContactInfo/CancelToDashboardButton.tsx#default": default_54f1c6c3a43494333fb0af7bc55fc5c7,
+  "./src/payload/globals/ContactInfo/DoneToDashboardButton.tsx#default": default_fbef3a9f78b89c9bef00041d2511dcff,
+  "./src/payload/globals/ContactInfo/EditView.tsx#default": default_23ec79c596e257b85332156ded05ce90,
   "./src/payload/fields/ContactSelect/AddressField.tsx#default": default_d157d8df42a1320ad842e0b0c59b6996,
+  "./src/payload/globals/Footer/CancelToDashboardButton.tsx#default": default_6223d9783f0348abfa2d228d3182c222,
+  "./src/payload/globals/Footer/DoneToDashboardButton.tsx#default": default_735fc14cf0f8527882a31dd8143c8477,
+  "./src/payload/globals/Footer/EditView.tsx#default": default_3f563e9fff31c0ab9083f7e40b5d1d9d,
   "./src/payload/components/AccountAvatar.tsx#default": default_42a288946efec5e795c971376ff074e7,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

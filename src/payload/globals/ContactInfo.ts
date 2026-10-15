@@ -27,6 +27,39 @@ export const ContactInfo: GlobalConfig = {
   admin: {
     description:
       "The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for. Reorder rows by dragging, or with the '...' menu's Move Up / Move Down.",
+    // Custom Edit view wrapper that paints the admin panel style the other
+    // panels use (photoshop_assets/adminPanelMockup1.png and
+    // adminPanelMockup1_homePageLayout.png): the #111115 page background and
+    // the rounded #2d2d33 / #414141 cards that each contact row becomes — the
+    // same palette as the Home Page Layout, Events and Hero pages. The same
+    // elements are repainted for the Light theme.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/globals/ContactInfo/EditView.tsx",
+            },
+          },
+        },
+      },
+      // "Cancel" and "Done" buttons next to Save — a global renders its
+      // document controls bar from `elements` (not `edit`, which collections
+      // use), in array order before the Save button, so the bar reads
+      // "Cancel | Done | Save" like the Home Page Layout and Events pages.
+      // Both return to the admin dashboard, since a global has no list view
+      // to go back to.
+      elements: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/globals/ContactInfo/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/globals/ContactInfo/DoneToDashboardButton.tsx",
+          },
+        ],
+      },
+    },
   },
   fields: [
     {

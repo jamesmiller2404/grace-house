@@ -5,6 +5,7 @@ import {
   MAX_HOME_STORIES,
 } from "@/content/homePage";
 import {
+  getCustomPageById,
   getHero,
   getHelpStrip,
   getHomeLayout,
@@ -19,7 +20,9 @@ import type { SectionConfig } from "@/sections/registry";
  * appear — and which of them appear at all — is owned by the admin panel's
  * "Home Page Layout" page (the `home-layout` global). Each saved row names a
  * section type; here it is mapped to the static config that carries that
- * section's props (src/content/homePage.ts) and hidden rows are dropped.
+ * section's props (src/content/homePage.ts) and hidden rows are dropped. A
+ * "Custom Page" row instead names a `custom-pages` document, which is
+ * resolved here (enabled pages only) into the same kind of section config.
  *
  * Content that lives in the database — the hero (from the `hero` collection),
  * the "What is Grace House" intro (from the `intro` collection), upcoming
@@ -42,6 +45,27 @@ export default async function Home() {
     homePageSections.map((section) => [section.type, section]),
   );
 
+  // The custom (spare) pages the layout places on the front page: a "Custom
+  // Page" row stores the picked page's id, resolved here. Only enabled pages
+  // resolve — a row whose page was hidden or deleted renders nothing, the
+  // same graceful degradation as an unknown section type.
+  const customPageIds = layout
+    .filter((row) => row.section === "custom-page" && row.enabled !== false)
+    .map((row) => row.customPage)
+    .filter((id): id is number => id !== null && id !== undefined);
+  const customPageSections = new Map<string, SectionConfig>();
+  await Promise.all(
+    customPageIds.map(async (id) => {
+      const page = await getCustomPageById(id);
+      if (page) {
+        customPageSections.set(String(id), {
+          type: "custom-page",
+          props: { page },
+        });
+      }
+    }),
+  );
+
   // Whether the "Get Help Now" strip is shown on the home page. The hero's
   // "Get Help" button links to the on-page strip when it is; when an editor
   // hides the strip, the button falls back to the standalone /get-help page.
@@ -52,8 +76,15 @@ export default async function Home() {
   const sections: SectionConfig[] = layout
     // Skip sections the editor has hidden.
     .filter((row) => row.enabled !== false)
-    // Resolve each saved row to its section config; unknown types are dropped.
-    .map((row) => byType.get(row.section))
+    // Resolve each saved row to its section config; unknown types and
+    // custom-page rows whose page is missing/hidden are dropped.
+    .map((row) =>
+      row.section === "custom-page"
+        ? row.customPage
+          ? customPageSections.get(String(row.customPage))
+          : undefined
+        : byType.get(row.section),
+    )
     .filter((section): section is SectionConfig => section !== undefined)
     .map((section) => {
       // Overlay the editable hero heading / subline / image from the database.

@@ -1080,11 +1080,15 @@ export interface HomeLayout {
     /**
      * Which home page section this row controls.
      */
-    section: 'hero' | 'help-strip' | 'welcome' | 'four-pillars' | 'stories' | 'upcoming-events';
+    section: 'hero' | 'help-strip' | 'welcome' | 'four-pillars' | 'stories' | 'upcoming-events' | 'custom-page';
     /**
      * Untick to hide this section without removing it from the order.
      */
     enabled?: boolean | null;
+    /**
+     * Which custom page this row shows — only pages with "Show in header menu" ticked are listed. Manage the pages under Custom Pages.
+     */
+    customPage?: (number | null) | CustomPage;
     id?: string | null;
   }[];
   updatedAt?: string | null;
@@ -1185,6 +1189,7 @@ export interface HomeLayoutSelect<T extends boolean = true> {
     | {
         section?: T;
         enabled?: T;
+        customPage?: T;
         id?: T;
       };
   updatedAt?: T;

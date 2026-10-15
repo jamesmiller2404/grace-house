@@ -21,6 +21,7 @@ import * as migration_20261015_065658_footer_address_picker from './20261015_065
 import * as migration_20261015_065846_require_footer_address_choice from './20261015_065846_require_footer_address_choice';
 import * as migration_20261015_071434_events_contact_pickers from './20261015_071434_events_contact_pickers';
 import * as migration_20261015_071529_carry_event_contact_into_pickers from './20261015_071529_carry_event_contact_into_pickers';
+import * as migration_20261015_075010_home_layout_custom_page from './20261015_075010_home_layout_custom_page';
 
 export const migrations = [
   {
@@ -136,6 +137,11 @@ export const migrations = [
   {
     up: migration_20261015_071529_carry_event_contact_into_pickers.up,
     down: migration_20261015_071529_carry_event_contact_into_pickers.down,
-    name: '20261015_071529_carry_event_contact_into_pickers'
+    name: '20261015_071529_carry_event_contact_into_pickers',
+  },
+  {
+    up: migration_20261015_075010_home_layout_custom_page.up,
+    down: migration_20261015_075010_home_layout_custom_page.down,
+    name: '20261015_075010_home_layout_custom_page'
   },
 ];

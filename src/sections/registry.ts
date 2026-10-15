@@ -18,6 +18,9 @@ import FourPillars, { type FourPillarsProps } from "./FourPillars";
 import HelpStrip, { type HelpStripProps } from "./HelpStrip";
 import UpcomingEvents, { type UpcomingEventsProps } from "./UpcomingEvents";
 import StoriesSection, { type StoriesSectionProps } from "./StoriesSection";
+import CustomPageSection, {
+  type CustomPageSectionProps,
+} from "./CustomPageSection";
 
 export type SectionConfig =
   | { type: "hero"; props: HeroProps }
@@ -25,7 +28,8 @@ export type SectionConfig =
   | { type: "four-pillars"; props: FourPillarsProps }
   | { type: "help-strip"; props: HelpStripProps }
   | { type: "upcoming-events"; props: UpcomingEventsProps }
-  | { type: "stories"; props: StoriesSectionProps };
+  | { type: "stories"; props: StoriesSectionProps }
+  | { type: "custom-page"; props: CustomPageSectionProps };
 
 export const sectionRegistry = {
   hero: { component: Hero },
@@ -34,6 +38,9 @@ export const sectionRegistry = {
   "help-strip": { component: HelpStrip },
   "upcoming-events": { component: UpcomingEvents },
   stories: { component: StoriesSection },
+  // The page itself is chosen per layout row (home-layout global); the props
+  // are supplied by the front page, not by src/content/homePage.ts.
+  "custom-page": { component: CustomPageSection },
 } as const;
 
 export type SectionType = keyof typeof sectionRegistry;

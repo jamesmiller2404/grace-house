@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CustomPageBlocks from "@/components/CustomPageBlocks";
 import { getCustomPageBySlug } from "@/payload/queries";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -56,97 +56,13 @@ export default async function CustomPage({ params }: Params) {
         <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
         <h1 className="font-heading text-ink text-5xl">{page.title}</h1>
 
-        {/* The page body — blocks in the order the editor stacked them. */}
+        {/* The page body — blocks in the order the editor stacked them
+            (shared with the home page's "Custom Page" section). */}
         <div className="max-w-[70ch]">
-          {page.blocks.map((block, i) => {
-            if (block.type === "photo") {
-              return (
-                <figure key={i} className="mt-10">
-                  <div className="border-ink relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-lg border-2">
-                    <Image
-                      src={block.image}
-                      alt={block.alt}
-                      fill
-                      sizes="(min-width:1024px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  {block.caption && (
-                    <figcaption className="text-ink/80 mt-2 text-base">
-                      {block.caption}
-                    </figcaption>
-                  )}
-                </figure>
-              );
-            }
-            const link =
-              block.linkLabel && block.linkHref
-                ? { href: block.linkHref, label: block.linkLabel }
-                : null;
-            if (block.type === "heading") {
-              return (
-                <h2
-                  key={i}
-                  className="font-heading text-ink mt-10 text-3xl sm:text-4xl"
-                >
-                  {block.text}
-                  {link && (
-                    <>
-                      {" "}
-                      <BlockLink href={link.href} label={link.label} />
-                    </>
-                  )}
-                </h2>
-              );
-            }
-            return (
-              <p
-                key={i}
-                className={`text-ink/90 whitespace-pre-line leading-relaxed ${
-                  i === 0 ? "mt-4" : "mt-6"
-                }`}
-              >
-                {block.text}
-                {link && (
-                  <>
-                    {" "}
-                    <BlockLink href={link.href} label={link.label} />
-                  </>
-                )}
-              </p>
-            );
-          })}
+          <CustomPageBlocks blocks={page.blocks} />
         </div>
       </div>
     </main>
   );
 }
 
-/**
- * The optional link attached to a paragraph/heading block. Internal links
- * (starting with "/") render through Next's Link; website URLs open in a new
- * tab; tel:/mailto: links hand off to the phone's dialer / mail app.
- */
-function BlockLink({ href, label }: { href: string; label: string }) {
-  const classes =
-    label.length > 30
-      ? "break-all underline underline-offset-4 hover:underline"
-      : "underline underline-offset-4 hover:underline";
-  if (href.startsWith("/")) {
-    return (
-      <Link href={href} className={`font-semibold ${classes}`}>
-        {label}
-      </Link>
-    );
-  }
-  const external = /^https?:\/\//i.test(href);
-  return (
-    <a
-      href={href}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={`font-semibold ${classes}`}
-    >
-      {label}
-    </a>
-  );
-}

@@ -32,6 +32,38 @@ export const Footer: GlobalConfig = {
   admin: {
     description:
       "The phone number, email address and street address shown in the footer's 'Get Help' column. Pick each one from the entries registered in the Contact Info panel (editing them there updates the footer automatically), or choose 'Other (enter manually)' for a one-off.",
+    // Custom Edit view wrapper that paints the admin panel style the other
+    // panels use (photoshop_assets/adminPanelMockup1.png): the #111115 page
+    // background, the rounded #2d2d33 panel around the fields and the #101012
+    // input boxes and pickers — the same palette as the Get Help Now, Events
+    // and Hero pages. The same elements are repainted for the Light theme.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/globals/Footer/EditView.tsx",
+            },
+          },
+        },
+      },
+      // "Cancel" and "Done" buttons next to Save — a global renders its
+      // document controls bar from `elements` (not `edit`, which collections
+      // use), in array order before the Save button, so the bar reads
+      // "Cancel | Done | Save" like the Home Page Layout and Events pages.
+      // Both return to the admin dashboard, since a global has no list view
+      // to go back to.
+      elements: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/globals/Footer/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/globals/Footer/DoneToDashboardButton.tsx",
+          },
+        ],
+      },
+    },
   },
   fields: [
     ContactSelectField("phone", {

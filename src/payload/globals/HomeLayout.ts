@@ -7,9 +7,12 @@ import { homeSectionLabels, homeSectionTypes } from "@/content/homeLayout";
  *
  * The page lists every section as one row (see src/content/homeLayout.ts for
  * the list and the friendly names). Each row has:
- *  - a "Section" dropdown (which section the row controls), and
+ *  - a "Section" dropdown (which section the row controls),
  *  - a "Show on home page" checkbox (untick to hide it without losing its
- *    place in the order).
+ *    place in the order), and
+ *  - a "Custom page" picker, shown only for a "Custom Page" row, which lists
+ *    the visible custom pages (the `custom-pages` collection) so any of them
+ *    can be placed on the home page.
  *
  * Reordering uses Payload's built-in array controls: drag a row on desktop, or
  * open the row's "..." menu and use Move Up / Move Down — the easiest option
@@ -104,6 +107,21 @@ export const HomeLayout: GlobalConfig = {
           admin: {
             description:
               "Untick to hide this section without removing it from the order.",
+          },
+        },
+        {
+          name: "customPage",
+          type: "relationship",
+          relationTo: "custom-pages",
+          label: "Custom page",
+          // Only the pages that are visible on the site (their "Show in header
+          // menu" checkbox is ticked) can be placed on the home page.
+          filterOptions: { enabled: { equals: true } },
+          admin: {
+            description:
+              'Which custom page this row shows — only pages with "Show in header menu" ticked are listed. Manage the pages under Custom Pages.',
+            // Only relevant for a "Custom Page" row.
+            condition: (_data, sibling) => sibling?.section === "custom-page",
           },
         },
       ],

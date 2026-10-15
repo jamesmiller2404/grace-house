@@ -557,10 +557,20 @@ export const getHomeLayout = cache(async (): Promise<HomeLayoutSection[]> => {
 
   const sections = doc?.sections;
   if (Array.isArray(sections) && sections.length > 0) {
-    return sections.map((row) => ({
-      section: row.section as HomeLayoutSection["section"],
-      enabled: row.enabled ?? true,
-    }));
+    return sections.map((row) => {
+      // A "custom-page" row points at a `custom-pages` document; the
+      // relationship comes back as a bare id, or as the populated document
+      // when it was read with depth. Only the id is kept — the front page
+      // resolves it through getCustomPageById, which re-checks visibility.
+      const related = row.customPage;
+      const customPage =
+        typeof related === "object" && related !== null ? related.id : related;
+      return {
+        section: row.section as HomeLayoutSection["section"],
+        enabled: row.enabled ?? true,
+        customPage: customPage ?? null,
+      };
+    });
   }
   return defaultHomeLayout;
 });
@@ -760,6 +770,29 @@ function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
     }),
   };
 }
+
+/**
+ * One enabled custom page by id — used by the home page for a "Custom Page"
+ * row of the home-layout global (the row stores the page id; see
+ * src/app/(frontend)/page.tsx). Returns undefined for a page that is missing
+ * or no longer visible (its "Show in header menu" checkbox unticked), so the
+ * row renders nothing — the same graceful degradation as an unknown section
+ * type.
+ */
+export const getCustomPageById = cache(
+  async (id: number | string): Promise<CustomPageContent | undefined> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "custom-pages",
+      limit: 1,
+      where: { id: { equals: id } },
+    });
+    const doc = docs[0];
+    if (!doc || doc.enabled !== true) return undefined;
+    return toCustomPageContent(doc);
+  },
+);
 
 /**
  * The enabled custom pages as header "More" dropdown entries (label + URL),
