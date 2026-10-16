@@ -109,6 +109,14 @@ export default buildConfig({
   // Payload's per-view generateMetadata spreads admin.meta into the Next
   // metadata of every admin page, emitting the robots tag there.
   admin: {
+    // Lock the admin panel to the dark scheme. Payload's default is `"all"`,
+    // which lets every user pick Light / Dark / Auto in Account -> Settings
+    // (the radio group rendered by Payload's ToggleTheme). Setting `"dark"`
+    // forces the dark palette server-side (`data-theme="dark"` on <html>, no
+    // cookie or OS lookup) and hides those Light / Dark / Auto options, so
+    // the panel always matches the dark schemes in
+    // src/app/(payload)/custom.css and the EditView palettes.
+    theme: "dark",
     meta: {
       robots: "noindex, nofollow",
     },
