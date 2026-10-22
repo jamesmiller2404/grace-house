@@ -1,17 +1,23 @@
+
 import type { CollectionConfig } from 'payload'
 
-/**
- * Admin users for the Payload panel (/admin). Payload handles the email and
- * password columns automatically via `auth: true` — this config only adds the
- * extra fields we care about.
- */
 export const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
+
+  access: {
+    admin: ({ req }) => req.user?.role === 'admin',
+    create: () => false,
+    read: ({ req }) => req.user?.role === 'admin',
+    update: ({ req }) => req.user?.role === 'admin',
+    delete: () => false,
+  },
+
   admin: {
     defaultColumns: ['name', 'email', 'role'],
     useAsTitle: 'name',
   },
+
   fields: [
     {
       name: 'name',
@@ -21,9 +27,11 @@ export const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       options: ['admin', 'editor'],
-      defaultValue: 'admin',
+      defaultValue: 'editor',
       required: true,
+      access: {
+        update: () => false,
+      },
     },
   ],
 }
-
