@@ -37,15 +37,27 @@ export const CustomPages: CollectionConfig = {
   // Public site content — allow anonymous reads of the REST API.
   // (The site itself reads through the Local API, which bypasses
   // access control; this opens the public /api/custom-pages endpoint.)
-  access: {
-    read: () => true,
-    // Cap the collection at MAX_CUSTOM_PAGES documents, so the three
-    // pre-wired spare pages are all the panel ever offers.
-    create: async ({ req: { payload } }) => {
-      const { totalDocs } = await payload.count({ collection: "custom-pages" });
-      return totalDocs < MAX_CUSTOM_PAGES;
-    },
+access: {
+  read: () => true,
+
+  create: async ({ req }) => {
+    if (req.user?.role !== "admin" && req.user?.role !== "editor") {
+      return false;
+    }
+
+    const { totalDocs } = await req.payload.count({
+      collection: "custom-pages",
+    });
+
+    return totalDocs < MAX_CUSTOM_PAGES;
   },
+
+  update: ({ req }) =>
+    req.user?.role === "admin" || req.user?.role === "editor",
+
+  delete: ({ req }) =>
+    req.user?.role === "admin" || req.user?.role === "editor",
+},
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "enabled", "updatedAt"],

@@ -10,6 +10,12 @@ export const Media: CollectionConfig = {
   // site's <Image> tags (via the Next image optimizer) can fetch them.
   access: {
     read: () => true,
+    create: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
+    update: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
+    delete: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
     useAsTitle: "alt",

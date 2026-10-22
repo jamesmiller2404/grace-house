@@ -23,6 +23,8 @@ export const ContactInfo: GlobalConfig = {
   // Public site content — allow anonymous reads of the REST API.
   access: {
     read: () => true,
+    update: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
     description:

@@ -35,6 +35,7 @@ const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 const trustedOrigins = [
     "http://localhost:3000",
+    "http://localhost:3001",
   "https://mockup1.offworldcreations.com",
   "https://payload-app-nxg2.onrender.com",
 ];

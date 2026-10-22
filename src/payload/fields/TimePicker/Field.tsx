@@ -267,7 +267,7 @@ const TimePickerField: React.FC<TextFieldClientProps> = (props) => {
             placeholder={placeholder}
             style={styles.input}
             type="text"
-            value={value}
+            value={value ?? ""}
           />
           <button
             aria-expanded={popupOpen}

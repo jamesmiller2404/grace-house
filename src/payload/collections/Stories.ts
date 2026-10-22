@@ -36,6 +36,12 @@ export const Stories: CollectionConfig = {
   // control; this opens the public /api/stories endpoint.)
   access: {
     read: () => true,
+    create: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
+    update: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
+    delete: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
     useAsTitle: "name",

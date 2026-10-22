@@ -6,11 +6,11 @@ export const Users: CollectionConfig = {
   auth: true,
 
   access: {
-    admin: ({ req }) => req.user?.role === 'admin',
-    create: () => false,
+    admin: ({ req }) => req.user?.role === 'admin' || req.user?.role === 'editor',
+    create: ({ req }) => req.user?.role === 'admin',
     read: ({ req }) => req.user?.role === 'admin',
     update: ({ req }) => req.user?.role === 'admin',
-    delete: () => false,
+    delete: ({ req }) => req.user?.role === 'admin',
   },
 
   admin: {
@@ -30,7 +30,7 @@ export const Users: CollectionConfig = {
       defaultValue: 'editor',
       required: true,
       access: {
-        update: () => false,
+        update: ({ req }) => req.user?.role === 'admin',
       },
     },
   ],

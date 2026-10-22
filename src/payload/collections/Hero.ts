@@ -22,6 +22,8 @@ export const Hero: CollectionConfig = {
   // access control; this opens the public /api/hero endpoint.)
   access: {
     read: () => true,
+    update: ({ req }) =>
+      req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
     useAsTitle: "heading",
