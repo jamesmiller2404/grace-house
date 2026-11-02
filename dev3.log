@@ -1,0 +1,3153 @@
+
+> grace-house@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.8 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.1.10.175:3000
+- Environments: .env
+✓ Ready in 886ms
+✓ Running next.config.ts took 107ms
+- Experiments (use with caution):
+  ⨯ turbopackServerFastRefresh
+
+⨯ ./payload.config.ts:191:7
+Error: Expected a semicolon
+  [90m189 |[0m       [36mawait[0m seedFooter(payload);
+  [90m190 |[0m       [36mawait[0m seedHomeLayout(payload);
+[31m[1m>[0m [90m191 |[0m     } [36mcatch[0m (error) {
+  [90m    |[0m       [31m[1m^^^^^[0m
+  [90m192 |[0m       payload.logger.warn(
+  [90m193 |[0m         [32m"Seed: skipped (could not check the events collection)."[0m,
+  [90m194 |[0m       );
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx
+
+
+
+./payload.config.ts:197:4
+Error: Expected a semicolon
+  [90m195 |[0m       payload.logger.debug({ error });
+  [90m196 |[0m     }
+[31m[1m>[0m [90m197 |[0m   };
+  [90m    |[0m    [31m[1m^[0m
+  [90m198 |[0m });
+  [90m199 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx
+
+
+ GET /admin 500 in 1508ms (next.js: 1236ms, application-code: 272ms)
+[browser] Uncaught Error: ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx
+
+
+    at <unknown> (Error: ./payload.config.ts:197:4)
+    at <unknown> (Error: (./payload.config.ts:197:4)
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   },
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   },
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(frontend)/faq/page.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/payload/queries.ts
+    ./src/app/(frontend)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   },
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:198:1
+Error: Expected a semicolon
+  196 |     }
+  197 |   }
+> 198 | });
+      | ^
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:198:2
+Error: Expected a semicolon
+  196 |     }
+  197 |   };
+> 198 | });
+      |  ^
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+⨯ ./payload.config.ts:191:7
+Error: Expected a semicolon
+  [90m189 |[0m       [36mawait[0m seedFooter(payload);
+  [90m190 |[0m       [36mawait[0m seedHomeLayout(payload);
+[31m[1m>[0m [90m191 |[0m     } [36mcatch[0m (error) {
+  [90m    |[0m       [31m[1m^^^^^[0m
+  [90m192 |[0m       payload.logger.warn(
+  [90m193 |[0m         [32m"Seed: skipped (could not check the events collection)."[0m,
+  [90m194 |[0m       );
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(frontend)/faq/page.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/payload/queries.ts
+    ./src/app/(frontend)/layout.tsx
+
+
+
+./payload.config.ts:197:4
+Error: Expected a semicolon
+  [90m195 |[0m       payload.logger.debug({ error });
+  [90m196 |[0m     }
+[31m[1m>[0m [90m197 |[0m   };
+  [90m    |[0m    [31m[1m^[0m
+  [90m198 |[0m });
+  [90m199 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(frontend)/faq/page.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/payload/queries.ts
+    ./src/app/(frontend)/layout.tsx
+
+
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+ GET /faq 500 in 927ms (next.js: 872ms, application-code: 54ms)
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] Uncaught Error: ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx
+
+
+    at <unknown> (Error: ./payload.config.ts:197:4)
+    at <unknown> (Error: (./payload.config.ts:197:4)
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[browser] ./payload.config.ts:197:4
+Error: Expected a semicolon
+  195 |       payload.logger.debug({ error });
+  196 |     }
+> 197 |   };
+      |    ^
+  198 | });
+  199 |
+
+Parsing ecmascript source code failed
+
+Import traces:
+  #1 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/not-found.tsx
+
+  #2 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/admin/[[...segments]]/page.tsx
+
+  #3 [Server Component]:
+    ./payload.config.ts
+    ./src/app/(payload)/layout.tsx 
+[?25h

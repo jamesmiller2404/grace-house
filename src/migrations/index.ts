@@ -22,6 +22,8 @@ import * as migration_20261015_065846_require_footer_address_choice from './2026
 import * as migration_20261015_071434_events_contact_pickers from './20261015_071434_events_contact_pickers';
 import * as migration_20261015_071529_carry_event_contact_into_pickers from './20261015_071529_carry_event_contact_into_pickers';
 import * as migration_20261015_075010_home_layout_custom_page from './20261015_075010_home_layout_custom_page';
+import * as migration_20261102_063140_sync_schema from './20261102_063140_sync_schema';
+import * as migration_20261102_065655_add_faq from './20261102_065655_add_faq';
 
 export const migrations = [
   {
@@ -142,6 +144,16 @@ export const migrations = [
   {
     up: migration_20261015_075010_home_layout_custom_page.up,
     down: migration_20261015_075010_home_layout_custom_page.down,
-    name: '20261015_075010_home_layout_custom_page'
+    name: '20261015_075010_home_layout_custom_page',
+  },
+  {
+    up: migration_20261102_063140_sync_schema.up,
+    down: migration_20261102_063140_sync_schema.down,
+    name: '20261102_063140_sync_schema',
+  },
+  {
+    up: migration_20261102_065655_add_faq.up,
+    down: migration_20261102_065655_add_faq.down,
+    name: '20261102_065655_add_faq'
   },
 ];

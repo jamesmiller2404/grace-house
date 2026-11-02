@@ -14,6 +14,8 @@ import { stories } from "@/content/stories";
 import { storyProfiles } from "@/content/storyProfiles";
 import { MAX_CUSTOM_PAGES } from "@/payload/collections/CustomPages";
 import type { Story } from "../../payload-types";
+import type { Faq } from "../../payload-types";
+import { faqDefaults, type FaqBlock } from "@/content/faq";
 
 /** Mime types for the image extensions used in public/images. */
 const MIME_TYPES: Record<string, string> = {
@@ -576,5 +578,88 @@ export async function seedCustomPages(payload: Payload): Promise<void> {
 
   payload.logger.info(
     "Seed: created the three spare custom pages (hidden until used).",
+  );
+}
+
+/** Turns "plain **bold** text" into Lexical text nodes. */
+function toTextNodes(value: string) {
+  return value
+    .split(/\*\*(.+?)\*\*/g)
+    .map((part, i) => ({ part, bold: i % 2 === 1 }))
+    .filter(({ part }) => part.length > 0)
+    .map(({ part, bold }) => ({
+      type: "text",
+      text: part,
+      format: bold ? 1 : 0,
+      detail: 0,
+      mode: "normal",
+      style: "",
+      version: 1,
+    }));
+}
+
+/** Builds Lexical editor state from simple paragraph/list blocks. */
+function toLexical(blocks: FaqBlock[]): Faq["answer"] {
+  const children = blocks.map((block) => {
+    if ("list" in block) {
+      return {
+        type: "list",
+        listType: "bullet",
+        tag: "ul",
+        start: 1,
+        format: "",
+        indent: 0,
+        direction: "ltr",
+        version: 1,
+        children: block.list.map((item, i) => ({
+          type: "listitem",
+          value: i + 1,
+          format: "",
+          indent: 0,
+          direction: "ltr",
+          version: 1,
+          children: toTextNodes(item),
+        })),
+      };
+    }
+    return {
+      type: "paragraph",
+      format: "",
+      indent: 0,
+      direction: "ltr",
+      textFormat: 0,
+      textStyle: "",
+      version: 1,
+      children: toTextNodes(block.p),
+    };
+  });
+
+  return {
+    root: {
+      type: "root",
+      format: "",
+      indent: 0,
+      direction: "ltr",
+      version: 1,
+      children,
+    },
+  } as unknown as Faq["answer"];
+}
+
+export async function seedFAQ(payload: Payload): Promise<void> {
+  for (const [index, item] of faqDefaults.entries()) {
+    await payload.create({
+      collection: "faq",
+      data: {
+        question: item.question,
+        answer: toLexical(item.answer),
+        order: (index + 1) * 10,
+        published: true,
+      },
+    });
+  }
+
+  payload.logger.info(
+    `Seed: created ${faqDefaults.length} FAQ entries from src/content/faq.ts.`,
   );
 }

@@ -17,6 +17,9 @@ import { GetHelpNow } from "@/payload/collections/GetHelpNow";
 import { HomeLayout } from "@/payload/globals/HomeLayout";
 import { ContactInfo } from "@/payload/globals/ContactInfo";
 import { Footer } from "@/payload/globals/Footer";
+import { Faq } from "@/payload/collections/Faq";
+
+
 import {
   seedEvents,
   seedHero,
@@ -29,6 +32,7 @@ import {
   seedGetHelpNow,
   seedContactInfo,
   seedFooter,
+  seedFAQ,
 } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -41,7 +45,7 @@ const trustedOrigins = [
 ];
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow],
+  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow, Faq],
   globals: [HomeLayout, ContactInfo, Footer],
   serverURL: siteURL,
   cors: trustedOrigins,
@@ -173,6 +177,10 @@ export default buildConfig({
       const getHelpNow = await payload.count({ collection: "get-help-now" });
       if (getHelpNow.totalDocs === 0) {
         await seedGetHelpNow(payload);
+      }
+      const faqCount = await payload.count({ collection: "faq" });
+      if (faqCount.totalDocs === 0) {
+        await seedFAQ(payload);
       }
       await seedFooter(payload);
       await seedHomeLayout(payload);
