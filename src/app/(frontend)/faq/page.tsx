@@ -38,7 +38,7 @@ export default async function FaqPage() {
           __html: JSON.stringify(schema).replace(/</g, '\\u003c'),
         }}
       />
-      <h1>Grace House Nor Cal: Frequently Asked Questions</h1>
+      <h1>Grace House Nor Cal - Common Questions</h1>
       {docs.map((f) => (
         <details key={f.id} className="faq-item">
           <summary>{f.question}</summary>
