@@ -1,5 +1,8 @@
-import Image from "next/image";
+import { notFound } from "next/navigation";
+import { getPayload } from "payload";
+import config from "@payload-config";
 import Link from "next/link";
+import CustomPageBlocks from "@/components/CustomPageBlocks";
 
 export const metadata = {
   title: "Feeding the Streets — Grace House",
@@ -8,10 +11,42 @@ export const metadata = {
 };
 
 /**
- * Community outreach / Feeding the Streets page. Placeholder content — real
- * outreach details, opportunities, and partner info will be filled in later.
+ * Feeding the Streets page — rendered from the `feeding-the-streets`
+ * collection in the database (managed in /admin/collections/feeding-the-streets).
+ * The Title and blocks come from the admin panel; nothing is hardcoded here.
  */
-export default function FeedingTheStreetsPage() {
+export default async function FeedingTheStreetsPage() {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "feeding-the-streets",
+    limit: 1,
+  });
+  const doc = docs[0];
+  if (!doc) notFound();
+
+  const blocks = (doc.blocks ?? []).map((block) => {
+    if (block.type === "Photo") {
+      return {
+        type: "photo",
+        image:
+          typeof block.image === "object" && block.image
+            ? ((block.image as { url?: string }).url ?? "")
+            : "",
+        alt:
+          typeof block.image === "object" && block.image
+            ? ((block.image as { alt?: string }).alt ?? "")
+            : "",
+        caption: block.caption ?? undefined,
+      } as { type: "photo"; image: string; alt: string; caption?: string };
+    }
+    return {
+      type: block.type === "Heading" ? "heading" : "paragraph",
+      text: block.text ?? "",
+      linkLabel: block.linkLabel ?? undefined,
+      linkHref: block.linkHref ?? undefined,
+    } as { type: "heading" | "paragraph"; text: string; linkLabel?: string; linkHref?: string };
+  });
+
   return (
     <>
       <main className="bg-sand flex-1 px-4 py-10 sm:px-6">
@@ -29,47 +64,15 @@ export default function FeedingTheStreetsPage() {
               <li aria-hidden className="text-ink/60 font-normal">
                 ›
               </li>
-              <li aria-current="page">Feeding the Streets</li>
+              <li aria-current="page">{doc.title}</li>
             </ol>
           </nav>
 
           <div className="bg-gold mt-8 h-1 w-28 rounded-full" />
-          <h1 className="font-heading text-anchor mt-4 text-5xl">
-            Feeding the Streets
-          </h1>
-          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-            Grace House prides itself on giving back to our community. We are
-            proud to take part in homeless feedings, winter sanctuary
-            transportation, food for hungry families, veteran stand-downs, the
-            adopt-a-grandparent project and giving back to our community
-            whether that looks like doing yard work, helping them move,
-            bringing them meals when needed.
-          </p>
-          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-            You can find us feeding our unhoused friends at the Gathering Inn
-            (Roseville location) every Tuesday at 11am (rain or shine).
-          </p>
-          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-            We are also feeding at Royer Park in Roseville (190 Park Dr
-            Roseville, CA 95678) on Sundays at 3PM. We would love to see you
-            out there.
-          </p>
-          <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
-            We are back with our new Tuesday feed from 3:00PM – 4:00PM at the
-            Sylvan Oaks Library located at 6700 Auburn Blvd, Citrus Heights, CA
-            95621.
-          </p>
-
-          {/* Sunrise divider */}
-          <Image
-            src="/images/sunriseHR.png"
-            alt=""
-            width={959}
-            height={72}
-            className="mt-8 h-auto w-full max-w-3xl"
-          />
-
-         
+          <h1 className="font-heading text-anchor mt-4 text-5xl">{doc.title}</h1>
+          <div className="max-w-[70ch] mt-4">
+            <CustomPageBlocks blocks={blocks} />
+          </div>
         </div>
       </main>
     </>

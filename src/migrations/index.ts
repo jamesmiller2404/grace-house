@@ -24,6 +24,7 @@ import * as migration_20261015_071529_carry_event_contact_into_pickers from './2
 import * as migration_20261015_075010_home_layout_custom_page from './20261015_075010_home_layout_custom_page';
 import * as migration_20261102_063140_sync_schema from './20261102_063140_sync_schema';
 import * as migration_20261102_065655_add_faq from './20261102_065655_add_faq';
+import * as migration_20261103_073348 from './20261103_073348';
 
 export const migrations = [
   {
@@ -154,6 +155,11 @@ export const migrations = [
   {
     up: migration_20261102_065655_add_faq.up,
     down: migration_20261102_065655_add_faq.down,
-    name: '20261102_065655_add_faq'
+    name: '20261102_065655_add_faq',
+  },
+  {
+    up: migration_20261103_073348.up,
+    down: migration_20261103_073348.down,
+    name: '20261103_073348'
   },
 ];

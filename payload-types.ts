@@ -78,6 +78,7 @@ export interface Config {
     'custom-pages': CustomPage;
     'get-help-now': GetHelpNow;
     faq: Faq;
+    'feeding-the-streets': FeedingTheStreet;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
     'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
+    'feeding-the-streets': FeedingTheStreetsSelect<false> | FeedingTheStreetsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -679,6 +681,50 @@ export interface Faq {
   createdAt: string;
 }
 /**
+ * The Title and heading/paragraph/photo blocks shown on the Feeding the Streets page (/feeding-the-streets).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feeding-the-streets".
+ */
+export interface FeedingTheStreet {
+  id: number;
+  /**
+   * The page heading (e.g. "Feeding the Streets") and breadcrumb label.
+   */
+  title: string;
+  /**
+   * Add headings, paragraphs and photos in the order they should appear on the page. Use a blank line between paragraphs in a text block.
+   */
+  blocks?:
+    | {
+        type: 'Paragraph' | 'Heading' | 'Photo';
+        /**
+         * The paragraph or heading text. Use a blank line between paragraphs.
+         */
+        text?: string | null;
+        /**
+         * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
+         */
+        linkLabel?: string | null;
+        /**
+         * Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.
+         */
+        linkHref?: string | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Text shown in small type under the photo.
+         */
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -745,6 +791,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'faq';
         value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'feeding-the-streets';
+        value: number | FeedingTheStreet;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1073,6 +1123,26 @@ export interface FaqSelect<T extends boolean = true> {
   answer?: T;
   order?: T;
   published?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feeding-the-streets_select".
+ */
+export interface FeedingTheStreetsSelect<T extends boolean = true> {
+  title?: T;
+  blocks?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        linkLabel?: T;
+        linkHref?: T;
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

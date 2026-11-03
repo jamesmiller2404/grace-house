@@ -44,13 +44,6 @@ h6 {
   color: var(--color-anchor);
 }
 
-/* FAQ page — matches mockup-common-questions-2x.png */
-.faq {
-  max-width: 44rem;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
-}
-
 .faq h1 {
   font-family: var(--font-heading);
   font-weight: 400;

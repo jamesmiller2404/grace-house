@@ -18,6 +18,7 @@ import { HomeLayout } from "@/payload/globals/HomeLayout";
 import { ContactInfo } from "@/payload/globals/ContactInfo";
 import { Footer } from "@/payload/globals/Footer";
 import { Faq } from "@/payload/collections/Faq";
+import { FeedingTheStreets } from "@/payload/collections/FeedingTheStreets";
 
 
 import {
@@ -33,6 +34,7 @@ import {
   seedContactInfo,
   seedFooter,
   seedFAQ,
+  seedFeedingTheStreets,
 } from "@/payload/seed";
 
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -45,7 +47,7 @@ const trustedOrigins = [
 ];
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow, Faq],
+  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow, Faq, FeedingTheStreets],
   globals: [HomeLayout, ContactInfo, Footer],
   serverURL: siteURL,
   cors: trustedOrigins,
@@ -181,6 +183,10 @@ export default buildConfig({
       const faqCount = await payload.count({ collection: "faq" });
       if (faqCount.totalDocs === 0) {
         await seedFAQ(payload);
+      }
+      const feedingCount = await payload.count({ collection: "feeding-the-streets" });
+      if (feedingCount.totalDocs === 0) {
+        await seedFeedingTheStreets(payload);
       }
       await seedFooter(payload);
       await seedHomeLayout(payload);

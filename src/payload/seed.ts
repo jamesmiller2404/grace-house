@@ -663,3 +663,44 @@ export async function seedFAQ(payload: Payload): Promise<void> {
     `Seed: created ${faqDefaults.length} FAQ entries from src/content/faq.ts.`,
   );
 }
+
+/**
+ * Seed the `feeding-the-streets` collection with the page's current
+ * hardcoded content (from src/app/(frontend)/feeding-the-streets/page.tsx),
+ * so editors can manage it from the admin panel instead. Runs once, when
+ * the collection is empty.
+ */
+export async function seedFeedingTheStreets(payload: Payload): Promise<void> {
+  await payload.create({
+    collection: "feeding-the-streets",
+    data: {
+      title: "Feeding the Streets",
+      blocks: [
+        {
+          type: "Paragraph",
+          text:
+            "Grace House prides itself on giving back to our community. We are proud to take part in homeless feedings, winter sanctuary transportation, food for hungry families, veteran stand-downs, the adopt-a-grandparent project and giving back to our community whether that looks like doing yard work, helping them move, bringing them meals when needed.",
+        },
+        {
+          type: "Paragraph",
+          text:
+            "You can find us feeding our unhoused friends at the Gathering Inn (Roseville location) every Tuesday at 11am (rain or shine).",
+        },
+        {
+          type: "Paragraph",
+          text:
+            "We are also feeding at Royer Park in Roseville (190 Park Dr Roseville, CA 95678) on Sundays at 3PM. We would love to see you out there.",
+        },
+        {
+          type: "Paragraph",
+          text:
+            "We are back with our new Tuesday feed from 3:00PM – 4:00PM at the Sylvan Oaks Library located at 6700 Auburn Blvd, Citrus Heights, CA 95621.",
+        },
+      ],
+    },
+  });
+
+  payload.logger.info(
+    "Seed: created the Feeding the Streets page from the hardcoded page content.",
+  );
+}
