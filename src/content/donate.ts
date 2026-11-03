@@ -95,7 +95,7 @@ export const donateDefaults: DonatePage = {
     buttonHref: site.venmo.profileHref,
   },
   note: {
-    text: "Grace House is a 501(c)(3) nonprofit organization. Thank you for supporting faith-based recovery in Northern California. For questions about donating, call us at",
+    text: "Thank you for supporting Grace House. For questions about donating, call us at",
     phone: site.phone,
     phoneHref: site.phoneHref,
   },

@@ -247,7 +247,7 @@ export const Donate: CollectionConfig = {
       // The 501(c)(3) note: text, then the phone number as a tel: link.
       name: "note",
       type: "group",
-      label: "501(c)(3) Note",
+      label: "Final Note",
       fields: [
         {
           name: "text",

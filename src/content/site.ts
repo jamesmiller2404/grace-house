@@ -19,7 +19,7 @@ export const site = {
       children: [
         { label: "Mission", href: "/about/mission" },
         { label: "The Four Pillars", href: "/about/four-pillars" },
-        { label: "FAQ", href: "/faq" },
+        { label: "Common Questions", href: "/common-questions" },
         { label: "Board Members", href: "/about/board" },
         { label: "Staff", href: "/about/staff" },        
       ],
