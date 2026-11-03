@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import {
-  Cormorant_Garamond,
   DM_Serif_Display,
   Source_Sans_3,
 } from "next/font/google";
@@ -16,13 +15,6 @@ const dmSerif = DM_Serif_Display({
   variable: "--font-dm-serif",
 });
 const source = Source_Sans_3({ subsets: ["latin"], variable: "--font-source" });
-// Elegant serif used for the memorial dedication in the footer
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-});
 
 export const metadata: Metadata = {
   title: "Grace House Nor Cal",
@@ -51,7 +43,7 @@ export default async function RootLayout({
   const footerContact = await getFooterContact();
 
   return (
-    <html lang="en" className={`${dmSerif.variable} ${source.variable} ${cormorant.variable}`}>
+    <html lang="en" className={`${dmSerif.variable} ${source.variable}`}>
       <body className="flex min-h-screen flex-col">
         <Nav customLinks={customLinks} />
         {children}

@@ -2,16 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Giving Back — Grace House",
+  title: "Feeding the Streets — Grace House",
   description:
-    "Community outreach at Grace House — volunteer, partner, and give back to the community.",
+    "Community outreach at Grace House — volunteer, partner, and feed the streets.",
 };
 
 /**
- * Community outreach / Giving Back page. Placeholder content — real
+ * Community outreach / Feeding the Streets page. Placeholder content — real
  * outreach details, opportunities, and partner info will be filled in later.
  */
-export default function GivingBackPage() {
+export default function FeedingTheStreetsPage() {
   return (
     <>
       <main className="bg-sand flex-1 px-4 py-10 sm:px-6">
@@ -29,13 +29,13 @@ export default function GivingBackPage() {
               <li aria-hidden className="text-ink/60 font-normal">
                 ›
               </li>
-              <li aria-current="page">Giving Back</li>
+              <li aria-current="page">Feeding the Streets</li>
             </ol>
           </nav>
 
           <div className="bg-gold mt-8 h-1 w-28 rounded-full" />
           <h1 className="font-heading text-anchor mt-4 text-5xl">
-            Giving Back
+            Feeding the Streets
           </h1>
           <p className="text-ink/80 mt-4 max-w-[60ch] text-lg">
             Grace House prides itself on giving back to our community. We are
