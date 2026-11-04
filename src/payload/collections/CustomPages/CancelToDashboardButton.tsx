@@ -1,7 +1,6 @@
 "use client";
 
-import { Button, useConfig } from "@payloadcms/ui";
-import { formatAdminURL } from "payload/shared";
+import { Button } from "@payloadcms/ui";
 import React from "react";
 
 /**
@@ -11,27 +10,31 @@ import React from "react";
  * left of the Save button, so the bar reads "Cancel | Done | Save" — the
  * same bar as the Events and Hero create/edit pages.
  *
- * Clicking it navigates to the admin dashboard (/admin). The button is
- * rendered with Payload's own `Button` as a link (el="link"), so the
- * navigation runs through Payload's `Link`: it shows the admin panel's
- * route transition/progress behavior and, if the form has unsaved
- * changes, Payload's "Leave without saving?" confirmation modal pops up
- * before leaving — the exact same protection the sidebar links have.
+ * Clicking it shows a confirmation dialog, then uses the browser's back
+ * navigation to return the user to the screen they came from (typically the
+ * collection list view), rather than always jumping to the admin dashboard.
+ * This matches user expectations for a "Cancel" button: go back to where you
+ * were, not to the dashboard.
+ *
+ * If the user confirms, navigation proceeds via window.history.back(). If they
+ * cancel, they stay on the current edit page. The confirmation dialog always
+ * appears on click to protect against accidental data loss.
  */
 
 const CancelToDashboardButton: React.FC = () => {
-  const { config } = useConfig();
-
-  // Same URL Payload's own "back to dashboard" navigation builds:
-  // routes.admin ("/admin") joined onto serverURL via formatAdminURL.
-  const dashboardURL = formatAdminURL({
-    adminRoute: config.routes.admin,
-    serverURL: config.serverURL,
-    path: "",
-  });
+  const handleClick = () => {
+    if (
+      !window.confirm(
+        "You have unsaved changes. Are you sure you want to leave this page?",
+      )
+    ) {
+      return;
+    }
+    window.history.back();
+  };
 
   return (
-    <Button buttonStyle="secondary" el="link" to={dashboardURL}>
+    <Button buttonStyle="secondary" onClick={handleClick}>
       Cancel
     </Button>
   );

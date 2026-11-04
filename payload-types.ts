@@ -673,7 +673,7 @@ export interface Faq {
     [k: string]: unknown;
   };
   /**
-   * Lower numbers appear first (10, 20, 30...).
+   * Lower numbers appear first (10, 20, 30...). Defaults to the last order + 10 on create.
    */
   order?: number | null;
   published?: boolean | null;
