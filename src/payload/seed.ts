@@ -100,8 +100,10 @@ export async function seedEvents(payload: Payload): Promise<void> {
         city: detail.city,
         cost: detail.cost,
         image: imageId,
-        about: detail.about.map((text) => ({ text })),
-        whatToExpect: detail.whatToExpect.map((text) => ({ text })),
+        blocks: detail.blocks.map((block) => ({
+          heading: block.heading,
+          paragraphs: block.paragraphs,
+        })),
         contact: {
           phoneChoice: contactPhone.choice,
           ...(contactPhone.custom ? { phoneCustom: contactPhone.custom } : {}),

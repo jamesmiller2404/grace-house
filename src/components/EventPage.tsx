@@ -141,20 +141,17 @@ export default function EventPage({ event }: EventPageProps) {
             )}
 
             <section className="mt-10">
-              <h2 className="font-heading text-anchor text-3xl">About Event</h2>
-              {event.about.map((p, i) => (
-                <p key={i} className="mt-3 max-w-prose">
-                  {p}
-                </p>
-              ))}
-            </section>
-
-            <section className="mt-8">
-              <h2 className="font-heading text-anchor text-3xl">What to Expect</h2>
-              {event.whatToExpect.map((p, i) => (
-                <p key={i} className="mt-3 max-w-prose">
-                  {p}
-                </p>
+              {event.blocks.map((block, index) => (
+                <div key={index}>
+                  {block.heading && (
+                    <h2 className="font-heading text-anchor text-3xl">{block.heading}</h2>
+                  )}
+                  {block.paragraphs.map((p, i) => (
+                    <p key={i} className="mt-3 max-w-prose">
+                      {p}
+                    </p>
+                  ))}
+                </div>
               ))}
             </section>
           </div>

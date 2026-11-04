@@ -135,8 +135,10 @@ function toEventDetail(
         : "",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
-    about: (doc.about ?? []).map((paragraph) => paragraph.text),
-    whatToExpect: (doc.whatToExpect ?? []).map((paragraph) => paragraph.text),
+    blocks: (doc.blocks ?? []).map((block) => ({
+      heading: block.heading,
+      paragraphs: block.paragraphs.map((paragraph) => paragraph.text),
+    })),
     contact: {
       questions: "Questions?",
       phone: `Call ${contact.phone} or`,

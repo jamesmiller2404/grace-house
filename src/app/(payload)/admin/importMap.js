@@ -69,6 +69,7 @@ import { default as default_6223d9783f0348abfa2d228d3182c222 } from '../../../..
 import { default as default_735fc14cf0f8527882a31dd8143c8477 } from '../../../../src/payload/globals/Footer/DoneToDashboardButton.tsx'
 import { default as default_3f563e9fff31c0ab9083f7e40b5d1d9d } from '../../../../src/payload/globals/Footer/EditView.tsx'
 import { default as default_42a288946efec5e795c971376ff074e7 } from '../../../../src/payload/components/AccountAvatar.tsx'
+import { default as default_0ac5725829c52b6aa8de745a5a212911 } from '../../../../src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -144,5 +145,6 @@ export const importMap = {
   "./src/payload/globals/Footer/DoneToDashboardButton.tsx#default": default_735fc14cf0f8527882a31dd8143c8477,
   "./src/payload/globals/Footer/EditView.tsx#default": default_3f563e9fff31c0ab9083f7e40b5d1d9d,
   "./src/payload/components/AccountAvatar.tsx#default": default_42a288946efec5e795c971376ff074e7,
+  "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx#default": default_0ac5725829c52b6aa8de745a5a212911,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

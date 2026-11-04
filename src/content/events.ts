@@ -63,10 +63,14 @@ export type EventDetail = {
   /** Where the image sits in the frame — CSS object-position percentages. */
   imagePositionX?: number;
   imagePositionY?: number;
-  /** Lead copy under the "About Event" heading. */
-  about: string[];
-  /** Copy under the "What to Expect" heading. */
-  whatToExpect: string[];
+  /**
+   * Flexible content sections - each block has a heading the editor
+   * chooses and one or more paragraphs of body text.
+   */
+  blocks: {
+    heading: string;
+    paragraphs: string[];
+  }[];
   contact: { questions: string; phone: string; email: string };
 };
 
@@ -83,12 +87,19 @@ export const eventDetails: EventDetail[] = [
     location: "St. Augustine Community Church",
     city: "Sacramento, CA",
     cost: "Free",
-    image: "/images/halloween1.png",
-    about: [
-      "Join us for a spooky (but family-friendly) Halloween Haunted House, hosted at St. Augustine Community Church. Costumes encouraged — come enjoy the fun with the Grace House community.",
-    ],
-    whatToExpect: [
-      "Tour the haunted hallways room by room, then warm up with hot cider and treats in the fellowship area. A kids-friendly hour runs first, with slightly scarier walkthroughs after 5:00pm.",
+    blocks: [
+      {
+        heading: "About the Haunted House",
+        paragraphs: [
+          "Join us for a spooky (but family-friendly) Halloween Haunted House, hosted at St. Augustine Community Church. Costumes encouraged — come enjoy the fun with the Grace House community.",
+        ],
+      },
+      {
+        heading: "What to Expect",
+        paragraphs: [
+          "Tour the haunted hallways room by room, then warm up with hot cider and treats in the fellowship area. A kids-friendly hour runs first, with slightly scarier walkthroughs after 5:00pm.",
+        ],
+      },
     ],
     contact: {
       questions: "Questions?",
@@ -109,11 +120,19 @@ export const eventDetails: EventDetail[] = [
     city: "Sacramento, CA",
     cost: "Free",
     image: "/images/dinner1.png",
-    about: [
-      "An evening meal with residents, graduates, families and friends. Come hungry and meet the people behind Grace House.",
-    ],
-    whatToExpect: [
-      "Dinner is served family style at long tables. You do not need to bring anything. A few residents will share a little of their story, and then it is just a good meal.",
+    blocks: [
+      {
+        heading: "About the Dinner",
+        paragraphs: [
+          "An evening meal with residents, graduates, families and friends. Come hungry and meet the people behind Grace House.",
+        ],
+      },
+      {
+        heading: "What to Expect",
+        paragraphs: [
+          "Dinner is served family style at long tables. You do not need to bring anything. A few residents will share a little of their story, and then it is just a good meal.",
+        ],
+      },
     ],
     contact: {
       questions: "Questions?",
@@ -134,11 +153,19 @@ export const eventDetails: EventDetail[] = [
     city: "Sacramento, CA",
     cost: "Free",
     image: "/images/christmas1.png",
-    about: [
-      "Spend Christmas evening with the Grace House community. A warm holiday meal for residents, graduates, families and friends — no one should be alone on Christmas.",
-    ],
-    whatToExpect: [
-      "A festive family-style dinner with holiday decorations, carols between courses, and a small gift for every guest. Just come as you are; the house provides everything.",
+    blocks: [
+      {
+        heading: "About the Dinner",
+        paragraphs: [
+          "Spend Christmas evening with the Grace House community. A warm holiday meal for residents, graduates, families and friends — no one should be alone on Christmas.",
+        ],
+      },
+      {
+        heading: "What to Expect",
+        paragraphs: [
+          "A festive family-style dinner with holiday decorations, carols between courses, and a small gift for every guest. Just come as you are; the house provides everything.",
+        ],
+      },
     ],
     contact: {
       questions: "Questions?",
@@ -159,11 +186,19 @@ export const eventDetails: EventDetail[] = [
     city: "Sacramento, CA",
     cost: "Free",
     image: "/images/spring1.png",
-    about: [
-      "Tour the house, meet current residents and graduates, and see what a season of recovery at Grace House looks like. Refreshments served throughout.",
-    ],
-    whatToExpect: [
-      "Guided tours of the rooms and common spaces run every half hour, followed by coffee and refreshments with staff, residents and alumni. Ask anything — this is your chance to see the house for yourself.",
+    blocks: [
+      {
+        heading: "About the Open House",
+        paragraphs: [
+          "Tour the house, meet current residents and graduates, and see what a season of recovery at Grace House looks like. Refreshments served throughout.",
+        ],
+      },
+      {
+        heading: "What to Expect",
+        paragraphs: [
+          "Guided tours of the rooms and common spaces run every half hour, followed by coffee and refreshments with staff, residents and alumni. Ask anything — this is your chance to see the house for yourself.",
+        ],
+      },
     ],
     contact: {
       questions: "Questions?",

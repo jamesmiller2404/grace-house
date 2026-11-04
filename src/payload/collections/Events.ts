@@ -209,40 +209,43 @@ export const Events: CollectionConfig = {
       }),
     },
     {
-      name: "about",
+      name: "blocks",
       type: "array",
       labels: {
-        singular: "Paragraph",
-        plural: "About Event",
+        singular: "Content Section",
+        plural: "Content Sections",
       },
       fields: [
         {
-          name: "text",
-          type: "textarea",
+          name: "heading",
+          type: "text",
+          label: "Section Heading",
           required: true,
-          label: false,
           admin: {
-            placeholder: "Add more information...",
+            placeholder: "Section heading...",
           },
         },
-      ],
-    },
-    {
-      name: "whatToExpect",
-      type: "array",
-      labels: {
-        singular: "Paragraph",
-        plural: "What to Expect",
-      },
-      fields: [
         {
-          name: "text",
-          type: "textarea",
-          required: true,
-          label: false,
-          admin: {
-            placeholder: "What to Expect...",
+          name: "paragraphs",
+          type: "array",
+          labels: {
+            singular: "Paragraph",
+            plural: "Paragraph",
           },
+          admin: {
+            initCollapsed: false,
+          },
+          fields: [
+            {
+              name: "text",
+              type: "textarea",
+              label: false,
+              admin: {
+                placeholder: "Write a paragraph...",
+                description: "Use a blank line between paragraphs.",
+              },
+            },
+          ],
         },
       ],
     },

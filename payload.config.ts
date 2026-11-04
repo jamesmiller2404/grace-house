@@ -20,7 +20,6 @@ import { Footer } from "@/payload/globals/Footer";
 import { Faq } from "@/payload/collections/Faq";
 import { FeedingTheStreets } from "@/payload/collections/FeedingTheStreets";
 
-
 import {
   seedEvents,
   seedHero,
@@ -40,14 +39,27 @@ import {
 const siteURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
 const trustedOrigins = [
-    "http://localhost:3000",
-    "http://localhost:3001",
+  "http://localhost:3000",
+  "http://localhost:3001",
   "https://mockup1.offworldcreations.com",
   "https://payload-app-nxg2.onrender.com",
 ];
 
 export default buildConfig({
-  collections: [Users, Events, Media, MissionPage, Hero, Intro, Stories, Donate, CustomPages, GetHelpNow, Faq, FeedingTheStreets],
+  collections: [
+    Users,
+    Events,
+    Media,
+    MissionPage,
+    Hero,
+    Intro,
+    Stories,
+    Donate,
+    CustomPages,
+    GetHelpNow,
+    Faq,
+    FeedingTheStreets,
+  ],
   globals: [HomeLayout, ContactInfo, Footer],
   serverURL: siteURL,
   cors: trustedOrigins,
@@ -137,6 +149,20 @@ export default buildConfig({
         path: "./src/payload/components/AccountAvatar.tsx",
       },
     },
+    // Hover tooltip info boxes over sidebar nav items and dashboard cards,
+    // explaining the purpose of each admin section.
+    components: {
+      afterNavLinks: [
+        {
+          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
+        },
+      ],
+      afterDashboard: [
+        {
+          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
+        },
+      ],
+    },
   },
   typescript: { outputFile: "payload-types.ts" },
   // On first init, seed the collections that already have content in the app
@@ -184,7 +210,9 @@ export default buildConfig({
       if (faqCount.totalDocs === 0) {
         await seedFAQ(payload);
       }
-      const feedingCount = await payload.count({ collection: "feeding-the-streets" });
+      const feedingCount = await payload.count({
+        collection: "feeding-the-streets",
+      });
       if (feedingCount.totalDocs === 0) {
         await seedFeedingTheStreets(payload);
       }

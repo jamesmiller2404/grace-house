@@ -194,15 +194,18 @@ export interface Event {
   image?: (number | null) | Media;
   imagePositionX?: number | null;
   imagePositionY?: number | null;
-  about?:
+  blocks?:
     | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  whatToExpect?:
-    | {
-        text: string;
+        heading: string;
+        paragraphs?:
+          | {
+              /**
+               * Use a blank line between paragraphs.
+               */
+              text?: string | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -880,16 +883,16 @@ export interface EventsSelect<T extends boolean = true> {
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;
-  about?:
+  blocks?:
     | T
     | {
-        text?: T;
-        id?: T;
-      };
-  whatToExpect?:
-    | T
-    | {
-        text?: T;
+        heading?: T;
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
         id?: T;
       };
   contact?:
