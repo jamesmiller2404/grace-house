@@ -1,0 +1,118 @@
+src/migrations/20261009_022806.ts:43:  CREATE TABLE "payload_locked_documents_rels" (
+src/migrations/20261009_022806.ts:76:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261009_022806.ts:77:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261009_022806.ts:89:  CREATE INDEX "payload_locked_documents_rels_order_idx" ON "payload_locked_documents_rels" USING btree ("order");
+src/migrations/20261009_022806.ts:90:  CREATE INDEX "payload_locked_documents_rels_parent_idx" ON "payload_locked_documents_rels" USING btree ("parent_id");
+src/migrations/20261009_022806.ts:91:  CREATE INDEX "payload_locked_documents_rels_path_idx" ON "payload_locked_documents_rels" USING btree ("path");
+src/migrations/20261009_022806.ts:92:  CREATE INDEX "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
+src/migrations/20261009_022806.ts:110:  DROP TABLE "payload_locked_documents_rels" CASCADE;
+src/migrations/20261010_060830_initial.ts:62:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "events_id" integer;
+src/migrations/20261010_060830_initial.ts:63:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "media_id" integer;
+src/migrations/20261010_060830_initial.ts:64:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "mission_page_id" integer;
+src/migrations/20261010_060830_initial.ts:80:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_events_fk" FOREIGN KEY ("events_id") REFERENCES "public"."events"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261010_060830_initial.ts:81:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261010_060830_initial.ts:82:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_mission_page_fk" FOREIGN KEY ("mission_page_id") REFERENCES "public"."mission_page"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261010_060830_initial.ts:83:  CREATE INDEX "payload_locked_documents_rels_events_id_idx" ON "payload_locked_documents_rels" USING btree ("events_id");
+src/migrations/20261010_060830_initial.ts:84:  CREATE INDEX "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
+src/migrations/20261010_060830_initial.ts:85:  CREATE INDEX "payload_locked_documents_rels_mission_page_id_idx" ON "payload_locked_documents_rels" USING btree ("mission_page_id");`)
+src/migrations/20261010_060830_initial.ts:100:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_events_fk";
+src/migrations/20261010_060830_initial.ts:102:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_media_fk";
+src/migrations/20261010_060830_initial.ts:104:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_mission_page_fk";
+src/migrations/20261010_060830_initial.ts:106:  DROP INDEX "payload_locked_documents_rels_events_id_idx";
+src/migrations/20261010_060830_initial.ts:107:  DROP INDEX "payload_locked_documents_rels_media_id_idx";
+src/migrations/20261010_060830_initial.ts:108:  DROP INDEX "payload_locked_documents_rels_mission_page_id_idx";
+src/migrations/20261010_060830_initial.ts:109:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "events_id";
+src/migrations/20261010_060830_initial.ts:110:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "media_id";
+src/migrations/20261010_060830_initial.ts:111:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "mission_page_id";
+src/migrations/20261012_084452_hero.ts:14:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "hero_id" integer;
+src/migrations/20261012_084452_hero.ts:19:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_hero_fk" FOREIGN KEY ("hero_id") REFERENCES "public"."hero"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261012_084452_hero.ts:20:  CREATE INDEX "payload_locked_documents_rels_hero_id_idx" ON "payload_locked_documents_rels" USING btree ("hero_id");`)
+src/migrations/20261012_084452_hero.ts:27:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_hero_fk";
+src/migrations/20261012_084452_hero.ts:29:  DROP INDEX "payload_locked_documents_rels_hero_id_idx";
+src/migrations/20261012_084452_hero.ts:30:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "hero_id";`)
+src/migrations/20261012_172205_intro.ts:24:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "intro_id" integer;
+src/migrations/20261012_172205_intro.ts:27:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_intro_fk" FOREIGN KEY ("intro_id") REFERENCES "public"."intro"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261012_172205_intro.ts:28:  CREATE INDEX "payload_locked_documents_rels_intro_id_idx" ON "payload_locked_documents_rels" USING btree ("intro_id");`)
+src/migrations/20261012_172205_intro.ts:35:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_intro_fk";
+src/migrations/20261012_172205_intro.ts:37:  DROP INDEX "payload_locked_documents_rels_intro_id_idx";
+src/migrations/20261012_172205_intro.ts:38:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "intro_id";
+src/migrations/20261013_061623_stories.ts:53:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "stories_id" integer;
+src/migrations/20261013_061623_stories.ts:69:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_stories_fk" FOREIGN KEY ("stories_id") REFERENCES "public"."stories"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261013_061623_stories.ts:70:  CREATE INDEX "payload_locked_documents_rels_stories_id_idx" ON "payload_locked_documents_rels" USING btree ("stories_id");`)
+src/migrations/20261013_061623_stories.ts:83:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_stories_fk";
+src/migrations/20261013_061623_stories.ts:85:  DROP INDEX "payload_locked_documents_rels_stories_id_idx";
+src/migrations/20261013_061623_stories.ts:86:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "stories_id";
+src/migrations/20261014_055905_donate_page.ts:57:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "donate_id" integer;
+src/migrations/20261014_055905_donate_page.ts:69:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_donate_fk" FOREIGN KEY ("donate_id") REFERENCES "public"."donate"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261014_055905_donate_page.ts:70:  CREATE INDEX "payload_locked_documents_rels_donate_id_idx" ON "payload_locked_documents_rels" USING btree ("donate_id");`)
+src/migrations/20261014_055905_donate_page.ts:83:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_donate_fk";
+src/migrations/20261014_055905_donate_page.ts:85:  DROP INDEX "payload_locked_documents_rels_donate_id_idx";
+src/migrations/20261014_055905_donate_page.ts:86:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "donate_id";`)
+src/migrations/20261014_074937_custom_pages.ts:26:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "custom_pages_id" integer;
+src/migrations/20261014_074937_custom_pages.ts:34:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_custom_pages_fk" FOREIGN KEY ("custom_pages_id") REFERENCES "public"."custom_pages"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261014_074937_custom_pages.ts:35:  CREATE INDEX "payload_locked_documents_rels_custom_pages_id_idx" ON "payload_locked_documents_rels" USING btree ("custom_pages_id");`)
+src/migrations/20261014_074937_custom_pages.ts:44:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_custom_pages_fk";
+src/migrations/20261014_074937_custom_pages.ts:46:  DROP INDEX "payload_locked_documents_rels_custom_pages_id_idx";
+src/migrations/20261014_074937_custom_pages.ts:47:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "custom_pages_id";
+src/migrations/20261015_001720_get_help_now.ts:38:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "get_help_now_id" integer;
+src/migrations/20261015_001720_get_help_now.ts:47:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_get_help_now_fk" FOREIGN KEY ("get_help_now_id") REFERENCES "public"."get_help_now"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261015_001720_get_help_now.ts:48:  CREATE INDEX "payload_locked_documents_rels_get_help_now_id_idx" ON "payload_locked_documents_rels" USING btree ("get_help_now_id");`)
+src/migrations/20261015_001720_get_help_now.ts:59:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_get_help_now_fk";
+src/migrations/20261015_001720_get_help_now.ts:61:  DROP INDEX "payload_locked_documents_rels_get_help_now_id_idx";
+src/migrations/20261015_001720_get_help_now.ts:62:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "get_help_now_id";`)
+src/migrations/20261102_065655_add_faq.ts:15:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "faq_id" integer;
+src/migrations/20261102_065655_add_faq.ts:18:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_faq_fk" FOREIGN KEY ("faq_id") REFERENCES "public"."faq"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261102_065655_add_faq.ts:19:  CREATE INDEX "payload_locked_documents_rels_faq_id_idx" ON "payload_locked_documents_rels" USING btree ("faq_id");`)
+src/migrations/20261102_065655_add_faq.ts:26:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_faq_fk";
+src/migrations/20261102_065655_add_faq.ts:28:  DROP INDEX "payload_locked_documents_rels_faq_id_idx";
+src/migrations/20261102_065655_add_faq.ts:29:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "faq_id";`)
+src/migrations/20261103_073348.ts:25:  ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "feeding_the_streets_id" integer;
+src/migrations/20261103_073348.ts:33:  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_feeding_the_streets_fk" FOREIGN KEY ("feeding_the_streets_id") REFERENCES "public"."feeding_the_streets"("id") ON DELETE cascade ON UPDATE no action;
+src/migrations/20261103_073348.ts:34:  CREATE INDEX "payload_locked_documents_rels_feeding_the_streets_id_idx" ON "payload_locked_documents_rels" USING btree ("feeding_the_streets_id");`)
+src/migrations/20261103_073348.ts:43:  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_feeding_the_streets_fk";
+src/migrations/20261103_073348.ts:45:  DROP INDEX "payload_locked_documents_rels_feeding_the_streets_id_idx";
+src/migrations/20261103_073348.ts:46:  ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "feeding_the_streets_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:5:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "events_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:6:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "media_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:7:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "mission_page_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:8:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "hero_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:9:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "intro_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:10:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "stories_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:11:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "donate_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:12:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "custom_pages_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:13:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "get_help_now_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:14:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "faq_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:15:    ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "feeding_the_streets_id" integer;
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:17:    CREATE INDEX "payload_locked_documents_rels_events_id_idx" ON "payload_locked_documents_rels" USING btree ("events_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:18:    CREATE INDEX "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:19:    CREATE INDEX "payload_locked_documents_rels_mission_page_id_idx" ON "payload_locked_documents_rels" USING btree ("mission_page_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:20:    CREATE INDEX "payload_locked_documents_rels_hero_id_idx" ON "payload_locked_documents_rels" USING btree ("hero_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:21:    CREATE INDEX "payload_locked_documents_rels_intro_id_idx" ON "payload_locked_documents_rels" USING btree ("intro_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:22:    CREATE INDEX "payload_locked_documents_rels_stories_id_idx" ON "payload_locked_documents_rels" USING btree ("stories_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:23:    CREATE INDEX "payload_locked_documents_rels_donate_id_idx" ON "payload_locked_documents_rels" USING btree ("donate_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:24:    CREATE INDEX "payload_locked_documents_rels_custom_pages_id_idx" ON "payload_locked_documents_rels" USING btree ("custom_pages_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:25:    CREATE INDEX "payload_locked_documents_rels_get_help_now_id_idx" ON "payload_locked_documents_rels" USING btree ("get_help_now_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:26:    CREATE INDEX "payload_locked_documents_rels_faq_id_idx" ON "payload_locked_documents_rels" USING btree ("faq_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:27:    CREATE INDEX "payload_locked_documents_rels_feeding_the_streets_id_idx" ON "payload_locked_documents_rels" USING btree ("feeding_the_streets_id");
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:33:    DROP INDEX "payload_locked_documents_rels_feeding_the_streets_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:34:    DROP INDEX "payload_locked_documents_rels_faq_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:35:    DROP INDEX "payload_locked_documents_rels_get_help_now_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:36:    DROP INDEX "payload_locked_documents_rels_custom_pages_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:37:    DROP INDEX "payload_locked_documents_rels_donate_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:38:    DROP INDEX "payload_locked_documents_rels_stories_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:39:    DROP INDEX "payload_locked_documents_rels_intro_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:40:    DROP INDEX "payload_locked_documents_rels_hero_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:41:    DROP INDEX "payload_locked_documents_rels_mission_page_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:42:    DROP INDEX "payload_locked_documents_rels_media_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:43:    DROP INDEX "payload_locked_documents_rels_events_id_idx";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:45:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "feeding_the_streets_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:46:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "faq_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:47:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "get_help_now_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:48:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "custom_pages_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:49:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "donate_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:50:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "stories_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:51:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "intro_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:52:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "hero_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:53:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "mission_page_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:54:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "media_id";
+src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.ts:55:    ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "events_id";
