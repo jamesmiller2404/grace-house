@@ -98,3 +98,100 @@ html[data-theme='light'] {
 html {
   background: var(--theme-bg);
 }
+
+/* ============================================================================
+   Selection toolbar (bulk select bar) — make more pronounced and reposition
+   ============================================================================ */
+
+/*
+   Payload renders the selection toolbar (.list-selection) inside
+   ListHeader__actions on desktop (top right, near the account icon) and in
+   AfterPageControls on mobile. The default paint uses muted
+   --theme-elevation-500 helper text color. These rules repaint it to be
+   much more prominent: heavier font weight, primary text color, a subtle
+   background fill, and styled action buttons.
+
+   All rules are unlayered so they beat Payload's @layer payload-default.
+   They apply to every collection list view (Events, Users, Media, Stories,
+   Donate, CustomPages, Faq, Hero, Intro, MissionPage, GetHelpNow) because
+   .list-selection is a shared Payload element.
+ */
+
+/* Container: more prominent fill, heavier weight, primary text color */
+.list-selection {
+  color: var(--theme-text) !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  background: var(--theme-elevation-150) !important;
+  border: 1px solid var(--theme-elevation-400) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  gap: 12px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: fit-content !important;
+}
+
+/* Count text ("X items selected") — heaviest weight */
+.list-selection > span:first-child,
+.list-selection > span:first-of-type {
+  font-weight: 800 !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* Separator dashes between count and actions */
+.list-selection > span:nth-child(2),
+.list-selection > span:nth-of-type(2) {
+  color: var(--theme-elevation-400) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+}
+
+/* Action buttons (Select all / Edit / Delete / Publish / Unpublish) */
+.list-selection__button {
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  color: var(--theme-text) !important;
+  padding: 4px 10px !important;
+  border: 1px solid var(--theme-elevation-400) !important;
+  border-radius: 6px !important;
+  background: var(--theme-elevation-200) !important;
+  white-space: nowrap !important;
+}
+
+.list-selection__button:hover {
+  background: var(--theme-elevation-300) !important;
+  border-color: var(--theme-elevation-350) !important;
+}
+
+/* Action group wrapper */
+.list-selection__actions {
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+/* When the toolbar appears in the mobile page-controls area, give it full
+   width so it reads as a banner above the content */
+.page-controls .list-selection {
+  width: 100% !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+/* ============================================================================
+   Selection toolbar: reposition lower, remove Edit button
+   ============================================================================ */
+
+/* Push the toolbar lower in the ListHeader actions area so it sits clearly
+   below the user account icon instead of colliding with it on the same row. */
+.list-header__actions .list-selection {
+  margin-top: calc(var(--base, 16px) * 0.75) !important;
+}
+
+/* Remove the "Edit" button from the bulk-selection toolbar entirely.
+   Payload renders Edit as the first button in the last .list-selection__actions
+   group (the SelectionActions group, which comes after Select All). We target
+   only that button; Publish / Unpublish / Delete remain. */
+.list-selection__actions:last-of-type .list-selection__button:first-child {
+  display: none !important;
+}

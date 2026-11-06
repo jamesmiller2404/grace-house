@@ -20,6 +20,35 @@ export const Media: CollectionConfig = {
   admin: {
     useAsTitle: "alt",
     defaultColumns: ["filename", "alt", "mimeType", "updatedAt"],
+    // Custom Edit view wrapper that paints the mockup frame:
+    // #111115 page background, rounded #2d2d33 panel around the fields,
+    // #101012 input boxes — the DARK scheme. The same elements are repainted
+    // for the Light theme.
+    components: {
+      views: {
+        edit: {
+          default: {
+            Component: {
+              path: "./src/payload/collections/MediaEditView.tsx",
+            },
+          },
+        },
+      },
+      // "Cancel" and "Done" buttons next to Save on the create/edit pages —
+      // they render in the document controls bar (before the Save button, in
+      // array order) so the bar reads "Cancel | Done | Save". Cancel returns
+      // to the previous screen; Done returns to the Media list.
+      edit: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/collections/MediaCancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/MediaDoneToListButton.tsx",
+          },
+        ],
+      },
+    },
   },
   upload: {
     // Only allow image files — these accompany event pages.

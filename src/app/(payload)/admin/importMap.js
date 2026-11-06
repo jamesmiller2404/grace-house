@@ -1,3 +1,6 @@
+import { default as default_0dda18def457283302775b43747f5a9f } from '../../../../src/payload/collections/UsersCancelToDashboardButton.tsx'
+import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../../src/payload/collections/UsersDoneToListButton.tsx'
+import { default as default_d1e94d5abbb0ceb34ab990b1be6f4ecc } from '../../../../src/payload/collections/UsersEditView.tsx'
 import { default as default_8fb18f05fb7e1dc39f9754122148e2b2 } from '../../../../src/payload/fields/StatusSelect/Field.tsx'
 import { default as default_d42955c86c375058446f6a8864360da8 } from '../../../../src/payload/fields/TimePicker/Field.tsx'
 import { default as default_d2ad3e3f48e6de33e184359a387bbb6b } from '../../../../src/payload/fields/ImagePosition/Field.tsx'
@@ -6,6 +9,9 @@ import { default as default_bcf58fb3c735697e29276de8c79cca4d } from '../../../..
 import { default as default_ba23fe87f40460cfacd78b7ad3ca2ada } from '../../../../src/payload/collections/Events/CancelToDashboardButton.tsx'
 import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../../src/payload/collections/Events/DoneToListButton.tsx'
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
+import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
+import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
+import { default as default_1aef17eeafcdfd11df80e2f285bac85f } from '../../../../src/payload/collections/MediaEditView.tsx'
 import { default as default_015db43890ec4fd0759f106472cfb6a7 } from '../../../../src/payload/collections/MissionPage/CancelToDashboardButton.tsx'
 import { default as default_9b60535ca21064260bab2c5008a55b0c } from '../../../../src/payload/collections/MissionPage/DoneToListButton.tsx'
 import { default as default_b3783d9fad9fa582346bbc830ab9a03d } from '../../../../src/payload/collections/MissionPage/EditView.tsx'
@@ -74,6 +80,9 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "./src/payload/collections/UsersCancelToDashboardButton.tsx#default": default_0dda18def457283302775b43747f5a9f,
+  "./src/payload/collections/UsersDoneToListButton.tsx#default": default_406610a7604472cb1b28c015b6a61a3f,
+  "./src/payload/collections/UsersEditView.tsx#default": default_d1e94d5abbb0ceb34ab990b1be6f4ecc,
   "./src/payload/fields/StatusSelect/Field.tsx#default": default_8fb18f05fb7e1dc39f9754122148e2b2,
   "./src/payload/fields/TimePicker/Field.tsx#default": default_d42955c86c375058446f6a8864360da8,
   "./src/payload/fields/ImagePosition/Field.tsx#default": default_d2ad3e3f48e6de33e184359a387bbb6b,
@@ -82,6 +91,9 @@ export const importMap = {
   "./src/payload/collections/Events/CancelToDashboardButton.tsx#default": default_ba23fe87f40460cfacd78b7ad3ca2ada,
   "./src/payload/collections/Events/DoneToListButton.tsx#default": default_efa9dffc52114b53adee79502de11280,
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
+  "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
+  "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
+  "./src/payload/collections/MediaEditView.tsx#default": default_1aef17eeafcdfd11df80e2f285bac85f,
   "./src/payload/collections/MissionPage/CancelToDashboardButton.tsx#default": default_015db43890ec4fd0759f106472cfb6a7,
   "./src/payload/collections/MissionPage/DoneToListButton.tsx#default": default_9b60535ca21064260bab2c5008a55b0c,
   "./src/payload/collections/MissionPage/EditView.tsx#default": default_b3783d9fad9fa582346bbc830ab9a03d,
