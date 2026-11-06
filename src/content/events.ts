@@ -87,6 +87,7 @@ export const eventDetails: EventDetail[] = [
     location: "St. Augustine Community Church",
     city: "Sacramento, CA",
     cost: "Free",
+    image: "/images/halloween1.png",
     blocks: [
       {
         heading: "About the Haunted House",

@@ -102,7 +102,7 @@ export async function seedEvents(payload: Payload): Promise<void> {
         image: imageId,
         blocks: detail.blocks.map((block) => ({
           heading: block.heading,
-          paragraphs: block.paragraphs,
+          paragraphs: block.paragraphs.map((text) => ({ text })),
         })),
         contact: {
           phoneChoice: contactPhone.choice,

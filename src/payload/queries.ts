@@ -137,7 +137,7 @@ function toEventDetail(
     imagePositionY: doc.imagePositionY ?? 50,
     blocks: (doc.blocks ?? []).map((block) => ({
       heading: block.heading,
-      paragraphs: block.paragraphs.map((paragraph) => paragraph.text),
+      paragraphs: (block.paragraphs ?? []).map((paragraph) => paragraph.text ?? "").filter((text) => text.length > 0),
     })),
     contact: {
       questions: "Questions?",
