@@ -338,6 +338,7 @@ export interface Story {
   id: number;
   name: string;
   role: 'Graduate' | 'Volunteer' | 'Staff';
+  gender?: ('Male' | 'Female') | null;
   /**
    * The portrait photo shown in the story hero.
    */
@@ -957,6 +958,7 @@ export interface IntroSelect<T extends boolean = true> {
 export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  gender?: T;
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;

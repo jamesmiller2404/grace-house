@@ -45,7 +45,7 @@ export const Stories: CollectionConfig = {
   },
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["name", "role", "date", "pillar"],
+    defaultColumns: ["name", "role", "gender", "date", "pillar"],
     description:
       "The Lives Changed section: the people of Grace House — graduates, volunteers and staff — in their own words.",
     // Custom Edit view wrapper that paints the mockup frame
@@ -98,7 +98,7 @@ export const Stories: CollectionConfig = {
           label: false,
           admin: {
             placeholder: "Name...",
-            width: "75%",
+            width: "60%",
           },
         },
         {
@@ -110,7 +110,17 @@ export const Stories: CollectionConfig = {
             defaultValue: "Graduate",
             required: true,
             admin: {
-              width: "25%",
+              width: "20%",
+            },
+          }),
+        },
+        {
+          // Optional so existing stories can be updated without guessing.
+          ...StatusSelectField({
+            name: "gender",
+            options: ["Male", "Female"],
+            admin: {
+              width: "20%",
             },
           }),
         },
