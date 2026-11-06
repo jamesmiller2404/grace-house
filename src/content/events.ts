@@ -64,12 +64,13 @@ export type EventDetail = {
   imagePositionX?: number;
   imagePositionY?: number;
   /**
-   * Flexible content sections - each block has a heading the editor
-   * chooses and one or more paragraphs of body text.
+   * Flexible content sections - each block is either a Heading or a
+   * Paragraph, stacked in the order they appear (matching the Stories/Lives
+   * Changed block pattern).
    */
   blocks: {
-    heading: string;
-    paragraphs: string[];
+    type: "Heading" | "Paragraph";
+    text: string;
   }[];
   contact: { questions: string; phone: string; email: string };
 };
@@ -90,16 +91,22 @@ export const eventDetails: EventDetail[] = [
     image: "/images/halloween1.png",
     blocks: [
       {
-        heading: "About the Haunted House",
-        paragraphs: [
-          "Join us for a spooky (but family-friendly) Halloween Haunted House, hosted at St. Augustine Community Church. Costumes encouraged — come enjoy the fun with the Grace House community.",
-        ],
+        type: "Heading",
+        text: "About the Haunted House",
       },
       {
-        heading: "What to Expect",
-        paragraphs: [
+        type: "Paragraph",
+        text:
+          "Join us for a spooky (but family-friendly) Halloween Haunted House, hosted at St. Augustine Community Church. Costumes encouraged — come enjoy the fun with the Grace House community.",
+      },
+      {
+        type: "Heading",
+        text: "What to Expect",
+      },
+      {
+        type: "Paragraph",
+        text:
           "Tour the haunted hallways room by room, then warm up with hot cider and treats in the fellowship area. A kids-friendly hour runs first, with slightly scarier walkthroughs after 5:00pm.",
-        ],
       },
     ],
     contact: {
@@ -123,16 +130,22 @@ export const eventDetails: EventDetail[] = [
     image: "/images/dinner1.png",
     blocks: [
       {
-        heading: "About the Dinner",
-        paragraphs: [
-          "An evening meal with residents, graduates, families and friends. Come hungry and meet the people behind Grace House.",
-        ],
+        type: "Heading",
+        text: "About the Dinner",
       },
       {
-        heading: "What to Expect",
-        paragraphs: [
+        type: "Paragraph",
+        text:
+          "An evening meal with residents, graduates, families and friends. Come hungry and meet the people behind Grace House.",
+      },
+      {
+        type: "Heading",
+        text: "What to Expect",
+      },
+      {
+        type: "Paragraph",
+        text:
           "Dinner is served family style at long tables. You do not need to bring anything. A few residents will share a little of their story, and then it is just a good meal.",
-        ],
       },
     ],
     contact: {
@@ -156,16 +169,22 @@ export const eventDetails: EventDetail[] = [
     image: "/images/christmas1.png",
     blocks: [
       {
-        heading: "About the Dinner",
-        paragraphs: [
-          "Spend Christmas evening with the Grace House community. A warm holiday meal for residents, graduates, families and friends — no one should be alone on Christmas.",
-        ],
+        type: "Heading",
+        text: "About the Dinner",
       },
       {
-        heading: "What to Expect",
-        paragraphs: [
+        type: "Paragraph",
+        text:
+          "Spend Christmas evening with the Grace House community. A warm holiday meal for residents, graduates, families and friends — no one should be alone on Christmas.",
+      },
+      {
+        type: "Heading",
+        text: "What to Expect",
+      },
+      {
+        type: "Paragraph",
+        text:
           "A festive family-style dinner with holiday decorations, carols between courses, and a small gift for every guest. Just come as you are; the house provides everything.",
-        ],
       },
     ],
     contact: {
@@ -189,16 +208,22 @@ export const eventDetails: EventDetail[] = [
     image: "/images/spring1.png",
     blocks: [
       {
-        heading: "About the Open House",
-        paragraphs: [
-          "Tour the house, meet current residents and graduates, and see what a season of recovery at Grace House looks like. Refreshments served throughout.",
-        ],
+        type: "Heading",
+        text: "About the Open House",
       },
       {
-        heading: "What to Expect",
-        paragraphs: [
+        type: "Paragraph",
+        text:
+          "Tour the house, meet current residents and graduates, and see what a season of recovery at Grace House looks like. Refreshments served throughout.",
+      },
+      {
+        type: "Heading",
+        text: "What to Expect",
+      },
+      {
+        type: "Paragraph",
+        text:
           "Guided tours of the rooms and common spaces run every half hour, followed by coffee and refreshments with staff, residents and alumni. Ask anything — this is your chance to see the house for yourself.",
-        ],
       },
     ],
     contact: {

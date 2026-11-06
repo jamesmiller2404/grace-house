@@ -212,40 +212,41 @@ export const Events: CollectionConfig = {
       name: "blocks",
       type: "array",
       labels: {
-        singular: "Content Section",
-        plural: "Content Sections",
+        singular: "Block",
+        plural: "Content Blocks",
+      },
+      admin: {
+        // Keep every block open so the paragraph/heading order is visible at
+        // a glance.
+        initCollapsed: false,
+        description:
+          "Add headings and paragraphs in the order they should appear.",
+        // Friendly row labels (e.g. "1. Heading: ...") instead of Payload's
+        // default "Block 01" to see ./Events/BlockRowLabel.tsx.
+        components: {
+          RowLabel: {
+            path: "./src/payload/collections/Events/BlockRowLabel.tsx",
+          },
+        },
       },
       fields: [
         {
-          name: "heading",
-          type: "text",
-          label: "Section Heading",
-          required: true,
-          admin: {
-            placeholder: "Section heading...",
-          },
+          // The same Heading/Paragraph dropdown the Stories body blocks use.
+          ...StatusSelectField({
+            name: "type",
+            options: ["Paragraph", "Heading"],
+            defaultValue: "Paragraph",
+            required: true,
+          }),
         },
         {
-          name: "paragraphs",
-          type: "array",
-          labels: {
-            singular: "Paragraph",
-            plural: "Paragraph",
-          },
+          name: "text",
+          type: "textarea",
+          required: true,
+          label: false,
           admin: {
-            initCollapsed: false,
+            placeholder: "Text...",
           },
-          fields: [
-            {
-              name: "text",
-              type: "textarea",
-              label: false,
-              admin: {
-                placeholder: "Write a paragraph...",
-                description: "Use a blank line between paragraphs.",
-              },
-            },
-          ],
         },
       ],
     },

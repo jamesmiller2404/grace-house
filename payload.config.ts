@@ -19,6 +19,7 @@ import { ContactInfo } from "@/payload/globals/ContactInfo";
 import { Footer } from "@/payload/globals/Footer";
 import { Faq } from "@/payload/collections/Faq";
 import { FeedingTheStreets } from "@/payload/collections/FeedingTheStreets";
+import { resolve } from "node:path";
 
 import {
   seedEvents,
@@ -66,6 +67,7 @@ export default buildConfig({
   csrf: trustedOrigins,
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI },
+    migrationDir: resolve(process.cwd(), "src/migrations"),
     // Disable dev-time schema push so `next dev` never alters/drops columns.
     // Schema changes are managed through migrations (`payload migrate`).
     push: false,

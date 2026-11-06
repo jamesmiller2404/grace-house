@@ -194,18 +194,13 @@ export interface Event {
   image?: (number | null) | Media;
   imagePositionX?: number | null;
   imagePositionY?: number | null;
+  /**
+   * Add headings and paragraphs in the order they should appear.
+   */
   blocks?:
     | {
-        heading: string;
-        paragraphs?:
-          | {
-              /**
-               * Use a blank line between paragraphs.
-               */
-              text?: string | null;
-              id?: string | null;
-            }[]
-          | null;
+        type: 'Paragraph' | 'Heading';
+        text: string;
         id?: string | null;
       }[]
     | null;
@@ -886,13 +881,8 @@ export interface EventsSelect<T extends boolean = true> {
   blocks?:
     | T
     | {
-        heading?: T;
-        paragraphs?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
+        type?: T;
+        text?: T;
         id?: T;
       };
   contact?:

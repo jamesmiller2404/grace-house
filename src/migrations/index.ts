@@ -26,6 +26,7 @@ import * as migration_20261102_063140_sync_schema from './20261102_063140_sync_s
 import * as migration_20261102_065655_add_faq from './20261102_065655_add_faq';
 import * as migration_20261103_073348 from './20261103_073348';
 import * as migration_20261105_065109 from './20261105_065109';
+import * as migration_20261106_063133 from './20261106_063133';
 
 export const migrations = [
   {
@@ -166,6 +167,11 @@ export const migrations = [
   {
     up: migration_20261105_065109.up,
     down: migration_20261105_065109.down,
-    name: '20261105_065109'
+    name: '20261105_065109',
+  },
+  {
+    up: migration_20261106_063133.up,
+    down: migration_20261106_063133.down,
+    name: '20261106_063133'
   },
 ];
