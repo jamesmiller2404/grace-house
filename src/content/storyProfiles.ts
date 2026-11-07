@@ -25,7 +25,7 @@ export type StoryProfile = {
   /** Pull quote shown in the hero. */
   heroQuote: string;
   /** Story body: a sequence of plain paragraphs and subheadings. */
-  body: Array<{ type: "p"; text: string } | { type: "h2"; text: string }>;
+  body: Array<{ type: "p"; text: string } | { type: "h2"; text: string } | { type: "photo"; image: string; caption?: string }>;
   /** Copy for the full-width dark pull-quote band. */
   quoteBand: { quote: string; attribution: string };
   /** "Where she is today" closing section. */

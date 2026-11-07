@@ -1,0 +1,202 @@
+import Image from "next/image";
+import Link from "next/link";
+import type { EventDetail } from "@/content/events";
+
+export type EventPageProps = {
+  event: EventDetail;
+};
+
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const FULL_MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+/** Parse an ISO date (YYYY-MM-DD) without timezone drift. */
+function parseISODate(iso: string): Date | undefined {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!match) return undefined;
+  const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+/**
+ * Generic single-event page (mockup in
+ * photoshop_assets/eventPage-genericMockup.png). Data-driven so every
+ * `/events/<slug>` page renders the same layout with its own copy and photo.
+ */
+export default function EventPage({ event }: EventPageProps) {
+  const date = parseISODate(event.date);
+  // Start/end times are optional in the admin panel — build the range only
+  // from the parts the event actually has ("" when neither was saved).
+  const timeRange = [event.startTime, event.endTime].filter(Boolean).join(" - ");
+
+  return (
+    <div className="bg-cream min-h-screen">
+      {/* Breadcrumb — Events › <event title> */}
+      <nav aria-label="Breadcrumb" className="mx-auto max-w-6xl px-6 pt-8 text-base">
+        <ol className="text-terra flex flex-wrap items-center gap-2 font-bold">
+          <li>
+            <Link href="/events" className="underline-offset-4 hover:underline">
+              Events
+            </Link>
+          </li>
+          <li aria-hidden className="text-ink/60 font-normal">›</li>
+          <li aria-current="page">{event.title}</li>
+        </ol>
+      </nav>
+
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,3fr)]">
+          {/* Left column: header, photo, about */}
+          <div>
+            <header>
+              <span className="border-ink inline-block rounded-full border px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
+                {event.status}
+              </span>
+              <h1 className="font-heading text-anchor mt-4 text-5xl leading-tight sm:text-6xl">
+                {event.title}
+              </h1>
+
+              {/* One-line description — optional in the admin panel, so the
+                  header skips the line entirely when it's empty. */}
+              {event.description && (
+                <p className="text-ink/80 mt-3 max-w-prose text-lg">
+                  {event.description}
+                </p>
+              )}
+
+              <dl className="mt-6 space-y-1.5 text-lg">
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold">When</dt>
+                  <dd>
+                    -{" "}
+                    {[
+                      date
+                        ? `${WEEKDAYS[date.getDay()]}, ${FULL_MONTHS[date.getMonth()]} ${date.getDate()}`
+                        : "",
+                      timeRange,
+                    ]
+                      .filter(Boolean)
+                      .join(", ")}
+                  </dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold">Venue</dt>
+                  <dd>- {event.location}</dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold">City</dt>
+                  <dd>- {event.city}</dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="font-bold">Cost</dt>
+                  <dd>- {event.cost}</dd>
+                </div>
+              </dl>
+            </header>
+            {/* Optional event photo — skipped entirely when the event has
+                no image, so the page composes cleanly without it. */}
+            {event.image && (
+              <div className="border-ink relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-lg border-2">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  priority
+                  sizes="(min-width:1024px) 55vw, 100vw"
+                  className="object-cover"
+                  // Composition chosen by the editor in the admin panel's
+                  // draggable image-position preview (object-position
+                  // percentages). Defaults to centered.
+                  style={{
+                    objectPosition: `${event.imagePositionX ?? 50}% ${event.imagePositionY ?? 50}%`,
+                  }}
+                />
+              </div>
+            )}
+
+            <section className="mt-10">
+              {event.blocks.map((block, index) =>
+                block.type === "Heading" ? (
+                  <h2 key={index} className="font-heading text-anchor text-3xl">
+                    {block.text}
+                  </h2>
+                ) : (
+                  <p key={index} className="mt-3 max-w-prose">
+                    {block.text}
+                  </p>
+                )
+              )}
+            </section>
+          </div>
+
+          {/* Right column: date card, then contact */}
+          <div className="space-y-4 lg:pt-1">
+            <div className="border-gold rounded-lg border-2 bg-white p-5 shadow-sm">
+              <div className="flex items-center gap-4">
+                {date && (
+                  <div className="bg-ink flex h-16 w-14 shrink-0 flex-col items-center justify-center rounded-md text-center">
+                    <span className="text-lift text-xs font-bold tracking-[0.1em] uppercase">
+                      {MONTHS[date.getMonth()]}
+                    </span>
+                    <span className="font-heading text-cream text-2xl leading-none">
+                      {date.getDate()}
+                    </span>
+                  </div>
+                )}
+                <p className="text-lg font-semibold">
+                  {date
+                    ? `${WEEKDAYS[date.getDay()]}, ${MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+                    : ""}
+                  {/* Time range — optional in the admin panel, so the card
+                      skips the line entirely when it's empty. */}
+                  {timeRange && (
+                    <>
+                      <br />
+                      {timeRange}
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="border-ink rounded-lg border-2 bg-white p-5 shadow-sm">
+              <h2 className="font-heading text-anchor text-xl">Contact</h2>
+              <p className="mt-2">{event.contact.questions}</p>
+              <p>
+                {event.contact.phone}
+                <br />
+                {event.contact.email}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

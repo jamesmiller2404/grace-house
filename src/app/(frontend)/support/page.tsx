@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getDonate } from "@/payload/queries";
@@ -113,8 +114,27 @@ export default async function SupportPage() {
 
         {/* Additional text blocks (e.g. Underground Clothing Connection) */}
         <div className="max-w-[70ch]">
-          {d.blocks.map((block, i) =>
-            block.type === "Heading" ? (
+          {d.blocks.map((block, i) => {
+            if (block.type === "Photo") {
+              if (!block.image) return null;
+              return (
+                <figure key={i} className="my-8">
+                  <Image
+                    src={block.image}
+                    alt={block.caption || ""}
+                    width={1200}
+                    height={800}
+                    className="h-auto w-full rounded-lg"
+                  />
+                  {block.caption && (
+                    <figcaption className="text-ink/70 mt-2 text-sm italic">
+                      {block.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              );
+            }
+            return block.type === "Heading" ? (
               <h2
                 key={i}
                 className="font-heading text-ink mt-10 text-3xl sm:text-4xl"
@@ -147,8 +167,8 @@ export default async function SupportPage() {
                   </>
                 )}
               </p>
-            ),
-          )}
+            );
+          })}
         </div>
       </div>
     </main>

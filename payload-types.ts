@@ -195,12 +195,17 @@ export interface Event {
   imagePositionX?: number | null;
   imagePositionY?: number | null;
   /**
-   * Add headings and paragraphs in the order they should appear.
+   * Add headers, paragraphs and photos in the order they should appear.
    */
   blocks?:
     | {
-        type: 'Paragraph' | 'Heading';
-        text: string;
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        text?: string | null;
+        /**
+         * Choose the photo shown inline on the event page.
+         */
+        image?: (number | null) | Media;
+        caption?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -354,12 +359,17 @@ export interface Story {
    */
   pullQuote?: string | null;
   /**
-   * Add paragraphs and headings in the order they should appear. The first paragraph gets the drop cap on the site.
+   * Add headers, paragraphs and photos in the order they should appear. The first paragraph gets the drop cap on the site.
    */
   body?:
     | {
-        type: 'Paragraph' | 'Heading';
-        text: string;
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        text?: string | null;
+        /**
+         * Choose the photo shown inline in the story.
+         */
+        image?: (number | null) | Media;
+        caption?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -506,12 +516,17 @@ export interface Donate {
     phoneHref?: string | null;
   };
   /**
-   * Add headings and paragraphs in the order they should appear. Newlines render as line breaks (e.g. "Hours:\nWednesdays: 11am to 4pm."). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.
+   * Add headers, paragraphs and photos in the order they should appear. Newlines render as line breaks (e.g. "Hours:\nWednesdays: 11am to 4pm."). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.
    */
   blocks?:
     | {
-        type: 'Paragraph' | 'Heading';
-        text: string;
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        text?: string | null;
+        /**
+         * Choose the photo shown inline on the Donate page.
+         */
+        image?: (number | null) | Media;
+        caption?: string | null;
         /**
          * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
          */
@@ -547,7 +562,7 @@ export interface CustomPage {
    */
   blocks?:
     | {
-        type: 'Paragraph' | 'Heading' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo';
         /**
          * The paragraph or heading text. Use a blank line between paragraphs.
          */
@@ -696,7 +711,7 @@ export interface FeedingTheStreet {
    */
   blocks?:
     | {
-        type: 'Paragraph' | 'Heading' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo';
         /**
          * The paragraph or heading text. Use a blank line between paragraphs.
          */
@@ -884,6 +899,8 @@ export interface EventsSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        image?: T;
+        caption?: T;
         id?: T;
       };
   contact?:
@@ -969,6 +986,8 @@ export interface StoriesSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        image?: T;
+        caption?: T;
         id?: T;
       };
   bannerQuote?:
@@ -1049,6 +1068,8 @@ export interface DonateSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        image?: T;
+        caption?: T;
         linkLabel?: T;
         linkHref?: T;
         id?: T;

@@ -141,8 +141,26 @@ export default function EventPage({ event }: EventPageProps) {
             )}
 
             <section className="mt-10">
-              {event.blocks.map((block, index) =>
-                block.type === "Heading" ? (
+              {event.blocks.map((block, index) => {
+                if (block.type === "Photo") {
+                  return (
+                    <figure key={index} className="my-8">
+                      <Image
+                        src={block.image}
+                        alt={block.caption || ""}
+                        width={1200}
+                        height={800}
+                        className="h-auto w-full rounded-lg"
+                      />
+                      {block.caption && (
+                        <figcaption className="text-ink/70 mt-2 text-sm italic">
+                          {block.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  );
+                }
+                return block.type === "Heading" ? (
                   <h2 key={index} className="font-heading text-anchor text-3xl">
                     {block.text}
                   </h2>
@@ -150,8 +168,8 @@ export default function EventPage({ event }: EventPageProps) {
                   <p key={index} className="mt-3 max-w-prose">
                     {block.text}
                   </p>
-                )
-              )}
+                );
+              })}
             </section>
           </div>
 

@@ -68,10 +68,10 @@ export type EventDetail = {
    * Paragraph, stacked in the order they appear (matching the Stories/Lives
    * Changed block pattern).
    */
-  blocks: {
-    type: "Heading" | "Paragraph";
-    text: string;
-  }[];
+  blocks: (
+    | { type: "Heading" | "Paragraph"; text: string }
+    | { type: "Photo"; image: string; caption?: string }
+  )[];
   contact: { questions: string; phone: string; email: string };
 };
 

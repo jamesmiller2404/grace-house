@@ -88,6 +88,24 @@ export default function StoryProfile({
               </h2>
             );
           }
+          if (block.type === "photo") {
+            return (
+              <figure key={i} className="my-8">
+                <Image
+                  src={block.image}
+                  alt={block.caption || ""}
+                  width={1200}
+                  height={800}
+                  className="h-auto w-full rounded-lg"
+                />
+                {block.caption && (
+                  <figcaption className="text-ink/70 mt-2 text-sm italic">
+                    {block.caption}
+                  </figcaption>
+                )}
+              </figure>
+            );
+          }
           const isFirst = profile.body.findIndex((b) => b.type === "p") === i;
           return (
             <p key={i} className={`mt-6 ${isFirst ? "drop-cap" : ""}`}>

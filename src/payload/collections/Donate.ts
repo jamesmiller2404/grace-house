@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { StatusSelectField } from "@/payload/fields/StatusSelect";
+import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 
 /**
  * Donate page copy — the Payload version of `donateDefaults` in
@@ -297,7 +297,7 @@ export const Donate: CollectionConfig = {
         // a glance.
         initCollapsed: false,
         description:
-          "Add headings and paragraphs in the order they should appear. Newlines render as line breaks (e.g. \"Hours:\\nWednesdays: 11am to 4pm.\"). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.",
+          "Add headers, paragraphs and photos in the order they should appear. Newlines render as line breaks (e.g. \"Hours:\\nWednesdays: 11am to 4pm.\"). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.",
         // Friendly row labels ("1. Heading: Underground Clothing Connection")
         // instead of Payload's default "Block 01" — see ./Donate/BlockRowLabel.tsx.
         components: {
@@ -309,9 +309,13 @@ export const Donate: CollectionConfig = {
       fields: [
         {
           // The same Heading/Paragraph dropdown the Stories body blocks use.
-          ...StatusSelectField({
+          ...BlockTypeButtonsField({
             name: "type",
-            options: ["Paragraph", "Heading"],
+            options: [
+              { label: "Header", value: "Heading" },
+              { label: "Paragraph", value: "Paragraph" },
+              { label: "Photo", value: "Photo" },
+            ],
             defaultValue: "Paragraph",
             required: true,
           }),
@@ -319,10 +323,37 @@ export const Donate: CollectionConfig = {
         {
           name: "text",
           type: "textarea",
-          required: true,
           label: false,
           admin: {
+            condition: (_data, siblingData) => siblingData?.type !== "Photo",
             placeholder: "Text...",
+          },
+          validate: (value, { siblingData }) =>
+            siblingData?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
+              ? true
+              : "Enter text for this Header or Paragraph block.",
+        },
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          label: false,
+          admin: {
+            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            description: "Choose the photo shown inline on the Donate page.",
+          },
+          validate: (value, { siblingData }) =>
+            siblingData?.type !== "Photo" || value
+              ? true
+              : "Choose a photo for this Photo block.",
+        },
+        {
+          name: "caption",
+          type: "text",
+          label: false,
+          admin: {
+            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            placeholder: "Photo caption (optional)...",
           },
         },
         {
@@ -330,6 +361,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: "Link Text (optional)",
           admin: {
+            condition: (_data, siblingData) => siblingData?.type !== "Photo",
             placeholder: "e.g. (916) 470-0408 or Facebook",
             description:
               "The clickable words shown after the block's text. Example: for the text \"Call us at\" this would be \"(916) 470-0408\". Leave empty for a plain paragraph with no link.",
@@ -340,6 +372,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: "Link URL (optional)",
           admin: {
+            condition: (_data, siblingData) => siblingData?.type !== "Photo",
             placeholder: "e.g. tel:+19169529797 or https://example.com",
             description:
               "Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.",

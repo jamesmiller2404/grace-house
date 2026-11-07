@@ -100,10 +100,22 @@ export async function seedEvents(payload: Payload): Promise<void> {
         city: detail.city,
         cost: detail.cost,
         image: imageId,
-        blocks: detail.blocks.map((block) => ({
-          type: block.type,
-          text: block.text,
-        })),
+        blocks: await Promise.all(
+          detail.blocks.map(async (block) => {
+            if (block.type === "Photo") {
+              return {
+                type: "Photo" as const,
+                image: await uploadSeedImage(
+                  payload,
+                  block.image,
+                  `${detail.title} — event content photo`,
+                ),
+                caption: block.caption,
+              };
+            }
+            return { type: block.type, text: block.text };
+          }),
+        ),
         contact: {
           phoneChoice: contactPhone.choice,
           ...(contactPhone.custom ? { phoneCustom: contactPhone.custom } : {}),
@@ -502,10 +514,25 @@ export async function seedStories(payload: Payload): Promise<void> {
         imagePositionX: 50,
         imagePositionY: 50,
         pullQuote: profile.heroQuote,
-        body: profile.body.map((block) => ({
-          type: block.type === "h2" ? "Heading" : "Paragraph",
-          text: block.text,
-        })),
+        body: await Promise.all(
+          profile.body.map(async (block) => {
+            if (block.type === "photo") {
+              return {
+                type: "Photo" as const,
+                image: await uploadSeedImage(
+                  payload,
+                  block.image,
+                  `${profile.name} — story body photo`,
+                ),
+                caption: block.caption,
+              };
+            }
+            return {
+              type: block.type === "h2" ? "Heading" : "Paragraph",
+              text: block.text,
+            };
+          }),
+        ),
         bannerQuote: {
           quote: profile.quoteBand.quote,
           attribution: profile.quoteBand.attribution,
@@ -550,7 +577,27 @@ export async function seedDonate(payload: Payload): Promise<void> {
       paypal: d.paypal,
       venmo: d.venmo,
       note: d.note,
-      blocks: d.blocks,
+      blocks: await Promise.all(
+        d.blocks.map(async (block) => {
+          if (block.type === "Photo") {
+            return {
+              type: "Photo" as const,
+              image: await uploadSeedImage(
+                payload,
+                block.image || "",
+                "Donate page content photo",
+              ),
+              caption: block.caption,
+            };
+          }
+          return {
+            type: block.type,
+            text: block.text || "",
+            linkLabel: block.linkLabel,
+            linkHref: block.linkHref,
+          };
+        }),
+      ),
     },
   });
 

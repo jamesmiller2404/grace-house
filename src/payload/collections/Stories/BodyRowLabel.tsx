@@ -11,11 +11,12 @@ import React from "react";
  * glance even when the rows are collapsed.
  */
 const BodyRowLabel: React.FC = () => {
-  const { data, rowNumber } = useRowLabel<{ type?: string; text?: string }>();
+  const { data, rowNumber } = useRowLabel<{ type?: string; text?: string; caption?: string }>();
   const type = data?.type || "Paragraph";
-  const text = (data?.text || "").trim();
+  const displayType = type === "Heading" ? "Header" : type;
+  const text = ((type === "Photo" ? data?.caption : data?.text) || "").trim();
   const snippet = text.length > 40 ? `${text.slice(0, 40).trimEnd()}…` : text;
-  const label = snippet ? `${type}: ${snippet}` : type;
+  const label = snippet ? `${displayType}: ${snippet}` : displayType;
   return <span>{`${(rowNumber ?? 0) + 1}. ${label}`}</span>;
 };
 

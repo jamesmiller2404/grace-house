@@ -135,10 +135,15 @@ function toEventDetail(
         : "",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
-    blocks: (doc.blocks ?? []).map((block) => ({
-      type: block.type,
-      text: block.text,
-    })),
+    blocks: (doc.blocks ?? []).map((block) =>
+      block.type === "Photo"
+        ? {
+            type: "Photo" as const,
+            image: mediaUrl(block.image),
+            caption: block.caption ?? undefined,
+          }
+        : { type: block.type, text: block.text ?? "" },
+    ).filter((block) => block.type !== "Photo" || Boolean(block.image)),
     contact: {
       questions: "Questions?",
       phone: `Call ${contact.phone} or`,
@@ -274,12 +279,20 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
       phoneHref: doc.note?.phoneHref ?? d.note.phoneHref,
     },
     blocks:
-      doc.blocks?.map((block) => ({
-        type: block.type === "Heading" ? "Heading" : "Paragraph",
-        text: block.text,
-        linkLabel: block.linkLabel ?? undefined,
-        linkHref: block.linkHref ?? undefined,
-      })) ?? d.blocks,
+      doc.blocks?.map((block) =>
+        block.type === "Photo"
+          ? {
+              type: "Photo" as const,
+              image: mediaUrl(block.image),
+              caption: block.caption ?? undefined,
+            }
+          : {
+              type: block.type,
+              text: block.text ?? "",
+              linkLabel: block.linkLabel ?? undefined,
+              linkHref: block.linkHref ?? undefined,
+            },
+      ).filter((block) => block.type !== "Photo" || Boolean(block.image)) ?? d.blocks,
   };
 });
 
@@ -615,11 +628,18 @@ function mediaUrl(value: unknown): string {
 
 /** The story body blocks mapped to the h2/p sequence the page renders. */
 function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
-  return (doc.body ?? []).map((block) =>
-    block.type === "Heading"
-      ? { type: "h2" as const, text: block.text }
-      : { type: "p" as const, text: block.text },
-  );
+  return (doc.body ?? []).map((block) => {
+    if (block.type === "Photo") {
+      return {
+        type: "photo" as const,
+        image: mediaUrl(block.image),
+        caption: block.caption ?? undefined,
+      };
+    }
+    return block.type === "Heading"
+      ? { type: "h2" as const, text: block.text ?? "" }
+      : { type: "p" as const, text: block.text ?? "" };
+  }).filter((block) => block.type !== "photo" || Boolean(block.image));
 }
 
 /** Pronouns used by generated copy, derived from the story's Gender field. */

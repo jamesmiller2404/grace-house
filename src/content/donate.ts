@@ -59,12 +59,16 @@ export type DonatePage = {
 /** One text block: a heading or a paragraph, with an optional link. */
 export type DonateBlock = {
   /** Whether the block renders as a heading or a paragraph. */
-  type: "Heading" | "Paragraph";
+  type: "Heading" | "Paragraph" | "Photo";
   /**
    * The block text. Newlines render as line breaks, so a labeled block
    * (e.g. "Hours:\nWednesdays: 11am to 4pm.") can share one block.
    */
-  text: string;
+  text?: string;
+  /** Uploaded photo URL for Photo blocks. */
+  image?: string;
+  /** Optional caption shown under a photo. */
+  caption?: string;
   /** Optional link text shown after the block (punctuation may be included). */
   linkLabel?: string;
   /** Where the optional link points (opens in a new tab). */

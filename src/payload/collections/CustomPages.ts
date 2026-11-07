@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { StatusSelectField } from "@/payload/fields/StatusSelect";
+import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 
 /**
  * The most custom pages the site supports. Exactly this many are seeded
@@ -152,9 +152,13 @@ access: {
         {
           // The same dropdown the Donate blocks and Stories body use,
           // extended with the "Photo" choice.
-          ...StatusSelectField({
+          ...BlockTypeButtonsField({
             name: "type",
-            options: ["Paragraph", "Heading", "Photo"],
+            options: [
+              { label: "Header", value: "Heading" },
+              { label: "Paragraph", value: "Paragraph" },
+              { label: "Photo", value: "Photo" },
+            ],
             defaultValue: "Paragraph",
             required: true,
           }),

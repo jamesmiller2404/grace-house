@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { StatusSelectField } from "@/payload/fields/StatusSelect";
+import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 
 /**
  * Feeding the Streets page content — Title plus an ordered stack of
@@ -84,9 +84,13 @@ export const FeedingTheStreets: CollectionConfig = {
       },
       fields: [
         {
-          ...StatusSelectField({
+          ...BlockTypeButtonsField({
             name: "type",
-            options: ["Paragraph", "Heading", "Photo"],
+            options: [
+              { label: "Header", value: "Heading" },
+              { label: "Paragraph", value: "Paragraph" },
+              { label: "Photo", value: "Photo" },
+            ],
             defaultValue: "Paragraph",
             required: true,
           }),

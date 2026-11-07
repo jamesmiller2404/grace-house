@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { ContactSelectField } from "@/payload/fields/ContactSelect";
 import { ImagePositionField } from "@/payload/fields/ImagePosition";
+import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 import { StatusSelectField } from "@/payload/fields/StatusSelect";
 import { TimeField } from "@/payload/fields/TimePicker";
 
@@ -220,7 +221,7 @@ export const Events: CollectionConfig = {
         // a glance.
         initCollapsed: false,
         description:
-          "Add headings and paragraphs in the order they should appear.",
+          "Add headers, paragraphs and photos in the order they should appear.",
         // Friendly row labels (e.g. "1. Heading: ...") instead of Payload's
         // default "Block 01" to see ./Events/BlockRowLabel.tsx.
         components: {
@@ -232,9 +233,13 @@ export const Events: CollectionConfig = {
       fields: [
         {
           // The same Heading/Paragraph dropdown the Stories body blocks use.
-          ...StatusSelectField({
+          ...BlockTypeButtonsField({
             name: "type",
-            options: ["Paragraph", "Heading"],
+            options: [
+              { label: "Header", value: "Heading" },
+              { label: "Paragraph", value: "Paragraph" },
+              { label: "Photo", value: "Photo" },
+            ],
             defaultValue: "Paragraph",
             required: true,
           }),
@@ -242,10 +247,37 @@ export const Events: CollectionConfig = {
         {
           name: "text",
           type: "textarea",
-          required: true,
           label: false,
           admin: {
+            condition: (_data, siblingData) => siblingData?.type !== "Photo",
             placeholder: "Text...",
+          },
+          validate: (value, { siblingData }) =>
+            siblingData?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
+              ? true
+              : "Enter text for this Header or Paragraph block.",
+        },
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          label: false,
+          admin: {
+            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            description: "Choose the photo shown inline on the event page.",
+          },
+          validate: (value, { siblingData }) =>
+            siblingData?.type !== "Photo" || value
+              ? true
+              : "Choose a photo for this Photo block.",
+        },
+        {
+          name: "caption",
+          type: "text",
+          label: false,
+          admin: {
+            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            placeholder: "Photo caption (optional)...",
           },
         },
       ],
