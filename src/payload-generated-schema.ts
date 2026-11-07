@@ -11,13 +11,15 @@ import type {} from '@payloadcms/db-postgres'
 import { pgTable, index, uniqueIndex, foreignKey, integer, varchar, timestamp, serial, numeric, boolean, jsonb, pgEnum } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
 export const enum_users_role = pgEnum('enum_users_role', ['admin', 'editor'])
+export const enum_events_blocks_type = pgEnum('enum_events_blocks_type', ['Paragraph', 'Heading'])
 export const enum_events_status = pgEnum('enum_events_status', ['Upcoming', 'Past', 'Cancelled'])
 export const enum_intro_bg_color = pgEnum('enum_intro_bg_color', ['cream', 'sand', 'gold', 'terra', 'lift', 'anchor', 'ink', 'white'])
 export const enum_intro_text_color = pgEnum('enum_intro_text_color', ['cream', 'sand', 'gold', 'terra', 'lift', 'anchor', 'ink', 'white'])
 export const enum_intro_link_color = pgEnum('enum_intro_link_color', ['cream', 'sand', 'gold', 'terra', 'lift', 'anchor', 'ink', 'white'])
 export const enum_intro_link_hover_color = pgEnum('enum_intro_link_hover_color', ['cream', 'sand', 'gold', 'terra', 'lift', 'anchor', 'ink', 'white'])
 export const enum_stories_body_type = pgEnum('enum_stories_body_type', ['Paragraph', 'Heading'])
-export const enum_stories_role = pgEnum('enum_stories_role', ['Graduate', 'Volunteer', 'Staff'])
+export const enum_stories_role = pgEnum('enum_stories_role', ['Graduate', 'Volunteer', 'Staff', 'Other'])
+export const enum_stories_gender = pgEnum('enum_stories_gender', ['Male', 'Female'])
 export const enum_stories_pillar = pgEnum('enum_stories_pillar', ['Forgive Yourself', 'God\'s Timing', 'A Giver, Not a Taker', 'Restoration'])
 export const enum_donate_blocks_type = pgEnum('enum_donate_blocks_type', ['Paragraph', 'Heading'])
 export const enum_custom_pages_blocks_type = pgEnum('enum_custom_pages_blocks_type', ['Paragraph', 'Heading', 'Photo'])
@@ -60,26 +62,12 @@ export const users = pgTable('users', {
 )
 
 
-export const events_blocks_paragraphs = pgTable('events_blocks_paragraphs', {
-  _order: integer('_order').notNull(),
-  _parentID: varchar('_parent_id').notNull(),
-  id: varchar('id').primaryKey(),
-  text: varchar('text'),
-}, (columns) => [
-    index('events_blocks_paragraphs_order_idx').on(columns._order), index('events_blocks_paragraphs_parent_id_idx').on(columns._parentID), foreignKey({
-      columns: [columns['_parentID']],
-      foreignColumns: [events_blocks.id],
-      name: 'events_blocks_paragraphs_parent_id_fk'
-    }).onDelete('cascade'),
-]
-)
-
-
 export const events_blocks = pgTable('events_blocks', {
   _order: integer('_order').notNull(),
   _parentID: integer('_parent_id').notNull(),
   id: varchar('id').primaryKey(),
-  heading: varchar('heading').notNull(),
+  type: enum_events_blocks_type('type').notNull().default("Paragraph"),
+  text: varchar('text').notNull(),
 }, (columns) => [
     index('events_blocks_order_idx').on(columns._order), index('events_blocks_parent_id_idx').on(columns._parentID), foreignKey({
       columns: [columns['_parentID']],
@@ -236,6 +224,8 @@ export const stories = pgTable('stories', {
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
   role: enum_stories_role('role').notNull().default("Graduate"),
+  gender: enum_stories_gender('gender'),
+  roleLabel: varchar('role_label'),
   image: integer('image_id').references(() => media.id, {
       onDelete: 'set null'
   }),
@@ -688,23 +678,12 @@ export const relations_users = relations(users, ({ many }) => ({
             relationName: 'sessions',
     }),
       }))
-export const relations_events_blocks_paragraphs = relations(events_blocks_paragraphs, ({ one }) => ({
-  _parentID: one(events_blocks, {
-    
-    fields: [events_blocks_paragraphs._parentID],
-    references: [events_blocks.id],
-    relationName: 'paragraphs',
-    }),
-      }))
-export const relations_events_blocks = relations(events_blocks, ({ one, many }) => ({
+export const relations_events_blocks = relations(events_blocks, ({ one }) => ({
   _parentID: one(events, {
     
     fields: [events_blocks._parentID],
     references: [events.id],
     relationName: 'blocks',
-    }),
-    paragraphs: many(events_blocks_paragraphs, {
-            relationName: 'paragraphs',
     }),
       }))
 export const relations_events = relations(events, ({ one, many }) => ({
@@ -1030,6 +1009,7 @@ export const relations_footer = relations(footer, () => ({
 
 type DatabaseSchema = {
   enum_users_role: typeof enum_users_role
+  enum_events_blocks_type: typeof enum_events_blocks_type
   enum_events_status: typeof enum_events_status
   enum_intro_bg_color: typeof enum_intro_bg_color
   enum_intro_text_color: typeof enum_intro_text_color
@@ -1037,6 +1017,7 @@ type DatabaseSchema = {
   enum_intro_link_hover_color: typeof enum_intro_link_hover_color
   enum_stories_body_type: typeof enum_stories_body_type
   enum_stories_role: typeof enum_stories_role
+  enum_stories_gender: typeof enum_stories_gender
   enum_stories_pillar: typeof enum_stories_pillar
   enum_donate_blocks_type: typeof enum_donate_blocks_type
   enum_custom_pages_blocks_type: typeof enum_custom_pages_blocks_type
@@ -1044,7 +1025,6 @@ type DatabaseSchema = {
   enum_home_layout_sections_section: typeof enum_home_layout_sections_section
   users_sessions: typeof users_sessions
   users: typeof users
-  events_blocks_paragraphs: typeof events_blocks_paragraphs
   events_blocks: typeof events_blocks
   events: typeof events
   media: typeof media
@@ -1080,7 +1060,6 @@ type DatabaseSchema = {
   footer: typeof footer
   relations_users_sessions: typeof relations_users_sessions
   relations_users: typeof relations_users
-  relations_events_blocks_paragraphs: typeof relations_events_blocks_paragraphs
   relations_events_blocks: typeof relations_events_blocks
   relations_events: typeof relations_events
   relations_media: typeof relations_media

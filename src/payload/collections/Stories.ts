@@ -18,8 +18,8 @@ import { pillars } from "@/content/pillars";
  *  - the pillar of the Four Pillars that mattered most to the person
  *  - the card fields shown in the Lives Changed index (graduation date, short
  *    quote, read label)
- *  - the closing "Where they are today" section, pronouns and the memories
- *    photo gallery
+ *  - the closing "Where they are today" section and the memories photo gallery
+ *  - gender-derived pronouns for generated profile links
  *
  * The front page "Lives Changed" section, the /stories index and every
  * /stories/<slug> page read from this collection (see src/payload/queries.ts),
@@ -106,7 +106,7 @@ export const Stories: CollectionConfig = {
           // see src/payload/fields/StatusSelect.
           ...StatusSelectField({
             name: "role",
-            options: ["Graduate", "Volunteer", "Staff"],
+            options: ["Graduate", "Volunteer", "Staff", "Other"],
             defaultValue: "Graduate",
             required: true,
             admin: {
@@ -125,6 +125,24 @@ export const Stories: CollectionConfig = {
           }),
         },
       ],
+    },
+    {
+      // Only shown when the editor chooses the catch-all Role option.
+      name: "roleLabel",
+      type: "text",
+      label: false,
+      admin: {
+        condition: (_data, siblingData) => siblingData?.role === "Other",
+        placeholder: "Enter role label...",
+        description: "Enter the role label displayed on this profile.",
+      },
+      validate: (value: string | string[] | null | undefined, { siblingData }: { siblingData?: { role?: string } }) => {
+      //  if (siblingData?.role === "Other" && typeof value === "string" && !value.trim()) {
+      if (siblingData?.role === "Other" && typeof value === "string" && !value || (typeof value === "string" && !value.trim())) {
+      return "Please enter a role label when Role is Other.";
+        }
+        return true;
+      },
     },
     {
       // The portrait photo. Optional — the site falls back to a placeholder
@@ -180,8 +198,6 @@ export const Stories: CollectionConfig = {
       // src/components/StoryProfile.tsx).
       name: "body",
       type: "array",
-      required: true,
-      minRows: 1,
       labels: {
         singular: "Block",
         plural: "Story Body",
@@ -288,8 +304,7 @@ export const Stories: CollectionConfig = {
       type: "text",
       label: false,
       admin: {
-        placeholder: "Read her story...",
-        description: "The card link text (e.g. Read her story).",
+        hidden: true,
       },
     },
     {
@@ -332,13 +347,13 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // Grammar for copy like "shared her story" / "Read her story".
+      // Kept in the database for backwards compatibility, but hidden from
+      // editors. Public-facing pronouns are derived from the Gender field.
       name: "pronouns",
       type: "group",
       label: "Pronouns",
       admin: {
-        description:
-          "Used for copy like Read her story / shared her story.",
+        hidden: true,
       },
       fields: [
         {

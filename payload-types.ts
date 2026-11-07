@@ -337,8 +337,12 @@ export interface Intro {
 export interface Story {
   id: number;
   name: string;
-  role: 'Graduate' | 'Volunteer' | 'Staff';
+  role: 'Graduate' | 'Volunteer' | 'Staff' | 'Other';
   gender?: ('Male' | 'Female') | null;
+  /**
+   * Enter the role label displayed on this profile.
+   */
+  roleLabel?: string | null;
   /**
    * The portrait photo shown in the story hero.
    */
@@ -352,11 +356,13 @@ export interface Story {
   /**
    * Add paragraphs and headings in the order they should appear. The first paragraph gets the drop cap on the site.
    */
-  body: {
-    type: 'Paragraph' | 'Heading';
-    text: string;
-    id?: string | null;
-  }[];
+  body?:
+    | {
+        type: 'Paragraph' | 'Heading';
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * The full-width pull-quote band on the story page.
    */
@@ -376,9 +382,6 @@ export interface Story {
    * The short pull quote shown on the story card and in the list view.
    */
   excerpt?: string | null;
-  /**
-   * The card link text (e.g. Read her story).
-   */
   readLabel?: string | null;
   /**
    * The closing section of the story page (e.g. Where she is today).
@@ -392,9 +395,6 @@ export interface Story {
         }[]
       | null;
   };
-  /**
-   * Used for copy like Read her story / shared her story.
-   */
   pronouns?: {
     subject?: string | null;
     possessive?: string | null;
@@ -959,6 +959,7 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   role?: T;
   gender?: T;
+  roleLabel?: T;
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;

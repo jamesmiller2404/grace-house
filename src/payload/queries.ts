@@ -622,20 +622,33 @@ function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
   );
 }
 
+/** Pronouns used by generated copy, derived from the story's Gender field. */
+function pronounsForGender(gender: PayloadStory["gender"]) {
+  if (gender === "Male") {
+    return { subject: "he", object: "him", possessive: "his" };
+  }
+  if (gender === "Female") {
+    return { subject: "she", object: "her", possessive: "her" };
+  }
+  // Existing records may not have a gender selected yet. Use singular they
+  // rather than guessing or falling back to stale manually entered pronouns.
+  return { subject: "they", object: "them", possessive: "their" };
+}
+
 /** Map one database story to the card/list item the sections render. */
 function toStoryItem(doc: PayloadStory): StoryItem {
-  const possessive = doc.pronouns?.possessive ?? "";
+  const pronouns = pronounsForGender(doc.gender);
   return {
     name: doc.name,
-    tag: doc.role,
+    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
     date: doc.date ?? "",
     // Fall back to the hero pull quote when no short card quote is set.
     excerpt: doc.excerpt ?? doc.pullQuote ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
     href: `/stories/${storySlug(doc.name)}`,
-    readLabel:
-      doc.readLabel ??
-      (possessive ? `Read ${possessive} story` : "Read their story"),
+    // Generated link copy always follows Gender, not the legacy readLabel or
+    // Pronouns fields (both are hidden in the admin editor).
+    readLabel: `Read ${pronouns.possessive} story`,
     pillarIndex: pillarIndexFromTitle(doc.pillar),
   };
 }
@@ -645,7 +658,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
   return {
     slug: storySlug(doc.name),
     name: doc.name,
-    tag: doc.role,
+    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
     imagePositionX: doc.imagePositionX ?? 50,
@@ -661,10 +674,8 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
       paragraphs: (doc.closing?.paragraphs ?? []).map((p) => p.text),
     },
     pillarIndex: pillarIndexFromTitle(doc.pillar),
-    pronouns: {
-      subject: doc.pronouns?.subject ?? "",
-      possessive: doc.pronouns?.possessive ?? "",
-    },
+    // Never use the legacy manually-entered pronouns; derive them from Gender.
+    pronouns: pronounsForGender(doc.gender),
     memories: (doc.memories ?? []).map((memory) => ({
       image: mediaUrl(memory.image),
       alt: memory.alt ?? "",
