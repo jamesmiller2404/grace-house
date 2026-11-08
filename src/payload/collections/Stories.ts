@@ -293,14 +293,14 @@ export const Stories: CollectionConfig = {
           type: "textarea",
           label: false,
           admin: {
-            condition: (_data, siblingData) => siblingData?.type !== "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
             components: {
               Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" },
             },
             placeholder: "Text...",
           },
-          validate: (value, { siblingData }) =>
-            siblingData?.type === "Photo" ||
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | undefined)?.type === "Photo" ||
             (typeof value === "string" && value.trim().length > 0)
               ? true
               : "Enter text for this Header or Paragraph block.",
@@ -312,11 +312,11 @@ export const Stories: CollectionConfig = {
           label: false,
           admin: {
             className: "gh-block-photo-input",
-            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             description: "Choose the photo shown inline in the story.",
           },
-          validate: (value, { siblingData }) =>
-            siblingData?.type !== "Photo" || value
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | undefined)?.type !== "Photo" || value
               ? true
               : "Choose a photo for this Photo block.",
         },
@@ -325,7 +325,7 @@ export const Stories: CollectionConfig = {
           type: "text",
           label: false,
           admin: {
-            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             placeholder: "Photo caption (optional)...",
           },
         },
