@@ -228,30 +228,34 @@ html {
 }
 
 .gh-block-type-field__button {
-  min-width: 150px;
-  min-height: 46px;
-  padding: 8px 20px;
-  border: 1px solid #55555b;
-  border-radius: 8px;
-  background: #e4e4ea;
-  color: #7e6b6b;
+  min-width: 0;
+  min-height: 22px;
+  padding: 5px 8px;
+  margin: 5px 1px 5px 2px;
+  border: 1px solid #000000;
+  border-radius: 999px;
+  background: #929292;
+  color: #000000;
+  box-shadow: none;
   font: inherit;
-  font-size: 1rem;
-  font-weight: 650;
-  line-height: 1.1;
+  font-size: 0.85em;
+  font-weight: 500;
+  line-height: 1.2;
   cursor: pointer;
-  transition: background-color 120ms ease, box-shadow 120ms ease;
+  transition: background-color 120ms ease;
 }
 
 .gh-block-type-field__button:hover:not(:disabled) {
-  background: #c7c7c7;
+  background: #7f7f7f !important;
+  color: #000000 !important;
 }
 
 .gh-block-type-field__button.is-selected {
   border-color: #000000;
   background: #ffffff;
-  color: #111111;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  color: #000000;
+  box-shadow: none;
+  font-weight: 700;
 }
 
 .gh-block-type-field__button:focus-visible {
@@ -362,9 +366,11 @@ html {
   }
 
   .gh-block-type-field__button {
-    min-width: 0;
+    min-height: 44px;
     flex: 1 1 0;
-    padding-inline: 10px;
+    padding: 10px 12px;
+    margin: 4px 1px;
+    font-size: 0.9em;
   }
 }
 /* Background for Heading / Paragraph / Photo cards */
