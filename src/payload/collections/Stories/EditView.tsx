@@ -91,11 +91,11 @@ html[data-theme='light'] .gh-stories-edit {
   min-height: 22px;
   padding: 5px 8px;
   margin: 5px 1px 5px 2px;
-  border: 1px solid #222222;
+  border: 1px solid #000000;
   border-radius: 999px;
   background: #929292;
   color: #000000;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
   font: inherit;
   font-size: 0.85em;
   font-weight: 500;
