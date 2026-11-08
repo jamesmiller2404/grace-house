@@ -528,7 +528,7 @@ export async function seedStories(payload: Payload): Promise<void> {
               };
             }
             return {
-              type: block.type === "h2" ? "Heading" : "Paragraph",
+              type: (block.type === "h2" ? "Heading" : "Paragraph") as const,
               text: block.text,
             };
           }),
@@ -539,7 +539,7 @@ export async function seedStories(payload: Payload): Promise<void> {
         },
         // Seeded profiles explicitly include their known most-important pillar.
         showPillar: true,
-        pillar: (pillars[profile.pillarIndex]?.title ??
+        pillar: (pillars[profile.pillarIndex ?? 0]?.title ??
           pillars[0].title) as Story["pillar"],
         date: card?.date,
         readLabel: card?.readLabel,
