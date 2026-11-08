@@ -213,6 +213,46 @@ html[data-theme='light'] .gh-stories-edit {
     margin-bottom: 0;
   }
 }
+/* Make Payload's section separators easy to see between editor groups. */
+.gh-stories-edit hr,
+.gh-stories-edit .collapsible {
+  border-color: #8f8f9d !important;
+}
+.gh-stories-edit hr {
+  border-top: 2px solid #8f8f9d !important;
+  opacity: 1;
+}
+.gh-stories-edit .collapsible {
+  border-top: 2px solid #8f8f9d;
+  padding-top: 18px;
+}
+/* Graduation date: keep free-form text and the native calendar control aligned. */
+.gh-stories-edit .gh-graduation-date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.gh-stories-edit .gh-graduation-date__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.gh-stories-edit .gh-graduation-date__calendar {
+  flex: 0 0 170px;
+  max-width: 170px;
+}
+.gh-stories-edit .gh-graduation-date__calendar input {
+  width: 100%;
+}
+@media (max-width: 560px) {
+  .gh-stories-edit .gh-graduation-date {
+    flex-wrap: wrap;
+  }
+  .gh-stories-edit .gh-graduation-date__calendar {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
 /* Field helper text */
 .gh-stories-edit .field-description {
   color: var(--gh-st-help);
