@@ -137,10 +137,18 @@ export const Stories: CollectionConfig = {
         placeholder: "Enter role label...",
         description: "Enter the role label displayed on this profile.",
       },
-      validate: (value: string | string[] | null | undefined, { siblingData }: { siblingData?: { role?: string } }) => {
-      //  if (siblingData?.role === "Other" && typeof value === "string" && !value.trim()) {
-      if (siblingData?.role === "Other" && typeof value === "string" && !value || (typeof value === "string" && !value.trim())) {
-      return "Please enter a role label when Role is Other.";
+      validate: (
+        value: string | string[] | null | undefined,
+        { siblingData }: { siblingData?: { role?: string } },
+      ) => {
+        //  if (siblingData?.role === "Other" && typeof value === "string" && !value.trim()) {
+        if (
+          (siblingData?.role === "Other" &&
+            typeof value === "string" &&
+            !value) ||
+          (typeof value === "string" && !value.trim())
+        ) {
+          return "Please enter a role label when Role is Other.";
         }
         return true;
       },
@@ -236,11 +244,14 @@ export const Stories: CollectionConfig = {
           label: false,
           admin: {
             condition: (_data, siblingData) => siblingData?.type !== "Photo",
-            components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
+            components: {
+              Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" },
+            },
             placeholder: "Text...",
           },
           validate: (value, { siblingData }) =>
-            siblingData?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
+            siblingData?.type === "Photo" ||
+            (typeof value === "string" && value.trim().length > 0)
               ? true
               : "Enter text for this Header or Paragraph block.",
         },
@@ -251,7 +262,7 @@ export const Stories: CollectionConfig = {
           label: false,
           admin: {
             className: "gh-block-photo-input",
-condition: (_data, siblingData) => siblingData?.type === "Photo",
+            condition: (_data, siblingData) => siblingData?.type === "Photo",
             description: "Choose the photo shown inline in the story.",
           },
           validate: (value, { siblingData }) =>
@@ -302,6 +313,7 @@ condition: (_data, siblingData) => siblingData?.type === "Photo",
       // come from src/content/pillars.ts so the labels stay in sync.
       ...StatusSelectField({
         name: "pillar",
+        label: "Most Important Pillar",
         options: pillars.map((pillar) => pillar.title),
         defaultValue: pillars[0].title,
         required: true,
