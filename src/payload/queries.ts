@@ -681,11 +681,11 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
-    heroQuote: doc.showPullQuote ? doc.pullQuote ?? "" : "",
+    heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
     body: toStoryBody(doc),
     quoteBand: {
-      quote: doc.showBannerQuote ? doc.bannerQuote?.quote ?? "" : "",
-      attribution: doc.showBannerQuote ? doc.bannerQuote?.attribution ?? "" : "",
+      quote: doc.showBannerQuote !== false ? doc.bannerQuote?.quote ?? "" : "",
+      attribution: doc.showBannerQuote !== false ? doc.bannerQuote?.attribution ?? "" : "",
     },
     closing: {
       heading: doc.closing?.heading ?? "",
