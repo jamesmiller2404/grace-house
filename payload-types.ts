@@ -345,6 +345,10 @@ export interface Story {
   role: 'Graduate' | 'Volunteer' | 'Staff' | 'Other';
   gender?: ('Male' | 'Female') | null;
   /**
+   * Enter MM/DD/YYYY for a full date or MM/YYYY when only the month and year are known.
+   */
+  date?: string | null;
+  /**
    * Enter the role label displayed on this profile.
    */
   roleLabel?: string | null;
@@ -381,17 +385,13 @@ export interface Story {
     attribution?: string | null;
   };
   /**
-   * The pillar that mattered most to this person.
+   * Leave unchecked if you do not want a Most Important Pillar section on this profile.
    */
-  pillar: 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration';
+  showPillar?: boolean | null;
   /**
-   * Shown on the story card and in the list view (e.g. 05/30/2026 or 03/2019).
+   * Choose the pillar that mattered most to this person.
    */
-  date?: string | null;
-  /**
-   * The short pull quote shown on the story card and in the list view.
-   */
-  excerpt?: string | null;
+  pillar?: ('Select a pillar...' | 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration') | null;
   readLabel?: string | null;
   /**
    * The closing section of the story page (e.g. Where she is today).
@@ -976,6 +976,7 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   role?: T;
   gender?: T;
+  date?: T;
   roleLabel?: T;
   image?: T;
   imagePositionX?: T;
@@ -996,9 +997,8 @@ export interface StoriesSelect<T extends boolean = true> {
         quote?: T;
         attribution?: T;
       };
+  showPillar?: T;
   pillar?: T;
-  date?: T;
-  excerpt?: T;
   readLabel?: T;
   closing?:
     | T

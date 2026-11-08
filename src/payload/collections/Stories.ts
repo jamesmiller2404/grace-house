@@ -128,6 +128,41 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
+      // Graduation date: accept a full date (MM/DD/YYYY) or month/year (MM/YYYY).
+      name: "date",
+      type: "text",
+      label: false,
+      admin: {
+        placeholder: "Graduation date... (MM/DD/YYYY or MM/YYYY)",
+        description:
+          "Enter MM/DD/YYYY for a full date or MM/YYYY when only the month and year are known.",
+      },
+      validate: (value: unknown) => {
+        if (value == null || value === "") return true;
+        if (typeof value !== "string") {
+          return "Enter a date as MM/DD/YYYY or MM/YYYY.";
+        }
+
+        const fullDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/(\d{4})$/.exec(value);
+        if (fullDate) {
+          const month = Number(fullDate[1]);
+          const day = Number(fullDate[2]);
+          const year = Number(fullDate[3]);
+          const parsed = new Date(year, month - 1, day);
+          return parsed.getFullYear() === year &&
+            parsed.getMonth() === month - 1 &&
+            parsed.getDate() === day
+            ? true
+            : "Enter a valid calendar date as MM/DD/YYYY.";
+        }
+
+        const monthYear = /^(0?[1-9]|1[0-2])\/(\d{4})$/.exec(value);
+        return monthYear
+          ? true
+          : "Enter a date as MM/DD/YYYY or MM/YYYY.";
+      },
+    },
+    {
       // Only shown when the editor chooses the catch-all Role option.
       name: "roleLabel",
       type: "text",
@@ -309,40 +344,55 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // Which of the Four Pillars mattered most to this person. The options
-      // come from src/content/pillars.ts so the labels stay in sync.
-      ...StatusSelectField({
-        name: "pillar",
-        label: "Most Important Pillar",
-        options: pillars.map((pillar) => pillar.title),
-        defaultValue: pillars[0].title,
-        required: true,
-        admin: {
-          description: "The pillar that mattered most to this person.",
+      // Optional section: the checkbox explicitly controls whether a pillar
+      // is included on the public profile. The dummy default prevents an
+      // unintentional real pillar from being selected automatically.
+      type: "collapsible",
+      label: "Most Important Pillar",
+      admin: {
+        initCollapsed: false,
+      },
+      fields: [
+        {
+          name: "showPillar",
+          type: "checkbox",
+          label: "Include Most Important Pillar on this profile",
+          defaultValue: false,
+          admin: {
+            description:
+              "Leave unchecked if you do not want a Most Important Pillar section on this profile.",
+          },
         },
-      }),
-    },
-    {
-      // The graduation date on the card and in the list view.
-      name: "date",
-      type: "text",
-      label: false,
-      admin: {
-        placeholder: "Graduation date... (MM/DD/YYYY or MM/YYYY)",
-        description:
-          "Shown on the story card and in the list view (e.g. 05/30/2026 or 03/2019).",
-      },
-    },
-    {
-      // The short quote shown on the card and in the list view.
-      name: "excerpt",
-      type: "text",
-      label: false,
-      admin: {
-        placeholder: "Short card quote...",
-        description:
-          "The short pull quote shown on the story card and in the list view.",
-      },
+        {
+          ...StatusSelectField({
+            name: "pillar",
+            label: false,
+            options: [
+              { label: "Select a pillar...", value: "Select a pillar..." },
+              ...pillars.map((pillar) => ({
+                label: pillar.title,
+                value: pillar.title,
+              })),
+            ],
+            defaultValue: "Select a pillar...",
+            required: false,
+            admin: {
+              condition: (_data, siblingData) =>
+                siblingData?.showPillar === true,
+              description: "Choose the pillar that mattered most to this person.",
+            },
+            validate: (
+              value: string | null | undefined,
+              { siblingData }: { siblingData?: { showPillar?: boolean } },
+            ) => {
+              if (siblingData?.showPillar !== true) return true;
+              return pillars.some((pillar) => pillar.title === value)
+                ? true
+                : "Choose a pillar before including this section.";
+            },
+          }),
+        },
+      ],
     },
     {
       // The text of the card's link (e.g. "Read her story").

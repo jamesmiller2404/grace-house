@@ -611,10 +611,10 @@ function storySlug(name: string): string {
 }
 
 /** Index (0-based) into `pillars` of a story's saved pillar title. */
-function pillarIndexFromTitle(title: string | null | undefined): number {
-  if (!title) return 0;
+function pillarIndexFromTitle(title: string | null | undefined): number | null {
+  if (!title) return null;
   const index = pillars.findIndex((pillar) => pillar.title === title);
-  return index >= 0 ? index : 0;
+  return index >= 0 ? index : null;
 }
 
 /** Read a media document's public URL from an upload field value. */
@@ -662,14 +662,12 @@ function toStoryItem(doc: PayloadStory): StoryItem {
     name: doc.name,
     tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
     date: doc.date ?? "",
-    // Fall back to the hero pull quote when no short card quote is set.
-    excerpt: doc.excerpt ?? doc.pullQuote ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
     href: `/stories/${storySlug(doc.name)}`,
     // Generated link copy always follows Gender, not the legacy readLabel or
     // Pronouns fields (both are hidden in the admin editor).
     readLabel: `Read ${pronouns.possessive} story`,
-    pillarIndex: pillarIndexFromTitle(doc.pillar),
+    pillarIndex: doc.showPillar ? pillarIndexFromTitle(doc.pillar) : null,
   };
 }
 
@@ -693,7 +691,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
       heading: doc.closing?.heading ?? "",
       paragraphs: (doc.closing?.paragraphs ?? []).map((p) => p.text),
     },
-    pillarIndex: pillarIndexFromTitle(doc.pillar),
+    pillarIndex: doc.showPillar ? pillarIndexFromTitle(doc.pillar) : null,
     // Never use the legacy manually-entered pronouns; derive them from Gender.
     pronouns: pronounsForGender(doc.gender),
     memories: (doc.memories ?? []).map((memory) => ({

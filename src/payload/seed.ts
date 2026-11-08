@@ -466,7 +466,7 @@ async function uploadSeedImage(
  */
 export async function seedStories(payload: Payload): Promise<void> {
   for (const profile of storyProfiles) {
-    // The card fields (date, excerpt, readLabel) live in src/content/stories.ts.
+    // The card date lives in src/content/stories.ts.
     const card = stories.find((item) => item.name === profile.name);
 
     // 1. Upload the portrait photo (skipped if the file cannot be read).
@@ -537,11 +537,11 @@ export async function seedStories(payload: Payload): Promise<void> {
           quote: profile.quoteBand.quote,
           attribution: profile.quoteBand.attribution,
         },
-        // The pillar that mattered most, stored by its title.
+        // Seeded profiles explicitly include their known most-important pillar.
+        showPillar: true,
         pillar: (pillars[profile.pillarIndex]?.title ??
           pillars[0].title) as Story["pillar"],
         date: card?.date,
-        excerpt: card?.excerpt,
         readLabel: card?.readLabel,
         closing: {
           heading: profile.closing.heading,

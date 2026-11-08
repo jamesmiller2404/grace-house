@@ -20,7 +20,7 @@ export const enum_intro_link_hover_color = pgEnum('enum_intro_link_hover_color',
 export const enum_stories_body_type = pgEnum('enum_stories_body_type', ['Paragraph', 'Heading'])
 export const enum_stories_role = pgEnum('enum_stories_role', ['Graduate', 'Volunteer', 'Staff', 'Other'])
 export const enum_stories_gender = pgEnum('enum_stories_gender', ['Male', 'Female'])
-export const enum_stories_pillar = pgEnum('enum_stories_pillar', ['Forgive Yourself', 'God\'s Timing', 'A Giver, Not a Taker', 'Restoration'])
+export const enum_stories_pillar = pgEnum('enum_stories_pillar', ['Select a pillar...', 'Forgive Yourself', "God's Timing", 'A Giver, Not a Taker', 'Restoration'])
 export const enum_donate_blocks_type = pgEnum('enum_donate_blocks_type', ['Paragraph', 'Heading'])
 export const enum_custom_pages_blocks_type = pgEnum('enum_custom_pages_blocks_type', ['Paragraph', 'Heading', 'Photo'])
 export const enum_feeding_the_streets_blocks_type = pgEnum('enum_feeding_the_streets_blocks_type', ['Paragraph', 'Heading', 'Photo'])
@@ -234,9 +234,9 @@ export const stories = pgTable('stories', {
   pullQuote: varchar('pull_quote'),
   bannerQuote_quote: varchar('banner_quote_quote'),
   bannerQuote_attribution: varchar('banner_quote_attribution'),
-  pillar: enum_stories_pillar('pillar').notNull().default("Forgive Yourself"),
+  showPillar: boolean('show_pillar').default(false).notNull(),
+  pillar: enum_stories_pillar('pillar').notNull(),
   date: varchar('date'),
-  excerpt: varchar('excerpt'),
   readLabel: varchar('read_label'),
   closing_heading: varchar('closing_heading'),
   pronouns_subject: varchar('pronouns_subject'),

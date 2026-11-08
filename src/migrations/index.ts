@@ -30,6 +30,8 @@ import * as migration_20261106_063133 from './20261106_063133';
 import * as migration_20261106_084416 from './20261106_084416';
 import * as migration_20261106_091846 from './20261106_091846';
 import * as migration_20261107_030000_add_inline_photos_to_story_event_donate from './20261107_030000_add_inline_photos_to_story_event_donate';
+import * as migration_20261107_193200_lives_changed_optional_pillar_remove_card_quote from './20261107_193200_lives_changed_optional_pillar_remove_card_quote';
+import * as migration_20261108_035152 from './20261108_035152';
 
 export const migrations = [
   {
@@ -191,5 +193,15 @@ export const migrations = [
     up: migration_20261107_030000_add_inline_photos_to_story_event_donate.up,
     down: migration_20261107_030000_add_inline_photos_to_story_event_donate.down,
     name: '20261107_030000_add_inline_photos_to_story_event_donate',
+  },
+  {
+    up: migration_20261107_193200_lives_changed_optional_pillar_remove_card_quote.up,
+    down: migration_20261107_193200_lives_changed_optional_pillar_remove_card_quote.down,
+    name: '20261107_193200_lives_changed_optional_pillar_remove_card_quote',
+  },
+  {
+    up: migration_20261108_035152.up,
+    down: migration_20261108_035152.down,
+    name: '20261108_035152'
   },
 ];

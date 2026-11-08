@@ -31,7 +31,7 @@ export type StoryProfile = {
   /** "Where she is today" closing section. */
   closing: { heading: string; paragraphs: string[] };
   /** Index (0-based) into `pillars` of the pillar that mattered most. */
-  pillarIndex: number;
+  pillarIndex?: number | null;
   /** Grammar for copy like "shared her story" / "Read her story". */
   pronouns: { subject: string; possessive: string };
   /** Personal photos for the memories gallery. */

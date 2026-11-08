@@ -16,18 +16,13 @@ export type StoriesBrowserProps = {
   stories: StoryItem[];
 };
 
-type StorySortKey = "name" | "date" | "quote" | "pillar";
+type StorySortKey = "name" | "date" | "pillar";
 
 /** Initial order: graduation date, earliest first. */
 const INITIAL_SORT: SortState<StorySortKey> = {
   key: "date",
   ascending: true,
 };
-
-/** Strip decorative quotation marks so quotes sort alphabetically. */
-function stripQuotes(text: string): string {
-  return text.replace(/[“”"'’]/g, "");
-}
 
 /** Render the story date (MM/DD/YYYY or MM/YYYY) the way the mockup shows it: 05-30-2026. */
 function formatGraduationDate(date: string): string {
@@ -58,9 +53,8 @@ function dateSortKey(date: string): string {
 /**
  * Interactive index of every profile/story for the Lives Changed page.
  * Card view reuses the homepage "Lives Changed" card style; list view is the
- * sortable table from photoshop_assets/listView.png — Name, Graduation Date,
- * Quote and The Pillar columns, each with up/down arrows that take control of
- * the order (clicking again reverses it).
+ * sortable table — Name, Graduation Date and The Pillar columns, each with
+ * up/down arrows that take control of the order (clicking again reverses it).
  */
 export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
   const [view, setView] = useState<ViewMode>("card");
@@ -85,12 +79,12 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
       case "date":
         cmp = dateSortKey(a.date).localeCompare(dateSortKey(b.date));
         break;
-      case "quote":
-        cmp = stripQuotes(a.excerpt).localeCompare(stripQuotes(b.excerpt));
-        break;
       case "pillar":
-        // Group by pillar number first, then alphabetically within each pillar
-        cmp = a.pillarIndex - b.pillarIndex || a.name.localeCompare(b.name);
+        // Profiles without an optional pillar sort after profiles with one.
+        cmp =
+          (a.pillarIndex ?? Number.MAX_SAFE_INTEGER) -
+            (b.pillarIndex ?? Number.MAX_SAFE_INTEGER) ||
+          a.name.localeCompare(b.name);
         break;
     }
     return sort.ascending ? cmp : -cmp;
@@ -131,7 +125,6 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
                       {storyDateLabel(story.tag)} {formatStoryDate(story.date)}
                     </p>
                   )}
-                  <p className="mt-2 text-base italic">{story.excerpt}</p>
                   <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold">
                     {story.readLabel}
                   </span>
@@ -142,7 +135,7 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
         </ul>
       ) : (
         <div className="mt-10 overflow-x-auto">
-          <table className="w-full min-w-[760px] border-collapse text-left">
+          <table className="w-full min-w-[600px] border-collapse text-left">
             <thead>
               <tr className="border-ink/80 border-b-2">
                 <th scope="col" className="text-ink py-3 pr-4 text-lg font-bold">
@@ -172,21 +165,6 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
                       active={sort.key === "date"}
                       ascending={sort.ascending}
                       onClick={() => toggleSort("date")}
-                    />
-                  </button>
-                </th>
-                <th scope="col" className="text-ink py-3 pr-4 text-lg font-bold">
-                  <button
-                    type="button"
-                    onClick={() => toggleSort("quote")}
-                    className="hover:text-terra inline-flex items-center transition"
-                  >
-                    Quote
-                    <SortArrows
-                      label="Quote"
-                      active={sort.key === "quote"}
-                      ascending={sort.ascending}
-                      onClick={() => toggleSort("quote")}
                     />
                   </button>
                 </th>
@@ -224,11 +202,8 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
                   <td className="text-ink py-4 pr-4 text-lg">
                     {formatGraduationDate(story.date)}
                   </td>
-                  <td className="text-ink py-4 pr-4 text-lg italic">
-                    {story.excerpt}
-                  </td>
                   <td className="text-ink py-4 text-lg">
-                    {pillars[story.pillarIndex]?.title ?? ""}
+                    {story.pillarIndex == null ? "" : pillars[story.pillarIndex]?.title ?? ""}
                   </td>
                 </tr>
               ))}

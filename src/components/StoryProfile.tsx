@@ -20,7 +20,7 @@ export default function StoryProfile({
   profile,
   others = [],
 }: StoryProfileProps) {
-  const pillar = pillars[profile.pillarIndex];
+  const pillar = profile.pillarIndex == null ? undefined : pillars[profile.pillarIndex];
 
   return (
     <div className="bg-sand">

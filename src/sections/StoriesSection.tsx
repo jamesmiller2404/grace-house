@@ -63,9 +63,6 @@ export default function StoriesSection({
                       {storyDateLabel(story.tag)} {formatStoryDate(story.date)}
                     </p>
                   )}
-                  <p className="mt-2 text-base leading-relaxed italic">
-                    {story.excerpt}
-                  </p>
                   <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold">
                     {story.readLabel}
                   </span>
