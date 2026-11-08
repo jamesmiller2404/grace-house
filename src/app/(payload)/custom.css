@@ -405,3 +405,11 @@ div#field-date.gh-graduation-date .gh-graduation-date__native {
   background:transparent !important;
   border: 0px solid #000000 !important;
 }
+
+/* Darker helper/description text inside Heading / Paragraph / Photo cards
+   on Donate, Custom Pages, and Feeding the Streets only. Feeding the Streets
+   shares the Custom Pages edit-view wrapper. */
+.gh-donate-edit .array-field__row .field-description,
+.gh-custom-pages-edit .array-field__row .field-description {
+  color: #111114 !important;
+}
