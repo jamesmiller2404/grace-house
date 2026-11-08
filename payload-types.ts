@@ -345,7 +345,7 @@ export interface Story {
   role: 'Graduate' | 'Volunteer' | 'Staff' | 'Other';
   gender?: ('Male' | 'Female') | null;
   /**
-   * Enter MM/DD/YYYY for a full date or MM/YYYY when only the month and year are known.
+   * Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.
    */
   date?: string | null;
   /**
@@ -359,7 +359,11 @@ export interface Story {
   imagePositionX?: number | null;
   imagePositionY?: number | null;
   /**
-   * The pull quote shown in the story hero.
+   * Check to show an opening pull quote next to the picture and on the summary card.
+   */
+  showPullQuote?: boolean | null;
+  /**
+   * Opening pull quote placed next to the picture and on the summary card.
    */
   pullQuote?: string | null;
   /**
@@ -378,24 +382,17 @@ export interface Story {
       }[]
     | null;
   /**
+   * Check to include the full-width pull-quote band on the story page.
+   */
+  showBannerQuote?: boolean | null;
+  /**
    * The full-width pull-quote band on the story page.
    */
   bannerQuote?: {
     quote?: string | null;
     attribution?: string | null;
   };
-  /**
-   * Leave unchecked if you do not want a Most Important Pillar section on this profile.
-   */
-  showPillar?: boolean | null;
-  /**
-   * Choose the pillar that mattered most to this person.
-   */
-  pillar?: ('Select a pillar...' | 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration') | null;
   readLabel?: string | null;
-  /**
-   * The closing section of the story page (e.g. Where she is today).
-   */
   closing?: {
     heading?: string | null;
     paragraphs?:
@@ -426,6 +423,14 @@ export interface Story {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Leave unchecked if you do not want a Most Important Pillar section on this profile.
+   */
+  showPillar?: boolean | null;
+  /**
+   * Choose the pillar that mattered most to this person.
+   */
+  pillar?: ('Select a pillar...' | 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -981,6 +986,7 @@ export interface StoriesSelect<T extends boolean = true> {
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;
+  showPullQuote?: T;
   pullQuote?: T;
   body?:
     | T
@@ -991,14 +997,13 @@ export interface StoriesSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  showBannerQuote?: T;
   bannerQuote?:
     | T
     | {
         quote?: T;
         attribution?: T;
       };
-  showPillar?: T;
-  pillar?: T;
   readLabel?: T;
   closing?:
     | T
@@ -1025,6 +1030,8 @@ export interface StoriesSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  showPillar?: T;
+  pillar?: T;
   updatedAt?: T;
   createdAt?: T;
 }

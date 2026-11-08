@@ -24,6 +24,7 @@ import { default as default_f86ff8bf4def5733eab024d2a90762d5 } from '../../../..
 import { default as default_7ea838f270343e88888a38a48d4cda40 } from '../../../../src/payload/collections/Intro/CancelToDashboardButton.tsx'
 import { default as default_c08b9bff2a0c3541856fdc48248abffe } from '../../../../src/payload/collections/Intro/DoneToListButton.tsx'
 import { default as default_6cfbfdf24b870de17c04b8faea76d0a4 } from '../../../../src/payload/collections/Intro/EditView.tsx'
+import { default as default_7b93a2f4f9cec482843824ba197a8fce } from '../../../../src/payload/collections/Stories/GraduationDateField.tsx'
 import { default as default_ccd3294f607e0fcee28fd4ebda9d64c7 } from '../../../../src/payload/collections/Stories/BodyRowLabel.tsx'
 import { default as default_36bcfac68caf385e35e8afbdf797e0e1 } from '../../../../src/payload/collections/Stories/CancelToDashboardButton.tsx'
 import { default as default_26ae039daab2c0974bf13f4adc662368 } from '../../../../src/payload/collections/Stories/DoneToListButton.tsx'
@@ -109,6 +110,7 @@ export const importMap = {
   "./src/payload/collections/Intro/CancelToDashboardButton.tsx#default": default_7ea838f270343e88888a38a48d4cda40,
   "./src/payload/collections/Intro/DoneToListButton.tsx#default": default_c08b9bff2a0c3541856fdc48248abffe,
   "./src/payload/collections/Intro/EditView.tsx#default": default_6cfbfdf24b870de17c04b8faea76d0a4,
+  "./src/payload/collections/Stories/GraduationDateField.tsx#default": default_7b93a2f4f9cec482843824ba197a8fce,
   "./src/payload/collections/Stories/BodyRowLabel.tsx#default": default_ccd3294f607e0fcee28fd4ebda9d64c7,
   "./src/payload/collections/Stories/CancelToDashboardButton.tsx#default": default_36bcfac68caf385e35e8afbdf797e0e1,
   "./src/payload/collections/Stories/DoneToListButton.tsx#default": default_26ae039daab2c0974bf13f4adc662368,

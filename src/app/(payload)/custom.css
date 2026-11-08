@@ -394,3 +394,8 @@ html {
   color: #ffffff !important;
   /*border-color: #ffffff !important;*/
 }
+
+div#field-date.gh-graduation-date .gh-graduation-date__native {
+  background:transparent !important;
+  border: 0px solid #000000 !important;
+}
