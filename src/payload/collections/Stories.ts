@@ -369,57 +369,6 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // Optional section: the checkbox explicitly controls whether a pillar
-      // is included on the public profile. The dummy default prevents an
-      // unintentional real pillar from being selected automatically.
-      type: "collapsible",
-      label: "Most Important Pillar",
-      admin: {
-        initCollapsed: false,
-      },
-      fields: [
-        {
-          name: "showPillar",
-          type: "checkbox",
-          label: "Include Most Important Pillar on this profile",
-          defaultValue: false,
-          admin: {
-            description:
-              "Leave unchecked if you do not want a Most Important Pillar section on this profile.",
-          },
-        },
-        {
-          ...StatusSelectField({
-            name: "pillar",
-            label: false,
-            options: [
-              { label: "Select a pillar...", value: "Select a pillar..." },
-              ...pillars.map((pillar) => ({
-                label: pillar.title,
-                value: pillar.title,
-              })),
-            ],
-            defaultValue: "Select a pillar...",
-            required: false,
-            admin: {
-              condition: (_data, siblingData) =>
-                siblingData?.showPillar === true,
-              description: "Choose the pillar that mattered most to this person.",
-            },
-            validate: (
-              value: string | null | undefined,
-              { siblingData }: { siblingData?: { showPillar?: boolean } },
-            ) => {
-              if (siblingData?.showPillar !== true) return true;
-              return pillars.some((pillar) => pillar.title === value)
-                ? true
-                : "Choose a pillar before including this section.";
-            },
-          }),
-        },
-      ],
-    },
-    {
       // The text of the card's link (e.g. "Read her story").
       name: "readLabel",
       type: "text",
@@ -533,6 +482,58 @@ export const Stories: CollectionConfig = {
           admin: {
             placeholder: "Caption...",
           },
+        },
+      ],
+    },
+    {
+      // Optional section: the checkbox explicitly controls whether a pillar
+      // is included on the public profile. The dummy default prevents an
+      // unintentional real pillar from being selected automatically.
+      type: "collapsible",
+      label: "Most Important Pillar",
+      admin: {
+        className: "gh-pillar-section",
+        initCollapsed: false,
+      },
+      fields: [
+        {
+          name: "showPillar",
+          type: "checkbox",
+          label: "Include Most Important Pillar on this profile",
+          defaultValue: false,
+          admin: {
+            description:
+              "Leave unchecked if you do not want a Most Important Pillar section on this profile.",
+          },
+        },
+        {
+          ...StatusSelectField({
+            name: "pillar",
+            label: false,
+            options: [
+              { label: "Select a pillar...", value: "Select a pillar..." },
+              ...pillars.map((pillar) => ({
+                label: pillar.title,
+                value: pillar.title,
+              })),
+            ],
+            defaultValue: "Select a pillar...",
+            required: false,
+            admin: {
+              condition: (_data, siblingData) =>
+                siblingData?.showPillar === true,
+              description: "Choose the pillar that mattered most to this person.",
+            },
+            validate: (
+              value: string | null | undefined,
+              { siblingData }: { siblingData?: { showPillar?: boolean } },
+            ) => {
+              if (siblingData?.showPillar !== true) return true;
+              return pillars.some((pillar) => pillar.title === value)
+                ? true
+                : "Choose a pillar before including this section.";
+            },
+          }),
         },
       ],
     },
