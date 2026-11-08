@@ -78,6 +78,51 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .field-label {
   color: var(--gh-st-text);
 }
+/* Compact Heading / Paragraph / Photo type buttons: about half the desktop
+   height and spacing of the original controls. Keep the group flexible so
+   labels never force horizontal overflow. */
+.gh-stories-edit .gh-block-type-field__choices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+.gh-stories-edit .gh-block-type-field__button {
+  min-height: 22px;
+  padding: 5px 8px;
+  margin: 5px 1px 5px 2px;
+  border: 1px solid var(--theme-elevation-400);
+  border-radius: 9px;
+  background: var(--theme-elevation-450);
+  color: var(--theme-elevation-800);
+  font: inherit;
+  font-size: 0.85em;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.gh-stories-edit .gh-block-type-field__button.is-selected {
+  border-color: var(--theme-elevation-800);
+  background: var(--theme-elevation-1000);
+  color: var(--theme-elevation-0);
+  font-weight: 700;
+}
+.gh-stories-edit .gh-block-type-field__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+/* Preserve comfortable 44px touch targets on phones and narrow tablets. */
+@media (max-width: 768px) {
+  .gh-stories-edit .gh-block-type-field__choices {
+    gap: 6px;
+  }
+  .gh-stories-edit .gh-block-type-field__button {
+    min-height: 44px;
+    padding: 10px 12px;
+    margin: 4px 1px;
+    font-size: 0.9em;
+  }
+}
 /* Required-field marker (Name). This field keeps the mockup's placeholder-only
    look (label: false in Stories.ts), so Payload's labeled-field asterisk never
    renders for it. Paint the same marker here: a red * at the top-right corner
