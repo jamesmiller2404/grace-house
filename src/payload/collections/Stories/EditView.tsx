@@ -213,6 +213,14 @@ html[data-theme='light'] .gh-stories-edit {
     margin-bottom: 0;
   }
 }
+/* Remove the faint outline around each story-body block card. */
+.gh-stories-edit .blocks-field__row,
+.gh-stories-edit .blocks-field__block,
+.gh-stories-edit .array-field__row {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 /* Make Payload's section separators easy to see between editor groups. */
 .gh-stories-edit hr,
 .gh-stories-edit .collapsible {
@@ -226,32 +234,49 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 2px solid #8f8f9d;
   padding-top: 18px;
 }
-/* Graduation date: keep free-form text and the native calendar control aligned. */
+/* Graduation date: one compact text field plus a calendar button. */
 .gh-stories-edit .gh-graduation-date {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 .gh-stories-edit .gh-graduation-date__text {
-  flex: 1 1 auto;
+  flex: 0 1 220px;
+  width: 220px;
+  max-width: 220px;
   min-width: 0;
 }
-.gh-stories-edit .gh-graduation-date__calendar {
-  flex: 0 0 170px;
-  max-width: 170px;
+.gh-stories-edit .gh-graduation-date__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  padding: 0;
+  border: 1px solid var(--gh-st-help);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--gh-st-text);
+  cursor: pointer;
+  font-size: 20px;
 }
-.gh-stories-edit .gh-graduation-date__calendar input {
-  width: 100%;
+.gh-stories-edit .gh-graduation-date__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
-@media (max-width: 560px) {
-  .gh-stories-edit .gh-graduation-date {
-    flex-wrap: wrap;
-  }
-  .gh-stories-edit .gh-graduation-date__calendar {
-    flex-basis: 100%;
-    max-width: 100%;
-  }
+.gh-stories-edit .gh-graduation-date__native {
+  position: absolute;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 /* Field helper text */
 .gh-stories-edit .field-description {
