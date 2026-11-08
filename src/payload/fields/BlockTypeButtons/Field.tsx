@@ -42,19 +42,6 @@ const BlockTypeButtons: React.FC<SelectFieldClientProps> = ({
                   onChange?.(choice.value);
                 }
               }}
-              style={{
-                minHeight: 44,
-                padding: "10px 16px",
-                margin: "10px 1px 10px 4px",
-                border: `1px solid ${selected ? "var(--theme-elevation-800)" : "var(--theme-elevation-400)"}`,
-                borderRadius: "18px",
-                background: selected ? "var(--theme-elevation-1000)" : "var(--theme-elevation-450)",
-                color: selected ? "var(--theme-elevation-0)" : "var(--theme-elevation-800)",
-                font: "inherit",
-                fontWeight: selected ? 700 : 500,
-                cursor: isDisabled ? "not-allowed" : "pointer",
-                opacity: isDisabled ? 0.6 : 1,
-              }}
             >
               {choice.label}
             </button>
