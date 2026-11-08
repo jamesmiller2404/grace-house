@@ -168,7 +168,7 @@ export default function StoryProfile({
                 aria-hidden
                 className="font-heading text-gold shrink-0 self-start text-5xl leading-none sm:self-center sm:text-6xl"
               >
-                {String(profile.pillarIndex + 1).padStart(2, "0")}
+                {String((profile.pillarIndex ?? 0) + 1).padStart(2, "0")}
               </span>
               <div>
                 <p className="text-gold text-sm font-bold tracking-[0.15em] uppercase">
