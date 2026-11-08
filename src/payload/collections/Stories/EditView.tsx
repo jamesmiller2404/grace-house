@@ -234,9 +234,8 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 2px solid #8f8f9d;
   padding-top: 18px;
 }
-/* Graduation date: one compact text field plus a calendar button. */
+/* Graduation date: one compact text field and the browser's native calendar icon. */
 .gh-stories-edit .gh-graduation-date {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -248,35 +247,26 @@ html[data-theme='light'] .gh-stories-edit {
   max-width: 220px;
   min-width: 0;
 }
-.gh-stories-edit .gh-graduation-date__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
-  padding: 0;
-  border: 1px solid var(--gh-st-help);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--gh-st-text);
-  cursor: pointer;
-  font-size: 20px;
-}
-.gh-stories-edit .gh-graduation-date__button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
 .gh-stories-edit .gh-graduation-date__native {
-  position: absolute;
-  width: 1px !important;
-  height: 1px !important;
+  flex: 0 0 34px;
+  width: 34px !important;
+  height: 36px;
   padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
   border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: transparent !important;
+  cursor: pointer;
+}
+.gh-stories-edit .gh-graduation-date__native::-webkit-datetime-edit {
+  display: none;
+}
+.gh-stories-edit .gh-graduation-date__native::-webkit-calendar-picker-indicator {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0.85;
 }
 /* Field helper text */
 .gh-stories-edit .field-description {
