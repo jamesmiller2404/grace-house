@@ -155,7 +155,7 @@ access: {
           ...BlockTypeButtonsField({
             name: "type",
             options: [
-              { label: "Header", value: "Heading" },
+              { label: "Heading", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
             ],
@@ -178,6 +178,7 @@ access: {
             // (siblingData is the row).
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type !== "Photo",
+            components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
           },
         },
         {
@@ -211,6 +212,7 @@ access: {
           type: "upload",
           relationTo: "media",
           admin: {
+            className: "gh-block-photo-input",
             description: "The photo shown by this block.",
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type === "Photo",

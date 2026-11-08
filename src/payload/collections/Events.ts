@@ -236,7 +236,7 @@ export const Events: CollectionConfig = {
           ...BlockTypeButtonsField({
             name: "type",
             options: [
-              { label: "Header", value: "Heading" },
+              { label: "Heading", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
             ],
@@ -250,6 +250,7 @@ export const Events: CollectionConfig = {
           label: false,
           admin: {
             condition: (_data, siblingData) => siblingData?.type !== "Photo",
+            components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
             placeholder: "Text...",
           },
           validate: (value, { siblingData }) =>
@@ -263,7 +264,8 @@ export const Events: CollectionConfig = {
           relationTo: "media",
           label: false,
           admin: {
-            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            className: "gh-block-photo-input",
+condition: (_data, siblingData) => siblingData?.type === "Photo",
             description: "Choose the photo shown inline on the event page.",
           },
           validate: (value, { siblingData }) =>

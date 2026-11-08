@@ -87,7 +87,7 @@ export const FeedingTheStreets: CollectionConfig = {
           ...BlockTypeButtonsField({
             name: "type",
             options: [
-              { label: "Header", value: "Heading" },
+              { label: "Heading", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
             ],
@@ -105,6 +105,7 @@ export const FeedingTheStreets: CollectionConfig = {
               "The paragraph or heading text. Use a blank line between paragraphs.",
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type !== "Photo",
+            components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
           },
         },
         {
@@ -136,6 +137,7 @@ export const FeedingTheStreets: CollectionConfig = {
           type: "upload",
           relationTo: "media",
           admin: {
+            className: "gh-block-photo-input",
             description: "The photo shown by this block.",
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type === "Photo",

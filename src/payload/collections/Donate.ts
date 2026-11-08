@@ -312,7 +312,7 @@ export const Donate: CollectionConfig = {
           ...BlockTypeButtonsField({
             name: "type",
             options: [
-              { label: "Header", value: "Heading" },
+              { label: "Heading", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
             ],
@@ -326,6 +326,7 @@ export const Donate: CollectionConfig = {
           label: false,
           admin: {
             condition: (_data, siblingData) => siblingData?.type !== "Photo",
+            components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
             placeholder: "Text...",
           },
           validate: (value, { siblingData }) =>
@@ -339,6 +340,7 @@ export const Donate: CollectionConfig = {
           relationTo: "media",
           label: false,
           admin: {
+            className: "gh-block-photo-input",
             condition: (_data, siblingData) => siblingData?.type === "Photo",
             description: "Choose the photo shown inline on the Donate page.",
           },

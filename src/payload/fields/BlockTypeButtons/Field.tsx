@@ -16,31 +16,23 @@ const BlockTypeButtons: React.FC<SelectFieldClientProps> = ({
     potentiallyStalePath: pathFromProps,
   });
 
-  // Read the configured select options so this component supports both the
-  // two-button text selector and the three-button Header/Paragraph/Photo one.
   const choices: Choice[] = (field.options as Array<string | { label: string; value: string }>).map((option) =>
     typeof option === "string"
-      ? { label: option === "Heading" ? "Header" : option, value: option }
-      : { label: option.value === "Heading" ? "Header" : option.label, value: option.value },
+      ? { label: option === "Heading" ? "Heading" : option, value: option }
+      : { label: option.value === "Heading" ? "Heading" : option.label, value: option.value },
   );
   const isDisabled = Boolean(readOnly || disabled);
 
   return (
-    <div
-      className="field-type"
-      id={`field-${path.replace(/\./g, "__")}`}
-      style={{ flex: "1 1 auto" }}
-    >
-      <div
-        role="group"
-        aria-label="Content block type"
-        style={{ display: "grid", gridTemplateColumns: `repeat(${choices.length}, minmax(0, 1fr))`, gap: 8 }}
-      >
+    <div className="gh-block-type-field" id={`field-${path.replace(/\./g, "__")}`}>
+      <span className="gh-block-type-field__label">Type</span>
+      <div className="gh-block-type-field__choices" role="group" aria-label="Content block type">
         {choices.map((choice) => {
           const selected = value === choice.value;
           return (
             <button
               key={choice.value}
+              className={`gh-block-type-field__button${selected ? " is-selected" : ""}`}
               type="button"
               aria-pressed={selected}
               disabled={isDisabled}
@@ -53,8 +45,9 @@ const BlockTypeButtons: React.FC<SelectFieldClientProps> = ({
               style={{
                 minHeight: 44,
                 padding: "10px 16px",
+                margin: "10px 1px 10px 4px",
                 border: `1px solid ${selected ? "var(--theme-elevation-800)" : "var(--theme-elevation-400)"}`,
-                borderRadius: 14,
+                borderRadius: "18px",
                 background: selected ? "var(--theme-elevation-1000)" : "var(--theme-elevation-450)",
                 color: selected ? "var(--theme-elevation-0)" : "var(--theme-elevation-800)",
                 font: "inherit",
