@@ -297,6 +297,11 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .field-description {
   color: var(--gh-st-help);
 }
+/* Darken the small description copy on the Memories and Pillar cards. */
+.gh-stories-edit .gh-memories-section .field-description,
+.gh-stories-edit .gh-pillar-section .field-description {
+  color: #111114 !important;
+}
 `;
 
 type EditViewProps = Parameters<typeof DefaultEditView>[0];
