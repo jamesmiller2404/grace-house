@@ -1,0 +1,230 @@
+/**
+ * Payload admin panel custom styles.
+ *
+ * Payload wraps all of its admin CSS in the `@layer payload-default` layer,
+ * so any unlayered CSS here automatically wins over it regardless of
+ * specificity. See https://payloadcms.com/docs/admin/customizing-css
+ *
+ * Payload derives every admin surface (page background, sidebar nav and its
+ * borders, header, list views, form fields, buttons) from the --theme-*
+ * custom properties. It sets `data-theme` on <html> — server-side, and again
+ * when the Light / Dark / Auto selector in Account -> Settings changes — so
+ * the panel is painted from one of the two schemes below:
+ *
+ *   DARK (the original scheme)      LIGHT
+ *   page background  #111115        #bab3d2
+ *   panels/borders   #2d2d33        #8787a9
+ *   input boxes      #101012        #8787a9
+ *   dropdown menus   #222222        #bbc0ff
+ *   hover fill       #414141        #8787a9
+ *   primary text     #f0f0f3        #000000
+ *   helper text      #9d9da4        #525267
+ *
+ * The values are unlayered, so they beat Payload's own
+ * `html[data-theme=...]` definitions. The "Create New Event" form
+ * (src/payload/collections/Events/EditView.tsx) is painted from the same two
+ * schemes, and its custom field components (TimePicker, ImagePosition) read
+ * the theme variables defined there.
+ */
+
+html[data-theme='dark'] {
+  /* Page background and core text colors.
+     Payload paints `html { background: var(--theme-bg) }`, and defaults
+     --theme-bg to var(--theme-elevation-0). */
+  --theme-bg: #4c4c8a;
+  --theme-text: #f0f0f3;
+  --theme-input-bg: #101012;
+
+  /* Payload's elevation scale, remapped to the dark scheme. Low steps are
+     dark surfaces, high steps are light (text on dark), mirroring the
+     direction of Payload's built-in dark theme. */
+  --theme-elevation-0: #111115; /* page background */
+  --theme-elevation-50: #1a1a1c; /* subtle layer above the page */
+  --theme-elevation-100: #222222; /* dropdown menus, secondary fills */
+  --theme-elevation-150: #2d2d33; /* borders, the form "frame" */
+  --theme-elevation-200: #343434; /* secondary fills (input borders) */
+  --theme-elevation-250: #3b3b3b;
+  --theme-elevation-300: #414141; /* hover fills */
+  --theme-elevation-350: #4f4f55;
+  --theme-elevation-400: #6e6e76; /* muted labels (sidebar group headers) */
+  --theme-elevation-450: #86868f;
+  --theme-elevation-500: #9d9da4; /* helper text */
+  --theme-elevation-550: #a7a7ae;
+  --theme-elevation-600: #b1b1b8;
+  --theme-elevation-650: #babac1;
+  --theme-elevation-700: #c4c4cb;
+  --theme-elevation-750: #ceced4;
+  --theme-elevation-800: #d8d8de; /* primary (Save) button fill */
+  --theme-elevation-850: #e2e2e6;
+  --theme-elevation-900: #eaeaed;
+  --theme-elevation-950: #eeeff1;
+  --theme-elevation-1000: #f0f0f3; /* primary text */
+}
+
+html[data-theme='light'] {
+  /* Page background and core text colors. The panel background is the
+     requested #bab3d2, text is black. */
+  --theme-bg: #bab3d2;
+  --theme-text: #000000;
+  --theme-input-bg: #8787a9;
+
+  /* Payload's elevation scale, remapped to the light scheme. Low steps are
+     light surfaces, high steps are dark (text on light), the inverse of the
+     dark theme above. Accent steps (the Save button and its hover) come from
+     the requested #00aeef. */
+  --theme-elevation-0: #bab3d2; /* page background */
+  --theme-elevation-50: #c4bedd; /* subtle layer above the page */
+  --theme-elevation-100: #bbc0ff; /* dropdown menus, secondary fills */
+  --theme-elevation-150: #8787a9; /* borders, the form "frame" */
+  --theme-elevation-200: #7e7ea3; /* secondary fills (input borders) */
+  --theme-elevation-250: #75759b;
+  --theme-elevation-300: #8787a9; /* hover fills */
+  --theme-elevation-350: #6b6b91;
+  --theme-elevation-400: #62628a; /* muted labels (sidebar group headers) */
+  --theme-elevation-450: #5a5a80;
+  --theme-elevation-500: #525267; /* helper text */
+  --theme-elevation-550: #4c4c60;
+  --theme-elevation-600: #0093cc; /* primary (Save) button hover */
+  --theme-elevation-650: #008ac0;
+  --theme-elevation-700: #0080b3;
+  --theme-elevation-750: #0077a6;
+  --theme-elevation-800: #00aeef; /* primary (Save) button fill */
+  --theme-elevation-850: #2e2e3d;
+  --theme-elevation-900: #1a1a24;
+  --theme-elevation-950: #0d0d12;
+  --theme-elevation-1000: #000000; /* primary text */
+}
+
+html {
+  background: var(--theme-bg);
+}
+
+/* ============================================================================
+   Selection toolbar (bulk select bar) — make more pronounced and reposition
+   ============================================================================ */
+
+/*
+   Payload renders the selection toolbar (.list-selection) inside
+   ListHeader__actions on desktop (top right, near the account icon) and in
+   AfterPageControls on mobile. The default paint uses muted
+   --theme-elevation-500 helper text color. These rules repaint it to be
+   much more prominent: heavier font weight, primary text color, a subtle
+   background fill, and styled action buttons.
+
+   All rules are unlayered so they beat Payload's @layer payload-default.
+   They apply to every collection list view (Events, Users, Media, Stories,
+   Donate, CustomPages, Faq, Hero, Intro, MissionPage, GetHelpNow) because
+   .list-selection is a shared Payload element.
+ */
+
+/* Container: more prominent fill, heavier weight, primary text color */
+.list-selection {
+  color: var(--theme-text) !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  background: var(--theme-elevation-150) !important;
+  border: 1px solid var(--theme-elevation-400) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  gap: 12px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: fit-content !important;
+}
+
+/* Count text ("X items selected") — heaviest weight */
+.list-selection > span:first-child,
+.list-selection > span:first-of-type {
+  font-weight: 800 !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* Separator dashes between count and actions */
+.list-selection > span:nth-child(2),
+.list-selection > span:nth-of-type(2) {
+  color: var(--theme-elevation-400) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+}
+
+/* Action buttons (Select all / Edit / Delete / Publish / Unpublish) */
+.list-selection__button {
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  color: var(--theme-text) !important;
+  padding: 4px 10px !important;
+  border: 1px solid var(--theme-elevation-400) !important;
+  border-radius: 6px !important;
+  background: var(--theme-elevation-200) !important;
+  white-space: nowrap !important;
+}
+
+.list-selection__button:hover {
+  background: var(--theme-elevation-300) !important;
+  border-color: var(--theme-elevation-350) !important;
+}
+
+/* Action group wrapper */
+.list-selection__actions {
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+/* When the toolbar appears in the mobile page-controls area, give it full
+   width so it reads as a banner above the content */
+.page-controls .list-selection {
+  width: 100% !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+/* ============================================================================
+   Selection toolbar: reposition lower, remove Edit button
+   ============================================================================ */
+
+/* Push the toolbar lower in the ListHeader actions area so it sits clearly
+   below the user account icon instead of colliding with it on the same row. */
+.list-header__actions .list-selection {
+  margin-top: calc(var(--base, 16px) * 0.75) !important;
+}
+
+/* Remove the "Edit" button from the bulk-selection toolbar entirely.
+   Payload renders Edit as the first button in the last .list-selection__actions
+   group (the SelectionActions group, which comes after Select All). We target
+   only that button; Publish / Unpublish / Delete remain. */
+.list-selection__actions:last-of-type .list-selection__button:first-child {
+  display: none !important;
+}
+
+/* ============================================================================
+   Content block cards — shared Heading / Paragraph / Photo array rows
+   ============================================================================ */
+
+/* Card body/background */
+.array-field__row,
+.array-field__row-content {
+  background-color: #fff !important;
+}
+
+/* Card title/header bar */
+.array-field__row-header {
+  background-color: #403f47 !important;
+}
+
+/* Keep the card surfaces visually consistent when nested content has its
+   own wrappers, without changing the global admin theme. */
+.array-field__row .array-field__row-content {
+  background-color: #7c7a8b !important;
+}
+
+/* Compact square-cornered type selector buttons */
+#field-type button[aria-pressed],
+.field-type [role="group"] > button {
+  border-radius: 4px !important;
+  background-color: #454560;
+}
+.collapsible__content {
+  --theme-elevation-0: #7c7a8b !important;
+  background-color: #7c7a8b !important;
+}
+
