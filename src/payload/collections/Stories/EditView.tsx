@@ -246,11 +246,14 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 0 !important;
   box-shadow: none !important;
 }
+/* Match the requested card palette: muted slate body with a darker title bar. */
 .gh-stories-edit .gh-pillar-section,
 .gh-stories-edit .gh-pillar-section .collapsible,
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap,
 .gh-stories-edit .gh-pillar-section .collapsible__content {
-  background: var(--theme-elevation-50) !important;
+  background: #7c7a8b !important;
+}
+.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap {
+  background: #403f47 !important;
 }
 .gh-stories-edit .gh-pillar-section {
   padding-top: 0 !important;
