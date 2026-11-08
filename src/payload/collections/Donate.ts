@@ -325,12 +325,12 @@ export const Donate: CollectionConfig = {
           type: "textarea",
           label: false,
           admin: {
-            condition: (_data, siblingData) => siblingData?.type !== "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
             components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
             placeholder: "Text...",
           },
-          validate: (value, { siblingData }) =>
-            siblingData?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | undefined)?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
               ? true
               : "Enter text for this Header or Paragraph block.",
         },
@@ -341,11 +341,11 @@ export const Donate: CollectionConfig = {
           label: false,
           admin: {
             className: "gh-block-photo-input",
-            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             description: "Choose the photo shown inline on the Donate page.",
           },
-          validate: (value, { siblingData }) =>
-            siblingData?.type !== "Photo" || value
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | undefined)?.type !== "Photo" || value
               ? true
               : "Choose a photo for this Photo block.",
         },
@@ -354,7 +354,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: false,
           admin: {
-            condition: (_data, siblingData) => siblingData?.type === "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             placeholder: "Photo caption (optional)...",
           },
         },
@@ -363,7 +363,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: "Link Text (optional)",
           admin: {
-            condition: (_data, siblingData) => siblingData?.type !== "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
             placeholder: "e.g. (916) 470-0408 or Facebook",
             description:
               "The clickable words shown after the block's text. Example: for the text \"Call us at\" this would be \"(916) 470-0408\". Leave empty for a plain paragraph with no link.",
@@ -374,7 +374,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: "Link URL (optional)",
           admin: {
-            condition: (_data, siblingData) => siblingData?.type !== "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
             placeholder: "e.g. tel:+19169529797 or https://example.com",
             description:
               "Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.",
