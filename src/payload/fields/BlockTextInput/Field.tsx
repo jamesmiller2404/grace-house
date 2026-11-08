@@ -7,7 +7,6 @@ import type { TextareaFieldClientProps } from "payload";
 const BlockTextInput: React.FC<TextareaFieldClientProps> = ({
   path: pathFromProps,
   readOnly,
-  onChange,
   field,
 }) => {
   const { disabled, path, setValue, showError, value } = useField<string>({
@@ -42,7 +41,6 @@ const BlockTextInput: React.FC<TextareaFieldClientProps> = ({
           onChange={(event) => {
             const nextValue = event.currentTarget.value;
             setValue(nextValue);
-            onChange?.(nextValue);
           }}
         />
         <button
@@ -53,7 +51,6 @@ const BlockTextInput: React.FC<TextareaFieldClientProps> = ({
           disabled={isDisabled || !value}
           onClick={() => {
             setValue("");
-            onChange?.("");
           }}
         >
           ×
