@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { FieldError, useField } from "@payloadcms/ui";
 import type { TextFieldClientProps } from "payload";
 
@@ -17,10 +17,9 @@ const toNativeDate = (value: unknown): string => {
   }
 
   const monthYear = /^(0?[1-9]|1[0-2])\/(\d{4})$/.exec(value);
-  if (monthYear) {
-    return `${monthYear[2]}-${String(Number(monthYear[1])).padStart(2, "0")}-01`;
-  }
-  return "";
+  return monthYear
+    ? `${monthYear[2]}-${String(Number(monthYear[1])).padStart(2, "0")}-01`
+    : "";
 };
 
 const GraduationDateField: React.FC<TextFieldClientProps> = ({
@@ -31,46 +30,26 @@ const GraduationDateField: React.FC<TextFieldClientProps> = ({
   const { disabled, path, setValue, showError, value } = useField<string>({
     potentiallyStalePath: pathFromProps,
   });
-  const calendarRef = useRef<HTMLInputElement>(null);
   const isDisabled = Boolean(readOnly || disabled);
-  const textValue = typeof value === "string" ? value : "";
-
-  const openCalendar = () => {
-    const input = calendarRef.current;
-    if (!input || isDisabled) return;
-    if (typeof input.showPicker === "function") input.showPicker();
-    else input.click();
-  };
 
   return (
     <div className="gh-graduation-date" id={`field-${path}`}>
       <input
         className="gh-graduation-date__text"
         type="text"
-        value={textValue}
+        value={typeof value === "string" ? value : ""}
         placeholder={String(field.admin?.placeholder ?? "Graduation date...")}
         disabled={isDisabled}
         readOnly={readOnly}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
-      <button
-        className="gh-graduation-date__button"
-        type="button"
+      <input
+        className="gh-graduation-date__native"
         aria-label="Choose graduation date from calendar"
         title="Choose date"
-        disabled={isDisabled}
-        onClick={openCalendar}
-      >
-        <span aria-hidden="true">▦</span>
-      </button>
-      <input
-        ref={calendarRef}
-        className="gh-graduation-date__native"
-        aria-label="Choose graduation date"
         type="date"
         value={toNativeDate(value)}
         disabled={isDisabled}
-        tabIndex={-1}
         onChange={(event) => {
           const selected = event.currentTarget.value;
           if (!selected) return;
