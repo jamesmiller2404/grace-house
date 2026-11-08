@@ -93,8 +93,7 @@ html[data-theme='light'] .gh-stories-edit {
   margin: 5px 1px 5px 2px;
   border: 1px solid var(--theme-elevation-400);
   border-radius: 9px;
-  background: var(--theme-elevation-450);
-  color: var(--theme-elevation-800);
+  /* Leave background and text colors to Payload's original button styling. */
   font: inherit;
   font-size: 0.85em;
   font-weight: 500;
