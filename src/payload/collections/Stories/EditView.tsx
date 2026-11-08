@@ -234,10 +234,25 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 2px solid #8f8f9d;
   padding-top: 18px;
 }
-/* The Pillar section should not have the separator/border used by other sections. */
-.gh-stories-edit .gh-pillar-section {
+/* The Pillar collapsible should read like the other card surfaces, without
+   the separator or outline used by the other editor sections. Payload renders
+   the field wrapper and the collapsible itself as separate nested elements,
+   so style both levels (including the content surface). */
+.gh-stories-edit .gh-pillar-section,
+.gh-stories-edit .gh-pillar-section .collapsible,
+.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap,
+.gh-stories-edit .gh-pillar-section .collapsible__content {
   border: 0 !important;
   border-top: 0 !important;
+  box-shadow: none !important;
+}
+.gh-stories-edit .gh-pillar-section,
+.gh-stories-edit .gh-pillar-section .collapsible,
+.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap,
+.gh-stories-edit .gh-pillar-section .collapsible__content {
+  background: var(--theme-elevation-50) !important;
+}
+.gh-stories-edit .gh-pillar-section {
   padding-top: 0 !important;
 }
 
