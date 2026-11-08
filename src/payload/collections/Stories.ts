@@ -128,14 +128,18 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // Graduation date: accept a full date (MM/DD/YYYY) or month/year (MM/YYYY).
+      // Graduation date: the text entry keeps MM/YYYY available, while the
+      // custom field adds the browser's native calendar picker for full dates.
       name: "date",
       type: "text",
       label: false,
       admin: {
         placeholder: "Graduation date... (MM/DD/YYYY or MM/YYYY)",
         description:
-          "Enter MM/DD/YYYY for a full date or MM/YYYY when only the month and year are known.",
+          "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
+        components: {
+          Field: { path: "./src/payload/collections/Stories/GraduationDateField.tsx" },
+        },
       },
       validate: (value: unknown) => {
         if (value == null || value === "") return true;
@@ -227,12 +231,22 @@ export const Stories: CollectionConfig = {
       ),
     },
     {
+      name: "showPullQuote",
+      type: "checkbox",
+      label: "Include an opening pull quote",
+      defaultValue: false,
+      admin: {
+        description: "Check to show an opening pull quote next to the picture and on the summary card.",
+      },
+    },
+    {
       name: "pullQuote",
       type: "text",
       label: false,
       admin: {
-        placeholder: "Pull quote...",
-        description: "The pull quote shown in the story hero.",
+        condition: (data) => data?.showPullQuote === true,
+        placeholder: "Opening pull quote...",
+        description: "Opening pull quote placed next to the picture and on the summary card.",
       },
     },
     {
@@ -242,9 +256,10 @@ export const Stories: CollectionConfig = {
       // src/components/StoryProfile.tsx).
       name: "body",
       type: "array",
+      label: "Their Story",
       labels: {
         singular: "Block",
-        plural: "Story Body",
+        plural: "Story Blocks",
       },
       admin: {
         // Keep every block open so the paragraph/heading order is visible at
@@ -317,11 +332,21 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // The second pull quote — the full-width banner band on the story page.
+      name: "showBannerQuote",
+      type: "checkbox",
+      label: "Include a Banner Pull Quote",
+      defaultValue: false,
+      admin: {
+        description: "Check to include the full-width pull-quote band on the story page.",
+      },
+    },
+    {
+      // Optional full-width pull-quote band on the story page.
       name: "bannerQuote",
       type: "group",
       label: "Banner Pull Quote",
       admin: {
+        condition: (data) => data?.showBannerQuote === true,
         description: "The full-width pull-quote band on the story page.",
       },
       fields: [
@@ -404,13 +429,13 @@ export const Stories: CollectionConfig = {
       },
     },
     {
-      // The closing section at the end of the story page.
+      // Retained for existing public profiles and backwards compatibility,
+      // but removed from the editor as requested.
       name: "closing",
       type: "group",
       label: "Where They Are Today",
       admin: {
-        description:
-          "The closing section of the story page (e.g. Where she is today).",
+        hidden: true,
       },
       fields: [
         {
