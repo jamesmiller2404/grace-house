@@ -528,7 +528,7 @@ export async function seedStories(payload: Payload): Promise<void> {
               };
             }
             return {
-              type: (block.type === "h2" ? "Heading" : "Paragraph") as const,
+              type: block.type === "h2" ? ("Heading" as const) : ("Paragraph" as const),
               text: block.text,
             };
           }),
