@@ -68,12 +68,14 @@ export default function StoryProfile({
                 {storyDateLabel(profile.tag)} {formatStoryDate(profile.date)}
               </p>
             )}
-            <blockquote className="mt-6 flex gap-3">
-              <span className="bg-gold w-1 shrink-0 self-stretch" aria-hidden />
-              <p className="font-heading text-anchor text-2xl leading-snug sm:text-3xl">
-                &ldquo;{profile.heroQuote}&rdquo;
-              </p>
-            </blockquote>
+            {profile.heroQuote && (
+              <blockquote className="mt-6 flex gap-3">
+                <span className="bg-gold w-1 shrink-0 self-stretch" aria-hidden />
+                <p className="font-heading text-anchor text-2xl leading-snug sm:text-3xl">
+                  &ldquo;{profile.heroQuote}&rdquo;
+                </p>
+              </blockquote>
+            )}
           </div>
         </div>
       </header>
@@ -115,18 +117,22 @@ export default function StoryProfile({
         })}
       </article>
 
-      {/* Full-width pull-quote band */}
-      <section className="bg-anchor px-6 py-16 text-cream">
-        <figure className="mx-auto max-w-4xl text-center">
-          <div className="bg-gold mx-auto h-1 w-24 rounded-full" aria-hidden />
-          <blockquote className="font-heading mt-10 text-3xl leading-snug text-white sm:text-4xl">
-            &ldquo;{profile.quoteBand.quote}&rdquo;
-          </blockquote>
-          <figcaption className="text-terra mt-8 text-sm font-bold tracking-[0.2em] uppercase">
-            {profile.quoteBand.attribution}
-          </figcaption>
-        </figure>
-      </section>
+      {/* Optional full-width pull-quote band */}
+      {profile.quoteBand.quote && (
+        <section className="bg-anchor px-6 py-16 text-cream">
+          <figure className="mx-auto max-w-4xl text-center">
+            <div className="bg-gold mx-auto h-1 w-24 rounded-full" aria-hidden />
+            <blockquote className="font-heading mt-10 text-3xl leading-snug text-white sm:text-4xl">
+              &ldquo;{profile.quoteBand.quote}&rdquo;
+            </blockquote>
+            {profile.quoteBand.attribution && (
+              <figcaption className="text-terra mt-8 text-sm font-bold tracking-[0.2em] uppercase">
+                {profile.quoteBand.attribution}
+              </figcaption>
+            )}
+          </figure>
+        </section>
+      )}
 
       {/* Memories gallery (story-page-section4.png) */}
       <div className="mx-auto max-w-6xl px-6">
