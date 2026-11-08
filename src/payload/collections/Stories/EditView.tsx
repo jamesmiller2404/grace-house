@@ -234,6 +234,13 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 2px solid #8f8f9d;
   padding-top: 18px;
 }
+/* The Pillar section should not have the separator/border used by other sections. */
+.gh-stories-edit .gh-pillar-section {
+  border: 0 !important;
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
 /* Graduation date: one compact text field and the browser's native calendar icon. */
 .gh-stories-edit .gh-graduation-date {
   display: flex;
