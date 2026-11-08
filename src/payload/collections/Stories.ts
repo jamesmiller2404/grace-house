@@ -453,6 +453,7 @@ export const Stories: CollectionConfig = {
         plural: "Memories Gallery",
       },
       admin: {
+        className: "gh-memories-section",
         description: "The personal photos shown in the memories gallery.",
       },
       fields: [
