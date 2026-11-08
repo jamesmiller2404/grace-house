@@ -91,9 +91,11 @@ html[data-theme='light'] .gh-stories-edit {
   min-height: 22px;
   padding: 5px 8px;
   margin: 5px 1px 5px 2px;
-  border: 1px solid var(--theme-elevation-400);
-  border-radius: 9px;
-  /* Leave background and text colors to Payload's original button styling. */
+  border: 1px solid #222222;
+  border-radius: 999px;
+  background: #929292;
+  color: #000000;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.45);
   font: inherit;
   font-size: 0.85em;
   font-weight: 500;
@@ -101,9 +103,9 @@ html[data-theme='light'] .gh-stories-edit {
   cursor: pointer;
 }
 .gh-stories-edit .gh-block-type-field__button.is-selected {
-  border-color: var(--theme-elevation-800);
-  background: var(--theme-elevation-1000);
-  color: var(--theme-elevation-0);
+  border-color: #222222;
+  background: #ffffff;
+  color: #000000;
   font-weight: 700;
 }
 .gh-stories-edit .gh-block-type-field__button:disabled {
