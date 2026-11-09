@@ -663,6 +663,7 @@ function toStoryItem(doc: PayloadStory): StoryItem {
     tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
+    heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
     href: `/stories/${storySlug(doc.name)}`,
     // Generated link copy always follows Gender, not the legacy readLabel or
     // Pronouns fields (both are hidden in the admin editor).
