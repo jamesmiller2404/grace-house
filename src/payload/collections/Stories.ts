@@ -141,6 +141,9 @@ export const Stories: CollectionConfig = {
     {
       // Place the conditional Other role input directly beneath Role.
       type: "row",
+      admin: {
+        className: "gh-role-label-row",
+      },
       fields: [
         {
           name: "roleLabel",
