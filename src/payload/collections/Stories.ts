@@ -113,10 +113,16 @@ export const Stories: CollectionConfig = {
         name: "role",
         options: ["Graduate", "Volunteer", "Staff", "Other"],
         defaultValue: "Graduate",
-        required: true,
+        // Role defaults to Graduate, so omit Payload's required-field asterisk.
+        // Keep validation so the field cannot be cleared before saving.
+        required: false,
         admin: {
           className: "gh-story-role-field",
         },
+        validate: (value: unknown) =>
+          typeof value === "string" && value.trim()
+            ? true
+            : "Please select a role.",
       }),
     },
     {
