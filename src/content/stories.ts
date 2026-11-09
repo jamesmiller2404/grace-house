@@ -17,6 +17,8 @@ export type StoryItem = {
   image: string;
   /** Where the card links — the person's story/profile page. */
   href: string;
+  /** Opening pull quote shown on the profile card and in the profile hero. */
+  heroQuote?: string;
   /** Text for the card link, e.g. "Read her story". */
   readLabel: string;
   /**
@@ -29,6 +31,7 @@ export type StoryItem = {
 export const stories: StoryItem[] = [
   {
     name: "Maria",
+    heroQuote: "Grace House gave me my life back.",
     tag: "Graduate",
     date: "05/30/2026",
     image: "/images/person1.jpg",
@@ -38,6 +41,7 @@ export const stories: StoryItem[] = [
   },
   {
     name: "John",
+    heroQuote: "I've made life-long friends at Grace House.",
     tag: "Graduate",
     date: "06/30/2026",
     image: "/images/person2.jpg",
@@ -47,6 +51,7 @@ export const stories: StoryItem[] = [
   },
   {
     name: "Brandon",
+    heroQuote: "Grace House taught me who I am.",
     tag: "Graduate",
     date: "08/15/2026",
     image: "/images/person3.jpg",
@@ -56,6 +61,7 @@ export const stories: StoryItem[] = [
   },
   {
     name: "Denise",
+    heroQuote: "Every graduate who walks out that door is family now.",
     tag: "Staff",
     date: "03/2019",
     image: "/images/noPhotoAvailable_horizontall.png",
@@ -65,6 +71,7 @@ export const stories: StoryItem[] = [
   },
   {
     name: "Marcus",
+    heroQuote: "I run the house the way someone once ran it for me.",
     tag: "Staff",
     date: "08/12/2021",
     image: "/images/noPhotoAvailable_horizontall.png",
@@ -74,6 +81,7 @@ export const stories: StoryItem[] = [
   },
   {
     name: "Elena",
+    heroQuote: "I came to serve dinner. I stayed for the people.",
     tag: "Volunteer",
     date: "01/15/2023",
     image: "/images/noPhotoAvailable_horizontall.png",
