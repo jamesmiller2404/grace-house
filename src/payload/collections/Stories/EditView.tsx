@@ -124,6 +124,18 @@ html[data-theme='light'] .gh-stories-edit {
     font-size: 0.9em;
   }
 }
+/* Align the conditional Other role input beneath the Role dropdown
+   (the Role control begins after the 60% Name field in the first row). */
+.gh-stories-edit .gh-role-label-row .row__fields > * {
+  width: 20% !important;
+  margin-left: 60% !important;
+}
+@media (max-width: 1024px) {
+  .gh-stories-edit .gh-role-label-row .row__fields > * {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
 /* Required-field marker (Name). This field keeps the mockup's placeholder-only
    look (label: false in Stories.ts), so Payload's labeled-field asterisk never
    renders for it. Paint the same marker here: a red * at the top-right corner
