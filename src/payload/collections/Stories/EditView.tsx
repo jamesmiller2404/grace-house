@@ -372,7 +372,8 @@ html[data-theme='light'] .gh-stories-edit {
 }
 .gh-story-preview-hint {
   color: #bdbdc5;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 .gh-story-preview-backdrop {
   position: fixed;
