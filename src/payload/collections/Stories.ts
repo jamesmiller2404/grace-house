@@ -84,6 +84,17 @@ export const Stories: CollectionConfig = {
   // Default order in the admin list view: by name.
   defaultSort: "name",
   fields: [
+    {
+      type: "ui",
+      name: "storyPreview",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/Stories/StoryPreviewField.tsx",
+          },
+        },
+      },
+    },
     // Name (wide) + Role dropdown (top right), like the Events mockup's first
     // row (Title + Status).
     {
