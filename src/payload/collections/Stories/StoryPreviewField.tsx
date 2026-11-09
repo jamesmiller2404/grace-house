@@ -191,6 +191,25 @@ export default function StoryPreviewField() {
   );
 
   useEffect(() => {
+    if (!isOpen) return;
+    const handleFrameMessage = (event: MessageEvent<unknown>) => {
+      if (
+        event.origin !== window.location.origin ||
+        event.source !== iframeRef.current?.contentWindow ||
+        !event.data ||
+        typeof event.data !== "object"
+      ) {
+        return;
+      }
+      if ((event.data as { type?: unknown }).type === "grace-house:story-preview-ready") {
+        setFrameLoaded(true);
+      }
+    };
+    window.addEventListener("message", handleFrameMessage);
+    return () => window.removeEventListener("message", handleFrameMessage);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (!isOpen || !frameLoaded) return;
     iframeRef.current?.contentWindow?.postMessage(
       { type: "grace-house:story-preview", profile: previewProfile },
@@ -282,7 +301,6 @@ export default function StoryPreviewField() {
                 src="/story-preview"
                 className="gh-story-preview-frame"
                 style={{ width: device === "mobile" ? "390px" : "100%" }}
-                onLoad={() => setFrameLoaded(true)}
               />
             </div>
           </section>
