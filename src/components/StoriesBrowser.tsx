@@ -125,6 +125,11 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
                       {storyDateLabel(story.tag)} {formatStoryDate(story.date)}
                     </p>
                   )}
+                  {story.heroQuote && (
+                    <blockquote className="font-heading text-anchor mt-4 text-lg italic leading-snug">
+                      &ldquo;{story.heroQuote}&rdquo;
+                    </blockquote>
+                  )}
                   <span className="text-terra group-hover:text-lift mt-auto inline-flex items-center gap-2 pt-6 text-lg font-semibold">
                     {story.readLabel}
                   </span>
