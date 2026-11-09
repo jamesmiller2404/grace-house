@@ -1,4 +1,5 @@
 import { default as default_storyPreviewField } from "../../../../src/payload/collections/Stories/StoryPreviewField.tsx"
+import { default as default_pillarSectionHeading } from "../../../../src/payload/collections/Stories/PillarSectionHeading.tsx"
 import { default as default_0dda18def457283302775b43747f5a9f } from '../../../../src/payload/collections/UsersCancelToDashboardButton.tsx'
 import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../../src/payload/collections/UsersDoneToListButton.tsx'
 import { default as default_d1e94d5abbb0ceb34ab990b1be6f4ecc } from '../../../../src/payload/collections/UsersEditView.tsx'
@@ -117,6 +118,7 @@ export const importMap = {
   "./src/payload/collections/Stories/DoneToListButton.tsx#default": default_26ae039daab2c0974bf13f4adc662368,
   "./src/payload/collections/Stories/EditView.tsx#default": default_2cd92de4983d2a89abe8f915ada8e454,
   "./src/payload/collections/Stories/StoryPreviewField.tsx#default": default_storyPreviewField,
+  "./src/payload/collections/Stories/PillarSectionHeading.tsx#default": default_pillarSectionHeading,
   "./src/payload/collections/Donate/BlockRowLabel.tsx#default": default_5b3049fd892558b24300e9b5bc176dc4,
   "./src/payload/collections/Donate/CancelToDashboardButton.tsx#default": default_63c5fb8fd23bae5f71a0d607c694ede4,
   "./src/payload/collections/Donate/DoneToListButton.tsx#default": default_f9fe33a23084e1f0fe7274419542dc1c,
