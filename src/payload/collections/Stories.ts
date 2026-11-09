@@ -466,7 +466,7 @@ export const Stories: CollectionConfig = {
       defaultValue: true,
       admin: {
         className: "gh-photo-memories-heading",
-        description: "A collection of personal photos that gives visitors a glimpse of meaningful moments and memories.",
+        description: "Show a gallery of meaningful personal photos.",
       },
     },
     {
@@ -491,7 +491,7 @@ export const Stories: CollectionConfig = {
           required: true,
           label: false,
           admin: {
-            description: "A personal photo.",
+            description: "Choose a memory photo.",
           },
         },
         {
