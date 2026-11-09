@@ -280,42 +280,7 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 2px solid #8f8f9d;
   padding-top: 18px;
 }
-/* The Pillar collapsible should read like the other card surfaces, without
-   the separator or outline used by the other editor sections. Payload renders
-   the field wrapper and the collapsible itself as separate nested elements,
-   so style both levels (including the content surface). */
-.gh-stories-edit .gh-pillar-section,
-.gh-stories-edit .gh-pillar-section .collapsible,
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap,
-.gh-stories-edit .gh-pillar-section .collapsible__content {
-  border: 0 !important;
-  border-top: 0 !important;
-  box-shadow: none !important;
-}
-/* Match the requested card palette: muted slate body with a darker title bar. */
-.gh-stories-edit .gh-pillar-section,
-.gh-stories-edit .gh-pillar-section .collapsible,
-.gh-stories-edit .gh-pillar-section .collapsible__content {
-  background: #7c7a8b !important;
-}
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap {
-  background: #403f47 !important;
-}
-.gh-stories-edit .gh-pillar-section {
-  padding: 0 !important;
-  margin-top: 0 !important;
-}
-.gh-stories-edit .gh-pillar-section .collapsible {
-  padding-top: 0 !important;
-  margin-top: 0 !important;
-}
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap {
-  margin: 0 !important;
-  padding-top: 0 !important;
-}
-.gh-stories-edit .gh-pillar-section .collapsible__toggle {
-  margin-top: 0 !important;
-}
+
 
 /* Graduation date: one compact text field and the browser's native calendar icon. */
 .gh-stories-edit .gh-graduation-date {
@@ -355,16 +320,14 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .field-description {
   color: var(--gh-st-help);
 }
-/* Darken the small description copy on the Memories and Pillar cards. */
-.gh-stories-edit .gh-pillar-section .field-description {
-  color: #111114 !important;
-}
+
 
 /* Full-size section headings for optional profile content. The checkboxes
    double as section headings while preserving their existing top-level fields. */
 .gh-stories-edit .gh-opening-pull-quote-heading .field-label,
 .gh-stories-edit .gh-banner-pull-quote-heading .field-label,
-.gh-stories-edit .gh-photo-memories-heading .field-label {
+.gh-stories-edit .gh-photo-memories-heading .field-label,
+.gh-stories-edit .gh-pillar-heading .field-label {
   display: inline-flex;
   align-items: center;
   font-size: 1.25rem;
@@ -373,11 +336,20 @@ html[data-theme='light'] .gh-stories-edit {
 }
 .gh-stories-edit .gh-opening-pull-quote-heading,
 .gh-stories-edit .gh-banner-pull-quote-heading,
-.gh-stories-edit .gh-photo-memories-heading {
+.gh-stories-edit .gh-photo-memories-heading,
+.gh-stories-edit .gh-pillar-heading {
   margin-top: 18px;
   margin-bottom: 12px;
 }
 .gh-stories-edit .gh-photo-memories-heading .field-description {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gh-st-help) !important;
+}
+.gh-stories-edit .gh-pillar-heading .field-description {
   display: block;
   margin-top: 6px;
   font-size: 1.1rem;
@@ -426,21 +398,7 @@ html[data-theme='light'] .gh-stories-edit {
   flex: 1 1 auto;
   min-width: 0;
 }
-/* The Pillar heading is a separate UI field, above (not inside) the card. */
-.gh-stories-edit .gh-pillar-section-heading {
-  display: block;
-  margin: 18px 0 12px;
-  color: var(--gh-st-text);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-.gh-stories-edit .gh-pillar-section .collapsible__toggle {
-  font-size: 1rem;
-}
-/* Keep the Pillar card title bar flush against the top of its card. */
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap { margin-top: 0 !important; padding-top: 0 !important; }
-.gh-stories-edit .gh-pillar-section .collapsible__content { margin-top: 0 !important; }
+
 
 /* Lives Changed live profile preview */
 .gh-story-preview-field {
