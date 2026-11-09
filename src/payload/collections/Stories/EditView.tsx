@@ -356,7 +356,6 @@ html[data-theme='light'] .gh-stories-edit {
   color: var(--gh-st-help);
 }
 /* Darken the small description copy on the Memories and Pillar cards. */
-.gh-stories-edit .gh-memories-section .field-description,
 .gh-stories-edit .gh-pillar-section .field-description {
   color: #111114 !important;
 }
@@ -384,7 +383,7 @@ html[data-theme='light'] .gh-stories-edit {
   font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #111114 !important;
+  color: var(--gh-st-help) !important;
 }
 
 /* Keep the Banner Pull Quote title visually connected to its fields.
@@ -406,13 +405,22 @@ html[data-theme='light'] .gh-stories-edit {
 /* Graduation date label aligns horizontally with Role and Gender. */
 .gh-stories-edit .gh-graduation-date-field {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 12px;
+  width: 100%;
 }
 .gh-stories-edit .gh-graduation-date-field > .field-label {
+  display: block;
   flex: 0 0 auto;
   margin: 0;
   white-space: nowrap;
+}
+.gh-stories-edit .gh-graduation-date-field > .gh-graduation-date {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
 }
 .gh-stories-edit .gh-graduation-date-field > .field-type__wrap {
   flex: 1 1 auto;
