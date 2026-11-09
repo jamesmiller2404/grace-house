@@ -36,7 +36,7 @@ const BlockTextInput: React.FC<TextareaFieldClientProps> = ({
           placeholder={placeholder}
           disabled={isDisabled}
           readOnly={readOnly}
-          rows={2}
+          rows={8}
           style={{ width: "95%" }}
           onChange={(event) => {
             const nextValue = event.currentTarget.value;
@@ -56,6 +56,11 @@ const BlockTextInput: React.FC<TextareaFieldClientProps> = ({
           ×
         </button>
       </div>
+      {blockType === "Paragraph" && (
+        <p className="gh-block-text-input__hint">
+          Press Enter for a line break. Leave a blank line to start a new paragraph.
+        </p>
+      )}
       <FieldError path={path} showError={showError} />
     </div>
   );
