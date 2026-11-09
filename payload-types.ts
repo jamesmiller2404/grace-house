@@ -407,6 +407,10 @@ export interface Story {
     possessive?: string | null;
   };
   /**
+   * Uncheck to omit the Memories Gallery from this profile.
+   */
+  showMemories?: boolean | null;
+  /**
    * The personal photos shown in the memories gallery.
    */
   memories?:
@@ -1022,6 +1026,7 @@ export interface StoriesSelect<T extends boolean = true> {
         subject?: T;
         possessive?: T;
       };
+  showMemories?: T;
   memories?:
     | T
     | {
