@@ -123,6 +123,7 @@ function buildPreviewProfile(
     },
     pillarIndex: pillarIndex >= 0 ? pillarIndex : null,
     pronouns: pronounsForGender(data.gender),
+    showMemories: data.showMemories !== false,
     memories,
   };
 }
