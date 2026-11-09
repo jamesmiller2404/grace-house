@@ -695,6 +695,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
     pillarIndex: doc.showPillar ? pillarIndexFromTitle(doc.pillar) : null,
     // Never use the legacy manually-entered pronouns; derive them from Gender.
     pronouns: pronounsForGender(doc.gender),
+    showMemories: doc.showMemories !== false,
     memories: (doc.memories ?? []).map((memory) => ({
       image: mediaUrl(memory.image),
       alt: memory.alt ?? "",
