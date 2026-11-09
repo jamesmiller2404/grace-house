@@ -124,17 +124,46 @@ html[data-theme='light'] .gh-stories-edit {
     font-size: 0.9em;
   }
 }
-/* Align the conditional Other role input beneath the Role dropdown
-   (the Role control begins after the 60% Name field in the first row). */
+/* Place the conditional Other role input in the second grid row,
+   directly beneath the Role dropdown (not beneath Gender). */
+.gh-stories-edit .gh-role-label-row .row__fields {
+  display: grid !important;
+  grid-template-columns: 60% 20% 20%;
+  column-gap: 0;
+  row-gap: calc(var(--base, 16px) * 0.8);
+}
 .gh-stories-edit .gh-role-label-row .row__fields > * {
-  width: 20% !important;
-  margin-left: 60% !important;
+  width: 100% !important;
+  min-width: 0;
+  margin-left: 0 !important;
+}
+.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(3) {
+  grid-column: 3;
+  grid-row: 1;
+}
+.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(4) {
+  grid-column: 2;
+  grid-row: 2;
 }
 @media (max-width: 1024px) {
-  .gh-stories-edit .gh-role-label-row .row__fields > * {
-    width: 100% !important;
-    margin-left: 0 !important;
+  .gh-stories-edit .gh-role-label-row .row__fields {
+    grid-template-columns: minmax(0, 1fr);
   }
+  .gh-stories-edit .gh-role-label-row .row__fields > * {
+    grid-column: 1 !important;
+  }
+  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(1) { grid-row: 1; }
+  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(2) { grid-row: 2; }
+  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(4) { grid-row: 3; }
+  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(3) { grid-row: 4; }
 }
 /* Required-field marker (Name). This field keeps the mockup's placeholder-only
    look (label: false in Stories.ts), so Payload's labeled-field asterisk never
