@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { EventDetail } from "@/content/events";
+import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 
 export type EventPageProps = {
   event: EventDetail;
@@ -165,9 +166,14 @@ export default function EventPage({ event }: EventPageProps) {
                     {block.text}
                   </h2>
                 ) : (
-                  <p key={index} className="mt-3 max-w-prose">
-                    {block.text}
-                  </p>
+                  splitBlockParagraphs(block.text).map((paragraph, paragraphIndex) => (
+                    <p
+                      key={`${index}-${paragraphIndex}`}
+                      className="mt-3 max-w-prose whitespace-pre-line"
+                    >
+                      {paragraph}
+                    </p>
+                  ))
                 );
               })}
             </section>
