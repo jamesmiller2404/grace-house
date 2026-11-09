@@ -216,22 +216,6 @@ export const Stories: CollectionConfig = {
         },
       ],
     },
-      validate: (
-        value: string | string[] | null | undefined,
-        { siblingData }: { siblingData?: { role?: string } },
-      ) => {
-        //  if (siblingData?.role === "Other" && typeof value === "string" && !value.trim()) {
-        if (
-          (siblingData?.role === "Other" &&
-            typeof value === "string" &&
-            !value) ||
-          (typeof value === "string" && !value.trim())
-        ) {
-          return "Please enter a role label when Role is Other.";
-        }
-        return true;
-      },
-    },
     {
       // The portrait photo. Optional — the site falls back to a placeholder
       // image when it is empty.
