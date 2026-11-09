@@ -355,6 +355,8 @@ export const Stories: CollectionConfig = {
       defaultValue: false,
       admin: {
         className: "gh-banner-pull-quote-heading",
+        description:
+          "Check to display a full-width pull quote banner on this person's story page.",
       },
     },
     {
@@ -464,7 +466,7 @@ export const Stories: CollectionConfig = {
       name: "showMemories",
       type: "checkbox",
       label: "Their Photo Memories",
-      defaultValue: true,
+      defaultValue: false,
       admin: {
         className: "gh-photo-memories-heading",
         description: "Show a gallery of meaningful personal photos.",
