@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { formatStoryDate, storyDateLabel } from "@/lib/formatStoryDate";
 import type { StoryProfile as StoryProfileData } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
@@ -114,11 +115,29 @@ export default function StoryProfile({
             );
           }
           const isFirst = profile.body.findIndex((b) => b.type === "p") === i;
-          return (
-            <p key={i} className={`mt-6 ${isFirst ? "drop-cap" : ""}`}>
-              {block.text}
-            </p>
-          );
+          // A blank line starts a new paragraph; a single line break remains
+          // a line break within the current paragraph.
+          const paragraphs = block.text
+            .split(/\r?\n(?:[ \t]*\r?\n)+/)
+            .map((paragraph) => paragraph.trim())
+            .filter(Boolean);
+
+          return paragraphs.map((paragraph, paragraphIndex) => {
+            const lines = paragraph.split(/\r?\n/);
+            return (
+              <p
+                key={`${i}-${paragraphIndex}`}
+                className={`mt-6 ${isFirst && paragraphIndex === 0 ? "drop-cap" : ""}`}
+              >
+                {lines.map((line, lineIndex) => (
+                  <Fragment key={lineIndex}>
+                    {line}
+                    {lineIndex < lines.length - 1 && <br />}
+                  </Fragment>
+                ))}
+              </p>
+            );
+          });
         })}
       </article>
 
