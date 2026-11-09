@@ -342,12 +342,12 @@ export interface Intro {
 export interface Story {
   id: number;
   name: string;
-  role: 'Graduate' | 'Volunteer' | 'Staff' | 'Other';
-  gender?: ('Male' | 'Female') | null;
+  role?: ('Graduate' | 'Volunteer' | 'Staff' | 'Other') | null;
   /**
    * Enter the role label displayed on this profile.
    */
   roleLabel?: string | null;
+  gender?: ('Male' | 'Female') | null;
   /**
    * Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.
    */
@@ -978,8 +978,8 @@ export interface IntroSelect<T extends boolean = true> {
 export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   role?: T;
-  gender?: T;
   roleLabel?: T;
+  gender?: T;
   date?: T;
   image?: T;
   imagePositionX?: T;
