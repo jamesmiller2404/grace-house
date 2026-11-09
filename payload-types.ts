@@ -381,13 +381,7 @@ export interface Story {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Check to include the full-width pull-quote band on the story page.
-   */
   showBannerQuote?: boolean | null;
-  /**
-   * The full-width pull-quote band on the story page.
-   */
   bannerQuote?: {
     quote?: string | null;
     attribution?: string | null;
@@ -407,12 +401,9 @@ export interface Story {
     possessive?: string | null;
   };
   /**
-   * Uncheck to omit the Memories Gallery from this profile.
+   * A collection of personal photos that gives visitors a glimpse of meaningful moments and memories.
    */
   showMemories?: boolean | null;
-  /**
-   * The personal photos shown in the memories gallery.
-   */
   memories?:
     | {
         /**

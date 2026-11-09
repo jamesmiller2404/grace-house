@@ -1,4 +1,3 @@
-import { default as default_storyPreviewField } from "../../../../src/payload/collections/Stories/StoryPreviewField.tsx"
 import { default as default_0dda18def457283302775b43747f5a9f } from '../../../../src/payload/collections/UsersCancelToDashboardButton.tsx'
 import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../../src/payload/collections/UsersDoneToListButton.tsx'
 import { default as default_d1e94d5abbb0ceb34ab990b1be6f4ecc } from '../../../../src/payload/collections/UsersEditView.tsx'
@@ -25,6 +24,7 @@ import { default as default_f86ff8bf4def5733eab024d2a90762d5 } from '../../../..
 import { default as default_7ea838f270343e88888a38a48d4cda40 } from '../../../../src/payload/collections/Intro/CancelToDashboardButton.tsx'
 import { default as default_c08b9bff2a0c3541856fdc48248abffe } from '../../../../src/payload/collections/Intro/DoneToListButton.tsx'
 import { default as default_6cfbfdf24b870de17c04b8faea76d0a4 } from '../../../../src/payload/collections/Intro/EditView.tsx'
+import { default as default_660143d5cb63932c9c1a40c4d5011928 } from '../../../../src/payload/collections/Stories/StoryPreviewField.tsx'
 import { default as default_7b93a2f4f9cec482843824ba197a8fce } from '../../../../src/payload/collections/Stories/GraduationDateField.tsx'
 import { default as default_ccd3294f607e0fcee28fd4ebda9d64c7 } from '../../../../src/payload/collections/Stories/BodyRowLabel.tsx'
 import { default as default_36bcfac68caf385e35e8afbdf797e0e1 } from '../../../../src/payload/collections/Stories/CancelToDashboardButton.tsx'
@@ -111,12 +111,12 @@ export const importMap = {
   "./src/payload/collections/Intro/CancelToDashboardButton.tsx#default": default_7ea838f270343e88888a38a48d4cda40,
   "./src/payload/collections/Intro/DoneToListButton.tsx#default": default_c08b9bff2a0c3541856fdc48248abffe,
   "./src/payload/collections/Intro/EditView.tsx#default": default_6cfbfdf24b870de17c04b8faea76d0a4,
+  "./src/payload/collections/Stories/StoryPreviewField.tsx#default": default_660143d5cb63932c9c1a40c4d5011928,
   "./src/payload/collections/Stories/GraduationDateField.tsx#default": default_7b93a2f4f9cec482843824ba197a8fce,
   "./src/payload/collections/Stories/BodyRowLabel.tsx#default": default_ccd3294f607e0fcee28fd4ebda9d64c7,
   "./src/payload/collections/Stories/CancelToDashboardButton.tsx#default": default_36bcfac68caf385e35e8afbdf797e0e1,
   "./src/payload/collections/Stories/DoneToListButton.tsx#default": default_26ae039daab2c0974bf13f4adc662368,
   "./src/payload/collections/Stories/EditView.tsx#default": default_2cd92de4983d2a89abe8f915ada8e454,
-  "./src/payload/collections/Stories/StoryPreviewField.tsx#default": default_storyPreviewField,
   "./src/payload/collections/Donate/BlockRowLabel.tsx#default": default_5b3049fd892558b24300e9b5bc176dc4,
   "./src/payload/collections/Donate/CancelToDashboardButton.tsx#default": default_63c5fb8fd23bae5f71a0d607c694ede4,
   "./src/payload/collections/Donate/DoneToListButton.tsx#default": default_f9fe33a23084e1f0fe7274419542dc1c,

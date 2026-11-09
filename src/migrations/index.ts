@@ -33,6 +33,7 @@ import * as migration_20261107_030000_add_inline_photos_to_story_event_donate fr
 import * as migration_20261107_193200_lives_changed_optional_pillar_remove_card_quote from './20261107_193200_lives_changed_optional_pillar_remove_card_quote';
 import * as migration_20261108_035152 from './20261108_035152';
 import * as migration_20261108_075619 from './20261108_075619';
+import * as migration_20261109_012056 from './20261109_012056';
 
 export const migrations = [
   {
@@ -208,6 +209,11 @@ export const migrations = [
   {
     up: migration_20261108_075619.up,
     down: migration_20261108_075619.down,
-    name: '20261108_075619'
+    name: '20261108_075619',
+  },
+  {
+    up: migration_20261109_012056.up,
+    down: migration_20261109_012056.down,
+    name: '20261109_012056'
   },
 ];
