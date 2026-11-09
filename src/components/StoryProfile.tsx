@@ -9,6 +9,8 @@ export type StoryProfileProps = {
   profile: StoryProfileData;
   /** The other profiles, for the "More lives changed..." list. */
   others?: StoryProfileData[];
+  /** Render only this person's content, omitting page navigation and related profiles. */
+  preview?: boolean;
 };
 
 /**
@@ -19,13 +21,14 @@ export type StoryProfileProps = {
 export default function StoryProfile({
   profile,
   others = [],
+  preview = false,
 }: StoryProfileProps) {
   const pillar = profile.pillarIndex == null ? undefined : pillars[profile.pillarIndex];
 
   return (
     <div className="bg-sand">
-      {/* Breadcrumb — Lives Changed › <profile name> */}
-      <nav
+      {/* Breadcrumb belongs to the full public page, not the admin preview. */}
+      {!preview && <nav
         aria-label="Breadcrumb"
         className="mx-auto max-w-6xl px-6 pt-8 text-base"
       >
@@ -38,7 +41,7 @@ export default function StoryProfile({
           <li aria-hidden className="text-ink/60 font-normal">›</li>
           <li aria-current="page">{profile.name}</li>
         </ol>
-      </nav>
+      </nav>}
 
       {/* Hero: photo centered-left, name / tag / quote right */}
       <header className="mx-auto mt-10 max-w-4xl px-6">
@@ -195,7 +198,8 @@ export default function StoryProfile({
         </section>
       )}
 
-      {/* Divider + other profiles */}
+      {/* Related profiles are page navigation, not part of an individual profile preview. */}
+      {!preview && <>
       <hr className="border-ink/15 mx-auto max-w-6xl" />
       <section className="mx-auto max-w-6xl px-6 py-12">
         <h2 className="font-heading text-anchor text-2xl italic">
@@ -238,6 +242,7 @@ export default function StoryProfile({
           View all profiles and stories
         </Link>
       </section>
+      </>}
     </div>
   );
 }
