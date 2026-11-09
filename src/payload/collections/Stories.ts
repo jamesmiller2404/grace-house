@@ -139,19 +139,22 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // Graduation date: the text entry keeps MM/YYYY available, while the
-      // custom field adds the browser's native calendar picker for full dates.
-      name: "date",
-      type: "text",
-      label: false,
-      admin: {
-        placeholder: "Graduation date... (MM/DD/YYYY or MM/YYYY)",
-        description:
-          "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
-        components: {
-          Field: { path: "./src/payload/collections/Stories/GraduationDateField.tsx" },
-        },
-      },
+      type: "row",
+      fields: [
+        {
+          // Graduation date: label sits to the left, alongside Role and Gender.
+          name: "date",
+          type: "text",
+          label: false,
+          admin: {
+            width: "100%",
+            placeholder: "MM/DD/YYYY or MM/YYYY",
+            description:
+              "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
+            components: {
+              Field: { path: "./src/payload/collections/Stories/GraduationDateField.tsx" },
+            },
+          },
       validate: (value: unknown) => {
         if (value == null || value === "") return true;
         if (typeof value !== "string") {
@@ -176,6 +179,7 @@ export const Stories: CollectionConfig = {
           ? true
           : "Enter a date as MM/DD/YYYY or MM/YYYY.";
       },
+      ],
     },
     {
       // Only shown when the editor chooses the catch-all Role option.
@@ -240,26 +244,6 @@ export const Stories: CollectionConfig = {
         },
         { aspectRatio: "4 / 5" },
       ),
-    },
-    {
-      name: "showPullQuote",
-      type: "checkbox",
-      label: "Include an opening pull quote",
-      defaultValue: false,
-      admin: {
-        className: "gh-opening-pull-quote-heading",
-        description: "Check to show an opening pull quote next to the picture and on the summary card.",
-      },
-    },
-    {
-      name: "pullQuote",
-      type: "text",
-      label: false,
-      admin: {
-        condition: (data) => data?.showPullQuote === true,
-        placeholder: "Opening pull quote...",
-        description: "Opening pull quote placed next to the picture and on the summary card.",
-      },
     },
     {
       // The story body: an ordered list of Paragraph and Heading blocks. The
@@ -342,6 +326,26 @@ export const Stories: CollectionConfig = {
           },
         },
       ],
+    },
+    {
+      name: "showPullQuote",
+      type: "checkbox",
+      label: "Include an Opening Pull Quote",
+      defaultValue: false,
+      admin: {
+        className: "gh-opening-pull-quote-heading",
+        description: "Check to show an opening pull quote next to the picture and on the summary card.",
+      },
+    },
+    {
+      name: "pullQuote",
+      type: "text",
+      label: false,
+      admin: {
+        condition: (data) => data?.showPullQuote === true,
+        placeholder: "Opening pull quote...",
+        description: "Opening pull quote placed next to the picture and on the summary card.",
+      },
     },
     {
       name: "showBannerQuote",
@@ -462,7 +466,7 @@ export const Stories: CollectionConfig = {
       defaultValue: true,
       admin: {
         className: "gh-photo-memories-heading",
-        description: "A collection of personal photos that gives visitors a glimpse of meaningful moments and memories.",
+        description: "Show a gallery of meaningful personal photos.",
       },
     },
     {
@@ -487,7 +491,7 @@ export const Stories: CollectionConfig = {
           required: true,
           label: false,
           admin: {
-            description: "A personal photo.",
+            description: "Choose a memory photo.",
           },
         },
         {
@@ -510,11 +514,20 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
+      type: "ui",
+      name: "pillarSectionHeading",
+      admin: {
+        components: {
+          Field: { path: "./src/payload/collections/Stories/PillarSectionHeading.tsx" },
+        },
+      },
+    },
+    {
       // Optional section: the checkbox explicitly controls whether a pillar
       // is included on the public profile. The dummy default prevents an
       // unintentional real pillar from being selected automatically.
       type: "collapsible",
-      label: "The Pillar that Mattered Most to Them",
+      label: "Pillar Details",
       admin: {
         className: "gh-pillar-section",
         initCollapsed: false,

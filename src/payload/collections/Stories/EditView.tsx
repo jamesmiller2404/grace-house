@@ -302,7 +302,19 @@ html[data-theme='light'] .gh-stories-edit {
   background: #403f47 !important;
 }
 .gh-stories-edit .gh-pillar-section {
+  padding: 0 !important;
+  margin-top: 0 !important;
+}
+.gh-stories-edit .gh-pillar-section .collapsible {
   padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap {
+  margin: 0 !important;
+  padding-top: 0 !important;
+}
+.gh-stories-edit .gh-pillar-section .collapsible__toggle {
+  margin-top: 0 !important;
 }
 
 /* Graduation date: one compact text field and the browser's native calendar icon. */
@@ -369,17 +381,56 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .gh-photo-memories-heading .field-description {
   display: block;
   margin-top: 6px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #111114 !important;
 }
 
-/* Keep Banner Pull Quote fields visually connected to their heading. */
+/* Keep the Banner Pull Quote title visually connected to its fields.
+   Payload may place its section separator inside the conditional group wrapper,
+   so remove the separator in that group as well as the adjacent field flow. */
+.gh-stories-edit .field-type:has(.gh-banner-pull-quote-heading) + hr,
+.gh-stories-edit .field-type:has(.gh-banner-pull-quote-heading) ~ hr,
+.gh-stories-edit .gh-banner-pull-quote-heading ~ hr,
+.gh-stories-edit .field-type.group:has(input[name="bannerQuote.quote"]) hr {
+  display: none !important;
+}
 .gh-stories-edit .gh-banner-pull-quote-heading { margin-bottom: 4px; }
 .gh-stories-edit .gh-banner-pull-quote-heading + .field-type.group { margin-top: 0 !important; }
-.gh-stories-edit .gh-banner-pull-quote-heading:has(+ hr) + hr { display: none !important; }
-/* Keep the Pillar title bar flush against the top of its card. */
+.gh-stories-edit .gh-banner-pull-quote-heading ~ .field-type.group {
+  border-top: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+/* Graduation date label aligns horizontally with Role and Gender. */
+.gh-stories-edit .gh-graduation-date-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gh-stories-edit .gh-graduation-date-field > .field-label {
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+.gh-stories-edit .gh-graduation-date-field > .field-type__wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* The Pillar heading is a separate UI field, above (not inside) the card. */
+.gh-stories-edit .gh-pillar-section-heading {
+  display: block;
+  margin: 18px 0 12px;
+  color: var(--gh-st-text);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.gh-stories-edit .gh-pillar-section .collapsible__toggle {
+  font-size: 1rem;
+}
+/* Keep the Pillar card title bar flush against the top of its card. */
 .gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap { margin-top: 0 !important; padding-top: 0 !important; }
 .gh-stories-edit .gh-pillar-section .collapsible__content { margin-top: 0 !important; }
 
