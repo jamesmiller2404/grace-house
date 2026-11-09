@@ -349,6 +349,32 @@ html[data-theme='light'] .gh-stories-edit {
   color: #111114 !important;
 }
 
+/* Full-size section headings for optional profile content. The checkboxes
+   double as section headings while preserving their existing top-level fields. */
+.gh-stories-edit .gh-opening-pull-quote-heading .field-label,
+.gh-stories-edit .gh-banner-pull-quote-heading .field-label,
+.gh-stories-edit .gh-photo-memories-heading .field-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.gh-stories-edit .gh-opening-pull-quote-heading,
+.gh-stories-edit .gh-banner-pull-quote-heading,
+.gh-stories-edit .gh-photo-memories-heading {
+  margin-top: 18px;
+  margin-bottom: 12px;
+}
+.gh-stories-edit .gh-photo-memories-heading .field-description {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #111114 !important;
+}
+
 /* Lives Changed live profile preview */
 .gh-story-preview-field {
   display: flex;

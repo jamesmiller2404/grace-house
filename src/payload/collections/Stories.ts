@@ -247,6 +247,7 @@ export const Stories: CollectionConfig = {
       label: "Include an opening pull quote",
       defaultValue: false,
       admin: {
+        className: "gh-opening-pull-quote-heading",
         description: "Check to show an opening pull quote next to the picture and on the summary card.",
       },
     },
@@ -345,20 +346,19 @@ export const Stories: CollectionConfig = {
     {
       name: "showBannerQuote",
       type: "checkbox",
-      label: "Include a Banner Pull Quote",
+      label: "Banner Pull Quote",
       defaultValue: false,
       admin: {
-        description: "Check to include the full-width pull-quote band on the story page.",
+        className: "gh-banner-pull-quote-heading",
       },
     },
     {
       // Optional full-width pull-quote band on the story page.
       name: "bannerQuote",
       type: "group",
-      label: "Banner Pull Quote",
+      label: false,
       admin: {
         condition: (data) => data?.showBannerQuote === true,
-        description: "The full-width pull-quote band on the story page.",
       },
       fields: [
         {
@@ -458,16 +458,18 @@ export const Stories: CollectionConfig = {
     {
       name: "showMemories",
       type: "checkbox",
-      label: "Include Memories Gallery on this profile",
+      label: "Their Photo Memories",
       defaultValue: true,
       admin: {
-        description: "Uncheck to omit the Memories Gallery from this profile.",
+        className: "gh-photo-memories-heading",
+        description: "A collection of personal photos that gives visitors a glimpse of meaningful moments and memories.",
       },
     },
     {
       // The personal photos in the "{name}'s memories..." gallery.
       name: "memories",
       type: "array",
+      label: false,
       labels: {
         singular: "Photo",
         plural: "Memories Gallery",
@@ -512,7 +514,7 @@ export const Stories: CollectionConfig = {
       // is included on the public profile. The dummy default prevents an
       // unintentional real pillar from being selected automatically.
       type: "collapsible",
-      label: "Most Important Pillar",
+      label: "The Pillar that Mattered Most to Them",
       admin: {
         className: "gh-pillar-section",
         initCollapsed: false,
