@@ -34,6 +34,8 @@ export type StoryProfile = {
   pillarIndex?: number | null;
   /** Grammar for copy like "shared her story" / "Read her story". */
   pronouns: { subject: string; possessive: string };
+  /** Whether to show the Memories Gallery on this profile (defaults to true). */
+  showMemories?: boolean;
   /** Personal photos for the memories gallery. */
   memories: Memory[];
 };
