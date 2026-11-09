@@ -124,46 +124,36 @@ html[data-theme='light'] .gh-stories-edit {
     font-size: 0.9em;
   }
 }
-/* Place the conditional Other role input in the second grid row,
-   directly beneath the Role dropdown (not beneath Gender). */
-.gh-stories-edit .gh-role-label-row .row__fields {
-  display: grid !important;
-  grid-template-columns: 60% 20% 20%;
-  column-gap: 0;
-  row-gap: calc(var(--base, 16px) * 0.8);
+/* Identity fields stay in one tidy vertical column even on wide screens.
+   Constrain control widths so the Name field does not stretch across the panel. */
+.gh-stories-edit .gh-story-name-field {
+  width: 100%;
+  max-width: 420px;
 }
-.gh-stories-edit .gh-role-label-row .row__fields > * {
-  width: 100% !important;
-  min-width: 0;
-  margin-left: 0 !important;
+.gh-stories-edit .gh-story-name-field .field-type__wrap,
+.gh-stories-edit .gh-story-name-field input {
+  width: 100%;
+  max-width: 100%;
 }
-.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(1) {
-  grid-column: 1;
-  grid-row: 1;
+.gh-stories-edit .gh-story-role-field,
+.gh-stories-edit .gh-story-role-label-field,
+.gh-stories-edit .gh-story-gender-field,
+.gh-stories-edit .gh-story-date-field {
+  width: 100%;
+  max-width: 360px;
 }
-.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(2) {
-  grid-column: 2;
-  grid-row: 1;
+.gh-stories-edit .gh-story-role-field .field-type__wrap,
+.gh-stories-edit .gh-story-gender-field .field-type__wrap,
+.gh-stories-edit .gh-story-role-field .rs__control,
+.gh-stories-edit .gh-story-gender-field .rs__control,
+.gh-stories-edit .gh-story-role-label-field input {
+  width: 100%;
+  max-width: 100%;
 }
-.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(3) {
-  grid-column: 3;
-  grid-row: 1;
-}
-.gh-stories-edit .gh-role-label-row .row__fields > :nth-child(4) {
-  grid-column: 2;
-  grid-row: 2;
-}
-@media (max-width: 1024px) {
-  .gh-stories-edit .gh-role-label-row .row__fields {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .gh-stories-edit .gh-role-label-row .row__fields > * {
-    grid-column: 1 !important;
-  }
-  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(1) { grid-row: 1; }
-  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(2) { grid-row: 2; }
-  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(4) { grid-row: 3; }
-  .gh-stories-edit .gh-role-label-row .row__fields > :nth-child(3) { grid-row: 4; }
+.gh-stories-edit .gh-story-date-field .gh-graduation-date-field,
+.gh-stories-edit .gh-story-date-field .gh-graduation-date {
+  width: 100%;
+  max-width: 360px;
 }
 /* Required-field marker (Name). This field keeps the mockup's placeholder-only
    look (label: false in Stories.ts), so Payload's labeled-field asterisk never
