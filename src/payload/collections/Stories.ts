@@ -139,6 +139,37 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
+      // Place the conditional Other role input directly beneath Role.
+      type: "row",
+      fields: [
+        {
+          name: "roleLabel",
+          type: "text",
+          label: false,
+          admin: {
+            width: "20%",
+            condition: (_data, siblingData) => siblingData?.role === "Other",
+            placeholder: "Enter role label...",
+            description: "Enter the role label displayed on this profile.",
+          },
+          validate: (
+            value: string | string[] | null | undefined,
+            { siblingData }: { siblingData?: { role?: string } },
+          ) => {
+            if (
+              (siblingData?.role === "Other" &&
+                typeof value === "string" &&
+                !value) ||
+              (typeof value === "string" && !value.trim())
+            ) {
+              return "Please enter a role label when Role is Other.";
+            }
+            return true;
+          },
+        },
+      ],
+    },
+    {
       type: "row",
       fields: [
         {
@@ -182,16 +213,6 @@ export const Stories: CollectionConfig = {
         },
       ],
     },
-    {
-      // Only shown when the editor chooses the catch-all Role option.
-      name: "roleLabel",
-      type: "text",
-      label: false,
-      admin: {
-        condition: (_data, siblingData) => siblingData?.role === "Other",
-        placeholder: "Enter role label...",
-        description: "Enter the role label displayed on this profile.",
-      },
       validate: (
         value: string | string[] | null | undefined,
         { siblingData }: { siblingData?: { role?: string } },
