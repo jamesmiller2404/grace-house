@@ -34,7 +34,7 @@ const GraduationDateField: React.FC<TextFieldClientProps> = ({
 
   return (
     <div className="gh-graduation-date-field" id={`field-${path}`}>
-      <label className="field-label" htmlFor={`field-${path}-text`}>Graduation date</label>
+      <label className="field-label" htmlFor={`field-${path}-text`}>Date</label>
       <div className="gh-graduation-date">
       <input
         className="gh-graduation-date__text"

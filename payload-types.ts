@@ -345,13 +345,13 @@ export interface Story {
   role: 'Graduate' | 'Volunteer' | 'Staff' | 'Other';
   gender?: ('Male' | 'Female') | null;
   /**
-   * Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.
-   */
-  date?: string | null;
-  /**
    * Enter the role label displayed on this profile.
    */
   roleLabel?: string | null;
+  /**
+   * Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.
+   */
+  date?: string | null;
   /**
    * The portrait photo shown in the story hero.
    */
@@ -381,6 +381,9 @@ export interface Story {
    * Opening pull quote placed next to the picture and on the summary card.
    */
   pullQuote?: string | null;
+  /**
+   * Check to display a full-width pull quote banner on this person's story page.
+   */
   showBannerQuote?: boolean | null;
   bannerQuote?: {
     quote?: string | null;
@@ -419,7 +422,7 @@ export interface Story {
       }[]
     | null;
   /**
-   * Leave unchecked if you do not want a Most Important Pillar section on this profile.
+   * Check to include the Most Important Pillar section on this person's profile.
    */
   showPillar?: boolean | null;
   /**
@@ -976,8 +979,8 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   role?: T;
   gender?: T;
-  date?: T;
   roleLabel?: T;
+  date?: T;
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;
