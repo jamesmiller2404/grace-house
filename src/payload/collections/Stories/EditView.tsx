@@ -347,6 +347,15 @@ html[data-theme='light'] .gh-stories-edit {
   cursor: pointer;
   opacity: 0.85;
 }
+/* Instructions for entering multiple paragraphs in one story text box. */
+.gh-stories-edit .gh-block-text-input__hint {
+  width: 95%;
+  margin: 6px 0 0;
+  color: var(--gh-st-help);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
 /* Field helper text */
 .gh-stories-edit .field-description {
   color: var(--gh-st-help);
