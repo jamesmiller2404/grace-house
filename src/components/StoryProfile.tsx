@@ -140,9 +140,11 @@ export default function StoryProfile({
       )}
 
       {/* Memories gallery (story-page-section4.png) */}
-      <div className="mx-auto max-w-6xl px-6">
-        <MemoriesGallery memories={profile.memories} name={profile.name} />
-      </div>
+      {profile.showMemories !== false && (
+        <div className="mx-auto max-w-6xl px-6">
+          <MemoriesGallery memories={profile.memories} name={profile.name} />
+        </div>
+      )}
 
       {/* Closing — where she/he is today */}
       <section className="mx-auto max-w-3xl px-6 py-16">
