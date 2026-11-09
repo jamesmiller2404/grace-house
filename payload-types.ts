@@ -359,14 +359,6 @@ export interface Story {
   imagePositionX?: number | null;
   imagePositionY?: number | null;
   /**
-   * Check to show an opening pull quote next to the picture and on the summary card.
-   */
-  showPullQuote?: boolean | null;
-  /**
-   * Opening pull quote placed next to the picture and on the summary card.
-   */
-  pullQuote?: string | null;
-  /**
    * Add headers, paragraphs and photos in the order they should appear. The first paragraph gets the drop cap on the site.
    */
   body?:
@@ -381,6 +373,14 @@ export interface Story {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Check to show an opening pull quote next to the picture and on the summary card.
+   */
+  showPullQuote?: boolean | null;
+  /**
+   * Opening pull quote placed next to the picture and on the summary card.
+   */
+  pullQuote?: string | null;
   showBannerQuote?: boolean | null;
   bannerQuote?: {
     quote?: string | null;
@@ -401,13 +401,13 @@ export interface Story {
     possessive?: string | null;
   };
   /**
-   * A collection of personal photos that gives visitors a glimpse of meaningful moments and memories.
+   * Show a gallery of meaningful personal photos.
    */
   showMemories?: boolean | null;
   memories?:
     | {
         /**
-         * A personal photo.
+         * Choose a memory photo.
          */
         image: number | Media;
         /**
@@ -981,8 +981,6 @@ export interface StoriesSelect<T extends boolean = true> {
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;
-  showPullQuote?: T;
-  pullQuote?: T;
   body?:
     | T
     | {
@@ -992,6 +990,8 @@ export interface StoriesSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  showPullQuote?: T;
+  pullQuote?: T;
   showBannerQuote?: T;
   bannerQuote?:
     | T

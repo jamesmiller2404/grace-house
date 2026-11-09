@@ -179,6 +179,7 @@ export const Stories: CollectionConfig = {
           ? true
           : "Enter a date as MM/DD/YYYY or MM/YYYY.";
       },
+        },
       ],
     },
     {

@@ -138,7 +138,11 @@ function collectMediaIds(data: UnknownRecord): string[] {
 export default function StoryPreviewField() {
   const formFields = useFormFields(([fields]) => fields);
   const { getData } = useForm();
-  const draftData = useMemo(() => asRecord(getData()), [formFields, getData]);
+  //const draftData = useMemo(() => asRecord(getData()), [formFields, getData]);
+  const draftData = useMemo(() => {
+  void formFields;
+  return asRecord(getData());
+  }, [formFields, getData]);
   const [resolvedMedia, setResolvedMedia] = useState<Record<string, string>>({});
   const [isOpen, setIsOpen] = useState(false);
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
