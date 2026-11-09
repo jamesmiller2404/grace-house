@@ -34,6 +34,10 @@ export default function StoryPreviewFrame() {
     };
 
     window.addEventListener("message", receivePreview);
+    window.parent.postMessage(
+      { type: "grace-house:story-preview-ready" },
+      window.location.origin,
+    );
     return () => window.removeEventListener("message", receivePreview);
   }, []);
 
