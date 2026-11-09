@@ -95,10 +95,13 @@ export const Stories: CollectionConfig = {
         },
       },
     },
-    // Name (wide) + Role dropdown (top right), like the Events mockup's first
-    // row (Title + Status).
+    // Name, Role and Gender share the first row. The conditional Other
+    // role label is part of this row so it can sit directly beneath Role.
     {
       type: "row",
+      admin: {
+        className: "gh-role-label-row",
+      },
       fields: [
         {
           name: "name",
@@ -136,15 +139,6 @@ export const Stories: CollectionConfig = {
             },
           }),
         },
-      ],
-    },
-    {
-      // Place the conditional Other role input directly beneath Role.
-      type: "row",
-      admin: {
-        className: "gh-role-label-row",
-      },
-      fields: [
         {
           name: "roleLabel",
           type: "text",
