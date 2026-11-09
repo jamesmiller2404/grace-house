@@ -369,11 +369,19 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .gh-photo-memories-heading .field-description {
   display: block;
   margin-top: 6px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.5;
   color: #111114 !important;
 }
+
+/* Keep Banner Pull Quote fields visually connected to their heading. */
+.gh-stories-edit .gh-banner-pull-quote-heading { margin-bottom: 4px; }
+.gh-stories-edit .gh-banner-pull-quote-heading + .field-type.group { margin-top: 0 !important; }
+.gh-stories-edit .gh-banner-pull-quote-heading:has(+ hr) + hr { display: none !important; }
+/* Keep the Pillar title bar flush against the top of its card. */
+.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap { margin-top: 0 !important; padding-top: 0 !important; }
+.gh-stories-edit .gh-pillar-section .collapsible__content { margin-top: 0 !important; }
 
 /* Lives Changed live profile preview */
 .gh-story-preview-field {

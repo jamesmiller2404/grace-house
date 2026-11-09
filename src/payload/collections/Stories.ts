@@ -476,7 +476,7 @@ export const Stories: CollectionConfig = {
       },
       admin: {
         className: "gh-memories-section",
-        description: "The personal photos shown in the memories gallery.",
+        // The section heading above explains the purpose of this gallery.
         condition: (data) => data?.showMemories !== false,
       },
       fields: [
