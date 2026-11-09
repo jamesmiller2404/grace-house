@@ -95,101 +95,86 @@ export const Stories: CollectionConfig = {
         },
       },
     },
-    // Name, Role and Gender share the first row. The conditional Other
-    // role label is part of this row so it can sit directly beneath Role.
+    // Keep the identity fields in a predictable vertical column at every
+    // viewport width: Name, Role, conditional Other label, Gender, Date.
     {
-      type: "row",
+      name: "name",
+      type: "text",
+      required: true,
+      label: false,
       admin: {
-        className: "gh-role-label-row",
+        className: "gh-story-name-field",
+        placeholder: "Name...",
       },
-      fields: [
-        {
-          name: "name",
-          type: "text",
-          required: true,
-          // Placeholder-only look, like the Events and Intro forms (the
-          // required marker is painted by the Edit view — see
-          // ./Stories/EditView.tsx).
-          label: false,
-          admin: {
-            placeholder: "Name...",
-            width: "60%",
-          },
-        },
-        {
-          // Plain dropdown (not Payload's default searchable combobox) —
-          // see src/payload/fields/StatusSelect.
-          ...StatusSelectField({
-            name: "role",
-            options: ["Graduate", "Volunteer", "Staff", "Other"],
-            defaultValue: "Graduate",
-            required: true,
-            admin: {
-              width: "20%",
-            },
-          }),
-        },
-        {
-          // Optional so existing stories can be updated without guessing.
-          ...StatusSelectField({
-            name: "gender",
-            options: ["Male", "Female"],
-            admin: {
-              width: "20%",
-            },
-          }),
-        },
-        {
-          name: "roleLabel",
-          type: "text",
-          label: false,
-          admin: {
-            width: "20%",
-            condition: (_data, siblingData) => siblingData?.role === "Other",
-            placeholder: "Enter role label...",
-            description: "Enter the role label displayed on this profile.",
-          },
-          validate: (
-            value: string | string[] | null | undefined,
-            { siblingData }: { siblingData?: { role?: string } },
-          ) => {
-            if (
-              (siblingData?.role === "Other" &&
-                typeof value === "string" &&
-                !value) ||
-              (typeof value === "string" && !value.trim())
-            ) {
-              return "Please enter a role label when Role is Other.";
-            }
-            return true;
-          },
-        },
-      ],
     },
     {
-      type: "row",
-      fields: [
-        {
-          // Graduation date: label sits to the left, alongside Role and Gender.
-          name: "date",
-          type: "text",
-          label: false,
-          admin: {
-            width: "100%",
-            placeholder: "MM/DD/YYYY or MM/YYYY",
-            description:
-              "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
-            components: {
-              Field: { path: "./src/payload/collections/Stories/GraduationDateField.tsx" },
-            },
-          },
+      // Plain dropdown (not Payload's default searchable combobox).
+      ...StatusSelectField({
+        name: "role",
+        options: ["Graduate", "Volunteer", "Staff", "Other"],
+        defaultValue: "Graduate",
+        required: true,
+        admin: {
+          className: "gh-story-role-field",
+        },
+      }),
+    },
+    {
+      name: "roleLabel",
+      type: "text",
+      label: false,
+      admin: {
+        className: "gh-story-role-label-field",
+        condition: (_data, siblingData) => siblingData?.role === "Other",
+        placeholder: "Enter role label...",
+        description: "Enter the role label displayed on this profile.",
+      },
+      validate: (
+        value: string | string[] | null | undefined,
+        { siblingData }: { siblingData?: { role?: string } },
+      ) => {
+        if (
+          (siblingData?.role === "Other" &&
+            typeof value === "string" &&
+            !value) ||
+          (typeof value === "string" && !value.trim())
+        ) {
+          return "Please enter a role label when Role is Other.";
+        }
+        return true;
+      },
+    },
+    {
+      // Optional so existing stories can be updated without guessing.
+      ...StatusSelectField({
+        name: "gender",
+        options: ["Male", "Female"],
+        admin: {
+          className: "gh-story-gender-field",
+        },
+      }),
+    },
+    {
+      // Graduation date appears beneath Gender in the same vertical column.
+      name: "date",
+      type: "text",
+      label: false,
+      admin: {
+        className: "gh-story-date-field",
+        placeholder: "MM/DD/YYYY or MM/YYYY",
+        description:
+          "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
+        components: {
+          Field: { path: "./src/payload/collections/Stories/GraduationDateField.tsx" },
+        },
+      },
       validate: (value: unknown) => {
         if (value == null || value === "") return true;
         if (typeof value !== "string") {
           return "Enter a date as MM/DD/YYYY or MM/YYYY.";
         }
 
-        const fullDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/(\d{4})$/.exec(value);
+        const fullDate = /^(0?[1-9]|1[0-2])\\/(0?[1-9]|[12]\\d|3[01])\\/(\\d{4})$/.exec(value);
         if (fullDate) {
           const month = Number(fullDate[1]);
           const day = Number(fullDate[2]);
@@ -202,13 +187,11 @@ export const Stories: CollectionConfig = {
             : "Enter a valid calendar date as MM/DD/YYYY.";
         }
 
-        const monthYear = /^(0?[1-9]|1[0-2])\/(\d{4})$/.exec(value);
+        const monthYear = /^(0?[1-9]|1[0-2])\\/(\\d{4})$/.exec(value);
         return monthYear
           ? true
           : "Enter a date as MM/DD/YYYY or MM/YYYY.";
       },
-        },
-      ],
     },
     {
       // The portrait photo. Optional — the site falls back to a placeholder
