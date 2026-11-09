@@ -174,7 +174,7 @@ export const Stories: CollectionConfig = {
           return "Enter a date as MM/DD/YYYY or MM/YYYY.";
         }
 
-        const fullDate = /^(0?[1-9]|1[0-2])\\/(0?[1-9]|[12]\\d|3[01])\\/(\\d{4})$/.exec(value);
+        const fullDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/(\d{4})$/.exec(value);
         if (fullDate) {
           const month = Number(fullDate[1]);
           const day = Number(fullDate[2]);
@@ -187,7 +187,7 @@ export const Stories: CollectionConfig = {
             : "Enter a valid calendar date as MM/DD/YYYY.";
         }
 
-        const monthYear = /^(0?[1-9]|1[0-2])\\/(\\d{4})$/.exec(value);
+        const monthYear = /^(0?[1-9]|1[0-2])\/(\d{4})$/.exec(value);
         return monthYear
           ? true
           : "Enter a date as MM/DD/YYYY or MM/YYYY.";
