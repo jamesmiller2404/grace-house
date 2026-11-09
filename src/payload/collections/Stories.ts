@@ -456,6 +456,15 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
+      name: "showMemories",
+      type: "checkbox",
+      label: "Include Memories Gallery on this profile",
+      defaultValue: true,
+      admin: {
+        description: "Uncheck to omit the Memories Gallery from this profile.",
+      },
+    },
+    {
       // The personal photos in the "{name}'s memories..." gallery.
       name: "memories",
       type: "array",
@@ -466,6 +475,7 @@ export const Stories: CollectionConfig = {
       admin: {
         className: "gh-memories-section",
         description: "The personal photos shown in the memories gallery.",
+        condition: (data) => data?.showMemories !== false,
       },
       fields: [
         {
