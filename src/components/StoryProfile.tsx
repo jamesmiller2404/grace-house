@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { formatStoryDate, storyDateLabel } from "@/lib/formatStoryDate";
 import type { StoryProfile as StoryProfileData } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
@@ -9,6 +12,8 @@ export type StoryProfileProps = {
   profile: StoryProfileData;
   /** The other profiles, for the "More lives changed..." list. */
   others?: StoryProfileData[];
+  /** Render only this person's content, omitting page navigation and related profiles. */
+  preview?: boolean;
 };
 
 /**
@@ -19,13 +24,14 @@ export type StoryProfileProps = {
 export default function StoryProfile({
   profile,
   others = [],
+  preview = false,
 }: StoryProfileProps) {
   const pillar = profile.pillarIndex == null ? undefined : pillars[profile.pillarIndex];
 
   return (
     <div className="bg-sand">
-      {/* Breadcrumb — Lives Changed › <profile name> */}
-      <nav
+      {/* Breadcrumb belongs to the full public page, not the admin preview. */}
+      {!preview && <nav
         aria-label="Breadcrumb"
         className="mx-auto max-w-6xl px-6 pt-8 text-base"
       >
@@ -38,7 +44,7 @@ export default function StoryProfile({
           <li aria-hidden className="text-ink/60 font-normal">›</li>
           <li aria-current="page">{profile.name}</li>
         </ol>
-      </nav>
+      </nav>}
 
       {/* Hero: photo centered-left, name / tag / quote right */}
       <header className="mx-auto mt-10 max-w-4xl px-6">
@@ -109,11 +115,29 @@ export default function StoryProfile({
             );
           }
           const isFirst = profile.body.findIndex((b) => b.type === "p") === i;
-          return (
-            <p key={i} className={`mt-6 ${isFirst ? "drop-cap" : ""}`}>
-              {block.text}
-            </p>
-          );
+          // A blank line starts a new paragraph; a single line break remains
+          // a line break within the current paragraph.
+          const paragraphs = block.text
+            .split(/\r?\n(?:[ \t]*\r?\n)+/)
+            .map((paragraph) => paragraph.trim())
+            .filter(Boolean);
+
+          return paragraphs.map((paragraph, paragraphIndex) => {
+            const lines = paragraph.split(/\r?\n/);
+            return (
+              <p
+                key={`${i}-${paragraphIndex}`}
+                className={`mt-6 ${isFirst && paragraphIndex === 0 ? "drop-cap" : ""}`}
+              >
+                {lines.map((line, lineIndex) => (
+                  <Fragment key={lineIndex}>
+                    {line}
+                    {lineIndex < lines.length - 1 && <br />}
+                  </Fragment>
+                ))}
+              </p>
+            );
+          });
         })}
       </article>
 
@@ -135,9 +159,11 @@ export default function StoryProfile({
       )}
 
       {/* Memories gallery (story-page-section4.png) */}
-      <div className="mx-auto max-w-6xl px-6">
-        <MemoriesGallery memories={profile.memories} name={profile.name} />
-      </div>
+      {profile.showMemories !== false && (
+        <div className="mx-auto max-w-6xl px-6">
+          <MemoriesGallery memories={profile.memories} name={profile.name} />
+        </div>
+      )}
 
       {/* Closing — where she/he is today */}
       <section className="mx-auto max-w-3xl px-6 py-16">
@@ -195,7 +221,8 @@ export default function StoryProfile({
         </section>
       )}
 
-      {/* Divider + other profiles */}
+      {/* Related profiles are page navigation, not part of an individual profile preview. */}
+      {!preview && <>
       <hr className="border-ink/15 mx-auto max-w-6xl" />
       <section className="mx-auto max-w-6xl px-6 py-12">
         <h2 className="font-heading text-anchor text-2xl italic">
@@ -238,6 +265,7 @@ export default function StoryProfile({
           View all profiles and stories
         </Link>
       </section>
+      </>}
     </div>
   );
 }

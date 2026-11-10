@@ -342,30 +342,22 @@ export interface Intro {
 export interface Story {
   id: number;
   name: string;
-  role: 'Graduate' | 'Volunteer' | 'Staff' | 'Other';
+  role?: ('Graduate' | 'Volunteer' | 'Staff' | 'Other') | null;
+  /**
+   * Enter the role label displayed on this profile.
+   */
+  roleLabel?: string | null;
   gender?: ('Male' | 'Female') | null;
   /**
    * Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.
    */
   date?: string | null;
   /**
-   * Enter the role label displayed on this profile.
-   */
-  roleLabel?: string | null;
-  /**
    * The portrait photo shown in the story hero.
    */
   image?: (number | null) | Media;
   imagePositionX?: number | null;
   imagePositionY?: number | null;
-  /**
-   * Check to show an opening pull quote next to the picture and on the summary card.
-   */
-  showPullQuote?: boolean | null;
-  /**
-   * Opening pull quote placed next to the picture and on the summary card.
-   */
-  pullQuote?: string | null;
   /**
    * Add headers, paragraphs and photos in the order they should appear. The first paragraph gets the drop cap on the site.
    */
@@ -382,12 +374,17 @@ export interface Story {
       }[]
     | null;
   /**
-   * Check to include the full-width pull-quote band on the story page.
+   * Check to show an opening pull quote next to the picture and on the summary card.
+   */
+  showPullQuote?: boolean | null;
+  /**
+   * Opening pull quote placed next to the picture and on the summary card.
+   */
+  pullQuote?: string | null;
+  /**
+   * Check to display a full-width pull quote banner on this person's story page.
    */
   showBannerQuote?: boolean | null;
-  /**
-   * The full-width pull-quote band on the story page.
-   */
   bannerQuote?: {
     quote?: string | null;
     attribution?: string | null;
@@ -407,12 +404,13 @@ export interface Story {
     possessive?: string | null;
   };
   /**
-   * The personal photos shown in the memories gallery.
+   * Show a gallery of meaningful personal photos.
    */
+  showMemories?: boolean | null;
   memories?:
     | {
         /**
-         * A personal photo.
+         * Choose a memory photo.
          */
         image: number | Media;
         /**
@@ -424,7 +422,7 @@ export interface Story {
       }[]
     | null;
   /**
-   * Leave unchecked if you do not want a Most Important Pillar section on this profile.
+   * Check to include the Most Important Pillar section on this person's profile.
    */
   showPillar?: boolean | null;
   /**
@@ -980,14 +978,12 @@ export interface IntroSelect<T extends boolean = true> {
 export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  roleLabel?: T;
   gender?: T;
   date?: T;
-  roleLabel?: T;
   image?: T;
   imagePositionX?: T;
   imagePositionY?: T;
-  showPullQuote?: T;
-  pullQuote?: T;
   body?:
     | T
     | {
@@ -997,6 +993,8 @@ export interface StoriesSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  showPullQuote?: T;
+  pullQuote?: T;
   showBannerQuote?: T;
   bannerQuote?:
     | T
@@ -1022,6 +1020,7 @@ export interface StoriesSelect<T extends boolean = true> {
         subject?: T;
         possessive?: T;
       };
+  showMemories?: T;
   memories?:
     | T
     | {

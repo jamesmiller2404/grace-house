@@ -660,9 +660,10 @@ function toStoryItem(doc: PayloadStory): StoryItem {
   const pronouns = pronounsForGender(doc.gender);
   return {
     name: doc.name,
-    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
+    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role || "Other",
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
+    heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
     href: `/stories/${storySlug(doc.name)}`,
     // Generated link copy always follows Gender, not the legacy readLabel or
     // Pronouns fields (both are hidden in the admin editor).
@@ -676,7 +677,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
   return {
     slug: storySlug(doc.name),
     name: doc.name,
-    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
+    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role || "Other",
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
     imagePositionX: doc.imagePositionX ?? 50,
@@ -694,6 +695,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
     pillarIndex: doc.showPillar ? pillarIndexFromTitle(doc.pillar) : null,
     // Never use the legacy manually-entered pronouns; derive them from Gender.
     pronouns: pronounsForGender(doc.gender),
+    showMemories: doc.showMemories !== false,
     memories: (doc.memories ?? []).map((memory) => ({
       image: mediaUrl(memory.image),
       alt: memory.alt ?? "",

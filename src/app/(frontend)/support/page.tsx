@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getDonate } from "@/payload/queries";
+import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 
 export const metadata: Metadata = {
   title: "Donate — Grace House",
@@ -142,31 +143,33 @@ export default async function SupportPage() {
                 {block.text}
               </h2>
             ) : (
-              <p
-                key={i}
-                className={`whitespace-pre-line leading-relaxed ${
-                  i === 0 ? "mt-4" : "mt-6"
-                }`}
-              >
-                {block.text}
-                {block.linkLabel && block.linkHref && (
-                  <>
-                    {" "}
-                    <a
-                      href={block.linkHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={
-                        block.linkLabel.length > 30
-                          ? "break-all underline underline-offset-4 hover:underline"
-                          : "underline underline-offset-4 hover:underline"
-                      }
-                    >
-                      {block.linkLabel}
-                    </a>
-                  </>
-                )}
-              </p>
+              splitBlockParagraphs(block.text ?? "").map((paragraph, paragraphIndex, paragraphs) => (
+                <p
+                  key={`${i}-${paragraphIndex}`}
+                  className={`whitespace-pre-line leading-relaxed ${
+                    i === 0 && paragraphIndex === 0 ? "mt-4" : "mt-6"
+                  }`}
+                >
+                  {paragraph}
+                  {paragraphIndex === paragraphs.length - 1 && block.linkLabel && block.linkHref && (
+                    <>
+                      {" "}
+                      <a
+                        href={block.linkHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={
+                          block.linkLabel.length > 30
+                            ? "break-all underline underline-offset-4 hover:underline"
+                            : "underline underline-offset-4 hover:underline"
+                        }
+                      >
+                        {block.linkLabel}
+                      </a>
+                    </>
+                  )}
+                </p>
+              ))
             );
           })}
         </div>

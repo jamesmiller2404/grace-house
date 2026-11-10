@@ -31,5 +31,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
 , "src/migrations/20261104_000000_events_blocks.BU_ts", "src/migrations/20261104_010000_add_missing_locked_docs_rels_columns.BU_ts",  ],
-  "exclude": ["node_modules", "_grace-house-lives-changed-backup-*", "**/_grace-house-lives-changed-backup-*/**"]
+  "exclude": ["node_modules", "_grace-house-lives-changed-backup-*", "**/_grace-house-lives-changed-backup-*/**", "backups"]
 }

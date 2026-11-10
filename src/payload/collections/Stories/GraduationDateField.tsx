@@ -33,9 +33,12 @@ const GraduationDateField: React.FC<TextFieldClientProps> = ({
   const isDisabled = Boolean(readOnly || disabled);
 
   return (
-    <div className="gh-graduation-date" id={`field-${path}`}>
+    <div className="gh-graduation-date-field" id={`field-${path}`}>
+      <label className="field-label" htmlFor={`field-${path}-text`}>Date</label>
+      <div className="gh-graduation-date">
       <input
         className="gh-graduation-date__text"
+        id={`field-${path}-text`}
         type="text"
         value={typeof value === "string" ? value : ""}
         placeholder={String(field.admin?.placeholder ?? "Graduation date...")}
@@ -57,6 +60,7 @@ const GraduationDateField: React.FC<TextFieldClientProps> = ({
           setValue(`${month}/${day}/${year}`);
         }}
       />
+      </div>
       <FieldError path={path} showError={showError} />
     </div>
   );

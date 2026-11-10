@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CustomPageBlock } from "@/content/customPages";
+import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 
 /**
  * Renders a custom page's body — the blocks in the order the editor stacked
@@ -55,22 +56,23 @@ export default function CustomPageBlocks({
             </h2>
           );
         }
-        return (
+        const paragraphs = splitBlockParagraphs(block.text);
+        return paragraphs.map((paragraph, paragraphIndex) => (
           <p
-            key={i}
+            key={`${i}-${paragraphIndex}`}
             className={`text-ink/90 whitespace-pre-line leading-relaxed ${
-              i === 0 ? "mt-4" : "mt-6"
+              i === 0 && paragraphIndex === 0 ? "mt-4" : "mt-6"
             }`}
           >
-            {block.text}
-            {link && (
+            {paragraph}
+            {paragraphIndex === paragraphs.length - 1 && link && (
               <>
                 {" "}
                 <BlockLink href={link.href} label={link.label} />
               </>
             )}
           </p>
-        );
+        ));
       })}
     </>
   );

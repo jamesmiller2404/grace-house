@@ -78,51 +78,37 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .field-label {
   color: var(--gh-st-text);
 }
-/* Compact Heading / Paragraph / Photo type buttons: about half the desktop
-   height and spacing of the original controls. Keep the group flexible so
-   labels never force horizontal overflow. */
-.gh-stories-edit .gh-block-type-field__choices {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
+
+/* Identity fields stay in one tidy vertical column even on wide screens.
+   Constrain control widths so the Name field does not stretch across the panel. */
+.gh-stories-edit .gh-story-name-field {
+  width: 100%;
+  max-width: 420px;
 }
-.gh-stories-edit .gh-block-type-field__button {
-  min-height: 22px;
-  padding: 5px 8px;
-  margin: 5px 1px 5px 2px;
-  border: 1px solid #000000;
-  border-radius: 999px;
-  background: #929292;
-  color: #000000;
-  box-shadow: none;
-  font: inherit;
-  font-size: 0.85em;
-  font-weight: 500;
-  line-height: 1.2;
-  cursor: pointer;
+.gh-stories-edit .gh-story-name-field .field-type__wrap,
+.gh-stories-edit .gh-story-name-field input {
+  width: 100%;
+  max-width: 100%;
 }
-.gh-stories-edit .gh-block-type-field__button.is-selected {
-  border-color: #222222;
-  background: #ffffff;
-  color: #000000;
-  font-weight: 700;
+.gh-stories-edit .gh-story-role-field,
+.gh-stories-edit .gh-story-role-label-field,
+.gh-stories-edit .gh-story-gender-field,
+.gh-stories-edit .gh-story-date-field {
+  width: 100%;
+  max-width: 360px;
 }
-.gh-stories-edit .gh-block-type-field__button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+.gh-stories-edit .gh-story-role-field .field-type__wrap,
+.gh-stories-edit .gh-story-gender-field .field-type__wrap,
+.gh-stories-edit .gh-story-role-field .rs__control,
+.gh-stories-edit .gh-story-gender-field .rs__control,
+.gh-stories-edit .gh-story-role-label-field input {
+  width: 100%;
+  max-width: 100%;
 }
-/* Preserve comfortable 44px touch targets on phones and narrow tablets. */
-@media (max-width: 768px) {
-  .gh-stories-edit .gh-block-type-field__choices {
-    gap: 6px;
-  }
-  .gh-stories-edit .gh-block-type-field__button {
-    min-height: 44px;
-    padding: 10px 12px;
-    margin: 4px 1px;
-    font-size: 0.9em;
-  }
+.gh-stories-edit .gh-story-date-field .gh-graduation-date-field,
+.gh-stories-edit .gh-story-date-field .gh-graduation-date {
+  width: 100%;
+  max-width: 360px;
 }
 /* Required-field marker (Name). This field keeps the mockup's placeholder-only
    look (label: false in Stories.ts), so Payload's labeled-field asterisk never
@@ -280,30 +266,7 @@ html[data-theme='light'] .gh-stories-edit {
   border-top: 2px solid #8f8f9d;
   padding-top: 18px;
 }
-/* The Pillar collapsible should read like the other card surfaces, without
-   the separator or outline used by the other editor sections. Payload renders
-   the field wrapper and the collapsible itself as separate nested elements,
-   so style both levels (including the content surface). */
-.gh-stories-edit .gh-pillar-section,
-.gh-stories-edit .gh-pillar-section .collapsible,
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap,
-.gh-stories-edit .gh-pillar-section .collapsible__content {
-  border: 0 !important;
-  border-top: 0 !important;
-  box-shadow: none !important;
-}
-/* Match the requested card palette: muted slate body with a darker title bar. */
-.gh-stories-edit .gh-pillar-section,
-.gh-stories-edit .gh-pillar-section .collapsible,
-.gh-stories-edit .gh-pillar-section .collapsible__content {
-  background: #7c7a8b !important;
-}
-.gh-stories-edit .gh-pillar-section .collapsible__toggle-wrap {
-  background: #403f47 !important;
-}
-.gh-stories-edit .gh-pillar-section {
-  padding-top: 0 !important;
-}
+
 
 /* Graduation date: one compact text field and the browser's native calendar icon. */
 .gh-stories-edit .gh-graduation-date {
@@ -339,14 +302,251 @@ html[data-theme='light'] .gh-stories-edit {
   cursor: pointer;
   opacity: 0.85;
 }
+/* Instructions for entering multiple paragraphs in one story text box. */
+.gh-stories-edit .gh-block-text-input__hint {
+  width: 95%;
+  margin: 6px 0 0;
+  color: var(--gh-st-help);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
 /* Field helper text */
 .gh-stories-edit .field-description {
   color: var(--gh-st-help);
 }
-/* Darken the small description copy on the Memories and Pillar cards. */
-.gh-stories-edit .gh-memories-section .field-description,
-.gh-stories-edit .gh-pillar-section .field-description {
-  color: #111114 !important;
+
+
+/* Full-size section headings for optional profile content. The checkboxes
+   double as section headings while preserving their existing top-level fields. */
+.gh-stories-edit .gh-opening-pull-quote-heading .field-label,
+.gh-stories-edit .gh-banner-pull-quote-heading .field-label,
+.gh-stories-edit .gh-photo-memories-heading .field-label,
+.gh-stories-edit .gh-pillar-heading .field-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.gh-stories-edit .gh-opening-pull-quote-heading,
+.gh-stories-edit .gh-banner-pull-quote-heading,
+.gh-stories-edit .gh-photo-memories-heading,
+.gh-stories-edit .gh-pillar-heading {
+  margin-top: 18px;
+  margin-bottom: 12px;
+}
+.gh-stories-edit .gh-photo-memories-heading .field-description {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gh-st-help) !important;
+}
+.gh-stories-edit .gh-pillar-heading .field-description {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gh-st-help) !important;
+}
+
+/* Keep the Banner Pull Quote title visually connected to its fields.
+   Payload may place its section separator inside the conditional group wrapper,
+   so remove the separator in that group as well as the adjacent field flow. */
+.gh-stories-edit .field-type:has(.gh-banner-pull-quote-heading) + hr,
+.gh-stories-edit .field-type:has(.gh-banner-pull-quote-heading) ~ hr,
+.gh-stories-edit .gh-banner-pull-quote-heading ~ hr,
+.gh-stories-edit .field-type.group:has(input[name="bannerQuote.quote"]) hr {
+  display: none !important;
+}
+.gh-stories-edit .gh-banner-pull-quote-heading { margin-bottom: 4px; }
+.gh-stories-edit .gh-banner-pull-quote-heading + .field-type.group { margin-top: 0 !important; }
+.gh-stories-edit .gh-banner-pull-quote-heading ~ .field-type.group {
+  border-top: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+/* Graduation date label aligns horizontally with Role and Gender. */
+.gh-stories-edit .gh-graduation-date-field {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.gh-stories-edit .gh-graduation-date-field > .field-label {
+  display: block;
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+.gh-stories-edit .gh-graduation-date-field > .gh-graduation-date {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+.gh-stories-edit .gh-graduation-date-field > .field-type__wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+
+/* Lives Changed live profile preview */
+.gh-story-preview-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 0 0 20px;
+}
+.gh-story-preview-launch {
+  border: 1px solid #000;
+  border-radius: 6px;
+  background: #00aeef;
+  color: #000;
+  padding: 9px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gh-story-preview-launch:hover {
+  background: #28bdf3;
+}
+.gh-story-preview-hint {
+  color: #bdbdc5;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.gh-story-preview-backdrop {
+  position: fixed;
+  z-index: 100000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.82);
+}
+.gh-story-preview-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(1500px, 100%);
+  height: min(94vh, 1100px);
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #55555f;
+  border-radius: 12px;
+  background: #25252b;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+}
+.gh-story-preview-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #19191e;
+  color: #f0f0f3;
+}
+.gh-story-preview-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gh-story-preview-heading strong {
+  font-size: 1rem;
+}
+.gh-story-preview-heading span {
+  color: #b0b0ba;
+  font-size: 0.78rem;
+}
+.gh-story-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gh-story-preview-device-switch {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #55555f;
+  border-radius: 7px;
+}
+.gh-story-preview-device-switch button,
+.gh-story-preview-close {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 7px 11px;
+  background: transparent;
+  color: #f0f0f3;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.gh-story-preview-device-switch button.is-active {
+  background: #00aeef;
+  color: #080808;
+  font-weight: 700;
+}
+.gh-story-preview-close {
+  border-color: #6b6b75;
+  background: #393940;
+}
+.gh-story-preview-close:hover {
+  background: #4b4b54;
+}
+.gh-story-preview-stage {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+  background: #505057;
+}
+.gh-story-preview-frame {
+  display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  min-height: 500px;
+  max-width: 100%;
+  border: 0;
+  border-radius: 5px;
+  background: #e7d8c3;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.28);
+}
+.gh-story-preview-stage.is-mobile .gh-story-preview-frame {
+  width: 390px;
+}
+@media (max-width: 640px) {
+  .gh-story-preview-backdrop {
+    padding: 0;
+  }
+  .gh-story-preview-dialog {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+  .gh-story-preview-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .gh-story-preview-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .gh-story-preview-stage {
+    padding: 8px;
+  }
+  .gh-story-preview-frame {
+    min-height: 420px;
+  }
 }
 `;
 

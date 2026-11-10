@@ -84,57 +84,90 @@ export const Stories: CollectionConfig = {
   // Default order in the admin list view: by name.
   defaultSort: "name",
   fields: [
-    // Name (wide) + Role dropdown (top right), like the Events mockup's first
-    // row (Title + Status).
     {
-      type: "row",
-      fields: [
-        {
-          name: "name",
-          type: "text",
-          required: true,
-          // Placeholder-only look, like the Events and Intro forms (the
-          // required marker is painted by the Edit view — see
-          // ./Stories/EditView.tsx).
-          label: false,
-          admin: {
-            placeholder: "Name...",
-            width: "60%",
+      type: "ui",
+      name: "storyPreview",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/Stories/StoryPreviewField.tsx",
           },
         },
-        {
-          // Plain dropdown (not Payload's default searchable combobox) —
-          // see src/payload/fields/StatusSelect.
-          ...StatusSelectField({
-            name: "role",
-            options: ["Graduate", "Volunteer", "Staff", "Other"],
-            defaultValue: "Graduate",
-            required: true,
-            admin: {
-              width: "20%",
-            },
-          }),
-        },
-        {
-          // Optional so existing stories can be updated without guessing.
-          ...StatusSelectField({
-            name: "gender",
-            options: ["Male", "Female"],
-            admin: {
-              width: "20%",
-            },
-          }),
-        },
-      ],
+      },
+    },
+    // Keep the identity fields in a predictable vertical column at every
+    // viewport width: Name, Role, conditional Other label, Gender, Date.
+    {
+      name: "name",
+      type: "text",
+      required: true,
+      label: false,
+      admin: {
+        className: "gh-story-name-field",
+        placeholder: "Name...",
+      },
     },
     {
-      // Graduation date: the text entry keeps MM/YYYY available, while the
-      // custom field adds the browser's native calendar picker for full dates.
+      // Plain dropdown (not Payload's default searchable combobox).
+      ...StatusSelectField({
+        name: "role",
+        options: ["Graduate", "Volunteer", "Staff", "Other"],
+        defaultValue: "Graduate",
+        // Role defaults to Graduate, so omit Payload's required-field asterisk.
+        // Keep validation so the field cannot be cleared before saving.
+        required: false,
+        admin: {
+          className: "gh-story-role-field",
+        },
+        validate: (value: unknown) =>
+          typeof value === "string" && value.trim()
+            ? true
+            : "Please select a role.",
+      }),
+    },
+    {
+      name: "roleLabel",
+      type: "text",
+      label: false,
+      admin: {
+        className: "gh-story-role-label-field",
+        condition: (_data, siblingData) => siblingData?.role === "Other",
+        placeholder: "Enter role label...",
+        description: "Enter the role label displayed on this profile.",
+      },
+      validate: (
+        value: string | string[] | null | undefined,
+        { siblingData }: { siblingData?: { role?: string } },
+      ) => {
+        if (
+          (siblingData?.role === "Other" &&
+            typeof value === "string" &&
+            !value) ||
+          (typeof value === "string" && !value.trim())
+        ) {
+          return "Please enter a role label when Role is Other.";
+        }
+        return true;
+      },
+    },
+    {
+      // Optional so existing stories can be updated without guessing.
+      ...StatusSelectField({
+        name: "gender",
+        options: ["Male", "Female"],
+        admin: {
+          className: "gh-story-gender-field",
+        },
+      }),
+    },
+    {
+      // Graduation date appears beneath Gender in the same vertical column.
       name: "date",
       type: "text",
       label: false,
       admin: {
-        placeholder: "Graduation date... (MM/DD/YYYY or MM/YYYY)",
+        className: "gh-story-date-field",
+        placeholder: "MM/DD/YYYY or MM/YYYY",
         description:
           "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
         components: {
@@ -164,32 +197,6 @@ export const Stories: CollectionConfig = {
         return monthYear
           ? true
           : "Enter a date as MM/DD/YYYY or MM/YYYY.";
-      },
-    },
-    {
-      // Only shown when the editor chooses the catch-all Role option.
-      name: "roleLabel",
-      type: "text",
-      label: false,
-      admin: {
-        condition: (_data, siblingData) => siblingData?.role === "Other",
-        placeholder: "Enter role label...",
-        description: "Enter the role label displayed on this profile.",
-      },
-      validate: (
-        value: string | string[] | null | undefined,
-        { siblingData }: { siblingData?: { role?: string } },
-      ) => {
-        //  if (siblingData?.role === "Other" && typeof value === "string" && !value.trim()) {
-        if (
-          (siblingData?.role === "Other" &&
-            typeof value === "string" &&
-            !value) ||
-          (typeof value === "string" && !value.trim())
-        ) {
-          return "Please enter a role label when Role is Other.";
-        }
-        return true;
       },
     },
     {
@@ -229,25 +236,6 @@ export const Stories: CollectionConfig = {
         },
         { aspectRatio: "4 / 5" },
       ),
-    },
-    {
-      name: "showPullQuote",
-      type: "checkbox",
-      label: "Include an opening pull quote",
-      defaultValue: false,
-      admin: {
-        description: "Check to show an opening pull quote next to the picture and on the summary card.",
-      },
-    },
-    {
-      name: "pullQuote",
-      type: "text",
-      label: false,
-      admin: {
-        condition: (data) => data?.showPullQuote === true,
-        placeholder: "Opening pull quote...",
-        description: "Opening pull quote placed next to the picture and on the summary card.",
-      },
     },
     {
       // The story body: an ordered list of Paragraph and Heading blocks. The
@@ -332,22 +320,43 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      name: "showBannerQuote",
+      name: "showPullQuote",
       type: "checkbox",
-      label: "Include a Banner Pull Quote",
+      label: "Include an Opening Pull Quote",
       defaultValue: false,
       admin: {
-        description: "Check to include the full-width pull-quote band on the story page.",
+        className: "gh-opening-pull-quote-heading",
+        description: "Check to show an opening pull quote next to the picture and on the summary card.",
+      },
+    },
+    {
+      name: "pullQuote",
+      type: "text",
+      label: false,
+      admin: {
+        condition: (data) => data?.showPullQuote === true,
+        placeholder: "Opening pull quote...",
+        description: "Opening pull quote placed next to the picture and on the summary card.",
+      },
+    },
+    {
+      name: "showBannerQuote",
+      type: "checkbox",
+      label: "Banner Pull Quote",
+      defaultValue: false,
+      admin: {
+        className: "gh-banner-pull-quote-heading",
+        description:
+          "Check to display a full-width pull quote banner on this person's story page.",
       },
     },
     {
       // Optional full-width pull-quote band on the story page.
       name: "bannerQuote",
       type: "group",
-      label: "Banner Pull Quote",
+      label: false,
       admin: {
         condition: (data) => data?.showBannerQuote === true,
-        description: "The full-width pull-quote band on the story page.",
       },
       fields: [
         {
@@ -445,16 +454,28 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
+      name: "showMemories",
+      type: "checkbox",
+      label: "Their Photo Memories",
+      defaultValue: false,
+      admin: {
+        className: "gh-photo-memories-heading",
+        description: "Show a gallery of meaningful personal photos.",
+      },
+    },
+    {
       // The personal photos in the "{name}'s memories..." gallery.
       name: "memories",
       type: "array",
+      label: false,
       labels: {
         singular: "Photo",
         plural: "Memories Gallery",
       },
       admin: {
         className: "gh-memories-section",
-        description: "The personal photos shown in the memories gallery.",
+        // The section heading above explains the purpose of this gallery.
+        condition: (data) => data?.showMemories !== false,
       },
       fields: [
         {
@@ -464,7 +485,7 @@ export const Stories: CollectionConfig = {
           required: true,
           label: false,
           admin: {
-            description: "A personal photo.",
+            description: "Choose a memory photo.",
           },
         },
         {
@@ -487,56 +508,45 @@ export const Stories: CollectionConfig = {
       ],
     },
     {
-      // Optional section: the checkbox explicitly controls whether a pillar
-      // is included on the public profile. The dummy default prevents an
-      // unintentional real pillar from being selected automatically.
-      type: "collapsible",
-      label: "Most Important Pillar",
+      // Optional section: the checkbox controls whether the pillar appears
+      // on the public profile.
+      name: "showPillar",
+      type: "checkbox",
+      label: "The Pillar That Mattered Most to Them",
+      defaultValue: false,
       admin: {
-        className: "gh-pillar-section",
-        initCollapsed: false,
+        className: "gh-pillar-heading",
+        description:
+          "Check to include the Most Important Pillar section on this person's profile.",
       },
-      fields: [
-        {
-          name: "showPillar",
-          type: "checkbox",
-          label: "Include Most Important Pillar on this profile",
-          defaultValue: false,
-          admin: {
-            description:
-              "Leave unchecked if you do not want a Most Important Pillar section on this profile.",
-          },
-        },
-        {
-          ...StatusSelectField({
-            name: "pillar",
-            label: false,
-            options: [
-              { label: "Select a pillar...", value: "Select a pillar..." },
-              ...pillars.map((pillar) => ({
-                label: pillar.title,
-                value: pillar.title,
-              })),
-            ],
-            defaultValue: "Select a pillar...",
-            required: false,
-            admin: {
-              condition: (_data, siblingData) =>
-                siblingData?.showPillar === true,
-              description: "Choose the pillar that mattered most to this person.",
-            },
-            validate: (
-              value: string | null | undefined,
-              { siblingData }: { siblingData?: { showPillar?: boolean } },
-            ) => {
-              if (siblingData?.showPillar !== true) return true;
-              return pillars.some((pillar) => pillar.title === value)
-                ? true
-                : "Choose a pillar before including this section.";
-            },
-          }),
-        },
-      ],
     },
+    {
+      ...StatusSelectField({
+        name: "pillar",
+        label: false,
+        options: [
+          { label: "Select a pillar...", value: "Select a pillar..." },
+          ...pillars.map((pillar) => ({
+            label: pillar.title,
+            value: pillar.title,
+          })),
+        ],
+        defaultValue: "Select a pillar...",
+        required: false,
+        admin: {
+          condition: (data) => data?.showPillar === true,
+          description: "Choose the pillar that mattered most to this person.",
+        },
+        validate: (
+          value: string | null | undefined,
+          { siblingData }: { siblingData?: { showPillar?: boolean } },
+        ) => {
+          if (siblingData?.showPillar !== true) return true;
+          return pillars.some((pillar) => pillar.title === value)
+            ? true
+            : "Choose a pillar before including this section.";
+        },
+      }),
+    }
   ],
 };
