@@ -69,22 +69,39 @@ function buildPreviewProfile(
   const name = asText(data.name, "Your Story");
   const role = asText(data.role, "Graduate");
   const tag = role === "Other" ? asText(data.roleLabel, "Other") : role;
-  const body = asArray(data.body).flatMap((item) => {
-    const block = asRecord(item);
-    const type = block.type;
-    if (type === "Photo") {
-      const imageValue = block.image;
-      if (!imageValue) return [];
-      return [{
-        type: "photo" as const,
-        image: resolveMedia(imageValue, resolvedMedia, "/images/noPhotoAvailable_horizontall.png"),
-        caption: asText(block.caption) || undefined,
-      }];
+
+  type StoryBodyBlock =
+  | { type: "photo"; image: string; caption?: string }
+  | { type: "h2"; text: string }
+  | { type: "p"; text: string };
+
+ const body: StoryBodyBlock[] = asArray(data.body).flatMap(
+    (item): StoryBodyBlock[] => {
+      const block = asRecord(item);
+      const type = block.type;
+
+      if (type === "Photo") {
+        const imageValue = block.image;
+        if (!imageValue) return [];
+
+        return [{
+          type: "photo",
+          image: resolveMedia(imageValue, resolvedMedia, "/images/noPhotoAvailable_horizontall.png"),
+          caption: asText(block.caption) || undefined,
+        }];
+      }
+
+      if (type === "Heading") {
+        return [{ type: "h2", text: asText(block.text) }];
+      }
+
+      if (type === "Paragraph") {
+        return [{ type: "p", text: asText(block.text) }];
+      }
+
+      return [];
     }
-    if (type === "Heading") return [{ type: "h2" as const, text: asText(block.text) }];
-    if (type === "Paragraph") return [{ type: "p" as const, text: asText(block.text) }];
-    return [];
-  });
+  );
 
   const bannerQuote = asRecord(data.bannerQuote);
   const closing = asRecord(data.closing);

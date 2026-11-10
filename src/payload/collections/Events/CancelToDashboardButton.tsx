@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@payloadcms/ui";
+import { Button, useConfig } from "@payloadcms/ui";
+import { formatAdminURL } from "payload/shared";
 import React from "react";
 
 /**
@@ -10,31 +11,32 @@ import React from "react";
  * left of the Save button (the same bar on both the "Create New Event"
  * and the edit page, since both use the default Edit view).
  *
- * Clicking it shows a confirmation dialog, then uses the browser's back
- * navigation to return the user to the screen they came from (typically the
- * collection list view), rather than always jumping to the admin dashboard.
- * This matches user expectations for a "Cancel" button: go back to where you
- * were, not to the dashboard.
- *
- * If the user confirms, navigation proceeds via window.history.back(). If they
- * cancel, they stay on the current edit page. The confirmation dialog always
- * appears on click to protect against accidental data loss.
+ * Clicking it takes the user back to the Events list — the page that
+ * shows every event in the collection (/admin/collections/events). The
+ * button is rendered with Payload's own `Button` as a link (el="link"), so
+ * the navigation runs through Payload's `Link`: it shows the admin panel's
+ * route transition/progress behavior and, if the form has unsaved changes,
+ * Payload's "Leave without saving?" confirmation modal pops up before
+ * leaving — the exact same protection the sidebar links have. When there
+ * are no unsaved changes, the navigation happens immediately with no
+ * confirmation prompt.
  */
 
 const CancelToDashboardButton: React.FC = () => {
-  const handleClick = () => {
-    if (
-      !window.confirm(
-        "You have unsaved changes. Are you sure you want to leave this page?",
-      )
-    ) {
-      return;
-    }
-    window.history.back();
-  };
+  const { config } = useConfig();
+
+  // The collection list view lives at routes.admin ("/admin") joined with
+  // the collection's own route ("/collections/events"), combined onto
+  // serverURL via formatAdminURL — the same helper Payload's own list
+  // navigation builds.
+  const eventsListURL = formatAdminURL({
+    adminRoute: config.routes.admin,
+    serverURL: config.serverURL,
+    path: "/collections/events",
+  });
 
   return (
-    <Button buttonStyle="secondary" onClick={handleClick}>
+    <Button buttonStyle="secondary" el="link" to={eventsListURL}>
       Cancel
     </Button>
   );

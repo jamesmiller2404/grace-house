@@ -78,52 +78,7 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .field-label {
   color: var(--gh-st-text);
 }
-/* Compact Heading / Paragraph / Photo type buttons: about half the desktop
-   height and spacing of the original controls. Keep the group flexible so
-   labels never force horizontal overflow. */
-.gh-stories-edit .gh-block-type-field__choices {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-}
-.gh-stories-edit .gh-block-type-field__button {
-  min-height: 22px;
-  padding: 5px 8px;
-  margin: 5px 1px 5px 2px;
-  border: 1px solid #000000;
-  border-radius: 999px;
-  background: #929292;
-  color: #000000;
-  box-shadow: none;
-  font: inherit;
-  font-size: 0.85em;
-  font-weight: 500;
-  line-height: 1.2;
-  cursor: pointer;
-}
-.gh-stories-edit .gh-block-type-field__button.is-selected {
-  border-color: #222222;
-  background: #ffffff;
-  color: #000000;
-  font-weight: 700;
-}
-.gh-stories-edit .gh-block-type-field__button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-/* Preserve comfortable 44px touch targets on phones and narrow tablets. */
-@media (max-width: 768px) {
-  .gh-stories-edit .gh-block-type-field__choices {
-    gap: 6px;
-  }
-  .gh-stories-edit .gh-block-type-field__button {
-    min-height: 44px;
-    padding: 10px 12px;
-    margin: 4px 1px;
-    font-size: 0.9em;
-  }
-}
+
 /* Identity fields stay in one tidy vertical column even on wide screens.
    Constrain control widths so the Name field does not stretch across the panel. */
 .gh-stories-edit .gh-story-name-field {
