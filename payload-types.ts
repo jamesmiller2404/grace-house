@@ -348,9 +348,6 @@ export interface Story {
    */
   roleLabel?: string | null;
   gender?: ('Male' | 'Female') | null;
-  /**
-   * Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.
-   */
   date?: string | null;
   /**
    * The portrait photo shown in the story hero.

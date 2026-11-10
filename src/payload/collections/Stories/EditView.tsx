@@ -105,11 +105,6 @@ html[data-theme='light'] .gh-stories-edit {
   width: 100%;
   max-width: 100%;
 }
-.gh-stories-edit .gh-story-date-field .gh-graduation-date-field,
-.gh-stories-edit .gh-story-date-field .gh-graduation-date {
-  width: 100%;
-  max-width: 360px;
-}
 /* Required-field marker (Name). This field keeps the mockup's placeholder-only
    look (label: false in Stories.ts), so Payload's labeled-field asterisk never
    renders for it. Paint the same marker here: a red * at the top-right corner
@@ -268,40 +263,6 @@ html[data-theme='light'] .gh-stories-edit {
 }
 
 
-/* Graduation date: one compact text field and the browser's native calendar icon. */
-.gh-stories-edit .gh-graduation-date {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-}
-.gh-stories-edit .gh-graduation-date__text {
-  flex: 0 1 220px;
-  width: 220px;
-  max-width: 220px;
-  min-width: 0;
-}
-.gh-stories-edit .gh-graduation-date__native {
-  flex: 0 0 34px;
-  width: 34px !important;
-  height: 36px;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: transparent !important;
-  cursor: pointer;
-}
-.gh-stories-edit .gh-graduation-date__native::-webkit-datetime-edit {
-  display: none;
-}
-.gh-stories-edit .gh-graduation-date__native::-webkit-calendar-picker-indicator {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  cursor: pointer;
-  opacity: 0.85;
-}
 /* Instructions for entering multiple paragraphs in one story text box. */
 .gh-stories-edit .gh-block-text-input__hint {
   width: 95%;
@@ -369,31 +330,6 @@ html[data-theme='light'] .gh-stories-edit {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
-/* Graduation date label aligns horizontally with Role and Gender. */
-.gh-stories-edit .gh-graduation-date-field {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-.gh-stories-edit .gh-graduation-date-field > .field-label {
-  display: block;
-  flex: 0 0 auto;
-  margin: 0;
-  white-space: nowrap;
-}
-.gh-stories-edit .gh-graduation-date-field > .gh-graduation-date {
-  flex: 1 1 auto;
-  width: auto;
-  min-width: 0;
-}
-.gh-stories-edit .gh-graduation-date-field > .field-type__wrap {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
 
 /* Lives Changed live profile preview */
 .gh-story-preview-field {

@@ -1,4 +1,5 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, PayloadRequest } from "payload";
+import { storySlug } from "@/lib/storySlug";
 import { ImagePositionField } from "@/payload/fields/ImagePosition";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 import { StatusSelectField } from "@/payload/fields/StatusSelect";
@@ -106,6 +107,34 @@ export const Stories: CollectionConfig = {
         className: "gh-story-name-field",
         placeholder: "Name...",
       },
+      // The public web address is derived from this name (see
+      // src/lib/storySlug.ts), so two profiles with the same name — or two
+      // names that produce the same URL segment — would silently share one
+      // page: every link points at the same /stories/<slug> URL and only the
+      // first story wins it (see getStoryProfileBySlug in
+      // src/payload/queries.ts). Block that at save time, comparing the
+      // derived slugs so case and punctuation differences are caught too.
+      validate: async (
+        value: string | null | undefined,
+        { req, id }: { req: PayloadRequest; id?: number | string },
+      ) => {
+        const name = typeof value === "string" ? value.trim() : "";
+        // Empty names are reported by required: true above.
+        if (!name) return true;
+        const slug = storySlug(name);
+        if (!slug) return true;
+        // Small collection — the same limit the story queries use.
+        const { docs } = await req.payload.find({
+          collection: "stories",
+          limit: 100,
+        });
+        const clash = docs.find(
+          (doc) => doc.id !== id && storySlug(doc.name) === slug,
+        );
+        return clash
+          ? `Another profile ("${clash.name}") already uses this name — two profiles with the same name would share one web address. Please add something to distinguish them (for example a middle name).`
+          : true;
+      },
     },
     {
       // Plain dropdown (not Payload's default searchable combobox).
@@ -162,41 +191,18 @@ export const Stories: CollectionConfig = {
     },
     {
       // Graduation date appears beneath Gender in the same vertical column.
+      // A standard Payload date field — the same picker the Events collection
+      // uses (/admin/collections/events) — so the editing UI stays consistent.
+      // Stores a real date timestamp; formatStoryDate renders it on the site.
       name: "date",
-      type: "text",
+      type: "date",
       label: false,
       admin: {
         className: "gh-story-date-field",
-        placeholder: "MM/DD/YYYY or MM/YYYY",
-        description:
-          "Type MM/DD/YYYY or MM/YYYY, or use the calendar to choose a full date.",
-        components: {
-          Field: { path: "./src/payload/collections/Stories/GraduationDateField.tsx" },
+        placeholder: "Date...",
+        date: {
+          pickerAppearance: "dayOnly",
         },
-      },
-      validate: (value: unknown) => {
-        if (value == null || value === "") return true;
-        if (typeof value !== "string") {
-          return "Enter a date as MM/DD/YYYY or MM/YYYY.";
-        }
-
-        const fullDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/(\d{4})$/.exec(value);
-        if (fullDate) {
-          const month = Number(fullDate[1]);
-          const day = Number(fullDate[2]);
-          const year = Number(fullDate[3]);
-          const parsed = new Date(year, month - 1, day);
-          return parsed.getFullYear() === year &&
-            parsed.getMonth() === month - 1 &&
-            parsed.getDate() === day
-            ? true
-            : "Enter a valid calendar date as MM/DD/YYYY.";
-        }
-
-        const monthYear = /^(0?[1-9]|1[0-2])\/(\d{4})$/.exec(value);
-        return monthYear
-          ? true
-          : "Enter a date as MM/DD/YYYY or MM/YYYY.";
       },
     },
     {

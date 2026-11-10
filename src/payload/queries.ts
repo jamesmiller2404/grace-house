@@ -41,6 +41,7 @@ import {
   type StoryProfile,
 } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
+import { storySlug } from "@/lib/storySlug";
 
 /**
  * Event data access — the only place the app reads events from. Every event
@@ -601,14 +602,6 @@ export const getHomeLayout = cache(async (): Promise<HomeLayoutSection[]> => {
  * never break — the same fallback pattern as the hero / intro / mission
  * queries above.
  */
-
-/** "Maria" -> "maria" (the /stories/<slug> URL segment). */
-function storySlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
 
 /** Index (0-based) into `pillars` of a story's saved pillar title. */
 function pillarIndexFromTitle(title: string | null | undefined): number | null {

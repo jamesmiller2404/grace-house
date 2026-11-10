@@ -5,6 +5,9 @@ import { getStoryProfileBySlug, getStoryProfiles } from "@/payload/queries";
 
 type Params = { params: Promise<{ slug: string }> };
 
+/** How many "More lives changed..." cards a story page shows at most. */
+const MAX_MORE_PROFILES = 4;
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const profile = await getStoryProfileBySlug(slug);
@@ -26,7 +29,23 @@ export default async function StoryPage({ params }: Params) {
   const { slug } = await params;
   const profile = await getStoryProfileBySlug(slug);
   if (!profile) notFound();
-  const others = await getStoryProfiles();
+  const allProfiles = await getStoryProfiles();
+
+  // "More lives changed..." — up to MAX_MORE_PROFILES other profiles in
+  // random order, never including the profile being viewed. Pages render at
+  // request time, so the pick changes from visit to visit. The shuffle runs
+  // on the filtered copy, never on the request-cached array that
+  // getStoryProfiles() returns, and happens here on the server because
+  // StoryProfile is a client component (randomizing there would break
+  // hydration between the server and browser renders).
+  const candidates = allProfiles.filter(
+    (other) => other.slug !== profile.slug,
+  );
+  for (let i = candidates.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+  }
+  const others = candidates.slice(0, MAX_MORE_PROFILES);
 
   return (
     <>

@@ -34,6 +34,7 @@ import * as migration_20261107_193200_lives_changed_optional_pillar_remove_card_
 import * as migration_20261108_035152 from './20261108_035152';
 import * as migration_20261108_075619 from './20261108_075619';
 import * as migration_20261109_012056 from './20261109_012056';
+import * as migration_20261110_074900_story_date_to_date_field from './20261110_074900_story_date_to_date_field';
 
 export const migrations = [
   {
@@ -214,6 +215,11 @@ export const migrations = [
   {
     up: migration_20261109_012056.up,
     down: migration_20261109_012056.down,
-    name: '20261109_012056'
+    name: '20261109_012056',
+  },
+  {
+    up: migration_20261110_074900_story_date_to_date_field.up,
+    down: migration_20261110_074900_story_date_to_date_field.down,
+    name: '20261110_074900_story_date_to_date_field'
   },
 ];

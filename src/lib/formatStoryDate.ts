@@ -1,7 +1,9 @@
 /**
- * Story date formatting — supports both "MM/DD/YYYY" and "MM/YYYY" input.
- * Full dates render as "May 30, 2026"; month/year renders as "May 2026".
- * ISO "YYYY-MM-DD" is accepted as a fallback for older data.
+ * Story date formatting — renders "May 30, 2026" for full dates and
+ * "May 2026" for month/year. Accepts the legacy text values ("MM/DD/YYYY",
+ * "MM/YYYY") and the timestamps the standard Payload date field stores
+ * (any "YYYY-MM-DD..." ISO string uses the stored calendar day as-is, so no
+ * timezone math can shift the displayed date).
  */
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -15,7 +17,14 @@ export function formatStoryDate(raw: string): string {
   const monthYear = /^(0?[1-9]|1[0-2])\/(\d{4})$/.exec(raw);
   if (monthYear) return `${MONTHS[Number(monthYear[1]) - 1]} ${monthYear[2]}`;
 
-  // Fallback: ISO "YYYY-MM-DD" (or anything Date can parse).
+  // Payload date fields (the same "dayOnly" picker Events uses) store the
+  // chosen day as a timestamp — "YYYY-MM-DD", "YYYY-MM-DD HH:mm:ss+00" or a
+  // full ISO "YYYY-MM-DDTHH:mm:ss.sssZ". Take the calendar day straight from
+  // the stored value so no timezone math can shift the displayed date.
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(raw);
+  if (iso) return `${MONTHS[Number(iso[2]) - 1]} ${Number(iso[3])}, ${iso[1]}`;
+
+  // Fallback: anything Date can parse.
   const parsed = new Date(raw.length === 10 ? `${raw}T00:00:00` : raw);
   if (!Number.isNaN(parsed.getTime())) {
     return `${MONTHS[parsed.getMonth()]} ${parsed.getDate()}, ${parsed.getFullYear()}`;
