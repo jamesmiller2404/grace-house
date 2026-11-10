@@ -284,10 +284,12 @@ html {
   background: #080808;
 }
 
+/* Block text box: starts two lines tall for both Heading and Paragraph
+   blocks; editors can drag it taller (resize: vertical). */
 .gh-block-text-input__textarea {
   display: block;
   width: 100%;
-  min-height: 68px;
+  min-height: 80px;
   padding: 16px 58px 16px 30px;
   border: 0;
   outline: 0;

@@ -660,7 +660,7 @@ function toStoryItem(doc: PayloadStory): StoryItem {
   const pronouns = pronounsForGender(doc.gender);
   return {
     name: doc.name,
-    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
+    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role || "Other",
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
     heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
@@ -677,7 +677,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
   return {
     slug: storySlug(doc.name),
     name: doc.name,
-    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role,
+    tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role || "Other",
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
     imagePositionX: doc.imagePositionX ?? 50,

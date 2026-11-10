@@ -36,7 +36,7 @@ const BlockTextInput: React.FC<TextareaFieldClientProps> = ({
           placeholder={placeholder}
           disabled={isDisabled}
           readOnly={readOnly}
-          rows={8}
+          rows={2}
           style={{ width: "95%" }}
           onChange={(event) => {
             const nextValue = event.currentTarget.value;
