@@ -2,7 +2,12 @@ import type { CollectionConfig } from "payload";
 
 export const Users: CollectionConfig = {
   slug: "users",
-  auth: true,
+  auth: {
+    // Make the sign-in protections explicit so the login notice stays accurate.
+    maxLoginAttempts: 5,
+    lockTime: 10 * 60 * 1000, // 10 minutes, in milliseconds.
+    tokenExpiration: 2 * 60 * 60, // 2 hours, in seconds.
+  },
 
   access: {
     admin: ({ req }) =>
