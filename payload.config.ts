@@ -154,6 +154,12 @@ export default buildConfig({
     // Hover tooltip info boxes over sidebar nav items and dashboard cards,
     // explaining the purpose of each admin section.
     components: {
+      // Briefly explain login limits before the authentication form.
+      beforeLogin: [
+        {
+          path: "./src/payload/components/LoginNotice.tsx",
+        },
+      ],
       // Sidebar logout button (bottom-left): keep Payload's arrow-in-bracket
       // icon and add a visible "Logout" label so its purpose is obvious.
       // See src/payload/components/LogoutButton.tsx
