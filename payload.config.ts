@@ -154,6 +154,26 @@ export default buildConfig({
     // Hover tooltip info boxes over sidebar nav items and dashboard cards,
     // explaining the purpose of each admin section.
     components: {
+      // Sidebar logout button (bottom-left): keep Payload's arrow-in-bracket
+      // icon and add a visible "Logout" label so its purpose is obvious.
+      // See src/payload/components/LogoutButton.tsx
+      logout: {
+        Button: {
+          path: "./src/payload/components/LogoutButton.tsx",
+        },
+      },
+      // Replace the forgot-password view (/admin/forgot): if the entered
+      // email does not match any admin user, the form shows an error right
+      // away instead of the generic "check your email" success message, so
+      // typos get caught. See src/payload/components/ForgotPasswordView.tsx
+      // and the /check-email endpoint in src/payload/collections/Users.ts.
+      views: {
+        forgot: {
+          Component: {
+            path: "./src/payload/components/ForgotPasswordView.tsx",
+          },
+        },
+      },
       afterNavLinks: [
         {
           path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
