@@ -140,6 +140,11 @@ export const FeedingTheStreets: CollectionConfig = {
           type: "upload",
           relationTo: "media",
           admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
             className: "gh-block-photo-input",
             description: "The photo shown by this block.",
             condition: (_data, siblingData) =>
