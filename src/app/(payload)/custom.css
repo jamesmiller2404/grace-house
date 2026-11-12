@@ -421,3 +421,8 @@ html {
 .gh-custom-pages-edit .array-field__row .field-description {
   color: #111114 !important;
 }
+
+/* Dashboard action on collection list pages: keep a small gap after Create New. */
+.list-header__actions .gh-dashboard-list-button {
+  margin-inline-start: 0.5rem;
+}
