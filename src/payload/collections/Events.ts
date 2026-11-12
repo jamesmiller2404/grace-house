@@ -41,6 +41,9 @@ export const Events: CollectionConfig = {
     // rounded #2d2d33 panel around the fields, #101012 input boxes — the
     // DARK scheme. The same elements are repainted for the Light theme.
     components: {
+      beforeList: [
+        { path: "./src/payload/components/DashboardListButton.tsx" },
+      ],
       views: {
         edit: {
           default: {
