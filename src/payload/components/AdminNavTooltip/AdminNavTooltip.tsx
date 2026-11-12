@@ -3,13 +3,12 @@
 import { useEffect } from "react";
 
 /**
- * Adds accessible information buttons beside Payload collection/global links.
- * Hovering a link still shows its explainer on desktop; the separate info
- * button opens it on touchscreens without hijacking collection navigation.
+ * Adds one information button to each collection/global card on the mobile
+ * dashboard only. The sidebar has no info buttons, and desktop relies on the
+ * normal card labels without extra controls or hover tooltips.
  */
 
 const TOOLTIP_TEXT: Record<string, string> = {
-  // Collections
   users: "Manage site users and their access roles (admin / editor).",
   events:
     "Create and manage upcoming events — dates, locations, images, and contact info.",
@@ -30,7 +29,6 @@ const TOOLTIP_TEXT: Record<string, string> = {
   faq: "Create and manage frequently asked questions and answers shown on the site.",
   "feeding-the-streets":
     "The Title and heading/paragraph/photo blocks shown on the Feeding the Streets page (/feeding-the-streets).",
-  // Globals
   "home-layout":
     'Choose which sections appear on the home page and in what order. Drag a section to reorder it, or open its "..." menu and use Move Up / Move Down. Untick "Show on home page" to hide a section without removing it.',
   "contact-info":
@@ -40,7 +38,7 @@ const TOOLTIP_TEXT: Record<string, string> = {
 };
 
 function slugFromHref(href: string): string | null {
-  const match = href.match(/\/admin\/(collections|globals)\/([^/?#]+)/);
+  const match = href.match(/\\/admin\\/(collections|globals)\\/([^/?#]+)/);
   return match ? match[2] : null;
 }
 
@@ -75,6 +73,7 @@ const css = `
   position: relative !important;
 }
 .gh-admin-tooltip-button {
+  display: none;
   align-items: center;
   appearance: none;
   background: var(--theme-elevation-100, #333);
@@ -82,7 +81,6 @@ const css = `
   border-radius: 50%;
   color: var(--theme-elevation-800, #eee);
   cursor: pointer;
-  display: inline-flex;
   height: 25px;
   justify-content: center;
   padding: 0;
@@ -110,10 +108,17 @@ const css = `
   width: 15px;
   pointer-events: none;
 }
+@media (max-width: 767px) {
+  .gh-admin-tooltip-button {
+    display: inline-flex;
+  }
+}
 `;
 
 function AdminNavTooltip() {
   useEffect(() => {
+    const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+
     const tooltip = document.createElement("div");
     tooltip.className = "gh-admin-tooltip";
     tooltip.setAttribute("role", "tooltip");
@@ -136,8 +141,6 @@ function AdminNavTooltip() {
       );
       tooltip.style.left = `${left}px`;
       tooltip.style.maxWidth = `${tooltipWidth}px`;
-
-      // Measure after setting the horizontal position and content.
       const height = tooltip.getBoundingClientRect().height;
       const below = rect.bottom + 8;
       const top =
@@ -162,21 +165,22 @@ function AdminNavTooltip() {
     }
 
     function attachTooltips() {
+      if (!isMobile()) return;
+
+      // Dashboard cards live in the main content area. Sidebar navigation
+      // links are deliberately excluded.
       const links = document.querySelectorAll<HTMLAnchorElement>(
-        'a[href*="/admin/collections/"], a[href*="/admin/globals/"]',
+        'main a[href*="/admin/collections/"], main a[href*="/admin/globals/"]',
       );
 
       links.forEach((link) => {
         const href = link.getAttribute("href");
         if (!href) return;
-
         const slug = slugFromHref(href);
         const tooltipText = slug ? TOOLTIP_TEXT[slug] : undefined;
         if (!tooltipText || link.dataset.tooltipAttached === "true") return;
 
         link.dataset.tooltipAttached = "true";
-        link.dataset.tooltip = tooltipText;
-
         const parent = link.parentElement;
         if (!parent) return;
         parent.classList.add("gh-admin-tooltip-trigger-parent");
@@ -197,33 +201,19 @@ function AdminNavTooltip() {
         `;
 
         button.addEventListener("click", (event) => {
-          // This is a sibling of the link, but stop propagation so card/row
-          // handlers cannot interpret the information tap as navigation.
           event.preventDefault();
           event.stopPropagation();
-
           if (activeButton === button && tooltip.classList.contains("visible")) {
             closeTooltip();
             return;
           }
-
           closeTooltip();
           activeButton = button;
           button.setAttribute("aria-expanded", "true");
           showTooltip(tooltipText, button);
         });
 
-        // Insert beside the link, not inside it: navigation and explanation
-        // remain two separate, independently accessible actions.
         parent.appendChild(button);
-
-        link.addEventListener("mouseenter", () => {
-          if (activeButton) return;
-          showTooltip(tooltipText, link);
-        });
-        link.addEventListener("mouseleave", () => {
-          if (!activeButton) closeTooltip();
-        });
       });
     }
 
@@ -241,36 +231,25 @@ function AdminNavTooltip() {
       if (event.key === "Escape") closeTooltip();
     }
 
-    function onViewportChange() {
-      if (activeButton && tooltip.classList.contains("visible")) {
-        positionTooltip(activeButton);
-      }
-    }
-
     attachTooltips();
     const observer = new MutationObserver(attachTooltips);
     observer.observe(document.body, { childList: true, subtree: true });
+    const media = window.matchMedia("(max-width: 767px)");
+    media.addEventListener("change", attachTooltips);
     document.addEventListener("click", onDocumentClick);
     document.addEventListener("keydown", onKeyDown);
-    window.addEventListener("resize", onViewportChange);
-    window.addEventListener("scroll", onViewportChange, true);
 
     return () => {
       observer.disconnect();
+      media.removeEventListener("change", attachTooltips);
       document.removeEventListener("click", onDocumentClick);
       document.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("resize", onViewportChange);
-      window.removeEventListener("scroll", onViewportChange, true);
       tooltip.remove();
       style.remove();
-      document
-        .querySelectorAll(".gh-admin-tooltip-button")
-        .forEach((button) => button.remove());
-      document
-        .querySelectorAll(".gh-admin-tooltip-trigger-parent")
-        .forEach((parent) =>
-          parent.classList.remove("gh-admin-tooltip-trigger-parent"),
-        );
+      document.querySelectorAll(".gh-admin-tooltip-button").forEach((button) => button.remove());
+      document.querySelectorAll(".gh-admin-tooltip-trigger-parent").forEach((parent) =>
+        parent.classList.remove("gh-admin-tooltip-trigger-parent"),
+      );
     };
   }, []);
 
