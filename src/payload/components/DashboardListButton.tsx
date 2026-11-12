@@ -8,8 +8,7 @@ import { createPortal } from "react-dom";
 
 /**
  * Render a Dashboard link beside Payload's Create New action on collection
- * list pages. Injected through beforeList, then portaled into the list header
- * actions row so it shares the native controls.
+ * list pages. The two controls share the title-actions container.
  */
 const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const { config } = useConfig();
@@ -18,7 +17,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   useEffect(() => {
     const findActions = () => {
       const element = document.querySelector<HTMLElement>(
-        ".list-header__actions",
+        ".list-header__title-actions",
       );
       if (element) setActionsElement(element);
     };
