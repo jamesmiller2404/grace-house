@@ -95,6 +95,11 @@ export const Hero: CollectionConfig = {
       relationTo: "media",
       label: false,
       admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
         description:
           "The background image behind the hero text. Optional — the site falls back to the default image when empty.",
       },
