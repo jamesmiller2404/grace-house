@@ -164,29 +164,34 @@ function AdminNavTooltip() {
     }
 
     function attachTooltips() {
-      // Dashboard cards live in the main content area. Sidebar navigation
-      // links are deliberately excluded. The info button is hidden on desktop;
-      // desktop users get the same explanation by hovering over the card.
+      // Dashboard cards are rendered outside <main> in Payload's dashboard.
+      // Select their primary collection/global links and exclude card actions
+      // such as "Create New". This keeps sidebar links out of the selection.
       const links = document.querySelectorAll<HTMLAnchorElement>(
-        'main a[href*="/admin/collections/"], main a[href*="/admin/globals/"]',
+        '.card a[href*="/admin/collections/"], .card a[href*="/admin/globals/"]',
       );
 
       links.forEach((link) => {
         const href = link.getAttribute("href");
-        if (!href) return;
+        if (!href || /\/create(?:[/?#]|$)/.test(href)) return;
+
         const slug = slugFromHref(href);
         const tooltipText = slug ? TOOLTIP_TEXT[slug] : undefined;
-        if (!tooltipText || link.dataset.tooltipAttached === "true") return;
+        const card = link.closest<HTMLElement>(".card");
+        if (!tooltipText || !card || card.dataset.tooltipAttached === "true") {
+          return;
+        }
 
-        link.dataset.tooltipAttached = "true";
-        const parent = link.parentElement;
-        if (!parent) return;
-        parent.classList.add("gh-admin-tooltip-trigger-parent");
+        card.dataset.tooltipAttached = "true";
+        card.classList.add("gh-admin-tooltip-trigger-parent");
 
         const button = document.createElement("button");
         button.type = "button";
         button.className = "gh-admin-tooltip-button";
-        button.setAttribute("aria-label", `About ${link.textContent?.trim() || slug}`);
+        button.setAttribute(
+          "aria-label",
+          `About ${link.textContent?.trim() || slug}`,
+        );
         button.setAttribute("aria-describedby", tooltip.id);
         button.setAttribute("aria-expanded", "false");
         button.title = "Show section information";
@@ -211,14 +216,14 @@ function AdminNavTooltip() {
           showTooltip(tooltipText, button);
         });
 
-        parent.appendChild(button);
+        card.appendChild(button);
 
-        link.addEventListener("mouseenter", () => {
+        card.addEventListener("mouseenter", () => {
           if (isMobile()) return;
           closeTooltip();
-          showTooltip(tooltipText, link);
+          showTooltip(tooltipText, card);
         });
-        link.addEventListener("mouseleave", () => {
+        card.addEventListener("mouseleave", () => {
           if (!isMobile()) closeTooltip();
         });
       });
@@ -254,9 +259,10 @@ function AdminNavTooltip() {
       tooltip.remove();
       style.remove();
       document.querySelectorAll(".gh-admin-tooltip-button").forEach((button) => button.remove());
-      document.querySelectorAll(".gh-admin-tooltip-trigger-parent").forEach((parent) =>
-        parent.classList.remove("gh-admin-tooltip-trigger-parent"),
-      );
+      document.querySelectorAll<HTMLElement>(".gh-admin-tooltip-trigger-parent").forEach((parent) => {
+        parent.classList.remove("gh-admin-tooltip-trigger-parent");
+        delete parent.dataset.tooltipAttached;
+      });
     };
   }, []);
 
