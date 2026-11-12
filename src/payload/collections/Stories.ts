@@ -216,6 +216,11 @@ export const Stories: CollectionConfig = {
       relationTo: "media",
       label: false,
       admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
         description: "The portrait photo shown in the story hero.",
       },
     },
@@ -308,6 +313,11 @@ export const Stories: CollectionConfig = {
           relationTo: "media",
           label: false,
           admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
             className: "gh-block-photo-input",
             condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             description: "Choose the photo shown inline in the story.",
@@ -494,6 +504,11 @@ export const Stories: CollectionConfig = {
           required: true,
           label: false,
           admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
             description: "Choose a memory photo.",
           },
         },
