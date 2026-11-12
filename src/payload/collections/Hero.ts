@@ -36,6 +36,9 @@ export const Hero: CollectionConfig = {
     // boxes as the Events create/edit page. The same elements are repainted
     // for the Light theme.
     components: {
+      beforeList: [
+        { path: "./src/payload/components/DashboardListButton.tsx" },
+      ],
       views: {
         edit: {
           default: {
