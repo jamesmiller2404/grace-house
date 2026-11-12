@@ -25,7 +25,7 @@ export const site = {
       ],
     },
     { label: "Lives Changed", href: "/stories" },
-    { label: "Feed the Streets", href: "/feeding-the-streets" },
+    { label: "Feeding the Streets", href: "/feeding-the-streets" },
     { label: "Upcoming Events", href: "/events" },
   ],
   facts: [
