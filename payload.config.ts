@@ -160,6 +160,12 @@ export default buildConfig({
           path: "./src/payload/components/LoginNotice.tsx",
         },
       ],
+      // Make the dashboard destination explicit at the top of the admin sidebar.
+      beforeNavLinks: [
+        {
+          path: "./src/payload/components/DashboardLink.tsx",
+        },
+      ],
       // Sidebar logout button (bottom-left): keep Payload's arrow-in-bracket
       // icon and add a visible "Logout" label so its purpose is obvious.
       // See src/payload/components/LogoutButton.tsx
