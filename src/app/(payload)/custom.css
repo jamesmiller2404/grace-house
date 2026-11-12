@@ -459,3 +459,431 @@ html {
   justify-content: flex-start;
   margin: 0 0 1.25rem;
 }
+
+/* Visual Media browser used by the custom upload field. The native Payload
+   UploadField remains rendered above it, so its upload and remove controls
+   continue to work unchanged. */
+.gh-media-picker-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.gh-media-picker__open-button,
+.gh-media-picker__choose,
+.gh-media-picker__secondary,
+.gh-media-picker__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1px solid #696975;
+  border-radius: 8px;
+  background: #34343b;
+  color: #f0f0f3;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.25;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.gh-media-picker__open-button {
+  min-height: 46px;
+  background: #41414b;
+  border-color: #858592;
+}
+
+.gh-media-picker__open-button:hover,
+.gh-media-picker__secondary:hover:not(:disabled),
+.gh-media-picker__back:hover {
+  background: #50505b;
+  border-color: #a1a1ad;
+}
+
+.gh-media-picker__choose {
+  background: #e1e1e8;
+  border-color: #e1e1e8;
+  color: #17171b;
+}
+
+.gh-media-picker__choose:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #111115;
+}
+
+.gh-media-picker__secondary:disabled,
+.gh-media-picker__choose:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.gh-media-picker {
+  position: fixed;
+  z-index: 2147483000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #f0f0f3;
+}
+
+.gh-media-picker__dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(1120px, 100%);
+  height: min(900px, calc(100dvh - 40px));
+  min-height: 420px;
+  overflow: hidden;
+  border: 1px solid #53535d;
+  border-radius: 14px;
+  background: #1c1c21;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+}
+
+.gh-media-picker__header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 14px;
+  border-bottom: 1px solid #3f3f48;
+}
+
+.gh-media-picker__header h2 {
+  margin: 0;
+  color: #f5f5f7;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.gh-media-picker__header p {
+  margin: 5px 0 0;
+  color: #b5b5bf;
+  font-size: 0.9rem;
+}
+
+.gh-media-picker__close {
+  display: inline-flex;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #55555f;
+  border-radius: 8px;
+  background: #303038;
+  color: #f5f5f7;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gh-media-picker__close:hover {
+  background: #484851;
+}
+
+.gh-media-picker__search {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 22px 10px;
+}
+
+.gh-media-picker__search label {
+  color: #d0d0d7;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.gh-media-picker__search input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #55555f;
+  border-radius: 8px;
+  outline: none;
+  background: #101014;
+  color: #f0f0f3;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.gh-media-picker__search input:focus {
+  border-color: #a8a8b5;
+  box-shadow: 0 0 0 2px rgba(168, 168, 181, 0.2);
+}
+
+.gh-media-picker__grid {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  align-content: start;
+  gap: 14px;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 22px 20px;
+  overscroll-behavior: contain;
+}
+
+.gh-media-picker__tile {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  padding: 8px;
+  overflow: hidden;
+  border: 1px solid #4b4b55;
+  border-radius: 10px;
+  background: #292930;
+  color: #f0f0f3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gh-media-picker__tile:hover,
+.gh-media-picker__tile:focus-visible {
+  border-color: #b4b4c2;
+  background: #383840;
+  outline: none;
+}
+
+.gh-media-picker__thumb {
+  display: flex;
+  width: 100%;
+  height: 174px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #101014;
+}
+
+.gh-media-picker__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gh-media-picker__no-image {
+  padding: 12px;
+  color: #a9a9b3;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.gh-media-picker__tile-title {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #f3f3f5;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.gh-media-picker__filename {
+  overflow: hidden;
+  color: #aaaab4;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-media-picker__message {
+  grid-column: 1 / -1;
+  align-self: center;
+  margin: 0;
+  padding: 32px 12px;
+  color: #c3c3cc;
+  text-align: center;
+}
+
+.gh-media-picker__error {
+  color: #ffaaaa;
+}
+
+.gh-media-picker__footer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 22px;
+  border-top: 1px solid #3f3f48;
+  background: #202026;
+}
+
+.gh-media-picker__page {
+  color: #b5b5bf;
+  font-size: 0.85rem;
+}
+
+.gh-media-picker__page-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.gh-media-picker__preview {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px 22px 20px;
+}
+
+.gh-media-picker__back {
+  align-self: flex-start;
+  min-height: 40px;
+  padding: 7px 12px;
+  border: 0;
+  background: transparent;
+}
+
+.gh-media-picker__preview-image {
+  display: block;
+  width: 100%;
+  height: min(56vh, 590px);
+  min-height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #0c0c0f;
+}
+
+.gh-media-picker__preview-unavailable {
+  display: flex;
+  width: 100%;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #101014;
+  color: #b5b5bf;
+}
+
+.gh-media-picker__preview-details {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 4px;
+  color: #f0f0f3;
+  text-align: center;
+}
+
+.gh-media-picker__preview-details span {
+  color: #aaaab4;
+  font-size: 0.85rem;
+}
+
+.gh-media-picker__preview-actions {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+@media (max-width: 700px) {
+  .gh-media-picker {
+    padding: 0;
+  }
+
+  .gh-media-picker__dialog {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .gh-media-picker__header {
+    padding: max(12px, env(safe-area-inset-top)) 14px 12px;
+  }
+
+  .gh-media-picker__header h2 {
+    font-size: 1.15rem;
+  }
+
+  .gh-media-picker__header p {
+    max-width: 265px;
+    font-size: 0.82rem;
+  }
+
+  .gh-media-picker__search {
+    padding: 12px 14px 8px;
+  }
+
+  .gh-media-picker__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 8px 12px 16px;
+  }
+
+  .gh-media-picker__tile {
+    padding: 6px;
+    border-radius: 8px;
+  }
+
+  .gh-media-picker__thumb {
+    height: clamp(130px, 38vw, 190px);
+  }
+
+  .gh-media-picker__tile-title {
+    font-size: 0.86rem;
+  }
+
+  .gh-media-picker__footer {
+    padding: 10px 14px max(10px, env(safe-area-inset-bottom));
+  }
+
+  .gh-media-picker__secondary,
+  .gh-media-picker__choose {
+    min-height: 46px;
+    padding: 9px 13px;
+  }
+
+  .gh-media-picker__preview {
+    padding: 12px 14px max(16px, env(safe-area-inset-bottom));
+  }
+
+  .gh-media-picker__preview-image {
+    height: 52dvh;
+    max-height: 520px;
+  }
+
+  .gh-media-picker__preview-actions {
+    position: sticky;
+    bottom: 0;
+    padding: 10px 0 0;
+    background: #1c1c21;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gh-media-picker__tile,
+  .gh-media-picker__open-button,
+  .gh-media-picker__choose,
+  .gh-media-picker__secondary {
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+}
+
