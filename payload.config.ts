@@ -160,11 +160,6 @@ export default buildConfig({
           path: "./src/payload/components/LoginNotice.tsx",
         },
       ],
-      beforeNavLinks: [
-        {
-          path: "./src/payload/components/DashboardLink.tsx",
-        },
-      ],
       // Keep the labeled sign-out action at the bottom of the sidebar.
       logout: {
         Button: {
@@ -184,9 +179,6 @@ export default buildConfig({
       afterNavLinks: [
         {
           path: "./src/payload/components/MobileLogoutButton.tsx",
-        },
-        {
-          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
         },
       ],
       views: {
