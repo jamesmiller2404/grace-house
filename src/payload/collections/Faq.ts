@@ -12,6 +12,9 @@ export const Faq: CollectionConfig = {
     // boxes as the Events and Custom Pages create/edit pages. The same
     // elements are repainted for the Light theme.
     components: {
+      beforeList: [
+        { path: "./src/payload/components/DashboardListButton.tsx" },
+      ],
       views: {
         edit: {
           default: {
