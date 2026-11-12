@@ -40,7 +40,7 @@ const TOOLTIP_TEXT: Record<string, string> = {
 };
 
 function slugFromHref(href: string): string | null {
-  const match = href.match(/\\/admin\\/(collections|globals)\\/([^/?#]+)/);
+  const match = href.match(/\/admin\/(collections|globals)\/([^/?#]+)/);
   return match ? match[2] : null;
 }
 
