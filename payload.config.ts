@@ -153,32 +153,42 @@ export default buildConfig({
     },
     // Hover tooltip info boxes over sidebar nav items and dashboard cards,
     // explaining the purpose of each admin section.
+    // See src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx
     components: {
-      // Briefly explain login limits before the authentication form.
       beforeLogin: [
         {
           path: "./src/payload/components/LoginNotice.tsx",
         },
       ],
-      // Make the dashboard destination explicit at the top of the admin sidebar.
       beforeNavLinks: [
         {
           path: "./src/payload/components/DashboardLink.tsx",
         },
       ],
-      // Sidebar logout button (bottom-left): keep Payload's arrow-in-bracket
-      // icon and add a visible "Logout" label so its purpose is obvious.
-      // See src/payload/components/LogoutButton.tsx
+      // Keep the labeled sign-out action at the bottom of the sidebar.
       logout: {
         Button: {
           path: "./src/payload/components/LogoutButton.tsx",
         },
       },
-      // Replace the forgot-password view (/admin/forgot): if the entered
-      // email does not match any admin user, the form shows an error right
-      // away instead of the generic "check your email" success message, so
-      // typos get caught. See src/payload/components/ForgotPasswordView.tsx
-      // and the /check-email endpoint in src/payload/collections/Users.ts.
+      // Add a visible sign-out action to the dashboard itself.
+      afterDashboard: [
+        {
+          path: "./src/payload/components/DashboardLogoutButton.tsx",
+        },
+        {
+          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
+        },
+      ],
+      // The mobile navigation drawer gets its own labeled sign-out action.
+      afterNavLinks: [
+        {
+          path: "./src/payload/components/MobileLogoutButton.tsx",
+        },
+        {
+          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
+        },
+      ],
       views: {
         forgot: {
           Component: {
@@ -186,16 +196,6 @@ export default buildConfig({
           },
         },
       },
-      afterNavLinks: [
-        {
-          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
-        },
-      ],
-      afterDashboard: [
-        {
-          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
-        },
-      ],
     },
   },
   typescript: { outputFile: "payload-types.ts" },
@@ -244,9 +244,7 @@ export default buildConfig({
       if (faqCount.totalDocs === 0) {
         await seedFAQ(payload);
       }
-      const feedingCount = await payload.count({
-        collection: "feeding-the-streets",
-      });
+      const feedingCount = await payload.count({ collection: "feeding-the-streets" });
       if (feedingCount.totalDocs === 0) {
         await seedFeedingTheStreets(payload);
       }
