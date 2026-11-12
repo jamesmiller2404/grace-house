@@ -11,9 +11,7 @@ import React from "react";
 function DashboardLink() {
   const {
     config: {
-      admin: {
-        routes: { admin: adminRoute },
-      },
+      routes: { admin: adminRoute },
     },
   } = useConfig();
 
