@@ -186,6 +186,11 @@ export const Events: CollectionConfig = {
       relationTo: "media",
       label: false,
       admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
         description:
           "Optional image shown on the event page and the event card.",
       },
@@ -267,6 +272,11 @@ export const Events: CollectionConfig = {
           relationTo: "media",
           label: false,
           admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
             className: "gh-block-photo-input",
 condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             description: "Choose the photo shown inline on the event page.",
