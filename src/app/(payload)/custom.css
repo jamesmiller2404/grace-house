@@ -422,27 +422,35 @@ html {
   color: #111114 !important;
 }
 
-/* Collection-list actions: use the same secondary treatment as Cancel / Done. */
-.list-header__actions .btn--style-primary {
+/* Collection-list actions: match the secondary Cancel / Done controls. */
+.list-header__title-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.list-header__title-actions .list-create-new-doc__create-new-button,
+.list-header__title-actions .gh-dashboard-list-button {
   background: var(--theme-elevation-100) !important;
   border: 1px solid var(--theme-elevation-300) !important;
   border-radius: 5px !important;
   color: var(--theme-elevation-900) !important;
   font-size: 0.9rem !important;
   font-weight: 600 !important;
-  min-height: 42px;
+  min-height: 42px !important;
   padding: 0.6rem 0.9rem !important;
+  text-decoration: none !important;
 }
 
-.list-header__actions .btn--style-primary:hover {
+.list-header__title-actions .list-create-new-doc__create-new-button:hover,
+.list-header__title-actions .gh-dashboard-list-button:hover {
   background: var(--theme-elevation-200) !important;
   border-color: var(--theme-elevation-500) !important;
   color: var(--theme-elevation-1000) !important;
 }
 
-/* Keep Dashboard immediately to the right of Create New. */
-.list-header__actions .gh-dashboard-list-button {
-  margin-inline-start: 0.5rem;
+.list-header__title-actions .gh-dashboard-list-button {
+  margin: 0 !important;
 }
 
 /* Return-to-dashboard action at the top of the account page. */
