@@ -1,10 +1,9 @@
 "use client";
 
-import { Button, useAuth, useConfig } from "@payloadcms/ui";
+import { useAuth, useConfig } from "@payloadcms/ui";
 import { usePathname } from "next/navigation";
 import { formatAdminURL } from "payload/shared";
-import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import React, { useEffect } from "react";
 
 import type { User } from "../../../payload-types";
 
@@ -72,31 +71,32 @@ function AccountAvatar() {
   const pathname = usePathname();
   const isOnAccountPage =
     pathname === formatAdminURL({ adminRoute, path: accountRoute });
-  const [dashboardButtonHost, setDashboardButtonHost] =
-    useState<HTMLDivElement | null>(null);
 
   // Add a dashboard return action at the top of the account page content.
-  // The avatar component is mounted in the global admin header, so a portal
-  // lets the action live in the account page without replacing Payload's view.
+  // The avatar component is mounted in the global admin header, so insert a
+  // native link into the account page rather than using a portal/state host.
   useEffect(() => {
-    if (!isOnAccountPage) {
-      setDashboardButtonHost(null);
-      return;
-    }
+    if (!isOnAccountPage) return;
 
     const main = document.querySelector("main");
     if (!main) return;
 
     const host = document.createElement("div");
     host.className = "gh-account-dashboard-return";
+
+    const link = document.createElement("a");
+    link.className =
+      "btn btn--style-secondary gh-account-dashboard-return__button";
+    link.href = formatAdminURL({ adminRoute, path: "" });
+    link.textContent = "Dashboard";
+    host.append(link);
+
     main.prepend(host);
-    setDashboardButtonHost(host);
 
     return () => {
       host.remove();
-      setDashboardButtonHost(null);
     };
-  }, [isOnAccountPage]);
+  }, [adminRoute, isOnAccountPage]);
 
   const name = user?.name || user?.email || "";
   const role = user?.role || "";
@@ -125,22 +125,6 @@ function AccountAvatar() {
       </svg>
       {name ? <span className="gh-account-avatar__name">{name}</span> : null}
       {role ? <span className="gh-account-avatar__role">{role}</span> : null}
-      {dashboardButtonHost
-        ? createPortal(
-            <Button
-              buttonStyle="secondary"
-              el="link"
-              to={formatAdminURL({
-                adminRoute,
-                path: "",
-              })}
-              className="gh-account-dashboard-return__button"
-            >
-              Dashboard
-            </Button>,
-            dashboardButtonHost,
-          )
-        : null}
     </div>
   );
 }
