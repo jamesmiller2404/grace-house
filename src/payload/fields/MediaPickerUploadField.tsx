@@ -296,7 +296,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
                       </p>
                     ) : (
                       items.map((item) => {
-                        const imageURL = item.thumbnailURL || item.url;
+                        const imageURL = item.url || item.thumbnailURL;
                         const title = item.alt || item.filename || `Photo ${item.id}`;
 
                         return (
