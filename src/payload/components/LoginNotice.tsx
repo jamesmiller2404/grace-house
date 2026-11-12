@@ -14,9 +14,9 @@ const LoginNotice = () => (
       padding: "0.75rem 1rem",
     }}
   >
-    <strong>Sign-in security:</strong> After 5 unsuccessful login attempts,
-    your account is temporarily locked for 10 minutes. Your sign-in session
-    expires after 2 hours, and you will need to log in again.
+    <strong>Sign-in security:</strong> After 5 unsuccessful login attempts, your
+    account is temporarily locked for 10 minutes. Your sign-in session expires
+    after 2 hours, and you will need to log in again.
   </div>
 );
 
