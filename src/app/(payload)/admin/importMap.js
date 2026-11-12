@@ -4,10 +4,10 @@ import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../..
 import { default as default_d1e94d5abbb0ceb34ab990b1be6f4ecc } from '../../../../src/payload/collections/UsersEditView.tsx'
 import { default as default_8fb18f05fb7e1dc39f9754122148e2b2 } from '../../../../src/payload/fields/StatusSelect/Field.tsx'
 import { default as default_d42955c86c375058446f6a8864360da8 } from '../../../../src/payload/fields/TimePicker/Field.tsx'
+import { default as default_1e4b0eec1bbec3a72273beec88ca3055 } from '../../../../src/payload/fields/MediaPickerUploadField.tsx'
 import { default as default_d2ad3e3f48e6de33e184359a387bbb6b } from '../../../../src/payload/fields/ImagePosition/Field.tsx'
 import { default as default_3b3d89e528f3aec7d8ac7680d19f5694 } from '../../../../src/payload/fields/BlockTypeButtons/Field.tsx'
 import { default as default_0655dcc0a34d98f9a54187149d77f0b1 } from '../../../../src/payload/fields/BlockTextInput/Field.tsx'
-import { default as default_a81b9d3f7c2e4a6b8d0f13579ace2468 } from '../../../../src/payload/fields/MediaPickerUploadField.tsx'
 import { default as default_f1ca57aa7dba24613cc7c7e44d2d5bbd } from '../../../../src/payload/collections/Events/BlockRowLabel.tsx'
 import { default as default_4e49b4194b19d8eb6aa0d3e1c3a2d3d1 } from '../../../../src/payload/fields/ContactSelect/PhoneField.tsx'
 import { default as default_bcf58fb3c735697e29276de8c79cca4d } from '../../../../src/payload/fields/ContactSelect/EmailField.tsx'
@@ -97,10 +97,10 @@ export const importMap = {
   "./src/payload/collections/UsersEditView.tsx#default": default_d1e94d5abbb0ceb34ab990b1be6f4ecc,
   "./src/payload/fields/StatusSelect/Field.tsx#default": default_8fb18f05fb7e1dc39f9754122148e2b2,
   "./src/payload/fields/TimePicker/Field.tsx#default": default_d42955c86c375058446f6a8864360da8,
+  "./src/payload/fields/MediaPickerUploadField.tsx#default": default_1e4b0eec1bbec3a72273beec88ca3055,
   "./src/payload/fields/ImagePosition/Field.tsx#default": default_d2ad3e3f48e6de33e184359a387bbb6b,
   "./src/payload/fields/BlockTypeButtons/Field.tsx#default": default_3b3d89e528f3aec7d8ac7680d19f5694,
   "./src/payload/fields/BlockTextInput/Field.tsx#default": default_0655dcc0a34d98f9a54187149d77f0b1,
-  "./src/payload/fields/MediaPickerUploadField.tsx#default": default_a81b9d3f7c2e4a6b8d0f13579ace2468,
   "./src/payload/collections/Events/BlockRowLabel.tsx#default": default_f1ca57aa7dba24613cc7c7e44d2d5bbd,
   "./src/payload/fields/ContactSelect/PhoneField.tsx#default": default_4e49b4194b19d8eb6aa0d3e1c3a2d3d1,
   "./src/payload/fields/ContactSelect/EmailField.tsx#default": default_bcf58fb3c735697e29276de8c79cca4d,
