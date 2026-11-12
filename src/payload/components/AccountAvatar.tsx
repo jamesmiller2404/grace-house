@@ -56,13 +56,6 @@ const css = `
   font-size: 10px;
 }
 
-/* Keep the mobile header uncluttered: icon only on small screens. */
-@media (max-width: 767px) {
-  .gh-account-avatar__name,
-  .gh-account-avatar__role {
-    display: none;
-  }
-}
 `;
 
 function AccountAvatar() {
