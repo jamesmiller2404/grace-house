@@ -422,7 +422,32 @@ html {
   color: #111114 !important;
 }
 
-/* Dashboard action on collection list pages: keep a small gap after Create New. */
+/* Collection-list actions: use the same secondary treatment as Cancel / Done. */
+.list-header__actions .btn--style-primary {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-elevation-300) !important;
+  border-radius: 5px !important;
+  color: var(--theme-elevation-900) !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  min-height: 42px;
+  padding: 0.6rem 0.9rem !important;
+}
+
+.list-header__actions .btn--style-primary:hover {
+  background: var(--theme-elevation-200) !important;
+  border-color: var(--theme-elevation-500) !important;
+  color: var(--theme-elevation-1000) !important;
+}
+
+/* Keep Dashboard immediately to the right of Create New. */
 .list-header__actions .gh-dashboard-list-button {
   margin-inline-start: 0.5rem;
+}
+
+/* Return-to-dashboard action at the top of the account page. */
+.gh-account-dashboard-return {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 0 1.25rem;
 }
