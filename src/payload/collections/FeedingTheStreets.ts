@@ -32,6 +32,9 @@ export const FeedingTheStreets: CollectionConfig = {
     description:
       "The Title and heading/paragraph/photo blocks shown on the Feeding the Streets page (/feeding-the-streets).",
     components: {
+      beforeList: [
+        { path: "./src/payload/components/DashboardListButton.tsx" },
+      ],
       views: {
         edit: {
           default: {
