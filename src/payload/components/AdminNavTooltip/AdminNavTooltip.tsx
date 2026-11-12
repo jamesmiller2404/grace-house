@@ -3,9 +3,8 @@
 import { useEffect } from "react";
 
 /**
- * Adds one information button to each collection/global card on the mobile
- * dashboard only. The sidebar has no info buttons, and desktop relies on the
- * normal card labels without extra controls or hover tooltips.
+ * Adds hover tooltips to collection/global cards on desktop and one
+ * information button per card on the mobile dashboard. The sidebar is excluded.
  */
 
 const TOOLTIP_TEXT: Record<string, string> = {
@@ -165,10 +164,9 @@ function AdminNavTooltip() {
     }
 
     function attachTooltips() {
-      if (!isMobile()) return;
-
       // Dashboard cards live in the main content area. Sidebar navigation
-      // links are deliberately excluded.
+      // links are deliberately excluded. The info button is hidden on desktop;
+      // desktop users get the same explanation by hovering over the card.
       const links = document.querySelectorAll<HTMLAnchorElement>(
         'main a[href*="/admin/collections/"], main a[href*="/admin/globals/"]',
       );
@@ -214,6 +212,15 @@ function AdminNavTooltip() {
         });
 
         parent.appendChild(button);
+
+        link.addEventListener("mouseenter", () => {
+          if (isMobile()) return;
+          closeTooltip();
+          showTooltip(tooltipText, link);
+        });
+        link.addEventListener("mouseleave", () => {
+          if (!isMobile()) closeTooltip();
+        });
       });
     }
 
