@@ -403,6 +403,17 @@ html {
   /*border-color: #ffffff !important;*/
 }
 
+/* Keep the selected mode visibly selected after a tap. Mobile browsers can
+   retain :hover on the tapped button until the user taps elsewhere, so this
+   rule must come after the general hover styling and win over it. */
+.gh-block-type-field__button.is-selected,
+.gh-block-type-field__button.is-selected:hover,
+.gh-block-type-field__button.is-selected:active {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
 /* Darker helper/description text inside Heading / Paragraph / Photo cards
    on Donate, Custom Pages, and Feeding the Streets only. Feeding the Streets
    shares the Custom Pages edit-view wrapper. */
