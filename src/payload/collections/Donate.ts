@@ -343,6 +343,11 @@ export const Donate: CollectionConfig = {
           relationTo: "media",
           label: false,
           admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
             className: "gh-block-photo-input",
             condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
             description: "Choose the photo shown inline on the Donate page.",
