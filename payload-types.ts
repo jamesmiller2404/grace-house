@@ -211,12 +211,12 @@ export interface Event {
     | null;
   contact?: {
     /**
-     * The phone number shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered number.
+     * The phone number shown on the event page. Pick one registered in the Contact Info panel.
      */
     phoneChoice?: string | null;
     phoneCustom?: string | null;
     /**
-     * The email address shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered address.
+     * The email address shown on the event page. Pick one registered in the Contact Info panel.
      */
     emailChoice?: string | null;
     emailCustom?: string | null;

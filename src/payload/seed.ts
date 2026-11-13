@@ -12,7 +12,6 @@ import { donateDefaults } from "@/content/donate";
 import { pillars } from "@/content/pillars";
 import { stories } from "@/content/stories";
 import { storyProfiles } from "@/content/storyProfiles";
-import { MAX_CUSTOM_PAGES } from "@/payload/collections/CustomPages";
 import type { Story } from "../../payload-types";
 import type { Faq } from "../../payload-types";
 import { faqDefaults, type FaqBlock } from "@/content/faq";
