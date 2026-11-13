@@ -489,6 +489,7 @@ html {
 }
 
 .gh-media-picker__open-button,
+.gh-media-picker__new-button,
 .gh-media-picker__choose,
 .gh-media-picker__secondary,
 .gh-media-picker__back {
@@ -509,13 +510,15 @@ html {
   text-decoration: none;
 }
 
-.gh-media-picker__open-button {
+.gh-media-picker__open-button,
+.gh-media-picker__new-button {
   min-height: 46px;
   background: #41414b;
   border-color: #858592;
 }
 
 .gh-media-picker__open-button:hover,
+.gh-media-picker__new-button:hover,
 .gh-media-picker__secondary:hover:not(:disabled),
 .gh-media-picker__back:hover {
   background: #50505b;
@@ -907,6 +910,7 @@ html {
 @media (prefers-reduced-motion: no-preference) {
   .gh-media-picker__tile,
   .gh-media-picker__open-button,
+  .gh-media-picker__new-button,
   .gh-media-picker__choose,
   .gh-media-picker__secondary {
     transition: background-color 120ms ease, border-color 120ms ease;
