@@ -492,6 +492,7 @@ html {
   align-items: flex-start;
   gap: 10px;
   width: 100%;
+  margin-bottom: 16px;
 }
 
 .gh-media-picker__open-button,
