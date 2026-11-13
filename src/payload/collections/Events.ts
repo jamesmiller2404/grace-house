@@ -240,7 +240,7 @@ export const Events: CollectionConfig = {
         // a glance.
         initCollapsed: false,
         description:
-          "Add headers, paragraphs and photos in the order they should appear.",
+          "Add headers, paragraphs and photos in the order you would like them to appear.",
         // Friendly row labels (e.g. "1. Heading: ...") instead of Payload's
         // default "Block 01" to see ./Events/BlockRowLabel.tsx.
         components: {
