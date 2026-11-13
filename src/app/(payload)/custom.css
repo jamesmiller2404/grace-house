@@ -422,15 +422,23 @@ html {
   color: #111114 !important;
 }
 
-/* Collection-list actions: match the secondary Cancel / Done controls. */
-.list-header__title-actions {
+/* Collection-list actions: keep Create New, Bulk Upload, and Dashboard
+   visually consistent. Custom Pages uses list-header__actions because its
+   custom list view does not render the usual title-actions wrapper. */
+.list-header__title-actions,
+.list-header__actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .list-header__title-actions .list-create-new-doc__create-new-button,
-.list-header__title-actions .gh-dashboard-list-button {
+.list-header__title-actions button[aria-label="Bulk Upload"],
+.list-header__title-actions .gh-dashboard-list-button,
+.list-header__actions .gh-dashboard-list-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   background: var(--theme-elevation-100) !important;
   border: 1px solid var(--theme-elevation-300) !important;
   border-radius: 5px !important;
@@ -443,13 +451,16 @@ html {
 }
 
 .list-header__title-actions .list-create-new-doc__create-new-button:hover,
-.list-header__title-actions .gh-dashboard-list-button:hover {
+.list-header__title-actions button[aria-label="Bulk Upload"]:hover,
+.list-header__title-actions .gh-dashboard-list-button:hover,
+.list-header__actions .gh-dashboard-list-button:hover {
   background: var(--theme-elevation-200) !important;
   border-color: var(--theme-elevation-500) !important;
   color: var(--theme-elevation-1000) !important;
 }
 
-.list-header__title-actions .gh-dashboard-list-button {
+.list-header__title-actions .gh-dashboard-list-button,
+.list-header__actions .gh-dashboard-list-button {
   margin: 0 !important;
 }
 
