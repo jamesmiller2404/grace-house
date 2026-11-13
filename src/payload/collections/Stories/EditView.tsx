@@ -160,6 +160,32 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .rs__option--is-selected {
   background: var(--gh-st-hover);
 }
+/* Name and Date labels sit to the left of their controls, matching
+   the Role and Gender rows. Keep each control constrained to its existing
+   width rather than allowing the label to force a full-width input. */
+.gh-stories-edit .gh-story-name-field,
+.gh-stories-edit .gh-story-date-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: calc(var(--base, 16px) * 0.5);
+}
+.gh-stories-edit .gh-story-name-field > .field-label,
+.gh-stories-edit .gh-story-date-field > .field-label {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+.gh-stories-edit .gh-story-name-field > .field-type__wrap,
+.gh-stories-edit .gh-story-date-field > .field-type__wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.gh-stories-edit .gh-story-name-field input,
+.gh-stories-edit .gh-story-date-field input {
+  width: 100%;
+  max-width: 100%;
+}
 /* Select label + dropdown on one line (desktop AND mobile), like the Events
    Status field: Payload lays the select field out as a column (label above
    the control); flip it to a horizontal row here so the label sits to the
