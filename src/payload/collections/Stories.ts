@@ -265,6 +265,7 @@ export const Stories: CollectionConfig = {
         plural: "Story Blocks",
       },
       admin: {
+        className: "gh-story-body-field",
         // Keep every block open so the paragraph/heading order is visible at
         // a glance.
         initCollapsed: false,
