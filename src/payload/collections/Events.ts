@@ -175,7 +175,6 @@ export const Events: CollectionConfig = {
     {
       name: "cost",
       type: "text",
-      defaultValue: "Free",
       label: false,
       admin: {
         placeholder: "Cost... (e.g. Free)",
@@ -316,7 +315,7 @@ condition: (_data, siblingData) => (siblingData as { type?: string } | undefined
           admin: {
             placeholder: "Phone Number",
             description:
-              "The phone number shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered number.",
+              "The phone number shown on the event page. Pick one registered in the Contact Info panel.",
           },
         }),
         {
@@ -335,7 +334,7 @@ condition: (_data, siblingData) => (siblingData as { type?: string } | undefined
           admin: {
             placeholder: "Email",
             description:
-              "The email address shown on the event page. Pick one registered in the Contact Info panel, or leave empty to use the first registered address.",
+              "The email address shown on the event page. Pick one registered in the Contact Info panel.",
           },
         }),
         {
