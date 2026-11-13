@@ -82,6 +82,8 @@ import { default as default_735fc14cf0f8527882a31dd8143c8477 } from '../../../..
 import { default as default_3f563e9fff31c0ab9083f7e40b5d1d9d } from '../../../../src/payload/globals/Footer/EditView.tsx'
 import { default as default_42a288946efec5e795c971376ff074e7 } from '../../../../src/payload/components/AccountAvatar.tsx'
 import { default as default_d39f46a9eafb259942ecd6a68a351629 } from '../../../../src/payload/components/LogoutButton.tsx'
+import { default as default_f9482e1d1f62b86eb2f14f958402b3b6 } from '../../../../src/payload/components/GraceHouseAdminIcon.tsx'
+import { default as default_66503311d18cbd1c2f53a067abbb8a72 } from '../../../../src/payload/components/GraceHouseAdminLogo.tsx'
 import { default as default_49b8dc6111fde1914ac88e7ac816bfa4 } from '../../../../src/payload/components/DashboardLogoutButton.tsx'
 import { default as default_0ac5725829c52b6aa8de745a5a212911 } from '../../../../src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx'
 import { default as default_affbcb01d7c37135bda62799520840e5 } from '../../../../src/payload/components/MobileLogoutButton.tsx'
@@ -175,6 +177,8 @@ export const importMap = {
   "./src/payload/globals/Footer/EditView.tsx#default": default_3f563e9fff31c0ab9083f7e40b5d1d9d,
   "./src/payload/components/AccountAvatar.tsx#default": default_42a288946efec5e795c971376ff074e7,
   "./src/payload/components/LogoutButton.tsx#default": default_d39f46a9eafb259942ecd6a68a351629,
+  "./src/payload/components/GraceHouseAdminIcon.tsx#default": default_f9482e1d1f62b86eb2f14f958402b3b6,
+  "./src/payload/components/GraceHouseAdminLogo.tsx#default": default_66503311d18cbd1c2f53a067abbb8a72,
   "./src/payload/components/DashboardLogoutButton.tsx#default": default_49b8dc6111fde1914ac88e7ac816bfa4,
   "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx#default": default_0ac5725829c52b6aa8de745a5a212911,
   "./src/payload/components/MobileLogoutButton.tsx#default": default_affbcb01d7c37135bda62799520840e5,

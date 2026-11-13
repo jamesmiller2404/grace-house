@@ -344,7 +344,7 @@ export interface Story {
   name: string;
   role?: ('Graduate' | 'Volunteer' | 'Staff' | 'Other') | null;
   /**
-   * Enter the role label displayed on this profile.
+   * Enter the role description to display on this profile.
    */
   roleLabel?: string | null;
   gender?: ('Male' | 'Female') | null;
