@@ -935,6 +935,22 @@ html {
 .gh-profile-photo-preview__remove:hover { background: #b42318; }
 
 
+/* Keep Payload's field-level photo styling from reintroducing the old black
+   banner around the custom Photo-block preview. The native upload card is
+   hidden here; the custom New Photo / Browse Media Library actions remain. */
+.gh-media-picker-field--photo-block .gh-block-photo-input {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.gh-media-picker-field--photo-block .gh-block-photo-input .upload__dropzoneAndUpload,
+.gh-media-picker-field--photo-block .gh-block-photo-input .upload-field-card {
+  display: none !important;
+}
+
 /* Story Photo blocks use a roomy inline image preview instead of Payload's
    black upload card, with a clear remove control on the image itself. */
 .gh-media-picker-field--photo-block .upload__dropzoneAndUpload { display: none !important; }
