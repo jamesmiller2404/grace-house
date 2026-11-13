@@ -133,24 +133,36 @@ export const Events: CollectionConfig = {
         },
       ],
     },
-    TimeField({
-      name: "startTime",
-      type: "text",
-      label: "Start Time",
+    {
+      // Keep Start Time and End Time side by side while preserving the same
+      // label and input alignment used by the other primary event fields.
+      type: "row",
       admin: {
-        className: "gh-event-primary-field",
-        placeholder: "Start Time...",
+        className: "gh-event-time-row",
       },
-    }),
-    TimeField({
-      name: "endTime",
-      type: "text",
-      label: "End Time",
-      admin: {
-        className: "gh-event-primary-field",
-        placeholder: "End Time...",
-      },
-    }),
+      fields: [
+        TimeField({
+          name: "startTime",
+          type: "text",
+          label: "Start Time",
+          admin: {
+            className: "gh-event-primary-field",
+            placeholder: "Start Time...",
+            width: "100%",
+          },
+        }),
+        TimeField({
+          name: "endTime",
+          type: "text",
+          label: "End Time",
+          admin: {
+            className: "gh-event-primary-field",
+            placeholder: "End Time...",
+            width: "100%",
+          },
+        }),
+      ],
+    },
     {
       name: "location",
       type: "text",
