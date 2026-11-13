@@ -1069,7 +1069,7 @@ html {
 
 /* Add Block field helper text: make the shared block-editor explanation
    more readable on every collection page without changing other descriptions. */
-.blocks-field > .field-description {
+.blocks-field .field-description {
   font-size: 2em !important;
   line-height: 1.4 !important;
 }
