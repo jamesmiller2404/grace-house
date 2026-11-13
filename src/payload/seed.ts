@@ -12,7 +12,6 @@ import { donateDefaults } from "@/content/donate";
 import { pillars } from "@/content/pillars";
 import { stories } from "@/content/stories";
 import { storyProfiles } from "@/content/storyProfiles";
-import { MAX_CUSTOM_PAGES } from "@/payload/collections/CustomPages";
 import type { Story } from "../../payload-types";
 import type { Faq } from "../../payload-types";
 import { faqDefaults, type FaqBlock } from "@/content/faq";
@@ -607,14 +606,14 @@ export async function seedDonate(payload: Payload): Promise<void> {
 }
 
 /**
- * Seed the `custom-pages` collection with the three pre-wired spare pages —
+ * Seed the `custom-pages` collection with three initial spare pages —
  * "Spare Page 1/2/3", each disabled (hidden from the header's "More"
- * dropdown, URL 404s) and empty, ready for an editor to put to work. Runs
- * once, when the collection is empty, and tops up any missing spare page
- * numbers afterwards so the collection always offers all three.
+ * dropdown, URL 404s) and empty, ready for an editor to put to work. These
+ * are starter pages only; editors can create as many additional pages as
+ * they need from the collection list.
  */
 export async function seedCustomPages(payload: Payload): Promise<void> {
-  for (let i = 1; i <= MAX_CUSTOM_PAGES; i++) {
+  for (let i = 1; i <= 3; i++) {
     await payload.create({
       collection: "custom-pages",
       data: {
@@ -626,7 +625,7 @@ export async function seedCustomPages(payload: Payload): Promise<void> {
   }
 
   payload.logger.info(
-    "Seed: created the three spare custom pages (hidden until used).",
+    "Seed: created three initial spare custom pages (hidden until used).",
   );
 }
 
