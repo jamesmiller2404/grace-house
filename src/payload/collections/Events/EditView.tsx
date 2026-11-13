@@ -73,34 +73,6 @@ html[data-theme='light'] .gh-event-edit {
 .gh-event-edit .field-label {
   color: var(--gh-ev-text);
 }
-/* Required-field markers (Title, Date, Location). These three keep the
-   mockup's placeholder-only look (label: false in Events.ts), so Payload's
-   labeled-field asterisk — the red * shown next to the Status dropdown —
-   never renders for them. Paint the same marker here: a red * at the
-   top-right corner of each box, using Payload's own required-star color
-   (var(--theme-error-500), the .required rule in Payload's FieldLabel
-   styles). Text fields carry the id on the input itself (input#field-title,
-   input#field-location); the date field carries it on its
-   .field-type__wrap div (#field-date). The > .field-type__wrap child hop
-   keeps the selector from also matching the row wrappers that contain
-   these fields. */
-.gh-event-edit .field-type:has(> .field-type__wrap > input#field-title),
-.gh-event-edit .field-type:has(> .field-type__wrap > input#field-location),
-.gh-event-edit .field-type:has(> .field-type__wrap#field-date) {
-  position: relative;
-}
-.gh-event-edit .field-type:has(> .field-type__wrap > input#field-title)::after,
-.gh-event-edit .field-type:has(> .field-type__wrap > input#field-location)::after,
-.gh-event-edit .field-type:has(> .field-type__wrap#field-date)::after {
-  color: var(--theme-error-500);
-  content: "*";
-  font-size: calc(var(--base-body-size, 13) * 1px);
-  font-weight: 700;
-  line-height: 1;
-  position: absolute;
-  right: 6px;
-  top: -6px;
-}
 /* Primary event fields share a compact two-column layout. Labels stay
    left-aligned; every control starts at the same point and shares a common
    right edge. Status remains excluded and keeps its existing Title-row layout. */
@@ -172,28 +144,24 @@ html[data-theme='light'] .gh-event-edit {
 .gh-event-edit .rs__option--is-selected {
   background: var(--gh-ev-hover);
 }
-/* Status label + dropdown on one line (desktop AND mobile). Payload lays the
-   select field out as a column (label above the control) and, inside rows,
-   forces display:flex + flex-direction:column on every field child — a
-   rule that also survives the <=1024px row collapse, which only changes the
-   row wrapper (display: block, full-width children), not the field's inner
-   direction. Flip the Status field to a horizontal row here: label (default
-   margin-bottom zeroed) to the left, dropdown filling the remaining space.
-   These rules are unlayered, so they beat Payload's @layer payload-default
-   styles at every breakpoint. */
+/* Status uses the same label column as the other Event fields, so its
+   dropdown starts on the same vertical line as their inputs. Keep the
+   existing Title/Status row widths and change only the Status field's
+   internal label/control alignment. */
 .gh-event-edit .field-type.select {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 105px minmax(0, 1fr);
   align-items: center;
-  column-gap: calc(var(--base, 16px) * 0.5);
+  column-gap: 8px;
+  min-width: 0;
 }
 .gh-event-edit .field-type.select > .field-label {
-  margin-bottom: 0;
-  flex-shrink: 0;
+  justify-self: start;
+  margin: 0;
   white-space: nowrap;
 }
 .gh-event-edit .field-type.select > .field-type__wrap {
-  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
 }
 /* Upload field (event image): hide Payload's built-in "or drag and drop a
