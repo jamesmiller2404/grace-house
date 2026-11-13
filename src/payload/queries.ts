@@ -30,7 +30,6 @@ import {
   type CustomPageContent,
   type CustomNavLink,
 } from "@/content/customPages";
-import { MAX_CUSTOM_PAGES } from "@/payload/collections/CustomPages";
 import type { Story as PayloadStory } from "../../payload-types";
 import {
   stories as defaultStories,
@@ -831,7 +830,7 @@ export const getCustomNavItems = cache(
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "custom-pages",
-      limit: MAX_CUSTOM_PAGES,
+      pagination: false,
       where: { enabled: { equals: true } },
     });
     return docs.map((doc) => ({
@@ -853,7 +852,7 @@ export const getCustomPageBySlug = cache(
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "custom-pages",
-      limit: MAX_CUSTOM_PAGES,
+      pagination: false,
       where: { enabled: { equals: true } },
     });
     const doc = docs.find((page) => customPageSlug(page.title) === slug);
