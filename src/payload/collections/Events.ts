@@ -131,6 +131,8 @@ export const Events: CollectionConfig = {
             },
           },
         },
+      ],
+    },
     ...TimeField({
       name: "startTime",
       type: "text",
