@@ -1016,27 +1016,48 @@ html {
   }
 }
 
-/* Keep the Events Start Time and End Time controls on one shared row.
-   Each half uses the same label column as the other primary fields, giving
-   both inputs identical widths. The row is capped to the same overall width
-   as the single-line fields above and below it. */
-.gh-event-time-row .row {
+/* Start Time and End Time: four aligned items on one horizontal line —
+   Start label, Start input, End label, End input. Payload may attach the
+   custom class to the Row field wrapper or its inner row-fields container,
+   so cover both structures. */
+.gh-event-time-row,
+.gh-event-time-row > .row__fields,
+.gh-event-time-row > .row {
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   column-gap: 24px;
   width: min(100%, 733px);
 }
-.gh-event-time-row .row > .field-type {
+.gh-event-time-row > .row__fields,
+.gh-event-time-row > .row {
+  grid-column: 1 / -1;
+}
+.gh-event-time-row .gh-event-primary-field {
+  display: grid !important;
+  grid-template-columns: 105px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 8px;
   width: 100% !important;
   min-width: 0;
 }
-.gh-event-time-row .gh-event-primary-field {
-  grid-template-columns: 105px minmax(0, 1fr);
+.gh-event-time-row .gh-event-primary-field > .field-label {
+  justify-self: start;
+  margin: 0 !important;
+  white-space: nowrap;
+  text-align: left;
+}
+.gh-event-time-row .gh-event-primary-field > .field-type__wrap {
+  width: 100%;
+  min-width: 0;
+}
+.gh-event-time-row .gh-event-primary-field input {
   width: 100%;
 }
 @media (max-width: 700px) {
-  .gh-event-time-row .row {
+  .gh-event-time-row,
+  .gh-event-time-row > .row__fields,
+  .gh-event-time-row > .row {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 12px;
     width: 100%;
