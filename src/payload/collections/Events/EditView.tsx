@@ -144,15 +144,26 @@ html[data-theme='light'] .gh-event-edit {
 .gh-event-edit .rs__option--is-selected {
   background: var(--gh-ev-hover);
 }
-/* Status uses the same label column as the other Event fields, so its
-   dropdown starts on the same vertical line as their inputs. Keep the
-   existing Title/Status row widths and change only the Status field's
-   internal label/control alignment. */
+/* Keep the Title/Status row within the same 733px field width as the
+   other Event controls. Its two columns preserve the configured 75/25 split,
+   and the Status control fills its column so its right edge matches theirs. */
+.gh-event-edit .field-type.row:has(#field-status) > .row__fields {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  column-gap: 8px;
+  width: min(100%, 733px);
+}
+.gh-event-edit .field-type.row:has(#field-status) > .row__fields > * {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
 .gh-event-edit .field-type.select {
   display: grid;
   grid-template-columns: 105px minmax(0, 1fr);
   align-items: center;
   column-gap: 8px;
+  width: 100%;
   min-width: 0;
 }
 .gh-event-edit .field-type.select > .field-label {
@@ -163,6 +174,9 @@ html[data-theme='light'] .gh-event-edit {
 .gh-event-edit .field-type.select > .field-type__wrap {
   width: 100%;
   min-width: 0;
+}
+.gh-event-edit .field-type.select .rs__control {
+  width: 100%;
 }
 /* Upload field (event image): hide Payload's built-in "or drag and drop a
    file" hint — the mockup shows only the "Choose from existing" browse text. */
