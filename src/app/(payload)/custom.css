@@ -425,8 +425,7 @@ html {
 /* Collection-list actions: keep Create New, Bulk Upload, and Dashboard
    visually consistent. Custom Pages uses list-header__actions because its
    custom list view does not render the usual title-actions wrapper. */
-.list-header__title-actions,
-.list-header__actions {
+.list-header__title-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
