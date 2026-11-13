@@ -165,7 +165,7 @@ export const Stories: CollectionConfig = {
         className: "gh-story-role-label-field",
         condition: (_data, siblingData) => siblingData?.role === "Other",
         placeholder: "Enter role label...",
-        description: "Enter the role label to display on this profile.",
+        description: "Enter the role description to display on this profile.",
       },
       validate: (
         value: string | string[] | null | undefined,
