@@ -1015,3 +1015,30 @@ html {
     width: 100%;
   }
 }
+
+/* Keep the Events Start Time and End Time controls on one shared row.
+   Each half uses the same label column as the other primary fields, giving
+   both inputs identical widths. The row is capped to the same overall width
+   as the single-line fields above and below it. */
+.gh-event-time-row .row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  column-gap: 24px;
+  width: min(100%, 733px);
+}
+.gh-event-time-row .row > .field-type {
+  width: 100% !important;
+  min-width: 0;
+}
+.gh-event-time-row .gh-event-primary-field {
+  grid-template-columns: 105px minmax(0, 1fr);
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .gh-event-time-row .row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+    width: 100%;
+  }
+}
