@@ -39,7 +39,7 @@ export const Donate: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "updatedAt"],
     description:
-      "The Donate page (/support): the title and intro, the PayPal and Venmo cards, the 501(c)(3) note and the content sections (generic headings and paragraphs).",
+      "The Donate page (/support): the title and intro, the PayPal and Venmo cards, the final note and the content sections (generic headings and paragraphs).",
     // Custom Edit view wrapper that paints the mockup frame
     // (photoshop_assets/adminPanelMockup1.png) — the same #111115 page
     // background, rounded #2d2d33 panel around the fields and #101012 input
