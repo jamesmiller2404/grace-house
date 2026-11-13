@@ -66,6 +66,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
 
   const currentID = useMemo(() => getRelationshipID(value), [value]);
   const isProfilePhoto = path === "image";
+  const isPhotoBlock = /^body\\.\\d+\\.image$/.test(path);
   const [profilePhoto, setProfilePhoto] = useState<MediaDocument | null>(getMediaDocument(value));
 
   const apiRoot = useMemo(() => {
@@ -161,7 +162,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
 
   // Load the profile portrait details for the compact inline preview.
   useEffect(() => {
-    if (!isProfilePhoto || currentID === null) {
+    if ((!isProfilePhoto && !isPhotoBlock) || currentID === null) {
       setProfilePhoto(null);
       return;
     }
@@ -186,7 +187,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     };
     void loadProfilePhoto();
     return () => controller.abort();
-  }, [apiRoot, currentID, isProfilePhoto, value]);
+  }, [apiRoot, currentID, isPhotoBlock, isProfilePhoto, value]);
 
   // Fetch the currently selected Media document when the form stores only its ID.
   useEffect(() => {
@@ -301,8 +302,24 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   };
 
   return (
-    <div className={`gh-media-picker-field${isProfilePhoto ? " gh-media-picker-field--profile-photo" : ""}`} ref={fieldRef}>
+    <div className={`gh-media-picker-field${isProfilePhoto ? " gh-media-picker-field--profile-photo" : ""}${isPhotoBlock ? " gh-media-picker-field--photo-block" : ""}`} ref={fieldRef}>
       <UploadField {...props} />
+      {isPhotoBlock && profilePhoto && currentID !== null && (
+        <div className="gh-photo-block-preview">
+          {(profilePhoto.url || profilePhoto.thumbnailURL) && (
+            <img src={profilePhoto.url || profilePhoto.thumbnailURL || ""} alt={profilePhoto.alt || profilePhoto.filename || "Selected story photo"} />
+          )}
+          <button
+            type="button"
+            className="gh-photo-block-preview__remove"
+            onClick={() => { setValue(null); setProfilePhoto(null); }}
+            aria-label="Remove photo"
+            title="Remove photo"
+          >
+            ×
+          </button>
+        </div>
+      )}
       {isProfilePhoto && profilePhoto && currentID !== null && (
         <div className="gh-profile-photo-preview">
           {(profilePhoto.thumbnailURL || profilePhoto.url) && (
