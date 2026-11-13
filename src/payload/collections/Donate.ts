@@ -300,7 +300,7 @@ export const Donate: CollectionConfig = {
         // a glance.
         initCollapsed: false,
         description:
-          "Add headers, paragraphs and photos in the order they should appear. Newlines render as line breaks (e.g. \"Hours:\\nWednesdays: 11am to 4pm.\"). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.",
+          "Add headers, paragraphs and photos in the order you would like them to appear. Newlines render as line breaks (e.g. \"Hours:\\nWednesdays: 11am to 4pm.\"). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.",
         // Friendly row labels ("1. Heading: Underground Clothing Connection")
         // instead of Payload's default "Block 01" — see ./Donate/BlockRowLabel.tsx.
         components: {
