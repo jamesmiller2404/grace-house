@@ -101,32 +101,37 @@ html[data-theme='light'] .gh-event-edit {
   right: 6px;
   top: -6px;
 }
-/* The eight primary event fields use a consistent horizontal label/input
-   layout. The Status field is intentionally excluded and keeps its existing
-   dedicated styling and position beside Title. */
+/* Primary event fields share a compact two-column layout. Labels stay
+   left-aligned; every control starts at the same point and shares a common
+   right edge. Status remains excluded and keeps its existing Title-row layout. */
 .gh-event-edit .gh-event-primary-field {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 105px minmax(0, 620px);
   align-items: center;
-  column-gap: 12px;
+  column-gap: 8px;
 }
 .gh-event-edit .gh-event-primary-field > .field-label {
-  flex: 0 0 125px;
+  justify-self: start;
   margin: 0;
   white-space: nowrap;
+  text-align: left;
 }
 .gh-event-edit .gh-event-primary-field > .field-type__wrap {
-  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
+  justify-self: stretch;
 }
-@media (max-width: 560px) {
+.gh-event-edit .gh-event-primary-field textarea,
+.gh-event-edit .gh-event-primary-field input:not([type="checkbox"]):not([type="radio"]) {
+  width: 100%;
+}
+@media (max-width: 700px) {
   .gh-event-edit .gh-event-primary-field {
-    align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
     row-gap: 6px;
   }
   .gh-event-edit .gh-event-primary-field > .field-label {
-    flex-basis: auto;
+    justify-self: start;
   }
   .gh-event-edit .gh-event-primary-field > .field-type__wrap {
     width: 100%;
