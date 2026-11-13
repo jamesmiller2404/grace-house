@@ -160,6 +160,16 @@ export default buildConfig({
           path: "./src/payload/components/LoginNotice.tsx",
         },
       ],
+      // Replace Payload's default navigation icon and login logo with
+      // Grace House branding. Both components use the site's header crown.
+      graphics: {
+        Icon: {
+          path: "./src/payload/components/GraceHouseAdminIcon.tsx",
+        },
+        Logo: {
+          path: "./src/payload/components/GraceHouseAdminLogo.tsx",
+        },
+      },
       // Keep the labeled sign-out action at the bottom of the sidebar.
       logout: {
         Button: {
