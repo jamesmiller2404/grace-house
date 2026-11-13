@@ -205,6 +205,7 @@ export const Stories: CollectionConfig = {
         placeholder: "Date...",
         date: {
           pickerAppearance: "dayOnly",
+              displayFormat: "MMMM d, yyyy",
         },
       },
     },
