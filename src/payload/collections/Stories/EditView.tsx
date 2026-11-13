@@ -79,40 +79,71 @@ html[data-theme='light'] .gh-stories-edit {
   color: var(--gh-st-text);
 }
 
-/* Keep the Name, Role, Gender, and Date controls left-aligned in the form. */
+/* Align the four identity controls to one common left edge.
+   Target Payload's actual field IDs as well as the configured field classes,
+   so the layout remains effective if a custom field wrapper changes class placement. */
+.gh-stories-edit .field-type:has(#field-name),
+.gh-stories-edit .field-type:has(#field-role),
+.gh-stories-edit .field-type:has(#field-gender),
+.gh-stories-edit .field-type:has(#field-date),
 .gh-stories-edit .gh-story-name-field,
 .gh-stories-edit .gh-story-role-field,
 .gh-stories-edit .gh-story-gender-field,
 .gh-stories-edit .gh-story-date-field {
+  display: grid !important;
+  grid-template-columns: 80px minmax(0, 360px);
+  align-items: center;
+  justify-content: start;
+  justify-items: start;
+  column-gap: 8px;
+  width: 100%;
+  max-width: 448px;
   margin-left: 0 !important;
   margin-right: auto !important;
-  justify-self: start;
 }
-.gh-stories-edit .gh-story-name-field {
-  width: 100%;
-  max-width: 420px;
+.gh-stories-edit .field-type:has(#field-name) > .field-label,
+.gh-stories-edit .field-type:has(#field-role) > .field-label,
+.gh-stories-edit .field-type:has(#field-gender) > .field-label,
+.gh-stories-edit .field-type:has(#field-date) > .field-label,
+.gh-stories-edit .gh-story-name-field > .field-label,
+.gh-stories-edit .gh-story-role-field > .field-label,
+.gh-stories-edit .gh-story-gender-field > .field-label,
+.gh-stories-edit .gh-story-date-field > .field-label {
+  grid-column: 1;
+  margin: 0 !important;
+  white-space: nowrap;
 }
-.gh-stories-edit .gh-story-name-field .field-type__wrap,
-.gh-stories-edit .gh-story-name-field input {
+.gh-stories-edit .field-type:has(#field-name) > .field-type__wrap,
+.gh-stories-edit .field-type:has(#field-role) > .field-type__wrap,
+.gh-stories-edit .field-type:has(#field-gender) > .field-type__wrap,
+.gh-stories-edit .field-type:has(#field-date) > .field-type__wrap,
+.gh-stories-edit .gh-story-name-field > .field-type__wrap,
+.gh-stories-edit .gh-story-role-field > .field-type__wrap,
+.gh-stories-edit .gh-story-gender-field > .field-type__wrap,
+.gh-stories-edit .gh-story-date-field > .field-type__wrap {
+  grid-column: 2;
   width: 100%;
-  max-width: 100%;
-}
-.gh-stories-edit .gh-story-role-field,
-.gh-stories-edit .gh-story-gender-field,
-.gh-stories-edit .gh-story-date-field {
-  width: 100%;
+  min-width: 0;
   max-width: 360px;
+  margin: 0 !important;
 }
-.gh-stories-edit .gh-story-role-field .field-type__wrap,
-.gh-stories-edit .gh-story-gender-field .field-type__wrap,
+.gh-stories-edit .field-type:has(#field-name) input,
+.gh-stories-edit .field-type:has(#field-date) input,
+.gh-stories-edit .field-type:has(#field-role) .rs__control,
+.gh-stories-edit .field-type:has(#field-gender) .rs__control,
+.gh-stories-edit .gh-story-name-field input,
+.gh-stories-edit .gh-story-date-field input,
 .gh-stories-edit .gh-story-role-field .rs__control,
-.gh-stories-edit .gh-story-gender-field .rs__control,
-.gh-stories-edit .gh-story-date-field input {
-  width: 100%;
-  max-width: 100%;
+.gh-stories-edit .gh-story-gender-field .rs__control {
+  width: 100% !important;
+  max-width: 100% !important;
 }
-/* Payload already renders the required marker for Name. Do not add a second
-   decorative asterisk with a pseudo-element. */
+/* Suppress the duplicate decorative marker on Name without changing its
+   required validation. */
+.gh-stories-edit .field-type:has(#field-name)::after {
+  content: none !important;
+  display: none !important;
+}
 /* Text boxes and textareas */
 .gh-stories-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-stories-edit textarea {
