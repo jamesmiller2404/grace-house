@@ -187,6 +187,26 @@ html[data-theme='light'] .gh-event-edit {
   width: 100%;
 }
 
+/* The Contact group's phone/email pickers have no visible labels. Let each
+   dropdown use the full primary-field width instead of reserving the
+   105px label column; keep the same 733px maximum as the other controls. */
+.gh-event-edit #field-contact__phoneChoice,
+.gh-event-edit #field-contact__emailChoice {
+  display: block;
+  width: min(100%, 733px);
+  max-width: 733px;
+  min-width: 0;
+}
+.gh-event-edit #field-contact__phoneChoice > .field-type__wrap,
+.gh-event-edit #field-contact__emailChoice > .field-type__wrap {
+  width: 100%;
+  min-width: 0;
+}
+.gh-event-edit #field-contact__phoneChoice .rs__control,
+.gh-event-edit #field-contact__emailChoice .rs__control {
+  width: 100%;
+}
+
 /* Move controls 50px left independently of their labels. The existing
    30px parent offset remains in place, so labels do not move again and all
    input right edges remain aligned. Include the custom TimePicker wrapper. */
