@@ -187,24 +187,45 @@ html[data-theme='light'] .gh-event-edit {
   width: 100%;
 }
 
-/* The Contact group's phone/email pickers have no visible labels. Let each
-   dropdown use the full primary-field width instead of reserving the
-   105px label column; keep the same 733px maximum as the other controls. */
-.gh-event-edit #field-contact__phoneChoice,
-.gh-event-edit #field-contact__emailChoice {
-  display: block;
+/* Keep the entire Contact section — heading, both dropdowns and their
+   explanatory text — on one shared left edge and within the same 733px
+   width used by the other Event controls. The general select-control offset
+   below is intentionally cancelled for these two Contact pickers. */
+.gh-event-edit #field-contact {
   width: min(100%, 733px);
   max-width: 733px;
   min-width: 0;
+  text-align: left;
+}
+.gh-event-edit #field-contact > .field-label {
+  display: block;
+  margin: 0 0 12px;
+  text-align: left;
+}
+.gh-event-edit #field-contact__phoneChoice,
+.gh-event-edit #field-contact__emailChoice {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-left: 0;
+  text-align: left;
 }
 .gh-event-edit #field-contact__phoneChoice > .field-type__wrap,
 .gh-event-edit #field-contact__emailChoice > .field-type__wrap {
+  position: static;
+  left: auto;
   width: 100%;
   min-width: 0;
+  margin-left: 0;
 }
 .gh-event-edit #field-contact__phoneChoice .rs__control,
 .gh-event-edit #field-contact__emailChoice .rs__control {
   width: 100%;
+}
+.gh-event-edit #field-contact .field-description {
+  margin-left: 0;
+  text-align: left;
 }
 
 /* Move controls 50px left independently of their labels. The existing
