@@ -943,3 +943,17 @@ html {
 .gh-photo-block-preview__remove { position: absolute; top: 9px; right: 9px; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; border: 1px solid rgba(255,255,255,.75); border-radius: 50%; background: rgba(0,0,0,.8); color: #fff; font-size: 0; line-height: 0; cursor: pointer; }
 .gh-photo-block-preview__remove::before { content: "×"; display: block; font-family: Arial, sans-serif; font-size: 24px; line-height: 1; transform: translateY(1px); }
 .gh-photo-block-preview__remove:hover { background: #b42318; }
+
+
+/* The dashboard breadcrumb home link is fixed at 18px by Payload.
+   Give the Grace House crown 24px (33% larger) and enlarge its link box. */
+.step-nav__home {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.step-nav__home img {
+  width: 24px !important;
+  height: auto !important;
+  max-width: none !important;
+}
