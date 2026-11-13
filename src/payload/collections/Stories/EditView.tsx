@@ -91,7 +91,7 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .gh-story-gender-field,
 .gh-stories-edit .gh-story-date-field {
   display: grid !important;
-  grid-template-columns: 80px minmax(0, 360px);
+  grid-template-columns: 60px minmax(0, 360px);
   align-items: center;
   justify-content: start;
   justify-items: start;
