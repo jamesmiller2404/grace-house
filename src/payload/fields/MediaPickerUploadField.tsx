@@ -160,17 +160,14 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     };
   }, [open, showPreview]);
 
-  // Load the profile portrait details for the compact inline preview.
+  // Load selected media details only when the form stores an ID rather than
+  // a populated document. The displayed preview is derived from the current
+  // field value below, so this effect does not synchronously set state.
   useEffect(() => {
-    if ((!isProfilePhoto && !isPhotoBlock) || currentID === null) {
-      setProfilePhoto(null);
+    if ((!isProfilePhoto && !isPhotoBlock) || currentID === null || getMediaDocument(value)) {
       return;
     }
-    const existing = getMediaDocument(value);
-    if (existing) {
-      setProfilePhoto(existing);
-      return;
-    }
+
     const controller = new AbortController();
     const loadProfilePhoto = async () => {
       try {
@@ -182,12 +179,18 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
         const document = (await response.json()) as MediaDocument;
         if (document && document.id !== undefined) setProfilePhoto(document);
       } catch (fetchError) {
-        if (!(fetchError instanceof DOMException && fetchError.name === "AbortError")) setProfilePhoto(null);
+        if (!(fetchError instanceof DOMException && fetchError.name === "AbortError")) {
+          // Keep the current preview state; the ID check below prevents stale media from showing.
+        }
       }
     };
+
     void loadProfilePhoto();
     return () => controller.abort();
   }, [apiRoot, currentID, isPhotoBlock, isProfilePhoto, value]);
+
+  const displayedProfilePhoto = getMediaDocument(value) ??
+    (profilePhoto && String(profilePhoto.id) === String(currentID) ? profilePhoto : null);
 
   // Fetch the currently selected Media document when the form stores only its ID.
   useEffect(() => {
@@ -304,10 +307,10 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   return (
     <div className={`gh-media-picker-field${isProfilePhoto ? " gh-media-picker-field--profile-photo" : ""}${isPhotoBlock ? " gh-media-picker-field--photo-block" : ""}`} ref={fieldRef}>
       <UploadField {...props} />
-      {isPhotoBlock && profilePhoto && currentID !== null && (
+      {isPhotoBlock && displayedProfilePhoto && currentID !== null && (
         <div className="gh-photo-block-preview">
-          {(profilePhoto.url || profilePhoto.thumbnailURL) && (
-            <img src={profilePhoto.url || profilePhoto.thumbnailURL || ""} alt={profilePhoto.alt || profilePhoto.filename || "Selected story photo"} />
+          {(displayedProfilePhoto.url || displayedProfilePhoto.thumbnailURL) && (
+            <img src={displayedProfilePhoto.url || displayedProfilePhoto.thumbnailURL || ""} alt={displayedProfilePhoto.alt || displayedProfilePhoto.filename || "Selected story photo"} />
           )}
           <button
             type="button"
@@ -320,10 +323,10 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
           </button>
         </div>
       )}
-      {isProfilePhoto && profilePhoto && currentID !== null && (
+      {isProfilePhoto && displayedProfilePhoto && currentID !== null && (
         <div className="gh-profile-photo-preview">
-          {(profilePhoto.thumbnailURL || profilePhoto.url) && (
-            <img src={profilePhoto.thumbnailURL || profilePhoto.url || ""} alt={profilePhoto.alt || profilePhoto.filename || "Selected profile photo"} />
+          {(displayedProfilePhoto.thumbnailURL || displayedProfilePhoto.url) && (
+            <img src={displayedProfilePhoto.thumbnailURL || displayedProfilePhoto.url || ""} alt={displayedProfilePhoto.alt || displayedProfilePhoto.filename || "Selected profile photo"} />
           )}
           <button type="button" className="gh-profile-photo-preview__remove" onClick={() => { setValue(null); setProfilePhoto(null); }} aria-label="Remove profile photo" title="Remove profile photo">×</button>
         </div>
