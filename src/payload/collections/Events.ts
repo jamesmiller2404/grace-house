@@ -125,6 +125,7 @@ export const Events: CollectionConfig = {
             width: "33%",
             date: {
               pickerAppearance: "dayOnly",
+              displayFormat: "MMMM d, yyyy",
             },
           },
         },
