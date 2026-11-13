@@ -20,7 +20,7 @@ const TOOLTIP_TEXT: Record<string, string> = {
   stories:
     "The Lives Changed section: the people of Grace House — graduates, volunteers and staff — in their own words.",
   donate:
-    "The Donate page (/support): the title and intro, the PayPal and Venmo cards, the 501(c)(3) note and the content sections (generic headings and paragraphs).",
+    "The Donate page (/support): the title and intro, the PayPal and Venmo cards, the final note and the content sections (generic headings and paragraphs).",
   "custom-pages":
     'Spare pages you can use for anything. Tick "Show in header menu", name the page and add heading/paragraph/photo blocks — the page goes live at /pages/<page-name>.',
   "get-help-now":
