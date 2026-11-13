@@ -80,8 +80,9 @@ export const Events: CollectionConfig = {
           name: "title",
           type: "text",
           required: true,
-          label: false,
+          label: "Title",
           admin: {
+            className: "gh-event-primary-field",
             placeholder: "Title...",
             width: "75%",
           },
@@ -106,12 +107,13 @@ export const Events: CollectionConfig = {
       // the card and the event page simply skip the line when it's empty.
       name: "description",
       type: "textarea",
-      label: false,
+      label: "Description",
       admin: {
+        className: "gh-event-primary-field",
         placeholder: "One-line description...",
       },
     },
-    // Date + Start Time + End Time share one row in the mockup.
+    // Date is followed by the two time fields in their own stacked rows.
     {
       type: "row",
       fields: [
@@ -119,64 +121,61 @@ export const Events: CollectionConfig = {
           name: "date",
           type: "date",
           required: true,
-          label: false,
+          label: "Date",
           admin: {
+            className: "gh-event-primary-field",
             placeholder: "Date...",
-            width: "33%",
             date: {
               pickerAppearance: "dayOnly",
               displayFormat: "MMMM d, yyyy",
             },
           },
         },
-        {
-          // Optional: an event can be saved without a start time — the card
-          // and the event page simply skip the time range when it's empty.
-          ...TimeField({
-            name: "startTime",
-            type: "text",
-            label: false,
-            admin: {
-              placeholder: "Start Time...",
-              width: "33%",
-            },
-          }),
-        },
-        {
-          ...TimeField({
-            name: "endTime",
-            type: "text",
-            label: false,
-            admin: {
-              placeholder: "End Time...",
-              width: "33%",
-            },
-          }),
-        },
       ],
     },
+    ...TimeField({
+      name: "startTime",
+      type: "text",
+      label: "Start Time",
+      admin: {
+        className: "gh-event-primary-field",
+        placeholder: "Start Time...",
+      },
+    }),
+    ...TimeField({
+      name: "endTime",
+      type: "text",
+      label: "End Time",
+      admin: {
+        className: "gh-event-primary-field",
+        placeholder: "End Time...",
+      },
+    }),
     {
       name: "location",
       type: "text",
       required: true,
-      label: false,
+      label: "Location",
       admin: {
+        className: "gh-event-primary-field",
         placeholder: "Location...",
       },
     },
     {
       name: "city",
       type: "text",
-      label: false,
+      label: "Address",
       admin: {
+        className: "gh-event-primary-field",
         placeholder: "Address...",
       },
     },
     {
       name: "cost",
       type: "text",
-      label: false,
+      label: "Cost",
       admin: {
+        className: "gh-event-primary-field",
         placeholder: "Cost... (e.g. Free)",
       },
     },

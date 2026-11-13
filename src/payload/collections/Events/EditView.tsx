@@ -101,6 +101,37 @@ html[data-theme='light'] .gh-event-edit {
   right: 6px;
   top: -6px;
 }
+/* The eight primary event fields use a consistent horizontal label/input
+   layout. The Status field is intentionally excluded and keeps its existing
+   dedicated styling and position beside Title. */
+.gh-event-edit .gh-event-primary-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 12px;
+}
+.gh-event-edit .gh-event-primary-field > .field-label {
+  flex: 0 0 125px;
+  margin: 0;
+  white-space: nowrap;
+}
+.gh-event-edit .gh-event-primary-field > .field-type__wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+@media (max-width: 560px) {
+  .gh-event-edit .gh-event-primary-field {
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: 6px;
+  }
+  .gh-event-edit .gh-event-primary-field > .field-label {
+    flex-basis: auto;
+  }
+  .gh-event-edit .gh-event-primary-field > .field-type__wrap {
+    width: 100%;
+  }
+}
 /* Text boxes and textareas */
 .gh-event-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-event-edit textarea {
