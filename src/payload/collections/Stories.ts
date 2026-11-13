@@ -105,7 +105,7 @@ export const Stories: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
-      label: false,
+      label: "Name",
       admin: {
         className: "gh-story-name-field",
         placeholder: "Name...",
@@ -199,7 +199,7 @@ export const Stories: CollectionConfig = {
       // Stores a real date timestamp; formatStoryDate renders it on the site.
       name: "date",
       type: "date",
-      label: false,
+      label: "Date",
       admin: {
         className: "gh-story-date-field",
         placeholder: "Date...",
