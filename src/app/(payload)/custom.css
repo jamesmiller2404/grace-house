@@ -1067,10 +1067,9 @@ html {
   }
 }
 
-/* Double the helper text that explains the content-block ordering
-   on the Donate and Events collection edit pages. */
-.gh-donate-edit .array-field__row .field-description,
-.gh-event-edit .array-field__row .field-description {
+/* Add Block field helper text: make the shared block-editor explanation
+   more readable on every collection page without changing other descriptions. */
+.blocks-field .field-description {
   font-size: 2em !important;
   line-height: 1.4 !important;
 }
