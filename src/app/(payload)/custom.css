@@ -477,6 +477,12 @@ html {
   margin: 0 0 1.25rem;
 }
 
+/* The custom New Photo and Browse Media Library actions replace Payload's
+   native dropzone. Keep .upload__wrap visible for the selected-image preview. */
+.gh-media-picker-field .upload__dropzoneAndUpload {
+  display: none !important;
+}
+
 /* Visual Media browser used by the custom upload field. The native Payload
    UploadField remains rendered above it, so its upload and remove controls
    continue to work unchanged. */
