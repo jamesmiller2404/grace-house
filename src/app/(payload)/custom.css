@@ -479,7 +479,7 @@ html {
 
 /* The custom New Photo and Browse Media Library actions replace Payload's
    native dropzone. Keep .upload__wrap visible for the selected-image preview. */
-.gh-media-picker-field .upload__dropzoneAndUpload {
+.gh-media-picker-field .upload__dropzoneAndUpload > .dropzone {
   display: none !important;
 }
 
