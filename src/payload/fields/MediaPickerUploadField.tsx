@@ -65,6 +65,8 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     typeof relationTo === "string" ? relationTo : relationTo[0];
 
   const currentID = useMemo(() => getRelationshipID(value), [value]);
+  const isProfilePhoto = path === "image";
+  const [profilePhoto, setProfilePhoto] = useState<MediaDocument | null>(getMediaDocument(value));
 
   const apiRoot = useMemo(() => {
     const apiRoute = config.routes.api.replace(/\/$/, "");
@@ -156,6 +158,35 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open, showPreview]);
+
+  // Load the profile portrait details for the compact inline preview.
+  useEffect(() => {
+    if (!isProfilePhoto || currentID === null) {
+      setProfilePhoto(null);
+      return;
+    }
+    const existing = getMediaDocument(value);
+    if (existing) {
+      setProfilePhoto(existing);
+      return;
+    }
+    const controller = new AbortController();
+    const loadProfilePhoto = async () => {
+      try {
+        const response = await fetch(
+          `${apiRoot}/${encodeURIComponent(String(currentID))}?depth=0`,
+          { signal: controller.signal, headers: { Accept: "application/json" } },
+        );
+        if (!response.ok) return;
+        const document = (await response.json()) as MediaDocument;
+        if (document && document.id !== undefined) setProfilePhoto(document);
+      } catch (fetchError) {
+        if (!(fetchError instanceof DOMException && fetchError.name === "AbortError")) setProfilePhoto(null);
+      }
+    };
+    void loadProfilePhoto();
+    return () => controller.abort();
+  }, [apiRoot, currentID, isProfilePhoto, value]);
 
   // Fetch the currently selected Media document when the form stores only its ID.
   useEffect(() => {
@@ -270,8 +301,16 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   };
 
   return (
-    <div className="gh-media-picker-field" ref={fieldRef}>
+    <div className={`gh-media-picker-field${isProfilePhoto ? " gh-media-picker-field--profile-photo" : ""}`} ref={fieldRef}>
       <UploadField {...props} />
+      {isProfilePhoto && profilePhoto && currentID !== null && (
+        <div className="gh-profile-photo-preview">
+          {(profilePhoto.thumbnailURL || profilePhoto.url) && (
+            <img src={profilePhoto.thumbnailURL || profilePhoto.url || ""} alt={profilePhoto.alt || profilePhoto.filename || "Selected profile photo"} />
+          )}
+          <button type="button" className="gh-profile-photo-preview__remove" onClick={() => { setValue(null); setProfilePhoto(null); }} aria-label="Remove profile photo" title="Remove profile photo">×</button>
+        </div>
+      )}
       {!props.readOnly && (
         <button
           className="gh-media-picker__new-button"
