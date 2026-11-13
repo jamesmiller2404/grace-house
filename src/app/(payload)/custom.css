@@ -1016,49 +1016,52 @@ html {
   }
 }
 
-/* Start Time and End Time: four aligned items on one horizontal line —
-   Start label, Start input, End label, End input. Payload may attach the
-   custom class to the Row field wrapper or its inner row-fields container,
-   so cover both structures. */
-.gh-event-time-row,
-.gh-event-time-row > .row__fields,
-.gh-event-time-row > .row {
+/* Start/End Time row only. Payload collapses ordinary Row fields at
+   1024px, so explicitly keep this one row as a two-column grid. The custom
+   TimePicker Field component renders .field-type.text with a direct label
+   and a direct input wrapper (not Payload's .field-type__wrap); target that
+   actual structure rather than the standard-field markup. */
+.gh-event-time-row > .row__fields {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: start;
   column-gap: 24px;
   width: min(100%, 733px);
 }
-.gh-event-time-row > .row__fields,
-.gh-event-time-row > .row {
-  grid-column: 1 / -1;
+.gh-event-time-row > .row__fields > * {
+  width: 100% !important;
+  min-width: 0;
+  margin: 0 !important;
 }
-.gh-event-time-row .gh-event-primary-field {
+.gh-event-time-row .field-type.text {
   display: grid !important;
   grid-template-columns: 105px minmax(0, 1fr);
   align-items: center;
   column-gap: 8px;
-  width: 100% !important;
+  width: 100%;
   min-width: 0;
 }
-.gh-event-time-row .gh-event-primary-field > .field-label {
+.gh-event-time-row .field-type.text > .field-label {
   justify-self: start;
   margin: 0 !important;
   white-space: nowrap;
   text-align: left;
 }
-.gh-event-time-row .gh-event-primary-field > .field-type__wrap {
+.gh-event-time-row .field-type.text > div:not(.field-description) {
   width: 100%;
   min-width: 0;
 }
-.gh-event-time-row .gh-event-primary-field input {
+.gh-event-time-row .field-type.text > div:not(.field-description) > div {
   width: 100%;
+  min-width: 0;
+}
+.gh-event-time-row .field-type.text input {
+  width: 100% !important;
+  min-width: 0;
 }
 @media (max-width: 700px) {
-  .gh-event-time-row,
-  .gh-event-time-row > .row__fields,
-  .gh-event-time-row > .row {
-    grid-template-columns: minmax(0, 1fr);
+  .gh-event-time-row > .row__fields {
+    grid-template-columns: minmax(0, 1fr) !important;
     row-gap: 12px;
     width: 100%;
   }
