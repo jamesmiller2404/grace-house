@@ -265,6 +265,8 @@ html[data-theme='light'] .gh-event-edit {
 .gh-event-edit .upload__createNewToggler,
 .gh-event-edit .upload__listToggler {
   --bg-color: var(--gh-ev-upload);
+  position: relative;
+  left: -31px;
 }
 .gh-event-edit .upload__createNewToggler .btn__label,
 .gh-event-edit .upload__listToggler .btn__label {
