@@ -66,7 +66,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
 
   const currentID = useMemo(() => getRelationshipID(value), [value]);
   const isProfilePhoto = path === "image";
-  const isPhotoBlock = /^body\.\d+\.image$/.test(path);
+  const isPhotoBlock = /^(?:body|blocks)\.\d+\.image$/.test(path);
   const [profilePhoto, setProfilePhoto] = useState<MediaDocument | null>(getMediaDocument(value));
 
   const apiRoot = useMemo(() => {
