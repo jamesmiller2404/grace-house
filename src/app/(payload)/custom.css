@@ -954,6 +954,9 @@ html {
 /* Story Photo blocks use a roomy inline image preview instead of Payload's
    black upload card, with a clear remove control on the image itself. */
 .gh-media-picker-field--photo-block .upload__dropzoneAndUpload { display: none !important; }
+/* Hide Payload's selected-file thumbnail strip as well; the custom large preview
+   above it is the only selected-image preview for Photo blocks. */
+.gh-media-picker-field--photo-block .upload__wrap { display: none !important; }
 .gh-photo-block-preview { position: relative; display: block; width: min(100%, 560px); margin: 4px 0 8px; overflow: hidden; border: 1px solid #55555f; border-radius: 8px; background: #101014; }
 .gh-photo-block-preview img { display: block; width: 100%; max-height: 420px; object-fit: contain; }
 .gh-photo-block-preview__remove { position: absolute; top: 9px; right: 9px; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; border: 1px solid rgba(255,255,255,.75); border-radius: 50%; background: rgba(0,0,0,.8); color: #fff; font-size: 0; line-height: 0; cursor: pointer; }
