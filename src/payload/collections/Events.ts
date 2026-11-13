@@ -133,7 +133,7 @@ export const Events: CollectionConfig = {
         },
       ],
     },
-    ...TimeField({
+    TimeField({
       name: "startTime",
       type: "text",
       label: "Start Time",
@@ -142,7 +142,7 @@ export const Events: CollectionConfig = {
         placeholder: "Start Time...",
       },
     }),
-    ...TimeField({
+    TimeField({
       name: "endTime",
       type: "text",
       label: "End Time",
