@@ -93,7 +93,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     const simplifyNativeActions = () => {
       const buttons = root.querySelectorAll<HTMLElement>("button, a");
       buttons.forEach((button) => {
-        const label = (button.textContent || "").replace(/\\s+/g, " ").trim().toLowerCase();
+        const label = (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
         if (label === "create new" || label.includes("create new")) {
           button.hidden = true;
           button.setAttribute("aria-hidden", "true");
@@ -118,7 +118,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     const createButton = Array.from(
       root.querySelectorAll<HTMLElement>("button, a"),
     ).find((button) =>
-      (button.textContent || "").replace(/\\s+/g, " ").trim().toLowerCase().includes("create new"),
+      (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase().includes("create new"),
     );
     createButton?.click();
   };
@@ -270,8 +270,17 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   };
 
   return (
-    <div className="gh-media-picker-field">
+    <div className="gh-media-picker-field" ref={fieldRef}>
       <UploadField {...props} />
+      {!props.readOnly && (
+        <button
+          className="gh-media-picker__new-button"
+          type="button"
+          onClick={openNativeUpload}
+        >
+          New Photo
+        </button>
+      )}
 
       {!props.readOnly && (
         <button
