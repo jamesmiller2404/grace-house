@@ -194,7 +194,7 @@ html[data-theme='light'] .gh-event-edit {
 .gh-event-edit .field-type.select > .field-type__wrap,
 .gh-event-edit .gh-event-time-row .field-type.text > div:not(.field-description) {
   position: relative;
-  left: -50px;
+  left: -30px;
 }
 /* Upload field (event image): hide Payload's built-in "or drag and drop a
    file" hint — the mockup shows only the "Choose from existing" browse text. */
