@@ -463,6 +463,13 @@ html {
   margin: 0 !important;
 }
 
+/* Dashboard collection/global cards: remove the separate quick-create
+   action (the plus icon/link). The main card link still opens the collection. */
+.card a[href*="/admin/collections/"][href*="/create"],
+.card a[href*="/admin/globals/"][href*="/create"] {
+  display: none !important;
+}
+
 /* Return-to-dashboard action at the top of the account page. */
 .gh-account-dashboard-return {
   display: flex;
