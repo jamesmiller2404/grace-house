@@ -211,6 +211,20 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .upload__dragAndDropText {
   display: none !important;
 }
+/* Align the profile-photo actions with the left edge of the other
+   field labels. These buttons are direct children of the custom media picker,
+   so align the picker and both actions explicitly rather than shifting the
+   photo preview or the surrounding field. */
+.gh-stories-edit .gh-media-picker-field--profile-photo {
+  align-items: flex-start;
+  margin-left: 0;
+  padding-left: 0;
+}
+.gh-stories-edit .gh-media-picker-field--profile-photo > .gh-media-picker__new-button,
+.gh-stories-edit .gh-media-picker-field--profile-photo > .gh-media-picker__open-button {
+  align-self: flex-start;
+  margin-left: 0;
+}
 /* Upload field card shown after an image is chosen or changed: hide the
    "Edit" button (it opens the Media document drawer to edit the image) —
    only the "Remove" (x) button stays. Payload's upload field offers no
