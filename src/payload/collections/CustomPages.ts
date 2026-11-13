@@ -2,19 +2,11 @@ import type { CollectionConfig } from "payload";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 
 /**
- * The most custom pages the site supports. Exactly this many are seeded
- * ("Spare Page 1/2/3"); the create-access check below refuses new documents
- * once the collection is full, so the admin panel always shows the three
- * pre-wired pages an editor can put to work at any time.
- */
-export const MAX_CUSTOM_PAGES = 3;
-
-/**
- * A spare page an editor can fill with anything — headings, paragraphs,
- * photos and links — from the admin panel (/admin/collections/custom-pages).
+ * Custom pages an editor can create and manage without a fixed page limit.
+ * The initial "Spare Page 1/2/3" documents are seeded for convenience, but
+ * editors can create additional pages from the collection list.
  *
- * There are always exactly three documents ("Spare Page 1/2/3", seeded on
- * first init). Each starts disabled and invisible:
+ * Each page starts disabled and invisible:
  *
  *  - The page's URL (/pages/<page-name>) renders 404 while the "Show in
  *    header menu" checkbox is off.
@@ -40,17 +32,8 @@ export const CustomPages: CollectionConfig = {
 access: {
   read: () => true,
 
-  create: async ({ req }) => {
-    if (req.user?.role !== "admin" && req.user?.role !== "editor") {
-      return false;
-    }
-
-    const { totalDocs } = await req.payload.count({
-      collection: "custom-pages",
-    });
-
-    return totalDocs < MAX_CUSTOM_PAGES;
-  },
+  create: ({ req }) =>
+    req.user?.role === "admin" || req.user?.role === "editor",
 
   update: ({ req }) =>
     req.user?.role === "admin" || req.user?.role === "editor",
