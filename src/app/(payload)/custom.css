@@ -924,3 +924,11 @@ html {
   }
 }
 
+
+
+/* Compact Lives Changed portrait preview: replace Payload's large upload card. */
+.gh-media-picker-field--profile-photo .upload__dropzoneAndUpload { display: none !important; }
+.gh-profile-photo-preview { position: relative; display: inline-flex; width: 112px; height: 140px; overflow: hidden; border: 1px solid #55555f; border-radius: 8px; background: #101014; }
+.gh-profile-photo-preview img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gh-profile-photo-preview__remove { position: absolute; top: 5px; right: 5px; display: grid; width: 28px; height: 28px; padding: 0; place-items: center; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; background: rgba(0,0,0,.78); color: #fff; font-size: 22px; line-height: 1; cursor: pointer; }
+.gh-profile-photo-preview__remove:hover { background: #b42318; }
