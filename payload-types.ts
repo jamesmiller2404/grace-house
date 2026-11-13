@@ -195,7 +195,7 @@ export interface Event {
   imagePositionX?: number | null;
   imagePositionY?: number | null;
   /**
-   * Add headers, paragraphs and photos in the order they should appear.
+   * Add headers, paragraphs and photos in the order you would like them to appear.
    */
   blocks?:
     | {
@@ -356,7 +356,7 @@ export interface Story {
   imagePositionX?: number | null;
   imagePositionY?: number | null;
   /**
-   * Add headers, paragraphs and photos in the order they should appear. The first paragraph gets the drop cap on the site.
+   * Add headers, paragraphs and photos in the order you would like them to appear. The first paragraph gets the drop cap on the first letter.
    */
   body?:
     | {
@@ -516,7 +516,7 @@ export interface Donate {
     phoneHref?: string | null;
   };
   /**
-   * Add headers, paragraphs and photos in the order they should appear. Newlines render as line breaks (e.g. "Hours:\nWednesdays: 11am to 4pm."). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.
+   * Add headers, paragraphs and photos in the order you would like them to appear. Newlines render as line breaks (e.g. "Hours:\nWednesdays: 11am to 4pm."). To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text.
    */
   blocks?:
     | {
