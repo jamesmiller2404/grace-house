@@ -17,7 +17,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   useEffect(() => {
     const findActions = () => {
       const element = document.querySelector<HTMLElement>(
-        ".list-header__title-actions",
+        ".list-header__title-actions, .list-header__actions",
       );
       if (element) setActionsElement(element);
     };
