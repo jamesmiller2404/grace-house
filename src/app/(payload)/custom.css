@@ -834,17 +834,21 @@ html {
 
   .gh-media-picker__grid {
     grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(260px, auto);
     gap: 12px;
     padding: 8px 14px 16px;
   }
 
   .gh-media-picker__tile {
+    min-height: 260px;
     padding: 6px;
     border-radius: 8px;
   }
 
   .gh-media-picker__thumb {
     height: clamp(220px, 62vw, 300px);
+    min-height: 220px;
+    flex-shrink: 0;
   }
 
   .gh-media-picker__tile-title {
