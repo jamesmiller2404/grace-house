@@ -153,11 +153,11 @@ html[data-theme='light'] .gh-event-edit {
   background: var(--gh-ev-hover);
 }
 /* Keep the Title/Status row within the same 733px field width as the
-   other Event controls. Its two columns preserve the configured 75/25 split,
-   and the Status control fills its column so its right edge matches theirs. */
+   other Event controls. Give Status 45% of the row so its dropdown has
+   enough room to display every option label without clipping. */
 .gh-event-edit .field-type.row:has(#field-status) > .row__fields {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
   column-gap: 8px;
   width: min(100%, 733px);
 }
@@ -185,6 +185,16 @@ html[data-theme='light'] .gh-event-edit {
 }
 .gh-event-edit .field-type.select .rs__control {
   width: 100%;
+}
+
+/* Move controls 50px left independently of their labels. The existing
+   30px parent offset remains in place, so labels do not move again and all
+   input right edges remain aligned. Include the custom TimePicker wrapper. */
+.gh-event-edit .gh-event-primary-field > .field-type__wrap,
+.gh-event-edit .field-type.select > .field-type__wrap,
+.gh-event-edit .gh-event-time-row .field-type.text > div:not(.field-description) {
+  position: relative;
+  left: -50px;
 }
 /* Upload field (event image): hide Payload's built-in "or drag and drop a
    file" hint — the mockup shows only the "Choose from existing" browse text. */
