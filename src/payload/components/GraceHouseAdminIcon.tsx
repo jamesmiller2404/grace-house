@@ -12,7 +12,7 @@ export default function GraceHouseAdminIcon() {
       <img
         src="/images/crown.png"
         alt="Grace House"
-        style={{ display: "block", flex: "0 0 auto", height: "45px", objectFit: "contain", width: "auto" }}
+        style={{ display: "block", flex: "0 0 auto", height: "auto", maxWidth: "none", objectFit: "contain", width: "24px" }}
       />
       <span
         style={{
