@@ -430,7 +430,7 @@ export interface Story {
   createdAt: string;
 }
 /**
- * The Donate page (/support): the title and intro, the PayPal and Venmo cards, the 501(c)(3) note and the content sections (generic headings and paragraphs).
+ * The Donate page (/support): the title and intro, the PayPal and Venmo cards, the final note and the content sections (generic headings and paragraphs).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "donate".
