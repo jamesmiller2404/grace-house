@@ -976,3 +976,42 @@ html {
   height: auto !important;
   max-width: none !important;
 }
+
+
+/* Events collection field alignment — loaded globally so it applies to
+   both the Create and Edit screens. The field class is unique to Events. */
+.gh-event-primary-field {
+  display: grid !important;
+  grid-template-columns: 105px minmax(0, 620px);
+  align-items: center;
+  column-gap: 8px;
+  width: min(100%, 733px);
+}
+.gh-event-primary-field > .field-label {
+  justify-self: start;
+  margin: 0 !important;
+  text-align: left;
+  white-space: nowrap;
+}
+.gh-event-primary-field > .field-type__wrap {
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
+}
+.gh-event-primary-field .field-type__wrap input:not([type="checkbox"]):not([type="radio"]),
+.gh-event-primary-field .field-type__wrap textarea {
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .gh-event-primary-field {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 6px;
+    width: 100%;
+  }
+  .gh-event-primary-field > .field-label {
+    justify-self: start;
+  }
+  .gh-event-primary-field > .field-type__wrap {
+    width: 100%;
+  }
+}
