@@ -317,6 +317,12 @@ html[data-theme='light'] .gh-stories-edit {
   color: var(--gh-st-help);
 }
 
+/* Enlarge only the explainer beneath the Their Story heading. */
+.gh-stories-edit .gh-story-body-field > .field-description {
+  font-size: 2em !important;
+  line-height: 1.4;
+}
+
 
 /* Full-size section headings for optional profile content. The checkboxes
    double as section headings while preserving their existing top-level fields. */
