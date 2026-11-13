@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { UploadField, useConfig, useField } from "@payloadcms/ui";
 import type { UploadFieldClientProps } from "payload";
@@ -56,6 +56,7 @@ function getMediaDocument(value: unknown): MediaDocument | null {
  */
 const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const { config } = useConfig();
+  const fieldRef = useRef<HTMLDivElement>(null);
   const { path } = props;
   const { value, setValue } = useField({ path });
 
@@ -80,6 +81,47 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Present one clear path for each action: our "New Photo" button
+  // activates Payload's native upload/URL workflow, while the separate
+  // Browse Media Library button opens the visual picker below. Hide the
+  // native duplicate actions without replacing Payload's upload mechanics.
+  useEffect(() => {
+    const root = fieldRef.current;
+    if (!root) return;
+
+    const simplifyNativeActions = () => {
+      const buttons = root.querySelectorAll<HTMLElement>("button, a");
+      buttons.forEach((button) => {
+        const label = (button.textContent || "").replace(/\\s+/g, " ").trim().toLowerCase();
+        if (label === "create new" || label.includes("create new")) {
+          button.hidden = true;
+          button.setAttribute("aria-hidden", "true");
+          button.tabIndex = -1;
+        } else if (label.includes("choose from existing")) {
+          button.hidden = true;
+          button.setAttribute("aria-hidden", "true");
+          button.tabIndex = -1;
+        }
+      });
+    };
+
+    simplifyNativeActions();
+    const observer = new MutationObserver(simplifyNativeActions);
+    observer.observe(root, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
+  }, []);
+
+  const openNativeUpload = () => {
+    const root = fieldRef.current;
+    if (!root) return;
+    const createButton = Array.from(
+      root.querySelectorAll<HTMLElement>("button, a"),
+    ).find((button) =>
+      (button.textContent || "").replace(/\\s+/g, " ").trim().toLowerCase().includes("create new"),
+    );
+    createButton?.click();
+  };
 
   const openPicker = () => {
     setSearch("");
