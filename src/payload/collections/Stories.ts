@@ -270,7 +270,7 @@ export const Stories: CollectionConfig = {
         // a glance.
         initCollapsed: false,
         description:
-          "Add headers, paragraphs and photos in the order they should appear. The first paragraph gets the drop cap on the site.",
+          "Add headers, paragraphs and photos in the order you would like them to appear. The first paragraph gets the drop cap on the first letter.",
         // Friendly row labels ("1. Paragraph") instead of Payload's default
         // "Block 01" — see ./Stories/BodyRowLabel.tsx.
         components: {
