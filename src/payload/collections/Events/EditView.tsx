@@ -70,6 +70,14 @@ html[data-theme='light'] .gh-event-edit {
   margin-top: 12px;
   padding: 28px;
 }
+
+/* Shift each top-level Event field container left by 30px without moving
+   the surrounding frame or shifting nested fields a second time. This
+   includes the Title/Status row and the standalone fields below it. */
+.gh-event-edit .collection-edit__main-wrapper .field-type:not(.field-type .field-type) {
+  position: relative;
+  left: -30px;
+}
 .gh-event-edit .field-label {
   color: var(--gh-ev-text);
 }
