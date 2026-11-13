@@ -79,8 +79,15 @@ html[data-theme='light'] .gh-stories-edit {
   color: var(--gh-st-text);
 }
 
-/* Identity fields stay in one tidy vertical column even on wide screens.
-   Constrain control widths so the Name field does not stretch across the panel. */
+/* Keep the Name, Role, Gender, and Date controls left-aligned in the form. */
+.gh-stories-edit .gh-story-name-field,
+.gh-stories-edit .gh-story-role-field,
+.gh-stories-edit .gh-story-gender-field,
+.gh-stories-edit .gh-story-date-field {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  justify-self: start;
+}
 .gh-stories-edit .gh-story-name-field {
   width: 100%;
   max-width: 420px;
@@ -91,7 +98,6 @@ html[data-theme='light'] .gh-stories-edit {
   max-width: 100%;
 }
 .gh-stories-edit .gh-story-role-field,
-.gh-stories-edit .gh-story-role-label-field,
 .gh-stories-edit .gh-story-gender-field,
 .gh-stories-edit .gh-story-date-field {
   width: 100%;
@@ -101,29 +107,12 @@ html[data-theme='light'] .gh-stories-edit {
 .gh-stories-edit .gh-story-gender-field .field-type__wrap,
 .gh-stories-edit .gh-story-role-field .rs__control,
 .gh-stories-edit .gh-story-gender-field .rs__control,
-.gh-stories-edit .gh-story-role-label-field input {
+.gh-stories-edit .gh-story-date-field input {
   width: 100%;
   max-width: 100%;
 }
-/* Required-field marker (Name). This field keeps the mockup's placeholder-only
-   look (label: false in Stories.ts), so Payload's labeled-field asterisk never
-   renders for it. Paint the same marker here: a red * at the top-right corner
-   of the box, using Payload's own required-star color. The text input carries
-   the id on the input itself (input#field-name); the > .field-type__wrap child
-   hop keeps the selector from also matching the outer row wrapper. */
-.gh-stories-edit .field-type:has(> .field-type__wrap > input#field-name) {
-  position: relative;
-}
-.gh-stories-edit .field-type:has(> .field-type__wrap > input#field-name)::after {
-  color: var(--theme-error-500);
-  content: "*";
-  font-size: calc(var(--base-body-size, 13) * 1px);
-  font-weight: 700;
-  line-height: 1;
-  position: absolute;
-  right: 6px;
-  top: -6px;
-}
+/* Payload already renders the required marker for Name. Do not add a second
+   decorative asterisk with a pseudo-element. */
 /* Text boxes and textareas */
 .gh-stories-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-stories-edit textarea {
