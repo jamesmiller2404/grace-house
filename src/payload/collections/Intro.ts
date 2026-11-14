@@ -102,6 +102,7 @@ export const Intro: CollectionConfig = {
           type: "richText",
           label: false,
           admin: {
+            className: "gh-intro-paragraph-input",
             description: "Write the paragraph and use the link tool to add clickable links.",
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type === "Paragraph",
