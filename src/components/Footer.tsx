@@ -10,7 +10,7 @@ import { site } from "@/content/site";
  */
 
 /**
- * The contact details shown in the "{getHelpLabel}" column. The site layout passes
+ * The contact details shown in the "Get Help" column. The site layout passes
  * the values from the footer admin panel (/admin/globals/footer), which picks
  * them from the Contact Info panel; the phone and email fall back to the
  * static defaults in src/content/site.ts so the footer never breaks, even
@@ -45,14 +45,14 @@ export default function Footer({
   address,
   brandName = "Grace House",
   brandTagline = "NOR CAL",
-  missionText = "{missionText}",
+  missionText = "To see families restored and give hope to the hopeless.",
   memorialPhoto = "/images/pastorLonnie2a.jpg",
   memorialPhotoAlt = "Pastor Lonnie",
-  memorialName = "{memorialName}",
+  memorialName = "Lonnie W. Nix",
   memorialDates = "1956–2021",
   getHelpLabel = "Get Help",
-  hoursText = "{hoursText}",
-  intakesText = "{intakesText}",
+  hoursText = "Mon–Fri, 9am–5pm",
+  intakesText = "Intakes on weekdays only",
 }: FooterProps = {}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -68,7 +68,7 @@ export default function Footer({
             {brandTagline}
           </p>
           <p className="mt-5 max-w-xs text-cream/85 italic leading-relaxed mx-auto lg:mx-0">
-            To see families restored and give hope to the hopeless.
+            {missionText}
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export default function Footer({
           </button>
           <p className="font-memorial mt-5 text-center leading-snug text-white">
             <span className="block text-2xl font-medium tracking-[0.14em]">
-              Lonnie W. Nix
+              {memorialName}
             </span>
             <span className="mt-1 block text-lg italic tracking-[0.28em] text-white/90">
               {memorialDates}
@@ -102,7 +102,7 @@ export default function Footer({
         {/* Column 3: Get help */}
         <div className="lg:text-right">
           <h2 className="text-lift text-sm font-semibold tracking-widest uppercase">
-            Get Help
+            {getHelpLabel}
           </h2>
           <a
             href={phoneHref}
@@ -117,9 +117,9 @@ export default function Footer({
             {email}
           </a>
           <p className="mt-2 text-cream/85 leading-relaxed">
-            Mon–Fri, 9am–5pm
+            {hoursText}
             <br />
-            Intakes on weekdays only
+            {intakesText}
           </p>
           {address && (
             <p className="text-cream/85 mt-2 leading-relaxed">{address}</p>
@@ -145,8 +145,8 @@ export default function Footer({
             &times;
           </button>
           <Image
-            src="/images/pastorLonnie2a.jpg"
-            alt="Pastor Lonnie"
+            src={memorialPhoto}
+            alt={memorialPhotoAlt}
             width={1086}
             height={1086}
             className="max-h-[85vh] w-auto max-w-full rounded-lg shadow-2xl"
