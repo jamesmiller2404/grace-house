@@ -39,6 +39,7 @@ import { default as default_2cca5cc940b58ed57d9c98c3075e0d7d } from '../../../..
 import { default as default_3baff53da50f9c5ccb5f6c18d399aca9 } from '../../../../src/payload/collections/CustomPages/CancelToDashboardButton.tsx'
 import { default as default_17ca3f6b2636ac0759afd28b5fbd9451 } from '../../../../src/payload/collections/CustomPages/DoneToListButton.tsx'
 import { default as default_58e59a9c023b9646ed7227811de2e9fa } from '../../../../src/payload/collections/CustomPages/EditView.tsx'
+import { default as default_11ce7de4cdd6c161823ab65911e207a4 } from '../../../../src/payload/collections/GetHelpNow/PreviewField.tsx'
 import { default as default_bbb4d0cfca141ec99f8553120f15b14e } from '../../../../src/payload/collections/GetHelpNow/CancelToDashboardButton.tsx'
 import { default as default_5a6450c684af7c49de91b235b66cee93 } from '../../../../src/payload/collections/GetHelpNow/DoneToListButton.tsx'
 import { default as default_8a90e0f56f7d88e44ba6dd08ad3db4ca } from '../../../../src/payload/collections/GetHelpNow/EditView.tsx'
@@ -134,6 +135,7 @@ export const importMap = {
   "./src/payload/collections/CustomPages/CancelToDashboardButton.tsx#default": default_3baff53da50f9c5ccb5f6c18d399aca9,
   "./src/payload/collections/CustomPages/DoneToListButton.tsx#default": default_17ca3f6b2636ac0759afd28b5fbd9451,
   "./src/payload/collections/CustomPages/EditView.tsx#default": default_58e59a9c023b9646ed7227811de2e9fa,
+  "./src/payload/collections/GetHelpNow/PreviewField.tsx#default": default_11ce7de4cdd6c161823ab65911e207a4,
   "./src/payload/collections/GetHelpNow/CancelToDashboardButton.tsx#default": default_bbb4d0cfca141ec99f8553120f15b14e,
   "./src/payload/collections/GetHelpNow/DoneToListButton.tsx#default": default_5a6450c684af7c49de91b235b66cee93,
   "./src/payload/collections/GetHelpNow/EditView.tsx#default": default_8a90e0f56f7d88e44ba6dd08ad3db4ca,

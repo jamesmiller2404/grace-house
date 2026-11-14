@@ -1233,7 +1233,7 @@ export interface HomeLayout {
   createdAt?: string | null;
 }
 /**
- * The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for. Reorder rows by dragging, or with the '...' menu's Move Up / Move Down.
+ * The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-info".
@@ -1290,6 +1290,25 @@ export interface ContactInfo {
  */
 export interface Footer {
   id: number;
+  /**
+   * The main name shown at the top of the footer.
+   */
+  brandName?: string | null;
+  /**
+   * The smaller line displayed below the footer heading.
+   */
+  brandTagline?: string | null;
+  missionText?: string | null;
+  /**
+   * The photo displayed in the center column of the footer.
+   */
+  memorialPhoto?: (number | null) | Media;
+  memorialPhotoAlt?: string | null;
+  memorialName?: string | null;
+  memorialDates?: string | null;
+  getHelpLabel?: string | null;
+  hoursText?: string | null;
+  intakesText?: string | null;
   /**
    * The phone number shown in the footer. Pick one registered in the Contact Info panel, or enter a custom one.
    */
@@ -1369,6 +1388,16 @@ export interface ContactInfoSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  brandName?: T;
+  brandTagline?: T;
+  missionText?: T;
+  memorialPhoto?: T;
+  memorialPhotoAlt?: T;
+  memorialName?: T;
+  memorialDates?: T;
+  getHelpLabel?: T;
+  hoursText?: T;
+  intakesText?: T;
   phoneChoice?: T;
   phoneCustom?: T;
   emailChoice?: T;
