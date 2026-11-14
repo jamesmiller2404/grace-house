@@ -96,6 +96,17 @@ export const Footer: GlobalConfig = {
       admin: { description: "The photo displayed in the center column of the footer." },
     },
     {
+      type: "ui",
+      name: "memorialPhotoPreview",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/globals/Footer/MemorialPhotoPreview.tsx",
+          },
+        },
+      },
+    },
+    {
       name: "memorialPhotoAlt",
       type: "text",
       label: "Memorial photo description",
