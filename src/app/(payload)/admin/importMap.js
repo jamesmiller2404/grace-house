@@ -21,6 +21,7 @@ import { default as default_1aef17eeafcdfd11df80e2f285bac85f } from '../../../..
 import { default as default_015db43890ec4fd0759f106472cfb6a7 } from '../../../../src/payload/collections/MissionPage/CancelToDashboardButton.tsx'
 import { default as default_9b60535ca21064260bab2c5008a55b0c } from '../../../../src/payload/collections/MissionPage/DoneToListButton.tsx'
 import { default as default_b3783d9fad9fa582346bbc830ab9a03d } from '../../../../src/payload/collections/MissionPage/EditView.tsx'
+import { default as default_0e6ae7dd37d9e40ca7cf61129450b3c7 } from '../../../../src/payload/collections/Hero/PreviewField.tsx'
 import { default as default_4d09e2f6f2f389b7998294f488a949c3 } from '../../../../src/payload/collections/Hero/CancelToDashboardButton.tsx'
 import { default as default_80a0d172a23972da09ad94e08fdfb662 } from '../../../../src/payload/collections/Hero/DoneToListButton.tsx'
 import { default as default_f86ff8bf4def5733eab024d2a90762d5 } from '../../../../src/payload/collections/Hero/EditView.tsx'
@@ -121,6 +122,7 @@ export const importMap = {
   "./src/payload/collections/MissionPage/CancelToDashboardButton.tsx#default": default_015db43890ec4fd0759f106472cfb6a7,
   "./src/payload/collections/MissionPage/DoneToListButton.tsx#default": default_9b60535ca21064260bab2c5008a55b0c,
   "./src/payload/collections/MissionPage/EditView.tsx#default": default_b3783d9fad9fa582346bbc830ab9a03d,
+  "./src/payload/collections/Hero/PreviewField.tsx#default": default_0e6ae7dd37d9e40ca7cf61129450b3c7,
   "./src/payload/collections/Hero/CancelToDashboardButton.tsx#default": default_4d09e2f6f2f389b7998294f488a949c3,
   "./src/payload/collections/Hero/DoneToListButton.tsx#default": default_80a0d172a23972da09ad94e08fdfb662,
   "./src/payload/collections/Hero/EditView.tsx#default": default_f86ff8bf4def5733eab024d2a90762d5,
