@@ -9,6 +9,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" varchar PRIMARY KEY NOT NULL,
   	"type" "enum_intro_blocks_type" DEFAULT 'Paragraph' NOT NULL,
   	"text" varchar,
+  	"content" jsonb,
   	"image_id" integer,
   	"caption" varchar
   );
@@ -45,8 +46,11 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   CREATE TYPE "public"."enum_intro_link_color" AS ENUM('cream', 'sand', 'gold', 'terra', 'lift', 'anchor', 'ink', 'white');
   CREATE TYPE "public"."enum_intro_link_hover_color" AS ENUM('cream', 'sand', 'gold', 'terra', 'lift', 'anchor', 'ink', 'white');
   DROP TABLE "intro_blocks" CASCADE;
-  ALTER TABLE "intro" ADD COLUMN "heading" varchar NOT NULL;
-  ALTER TABLE "intro" ADD COLUMN "body" varchar NOT NULL;
+  ALTER TABLE "intro" ADD COLUMN "heading" varchar;
+  ALTER TABLE "intro" ADD COLUMN "body" varchar;
+  UPDATE "intro" SET "heading" = 'What is Grace House', "body" = '' WHERE "heading" IS NULL OR "body" IS NULL;
+  ALTER TABLE "intro" ALTER COLUMN "heading" SET NOT NULL;
+  ALTER TABLE "intro" ALTER COLUMN "body" SET NOT NULL;
   ALTER TABLE "intro" ADD COLUMN "pull_quote" varchar;
   ALTER TABLE "intro" ADD COLUMN "link_label" varchar;
   ALTER TABLE "intro" ADD COLUMN "link_href" varchar;
