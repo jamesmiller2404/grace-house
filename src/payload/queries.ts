@@ -832,8 +832,6 @@ function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
         {
           type: block.type === "Heading" ? "heading" : "paragraph",
           text,
-          linkLabel: block.linkLabel ?? undefined,
-          linkHref: block.linkHref ?? undefined,
         },
       ];
     }),
