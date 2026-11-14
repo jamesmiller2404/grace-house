@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { IntroBlock } from "@/content/intro";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 
@@ -42,7 +43,17 @@ export default function Welcome({ title, blocks }: WelcomeProps) {
               </figure>
             );
           }
-          return splitBlockParagraphs(block.text).map((paragraph, paragraphIndex) => (
+          if (block.content) {
+            return (
+              <div
+                key={index}
+                className="text-ink/90 mt-6 max-w-[70ch] text-lg leading-relaxed"
+              >
+                <RichText data={block.content as never} />
+              </div>
+            );
+          }
+          return splitBlockParagraphs(block.text ?? "").map((paragraph, paragraphIndex) => (
             <p
               key={index + "-" + paragraphIndex}
               className="text-ink/90 mt-6 max-w-[70ch] whitespace-pre-line text-lg leading-relaxed"
