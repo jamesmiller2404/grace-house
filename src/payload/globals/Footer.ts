@@ -69,6 +69,17 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      type: "ui",
+      name: "footerPreview",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/globals/Footer/PreviewField.tsx",
+          },
+        },
+      },
+    },
+    {
       name: "brandName",
       type: "text",
       label: "Footer heading",
