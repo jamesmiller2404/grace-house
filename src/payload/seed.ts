@@ -223,7 +223,7 @@ export async function seedIntro(payload: Payload): Promise<void> {
     const text = block.text ?? "";
     return {
       type: "Paragraph" as const,
-      content: {
+      content: ({
         root: {
           type: "root",
           format: "",
@@ -249,7 +249,7 @@ export async function seedIntro(payload: Payload): Promise<void> {
             }],
           })),
         },
-      },
+      } as never),
     };
   });
 
