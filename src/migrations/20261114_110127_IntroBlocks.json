@@ -916,6 +916,12 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
+        },
+        "content": {
+          "name": "content",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
