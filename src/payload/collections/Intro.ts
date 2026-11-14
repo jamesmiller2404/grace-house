@@ -1,54 +1,27 @@
 import type { CollectionConfig } from "payload";
-import { introColorLabels, introColorTokens } from "@/content/intro";
+import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 
 /**
- * Front-page Intro — the Payload version of the "What is Grace House" section
- * in `src/content/homePage.ts` (each field maps 1:1 to that section's props).
- *
- * The admin panel (/admin/collections/intro) gives an editor:
- *  - the title heading ("What is Grace House")
- *  - the body text
- *  - the pull quote (the italic tail of the body sentence)
- *  - the link text and where it points
- *  - the section background, text, link and link-hover colors
- *
- * Only one document should exist here; the site reads the first one.
+ * The "What is Grace House" homepage section. Editors set one rendered title
+ * and add standard Heading, Paragraph and Photo blocks in display order.
+ * Only one document should exist; the site reads the first one.
  */
-
-/** The four color fields offer the same set of design-token choices. */
-const colorOptions = introColorTokens.map((value) => ({
-  label: introColorLabels[value],
-  value,
-}));
-
 export const Intro: CollectionConfig = {
   slug: "intro",
   labels: {
     singular: "What is Grace House",
     plural: "What is Grace House",
   },
-  // Public site content — allow anonymous reads of the REST API.
-  // (The site itself reads through the Local API, which bypasses
-  // access control; this opens the public /api/intro endpoint.)
   access: {
     read: () => true,
-    create: ({ req }) =>
-      req.user?.role === "admin" || req.user?.role === "editor",
-    update: ({ req }) =>
-      req.user?.role === "admin" || req.user?.role === "editor",
-    delete: ({ req }) =>
-      req.user?.role === "admin" || req.user?.role === "editor",
+    create: ({ req }) => req.user?.role === "admin" || req.user?.role === "editor",
+    update: ({ req }) => req.user?.role === "admin" || req.user?.role === "editor",
+    delete: ({ req }) => req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
-    useAsTitle: "heading",
-    defaultColumns: ["heading", "updatedAt"],
-    description:
-      'The "What is Grace House" section on the home page: its heading, body text, link and colors.',
-    // Custom Edit view wrapper that paints the mockup frame
-    // (photoshop_assets/adminPanelMockup1.png): the same #111115 page
-    // background, rounded #2d2d33 panel around the fields and #101012 input
-    // boxes as the Events and Hero create/edit pages. The same elements are
-    // repainted for the Light theme.
+    useAsTitle: "title",
+    defaultColumns: ["title", "updatedAt"],
+    description: 'The "What is Grace House" section on the home page.',
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
@@ -62,110 +35,96 @@ export const Intro: CollectionConfig = {
           },
         },
       },
-      // "Cancel" and "Done" buttons next to Save on the create/edit pages —
-      // they render in the document controls bar (before the Save button, in
-      // array order) so the bar reads "Cancel | Done | Save", exactly like
-      // the Events and Hero pages. Cancel returns to the admin dashboard;
-      // Done returns to the Intro list.
       edit: {
         beforeDocumentControls: [
-          {
-            path: "./src/payload/collections/Intro/CancelToDashboardButton.tsx",
-          },
-          {
-            path: "./src/payload/collections/Intro/DoneToListButton.tsx",
-          },
+          { path: "./src/payload/collections/Intro/CancelToDashboardButton.tsx" },
+          { path: "./src/payload/collections/Intro/DoneToListButton.tsx" },
         ],
       },
     },
   },
   fields: [
     {
-      name: "heading",
+      name: "title",
       type: "text",
       required: true,
-      // Placeholder-only look, like the Events and Hero forms (the required
-      // marker is painted by the Edit view — see ./Intro/EditView.tsx).
       label: false,
       admin: {
-        placeholder: "Heading...",
-        description: 'The section heading (e.g. "What is Grace House").',
+        placeholder: "Page title...",
+        description: "The title displayed above this section's content.",
       },
     },
     {
-      name: "body",
-      type: "textarea",
-      required: true,
-      label: false,
+      name: "blocks",
+      type: "array",
+      labels: { singular: "Block", plural: "Blocks" },
       admin: {
-        placeholder: "Body text...",
-        description: "The main paragraph shown under the heading.",
-      },
-    },
-    {
-      name: "pullQuote",
-      type: "text",
-      label: false,
-      admin: {
-        placeholder: "Pull quote...",
+        initCollapsed: false,
         description:
-          'Optional italic tail of the body sentence (e.g. "to see families restored and give hope to the hopeless.").',
+          "Add headings, paragraphs and photos in the order they should appear. A Photo block shows an image from the Media collection.",
+        components: {
+          RowLabel: {
+            path: "./src/payload/collections/CustomPages/BlockRowLabel.tsx",
+          },
+        },
       },
-    },
-    {
-      name: "linkLabel",
-      type: "text",
-      label: false,
-      admin: {
-        placeholder: "Link label...",
-        description:
-          'The text of the link below the paragraph (e.g. "Read our mission").',
-      },
-    },
-    {
-      name: "linkHref",
-      type: "text",
-      label: false,
-      admin: {
-        placeholder: "Link URL...",
-        description: 'Where the link points (e.g. "/about/mission").',
-      },
-    },
-    {
-      name: "bgColor",
-      type: "select",
-      defaultValue: "cream",
-      options: colorOptions,
-      admin: {
-        description: "The section background color.",
-      },
-    },
-    {
-      name: "textColor",
-      type: "select",
-      defaultValue: "anchor",
-      options: colorOptions,
-      admin: {
-        description: "The color of the heading and body text.",
-      },
-    },
-    {
-      name: "linkColor",
-      type: "select",
-      defaultValue: "terra",
-      options: colorOptions,
-      admin: {
-        description: "The color of the link.",
-      },
-    },
-    {
-      name: "linkHoverColor",
-      type: "select",
-      defaultValue: "lift",
-      options: colorOptions,
-      admin: {
-        description: "The color of the link while the pointer is over it.",
-      },
+      fields: [
+        {
+          ...BlockTypeButtonsField({
+            name: "type",
+            options: [
+              { label: "Header", value: "Heading" },
+              { label: "Paragraph", value: "Paragraph" },
+              { label: "Photo", value: "Photo" },
+            ],
+            defaultValue: "Paragraph",
+            required: true,
+          }),
+        },
+        {
+          name: "text",
+          type: "textarea",
+          label: false,
+          admin: {
+            placeholder: "Text...",
+            description: "The header or paragraph text.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type !== "Photo",
+            components: {
+              Field: {
+                path: "./src/payload/fields/BlockTextInput/Field.tsx",
+              },
+            },
+          },
+        },
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
+            className: "gh-block-photo-input",
+            description: "The photo shown by this block.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Photo",
+          },
+        },
+        {
+          name: "caption",
+          type: "text",
+          label: "Caption (optional)",
+          admin: {
+            placeholder: "Caption...",
+            description: "Text shown under the photo.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Photo",
+          },
+        },
+      ],
     },
   ],
 };
