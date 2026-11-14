@@ -83,6 +83,17 @@ access: {
   },
   fields: [
     {
+      name: "customPagePreview",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/CustomPages/PreviewField.tsx",
+          },
+        },
+      },
+    },
+    {
       // Off by default — a spare page stays hidden (404, no menu link) until
       // the editor turns it on. Ticking it and saving publishes both the page
       // and its "More" dropdown link.
