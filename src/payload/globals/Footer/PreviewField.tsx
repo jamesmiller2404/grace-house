@@ -9,7 +9,7 @@ type Data = Record<string, unknown>;
 const record = (v: unknown): Data => v && typeof v === "object" && !Array.isArray(v) ? v as Data : {};
 const text = (v: unknown, fallback = ""): string => typeof v === "string" ? v : fallback;
 const rows = (v: unknown): Data[] => Array.isArray(v) ? v.map(record) : [];
-const phoneHref = (v: string) => `tel:${v.replace(/[^\\d+]/g, "")}`;
+const phoneHref = (v: string) => `tel:${v.replace(/[^\d+]/g, "")}`;
 
 function selectedContact(choice: unknown, custom: unknown, registered: Data[], fallback: string) {
   const key = text(choice);
