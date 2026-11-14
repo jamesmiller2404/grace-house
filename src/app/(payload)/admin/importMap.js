@@ -77,6 +77,8 @@ import { default as default_9fe6a6fc6eeda119f61b00cb1da3fa74 } from '../../../..
 import { default as default_54f1c6c3a43494333fb0af7bc55fc5c7 } from '../../../../src/payload/globals/ContactInfo/CancelToDashboardButton.tsx'
 import { default as default_fbef3a9f78b89c9bef00041d2511dcff } from '../../../../src/payload/globals/ContactInfo/DoneToDashboardButton.tsx'
 import { default as default_23ec79c596e257b85332156ded05ce90 } from '../../../../src/payload/globals/ContactInfo/EditView.tsx'
+import { default as default_d241165cb5c83e3ec2d07bcfe6049562 } from '../../../../src/payload/globals/Footer/PreviewField.tsx'
+import { default as default_3b057c39560113c0448acf41a239c4f4 } from '../../../../src/payload/globals/Footer/MemorialPhotoPreview.tsx'
 import { default as default_d157d8df42a1320ad842e0b0c59b6996 } from '../../../../src/payload/fields/ContactSelect/AddressField.tsx'
 import { default as default_6223d9783f0348abfa2d228d3182c222 } from '../../../../src/payload/globals/Footer/CancelToDashboardButton.tsx'
 import { default as default_735fc14cf0f8527882a31dd8143c8477 } from '../../../../src/payload/globals/Footer/DoneToDashboardButton.tsx'
@@ -173,6 +175,8 @@ export const importMap = {
   "./src/payload/globals/ContactInfo/CancelToDashboardButton.tsx#default": default_54f1c6c3a43494333fb0af7bc55fc5c7,
   "./src/payload/globals/ContactInfo/DoneToDashboardButton.tsx#default": default_fbef3a9f78b89c9bef00041d2511dcff,
   "./src/payload/globals/ContactInfo/EditView.tsx#default": default_23ec79c596e257b85332156ded05ce90,
+  "./src/payload/globals/Footer/PreviewField.tsx#default": default_d241165cb5c83e3ec2d07bcfe6049562,
+  "./src/payload/globals/Footer/MemorialPhotoPreview.tsx#default": default_3b057c39560113c0448acf41a239c4f4,
   "./src/payload/fields/ContactSelect/AddressField.tsx#default": default_d157d8df42a1320ad842e0b0c59b6996,
   "./src/payload/globals/Footer/CancelToDashboardButton.tsx#default": default_6223d9783f0348abfa2d228d3182c222,
   "./src/payload/globals/Footer/DoneToDashboardButton.tsx#default": default_735fc14cf0f8527882a31dd8143c8477,
