@@ -89,12 +89,22 @@ export const Intro: CollectionConfig = {
             placeholder: "Text...",
             description: "The header or paragraph text.",
             condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type !== "Photo",
+              (siblingData as { type?: string } | null)?.type === "Heading",
             components: {
               Field: {
                 path: "./src/payload/fields/BlockTextInput/Field.tsx",
               },
             },
+          },
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
+          admin: {
+            description: "Write the paragraph and use the link tool to add clickable links.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Paragraph",
           },
         },
         {
