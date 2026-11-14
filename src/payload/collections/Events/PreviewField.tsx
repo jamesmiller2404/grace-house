@@ -75,7 +75,7 @@ export default function EventsPreviewField() {
       cost: text(data.cost, "Free"), image: imageFor(data.image),
       imagePositionX: typeof data.imagePositionX === "number" ? data.imagePositionX : 50,
       imagePositionY: typeof data.imagePositionY === "number" ? data.imagePositionY : 50,
-      blocks: rows(data.blocks).flatMap((block) => {
+      blocks: rows(data.blocks).flatMap<EventDetail["blocks"][number]>((block): EventDetail["blocks"][number][] => {
         if (block.type === "Photo") {
           const image = imageFor(block.image);
           return image ? [{ type: "Photo" as const, image, caption: text(block.caption) }] : [];
