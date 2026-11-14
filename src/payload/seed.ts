@@ -207,18 +207,57 @@ export async function seedHero(payload: Payload): Promise<void> {
  * collection is empty.
  */
 export async function seedIntro(payload: Payload): Promise<void> {
+  const blocks = introDefaults.blocks.map((block) => {
+    if (block.type === "heading") {
+      return { type: "Heading" as const, text: block.text };
+    }
+    if (block.type === "photo") {
+      return {
+        type: "Photo" as const,
+        caption: block.caption,
+      };
+    }
+    if (block.content) {
+      return { type: "Paragraph" as const, content: block.content };
+    }
+    const text = block.text ?? "";
+    return {
+      type: "Paragraph" as const,
+      content: {
+        root: {
+          type: "root",
+          format: "",
+          indent: 0,
+          direction: "ltr",
+          version: 1,
+          children: text.split(/\n\s*\n/).filter(Boolean).map((paragraph) => ({
+            type: "paragraph",
+            format: "",
+            indent: 0,
+            direction: "ltr",
+            textFormat: 0,
+            textStyle: "",
+            version: 1,
+            children: [{
+              type: "text",
+              text: paragraph,
+              format: 0,
+              detail: 0,
+              mode: "normal",
+              style: "",
+              version: 1,
+            }],
+          })),
+        },
+      },
+    };
+  });
+
   await payload.create({
     collection: "intro",
     data: {
-      heading: introDefaults.heading,
-      body: introDefaults.body,
-      pullQuote: introDefaults.pullQuote,
-      linkLabel: introDefaults.linkLabel,
-      linkHref: introDefaults.linkHref,
-      bgColor: introDefaults.bgColor,
-      textColor: introDefaults.textColor,
-      linkColor: introDefaults.linkColor,
-      linkHoverColor: introDefaults.linkHoverColor,
+      title: introDefaults.title,
+      blocks,
     },
   });
 
