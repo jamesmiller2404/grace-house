@@ -116,6 +116,122 @@ html[data-theme='light'] .gh-footer-edit {
 .gh-footer-edit .field-description {
   color: var(--gh-ft-help);
 }
+
+/* Footer preview modal — intentionally matches the Lives Changed Profile Preview. */
+.gh-footer-edit .gh-story-preview-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 0 0 20px;
+}
+.gh-footer-edit .gh-story-preview-launch {
+  border: 1px solid #000;
+  border-radius: 6px;
+  background: #00aeef;
+  color: #000;
+  padding: 9px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gh-footer-edit .gh-story-preview-launch:hover { background: #28bdf3; }
+.gh-footer-edit .gh-story-preview-hint {
+  color: #bdbdc5;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.gh-footer-edit .gh-story-preview-backdrop {
+  position: fixed;
+  z-index: 100000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.82);
+}
+.gh-footer-edit .gh-story-preview-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(1500px, 100%);
+  height: min(94vh, 1100px);
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #55555f;
+  border-radius: 12px;
+  background: #25252b;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+}
+.gh-footer-edit .gh-story-preview-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #19191e;
+  color: #f0f0f3;
+}
+.gh-footer-edit .gh-story-preview-heading { display: flex; flex-direction: column; gap: 2px; }
+.gh-footer-edit .gh-story-preview-heading strong { font-size: 1rem; }
+.gh-footer-edit .gh-story-preview-heading span { color: #b0b0ba; font-size: 0.78rem; }
+.gh-footer-edit .gh-story-preview-actions { display: flex; align-items: center; gap: 12px; }
+.gh-footer-edit .gh-story-preview-device-switch {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #55555f;
+  border-radius: 7px;
+}
+.gh-footer-edit .gh-story-preview-device-switch button,
+.gh-footer-edit .gh-story-preview-close {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 7px 11px;
+  background: transparent;
+  color: #f0f0f3;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.gh-footer-edit .gh-story-preview-device-switch button.is-active {
+  background: #00aeef;
+  color: #080808;
+  font-weight: 700;
+}
+.gh-footer-edit .gh-story-preview-close { border-color: #6b6b75; background: #393940; }
+.gh-footer-edit .gh-story-preview-close:hover { background: #4b4b54; }
+.gh-footer-edit .gh-story-preview-stage {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+  background: #505057;
+}
+.gh-footer-edit .gh-story-preview-frame {
+  display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  min-height: 500px;
+  max-width: 100%;
+  border: 0;
+  border-radius: 5px;
+  background: #e7d8c3;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.28);
+}
+.gh-footer-edit .gh-story-preview-stage.is-mobile .gh-story-preview-frame { width: 390px; }
+@media (max-width: 640px) {
+  .gh-footer-edit .gh-story-preview-backdrop { padding: 0; }
+  .gh-footer-edit .gh-story-preview-dialog { width: 100%; height: 100%; border: 0; border-radius: 0; }
+  .gh-footer-edit .gh-story-preview-toolbar { align-items: flex-start; flex-direction: column; }
+  .gh-footer-edit .gh-story-preview-actions { width: 100%; justify-content: space-between; }
+  .gh-footer-edit .gh-story-preview-stage { padding: 8px; }
+  .gh-footer-edit .gh-story-preview-frame { min-height: 420px; }
+}
+
 `;
 
 type EditViewProps = Parameters<typeof DefaultEditView>[0];
