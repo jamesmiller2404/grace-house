@@ -28,7 +28,7 @@ export const ContactInfo: GlobalConfig = {
   },
   admin: {
     description:
-      "The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for. Reorder rows by dragging, or with the '...' menu's Move Up / Move Down.",
+      "The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for.",
     // Custom Edit view wrapper that paints the admin panel style the other
     // panels use (photoshop_assets/adminPanelMockup1.png and
     // adminPanelMockup1_homePageLayout.png): the #111115 page background and
