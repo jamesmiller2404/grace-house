@@ -2,6 +2,7 @@ import { default as default_e889d5011edb8e6606ecd09103a08b96 } from '../../../..
 import { default as default_0dda18def457283302775b43747f5a9f } from '../../../../src/payload/collections/UsersCancelToDashboardButton.tsx'
 import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../../src/payload/collections/UsersDoneToListButton.tsx'
 import { default as default_d1e94d5abbb0ceb34ab990b1be6f4ecc } from '../../../../src/payload/collections/UsersEditView.tsx'
+import { default as default_43c2496c945fc80646ed8dddcd907451 } from '../../../../src/payload/collections/Events/PreviewField.tsx'
 import { default as default_8fb18f05fb7e1dc39f9754122148e2b2 } from '../../../../src/payload/fields/StatusSelect/Field.tsx'
 import { default as default_d42955c86c375058446f6a8864360da8 } from '../../../../src/payload/fields/TimePicker/Field.tsx'
 import { default as default_1e4b0eec1bbec3a72273beec88ca3055 } from '../../../../src/payload/fields/MediaPickerUploadField.tsx'
@@ -100,6 +101,7 @@ export const importMap = {
   "./src/payload/collections/UsersCancelToDashboardButton.tsx#default": default_0dda18def457283302775b43747f5a9f,
   "./src/payload/collections/UsersDoneToListButton.tsx#default": default_406610a7604472cb1b28c015b6a61a3f,
   "./src/payload/collections/UsersEditView.tsx#default": default_d1e94d5abbb0ceb34ab990b1be6f4ecc,
+  "./src/payload/collections/Events/PreviewField.tsx#default": default_43c2496c945fc80646ed8dddcd907451,
   "./src/payload/fields/StatusSelect/Field.tsx#default": default_8fb18f05fb7e1dc39f9754122148e2b2,
   "./src/payload/fields/TimePicker/Field.tsx#default": default_d42955c86c375058446f6a8864360da8,
   "./src/payload/fields/MediaPickerUploadField.tsx#default": default_1e4b0eec1bbec3a72273beec88ca3055,
