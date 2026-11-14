@@ -1073,3 +1073,23 @@ html {
   font-size: 2em !important;
   line-height: 1.4 !important;
 }
+
+
+/* Intro Paragraph Lexical editor: use the same black input surface as Heading. */
+.gh-intro-paragraph-input .editor-container,
+.gh-intro-paragraph-input .lexical-editor,
+.gh-intro-paragraph-input [contenteditable="true"] {
+  background-color: #080808 !important;
+  color: #f5f5f5 !important;
+}
+
+.gh-intro-paragraph-input [contenteditable="true"] {
+  min-height: 80px;
+  padding: 16px 30px !important;
+  border-radius: 8px;
+}
+
+.gh-intro-paragraph-input [contenteditable="true"] p,
+.gh-intro-paragraph-input [contenteditable="true"] li {
+  color: #f5f5f5 !important;
+}
