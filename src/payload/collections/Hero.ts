@@ -67,6 +67,17 @@ export const Hero: CollectionConfig = {
   },
   fields: [
     {
+      name: "heroPreview",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/Hero/PreviewField.tsx",
+          },
+        },
+      },
+    },
+    {
       name: "heading",
       type: "text",
       required: true,
