@@ -1,78 +1,56 @@
-import Link from "next/link";
-import {
-  introBgClass,
-  introDefaults,
-  introHoverTextClass,
-  introTextClass,
-  type IntroColor,
-} from "@/content/intro";
+import Image from "next/image";
+import type { IntroBlock } from "@/content/intro";
+import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 
 export type WelcomeProps = {
-  heading: string;
-  body: string;
-  /** Italic tail of the body sentence (e.g. "to see families restored..."). */
-  pullQuote?: string;
-  /** The link below the paragraph: its text and where it points. */
-  linkLabel?: string;
-  linkHref?: string;
-  /**
-   * Design-token names for the section's colors (see src/content/intro.ts).
-   * Unknown or missing values fall back to the section defaults.
-   */
-  bgColor?: string;
-  textColor?: string;
-  linkColor?: string;
-  linkHoverColor?: string;
+  title: string;
+  blocks: IntroBlock[];
 };
 
-/** Look up a token's Tailwind class, falling back to the section default. */
-function classFor(
-  map: Record<IntroColor, string>,
-  token: string | undefined,
-  fallback: IntroColor,
-): string {
-  return map[token as IntroColor] ?? map[fallback];
-}
-
-export default function Welcome({
-  heading,
-  body,
-  // Text fields are rendered exactly as given: an empty pull quote shows
-  // nothing and an empty link (text or href) hides the link entirely — the
-  // default copy in src/content/intro.ts is never substituted for them.
-  pullQuote,
-  linkLabel,
-  linkHref,
-  bgColor,
-  textColor,
-  linkColor,
-  linkHoverColor,
-}: WelcomeProps) {
-  const bg = classFor(introBgClass, bgColor, introDefaults.bgColor);
-  const text = classFor(introTextClass, textColor, introDefaults.textColor);
-  const link = classFor(introTextClass, linkColor, introDefaults.linkColor);
-  const linkHover = classFor(
-    introHoverTextClass,
-    linkHoverColor,
-    introDefaults.linkHoverColor,
-  );
-
+/** Render the homepage "What is Grace House" section from its ordered blocks. */
+export default function Welcome({ title, blocks }: WelcomeProps) {
   return (
-    <section id="welcome" className={`${bg} px-6 py-14`}>
+    <section id="welcome" className="bg-cream px-6 py-14">
       <div className="mx-auto max-w-6xl">
         <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
-        <h2 className={`font-heading text-5xl ${text}`}>{heading}</h2>
-        <p className={`mt-4 max-w-[60ch] text-lg leading-relaxed ${text}`}>
-          {body} {pullQuote && <em>{pullQuote}</em>}
-        </p>
-        {linkLabel && linkHref && (
-          <Link
-            href={linkHref}
-            className={`${link} ${linkHover} mt-8 inline-flex items-center gap-2 text-xl font-semibold`}
-          >
-            {linkLabel}
-          </Link>
-        )}
+        <h2 className="font-heading text-5xl text-anchor">{title}</h2>
+        {blocks.map((block, index) => {
+          if (block.type === "heading") {
+            return (
+              <h3 key={index} className="font-heading text-ink mt-10 text-3xl sm:text-4xl">
+                {block.text}
+              </h3>
+            );
+          }
+          if (block.type === "photo") {
+            return (
+              <figure key={index} className="mt-10">
+                <div className="border-ink relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-lg border-2">
+                  <Image
+                    src={block.image}
+                    alt={block.alt}
+                    fill
+                    sizes="(min-width:1024px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                {block.caption && (
+                  <figcaption className="text-ink/80 mt-2 text-base">
+                    {block.caption}
+                  </figcaption>
+                )}
+              </figure>
+            );
+          }
+          return splitBlockParagraphs(block.text).map((paragraph, paragraphIndex) => (
+            <p
+              key={index + "-" + paragraphIndex}
+              className="text-ink/90 mt-6 max-w-[70ch] whitespace-pre-line text-lg leading-relaxed"
+            >
+              {paragraph}
+            </p>
+          ));
+        })}
       </div>
     </section>
   );
