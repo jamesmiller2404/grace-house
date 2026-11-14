@@ -558,7 +558,7 @@ export interface CustomPage {
    */
   title: string;
   /**
-   * Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text. A "Photo" block shows an image from the Media collection.
+   * Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. A "Photo" block shows an image from the Media collection.
    */
   blocks?:
     | {
@@ -567,14 +567,6 @@ export interface CustomPage {
          * The paragraph or heading text. Use a blank line between paragraphs.
          */
         text?: string | null;
-        /**
-         * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
-         */
-        linkLabel?: string | null;
-        /**
-         * Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.
-         */
-        linkHref?: string | null;
         /**
          * The photo shown by this block.
          */
@@ -1092,8 +1084,6 @@ export interface CustomPagesSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
-        linkLabel?: T;
-        linkHref?: T;
         image?: T;
         caption?: T;
         id?: T;
