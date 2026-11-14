@@ -35,18 +35,42 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     path: "",
   });
 
-  if (!actionsElement) return null;
+  return (
+    <>
+      <style>{`
+        /* The Media collection is an image library: make its list thumbnails
+           large enough to inspect without opening each document. */
+        .table td:has(img) {
+          min-width: 200px;
+          vertical-align: middle;
+        }
 
-  return createPortal(
-    <Button
-      buttonStyle="secondary"
-      el="link"
-      to={dashboardURL}
-      className="gh-dashboard-list-button"
-    >
-      Dashboard
-    </Button>,
-    actionsElement,
+        .table td:has(img) img {
+          display: block;
+          width: 180px;
+          height: 120px;
+          max-width: none;
+          object-fit: cover;
+          border-radius: 6px;
+        }
+
+        .table tr:has(td img) {
+          height: 136px;
+        }
+      `}</style>
+      {actionsElement &&
+        createPortal(
+          <Button
+            buttonStyle="secondary"
+            el="link"
+            to={dashboardURL}
+            className="gh-dashboard-list-button"
+          >
+            Dashboard
+          </Button>,
+          actionsElement,
+        )}
+    </>
   );
 };
 
