@@ -12,7 +12,7 @@ import { donateDefaults } from "@/content/donate";
 import { pillars } from "@/content/pillars";
 import { stories } from "@/content/stories";
 import { storyProfiles } from "@/content/storyProfiles";
-import type { Story } from "../../payload-types";
+import type { Intro, Story } from "../../payload-types";
 import type { Faq } from "../../payload-types";
 import { faqDefaults, type FaqBlock } from "@/content/faq";
 
@@ -251,7 +251,7 @@ export async function seedIntro(payload: Payload): Promise<void> {
         },
       } as never),
     };
-  });
+  }) as NonNullable<Intro["blocks"]>;
 
   await payload.create({
     collection: "intro",
