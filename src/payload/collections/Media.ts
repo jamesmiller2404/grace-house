@@ -54,6 +54,9 @@ export const Media: CollectionConfig = {
     },
   },
   upload: {
+    // Use the original image for the larger Media list previews.
+    adminThumbnail: ({ doc }) =>
+      typeof doc.url === "string" ? doc.url : "",
     // Only allow image files — these accompany event pages.
     mimeTypes: ["image/*"],
     // No image editing (crop / focal point adjustments) from the admin
