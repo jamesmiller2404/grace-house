@@ -15,7 +15,7 @@ import { ContactSelectField } from "@/payload/fields/ContactSelect";
  *    panel, or entered manually) and the office hours shown beneath it
  *  - the checklist of quick facts (✓ lines) on the right
  *  - the 24/7 crisis-resources heading and its three lines
- *  - the "Show assessment call-to-action" checkbox — untick it to hide the
+ *  - the "Show assessment button" checkbox — untick it to hide the
  *    assessment sentence ("Or you can fill out the assessment below..."),
  *    the Start Assessment button and its note ("← Fill out the Grace House
  *    Assessment Form") from the strip
@@ -121,7 +121,7 @@ export const GetHelpNow: CollectionConfig = {
       name: "showAssessment",
       type: "checkbox",
       defaultValue: true,
-      label: "Show assessment call-to-action",
+      label: "Show assessment button",
       admin: {
         description:
           "Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.",
