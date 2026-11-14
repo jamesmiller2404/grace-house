@@ -41,16 +41,32 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         /* The Media collection is an image library: make its list thumbnails
            large enough to inspect without opening each document. */
         .table td:has(img) {
-          min-width: 200px;
+          min-width: 200px !important;
           vertical-align: middle;
         }
 
+        /* Payload wraps admin thumbnails in a fixed-size Thumbnail element.
+           Override both the wrapper and image dimensions, not just the row. */
+        .table td:has(img) .thumbnail,
+        .table td:has(img) [class*="thumbnail"] {
+          width: 180px !important;
+          height: 120px !important;
+          min-width: 180px !important;
+          min-height: 120px !important;
+          max-width: 180px !important;
+          max-height: 120px !important;
+          overflow: hidden !important;
+        }
+
         .table td:has(img) img {
-          display: block;
-          width: 180px;
-          height: 120px;
-          max-width: none;
-          object-fit: cover;
+          display: block !important;
+          width: 180px !important;
+          height: 120px !important;
+          min-width: 180px !important;
+          min-height: 120px !important;
+          max-width: 180px !important;
+          max-height: 120px !important;
+          object-fit: cover !important;
           border-radius: 6px;
         }
 
