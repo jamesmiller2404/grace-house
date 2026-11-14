@@ -72,6 +72,17 @@ export const Events: CollectionConfig = {
   // Default order in the admin list view: soonest event first.
   defaultSort: "date",
   fields: [
+    {
+      name: "eventPreview",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/Events/PreviewField.tsx",
+          },
+        },
+      },
+    },
     // Title (wide) + Status dropdown (top right), like the mockup's first row.
     {
       type: "row",
