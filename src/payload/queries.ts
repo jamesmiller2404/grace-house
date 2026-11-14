@@ -344,22 +344,44 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
     limit: 1,
   });
   const doc = docs[0] as PayloadIntro | undefined;
-  if (doc) {
-    return {
-      heading: doc.heading,
-      body: doc.body,
-      // A saved-empty text field stays empty — the admin value is the whole
-      // story, so no default text is filled in here.
-      pullQuote: doc.pullQuote ?? "",
-      linkLabel: doc.linkLabel ?? "",
-      linkHref: doc.linkHref ?? "",
-      bgColor: doc.bgColor ?? introDefaults.bgColor,
-      textColor: doc.textColor ?? introDefaults.textColor,
-      linkColor: doc.linkColor ?? introDefaults.linkColor,
-      linkHoverColor: doc.linkHoverColor ?? introDefaults.linkHoverColor,
-    };
-  }
-  return introDefaults;
+  if (!doc) return introDefaults;
+
+  type IntroRow = NonNullable<PayloadIntro["blocks"]>[number] & {
+    content?: unknown;
+    text?: string | null;
+  };
+
+  const blocks = ((doc.blocks ?? []) as IntroRow[])
+    .map((block) => {
+      if (block.type === "Photo") {
+        const image = mediaUrl(block.image);
+        return image
+          ? {
+              type: "photo" as const,
+              image,
+              alt:
+                typeof block.image === "object" && block.image
+                  ? block.image.alt ?? ""
+                  : "",
+              caption: block.caption ?? undefined,
+            }
+          : null;
+      }
+      if (block.type === "Heading") {
+        return { type: "heading" as const, text: block.text ?? "" };
+      }
+      return {
+        type: "paragraph" as const,
+        content: block.content ?? undefined,
+        text: block.text ?? undefined,
+      };
+    })
+    .filter((block): block is NonNullable<typeof block> => block !== null);
+
+  return {
+    title: doc.title || introDefaults.title,
+    blocks,
+  };
 });
 
 /**
