@@ -52,6 +52,16 @@ export default async function RootLayout({
           phoneHref={footerContact.phoneHref}
           email={footerContact.email}
           address={footerContact.address}
+          brandName={footerContact.brandName}
+          brandTagline={footerContact.brandTagline}
+          missionText={footerContact.missionText}
+          memorialPhoto={footerContact.memorialPhoto}
+          memorialPhotoAlt={footerContact.memorialPhotoAlt}
+          memorialName={footerContact.memorialName}
+          memorialDates={footerContact.memorialDates}
+          getHelpLabel={footerContact.getHelpLabel}
+          hoursText={footerContact.hoursText}
+          intakesText={footerContact.intakesText}
         />
       </body>
     </html>
