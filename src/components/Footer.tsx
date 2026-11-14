@@ -10,7 +10,7 @@ import { site } from "@/content/site";
  */
 
 /**
- * The contact details shown in the "Get Help" column. The site layout passes
+ * The contact details shown in the "{getHelpLabel}" column. The site layout passes
  * the values from the footer admin panel (/admin/globals/footer), which picks
  * them from the Contact Info panel; the phone and email fall back to the
  * static defaults in src/content/site.ts so the footer never breaks, even
@@ -26,6 +26,16 @@ export type FooterProps = {
   email?: string;
   /** The street address shown below the office hours. */
   address?: string;
+  brandName?: string;
+  brandTagline?: string;
+  missionText?: string;
+  memorialPhoto?: string;
+  memorialPhotoAlt?: string;
+  memorialName?: string;
+  memorialDates?: string;
+  getHelpLabel?: string;
+  hoursText?: string;
+  intakesText?: string;
 };
 
 export default function Footer({
@@ -33,6 +43,16 @@ export default function Footer({
   phoneHref = site.phoneHref,
   email = site.email,
   address,
+  brandName = "Grace House",
+  brandTagline = "NOR CAL",
+  missionText = "{missionText}",
+  memorialPhoto = "/images/pastorLonnie2a.jpg",
+  memorialPhotoAlt = "Pastor Lonnie",
+  memorialName = "{memorialName}",
+  memorialDates = "1956–2021",
+  getHelpLabel = "Get Help",
+  hoursText = "{hoursText}",
+  intakesText = "{intakesText}",
 }: FooterProps = {}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -42,10 +62,10 @@ export default function Footer({
         {/* Column 1: wordmark + mission blurb */}
         <div className="lg:max-w-sm">
           <p className="font-heading text-3xl tracking-[0.04em] text-white">
-            {site.name}
+            {brandName}
           </p>
           <p className="text-gold mt-1 text-sm font-medium tracking-wide uppercase">
-            {site.tagline}
+            {brandTagline}
           </p>
           <p className="mt-5 max-w-xs text-cream/85 italic leading-relaxed mx-auto lg:mx-0">
             To see families restored and give hope to the hopeless.
@@ -57,13 +77,13 @@ export default function Footer({
           <button
             type="button"
             onClick={() => setLightboxOpen(true)}
-            aria-label="View full-size photo of Pastor Lonnie"
+            aria-label={`View full-size photo of ${memorialPhotoAlt}`}
             title="View full-size photo"
             className="block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
           >
             <Image
-              src="/images/pastorLonnie2a.jpg"
-              alt="Pastor Lonnie"
+              src={memorialPhoto}
+              alt={memorialPhotoAlt}
               width={1086}
               height={1086}
               className="h-auto w-full max-w-[320px] rounded-lg shadow-lg transition-transform duration-200 hover:scale-[1.03]"
@@ -74,7 +94,7 @@ export default function Footer({
               Lonnie W. Nix
             </span>
             <span className="mt-1 block text-lg italic tracking-[0.28em] text-white/90">
-              1956&ndash;2021
+              {memorialDates}
             </span>
           </p>
         </div>
@@ -113,7 +133,7 @@ export default function Footer({
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
           role="dialog"
           aria-modal="true"
-          aria-label="Full-size photo of Pastor Lonnie"
+          aria-label={`Full-size photo of ${memorialPhotoAlt}`}
           onClick={() => setLightboxOpen(false)}
         >
           <button
