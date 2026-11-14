@@ -287,7 +287,7 @@ export interface Hero {
   createdAt: string;
 }
 /**
- * The "What is Grace House" section on the home page: its heading, body text, link and colors.
+ * The "What is Grace House" section on the home page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "intro".
@@ -295,41 +295,30 @@ export interface Hero {
 export interface Intro {
   id: number;
   /**
-   * The section heading (e.g. "What is Grace House").
+   * The title displayed above this section's content.
    */
-  heading: string;
+  title: string;
   /**
-   * The main paragraph shown under the heading.
+   * Add headings, paragraphs and photos in the order they should appear. A Photo block shows an image from the Media collection.
    */
-  body: string;
-  /**
-   * Optional italic tail of the body sentence (e.g. "to see families restored and give hope to the hopeless.").
-   */
-  pullQuote?: string | null;
-  /**
-   * The text of the link below the paragraph (e.g. "Read our mission").
-   */
-  linkLabel?: string | null;
-  /**
-   * Where the link points (e.g. "/about/mission").
-   */
-  linkHref?: string | null;
-  /**
-   * The section background color.
-   */
-  bgColor?: ('cream' | 'sand' | 'gold' | 'terra' | 'lift' | 'anchor' | 'ink' | 'white') | null;
-  /**
-   * The color of the heading and body text.
-   */
-  textColor?: ('cream' | 'sand' | 'gold' | 'terra' | 'lift' | 'anchor' | 'ink' | 'white') | null;
-  /**
-   * The color of the link.
-   */
-  linkColor?: ('cream' | 'sand' | 'gold' | 'terra' | 'lift' | 'anchor' | 'ink' | 'white') | null;
-  /**
-   * The color of the link while the pointer is over it.
-   */
-  linkHoverColor?: ('cream' | 'sand' | 'gold' | 'terra' | 'lift' | 'anchor' | 'ink' | 'white') | null;
+  blocks?:
+    | {
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        /**
+         * The header or paragraph text.
+         */
+        text?: string | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Text shown under the photo.
+         */
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -948,15 +937,16 @@ export interface HeroSelect<T extends boolean = true> {
  * via the `definition` "intro_select".
  */
 export interface IntroSelect<T extends boolean = true> {
-  heading?: T;
-  body?: T;
-  pullQuote?: T;
-  linkLabel?: T;
-  linkHref?: T;
-  bgColor?: T;
-  textColor?: T;
-  linkColor?: T;
-  linkHoverColor?: T;
+  title?: T;
+  blocks?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

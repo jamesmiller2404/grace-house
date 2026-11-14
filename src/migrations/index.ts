@@ -36,6 +36,7 @@ import * as migration_20261108_075619 from './20261108_075619';
 import * as migration_20261109_012056 from './20261109_012056';
 import * as migration_20261110_074900_story_date_to_date_field from './20261110_074900_story_date_to_date_field';
 import * as migration_20261114_031204 from './20261114_031204';
+import * as migration_20261114_110127_IntroBlocks from './20261114_110127_IntroBlocks';
 
 export const migrations = [
   {
@@ -226,6 +227,11 @@ export const migrations = [
   {
     up: migration_20261114_031204.up,
     down: migration_20261114_031204.down,
-    name: '20261114_031204'
+    name: '20261114_031204',
+  },
+  {
+    up: migration_20261114_110127_IntroBlocks.up,
+    down: migration_20261114_110127_IntroBlocks.down,
+    name: '20261114_110127_IntroBlocks'
   },
 ];
