@@ -466,6 +466,16 @@ export const getFooterContact = cache(
     phoneHref: string;
     email: string;
     address?: string;
+    brandName: string;
+    brandTagline: string;
+    missionText: string;
+    memorialPhoto: string;
+    memorialPhotoAlt: string;
+    memorialName: string;
+    memorialDates: string;
+    getHelpLabel: string;
+    hoursText: string;
+    intakesText: string;
   }> => {
     await connection();
     const payload = await getPayload({ config });
@@ -487,6 +497,17 @@ export const getFooterContact = cache(
       phoneHref: telHref(phone),
       email,
       ...(address ? { address } : {}),
+      brandName: footer.brandName || "Grace House",
+      brandTagline: footer.brandTagline || "NOR CAL",
+      missionText:
+        footer.missionText || "To see families restored and give hope to the hopeless.",
+      memorialPhoto: mediaUrl(footer.memorialPhoto) || "/images/pastorLonnie2a.jpg",
+      memorialPhotoAlt: footer.memorialPhotoAlt || "Pastor Lonnie",
+      memorialName: footer.memorialName || "Lonnie W. Nix",
+      memorialDates: footer.memorialDates || "1956–2021",
+      getHelpLabel: footer.getHelpLabel || "Get Help",
+      hoursText: footer.hoursText || "Mon–Fri, 9am–5pm",
+      intakesText: footer.intakesText || "Intakes on weekdays only",
     };
   },
 );
