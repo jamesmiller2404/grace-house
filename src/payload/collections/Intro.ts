@@ -24,8 +24,8 @@ const colorOptions = introColorTokens.map((value) => ({
 export const Intro: CollectionConfig = {
   slug: "intro",
   labels: {
-    singular: "Intro",
-    plural: "Intro",
+    singular: "What is Grace House",
+    plural: "What is Grace House",
   },
   // Public site content — allow anonymous reads of the REST API.
   // (The site itself reads through the Local API, which bypasses
