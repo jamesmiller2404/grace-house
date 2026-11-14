@@ -58,7 +58,7 @@ export default function CustomPagesPreviewField() {
 
   const preview = useMemo<CustomPageContent>(() => {
     const title = text(data.title, "Page Name");
-    const blocks: CustomPageBlock[] = rows(data.blocks).flatMap((block) => {
+    const blocks: CustomPageBlock[] = rows(data.blocks).flatMap<CustomPageBlock>((block): CustomPageBlock[] => {
       if (block.type === "Photo") {
         const image = mediaUrl(block.image) || resolvedMedia[mediaId(block.image)] || "";
         if (!image) return [];
