@@ -309,6 +309,24 @@ export interface Intro {
          */
         text?: string | null;
         /**
+         * Write the paragraph and use the link tool to add clickable links.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
          * The photo shown by this block.
          */
         image?: (number | null) | Media;
@@ -943,6 +961,7 @@ export interface IntroSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        content?: T;
         image?: T;
         caption?: T;
         id?: T;
