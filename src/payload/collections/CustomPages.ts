@@ -123,8 +123,7 @@ access: {
       // The page body: an ordered list of blocks, each either a Paragraph, a
       // Heading or a Photo (the same text-block pattern as the Donate page,
       // extended with a photo block), so content can be added and stacked in
-      // any order. A Paragraph/Heading block may carry one optional link
-      // after its text; a Photo block is an image from the Media collection
+      // any order. A Photo block is an image from the Media collection
       // with an optional caption under it.
       name: "blocks",
       type: "array",
@@ -136,7 +135,7 @@ access: {
         // Keep every block open so the order is visible at a glance.
         initCollapsed: false,
         description:
-          'Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. To turn words into a link, fill in the two Link fields on the block; leave both empty for plain text. A "Photo" block shows an image from the Media collection.',
+          'Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. A "Photo" block shows an image from the Media collection.',
         // Friendly row labels ("1. Heading: Our History", "2. Photo") instead
         // of Payload's default "Block 01" — see ./CustomPages/BlockRowLabel.tsx.
         components: {
@@ -176,30 +175,6 @@ access: {
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type !== "Photo",
             components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
-          },
-        },
-        {
-          name: "linkLabel",
-          type: "text",
-          label: "Link Text (optional)",
-          admin: {
-            placeholder: "e.g. (916) 470-0408 or Facebook",
-            description:
-              'The clickable words shown after the block\'s text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.',
-            condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type !== "Photo",
-          },
-        },
-        {
-          name: "linkHref",
-          type: "text",
-          label: "Link URL (optional)",
-          admin: {
-            placeholder: "e.g. tel:+19169529797 or https://example.com",
-            description:
-              "Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.",
-            condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type !== "Photo",
           },
         },
         {
