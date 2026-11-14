@@ -47,7 +47,7 @@ export default function Welcome({ title, blocks }: WelcomeProps) {
             return (
               <div
                 key={index}
-                className="text-ink/90 mt-6 max-w-[70ch] text-lg leading-relaxed"
+                className="text-ink/90 mt-6 max-w-[70ch] text-lg leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-terra"
               >
                 <RichText data={block.content as never} />
               </div>
