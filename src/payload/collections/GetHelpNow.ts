@@ -82,6 +82,17 @@ export const GetHelpNow: CollectionConfig = {
   },
   fields: [
     {
+      type: "ui",
+      name: "getHelpNowPreview",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/GetHelpNow/PreviewField.tsx",
+          },
+        },
+      },
+    },
+    {
       name: "heading",
       type: "text",
       required: true,
