@@ -12,6 +12,8 @@ export type CustomPageBlock =
   | {
       type: "paragraph";
       text: string;
+      /** Lexical paragraph content; preferred over legacy plain text. */
+      content?: unknown;
       /** The clickable words shown after the text, if any. */
       linkLabel?: string;
       /** Where that link points (https://…, tel:… or mailto:…). */
