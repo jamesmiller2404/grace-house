@@ -202,6 +202,24 @@ export interface Event {
         type: 'Heading' | 'Paragraph' | 'Photo';
         text?: string | null;
         /**
+         * Format the paragraph and add links using the editor toolbar.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
          * Choose the photo shown inline on the event page.
          */
         image?: (number | null) | Media;
@@ -256,10 +274,25 @@ export interface MissionPage {
    * The page heading (e.g. "Mission") and breadcrumb label.
    */
   title: string;
+  body?: string | null;
   /**
-   * The mission statement. Use a blank line between paragraphs.
+   * The mission statement. Use the formatting toolbar for paragraphs, emphasis and links.
    */
-  body: string;
+  bodyContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -370,6 +403,24 @@ export interface Story {
         type: 'Heading' | 'Paragraph' | 'Photo';
         text?: string | null;
         /**
+         * Format the paragraph and add links using the editor toolbar.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
          * Choose the photo shown inline in the story.
          */
         image?: (number | null) | Media;
@@ -448,10 +499,25 @@ export interface Donate {
    * The page heading (e.g. "Donate to Grace House") and breadcrumb label.
    */
   title: string;
+  intro?: string | null;
   /**
-   * The paragraph shown under the heading.
+   * Format the introduction and add links using the editor toolbar.
    */
-  intro: string;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   paypal: {
     /**
      * The PayPal card's heading.
@@ -509,10 +575,25 @@ export interface Donate {
     buttonHref: string;
   };
   note?: {
-    /**
-     * The nonprofit note, without the phone number (it renders after the text).
-     */
     text?: string | null;
+    /**
+     * Format the note; the phone link is still added automatically after it.
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     /**
      * The phone number shown as a tel: link.
      */
@@ -529,6 +610,24 @@ export interface Donate {
     | {
         type: 'Heading' | 'Paragraph' | 'Photo';
         text?: string | null;
+        /**
+         * Format the paragraph and add links using the editor toolbar.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         /**
          * Choose the photo shown inline on the Donate page.
          */
@@ -571,9 +670,27 @@ export interface CustomPage {
     | {
         type: 'Heading' | 'Paragraph' | 'Photo';
         /**
-         * The paragraph or heading text. Use a blank line between paragraphs.
+         * The heading text.
          */
         text?: string | null;
+        /**
+         * Format the paragraph and add links using the editor toolbar.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         /**
          * The photo shown by this block.
          */
@@ -600,18 +717,48 @@ export interface GetHelpNow {
    * The strip's main heading (e.g. "Need help now?").
    */
   heading: string;
-  /**
-   * The opening line (e.g. "You don't have to figure this out alone. Talk to a real person.").
-   */
   body: string;
+  /**
+   * Format the opening line and add links using the editor toolbar.
+   */
+  bodyContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.
    */
   showAssessment?: boolean | null;
-  /**
-   * The sentence shown after the opening line (e.g. "Or you can fill out the assessment below and we will contact you within two business days.").
-   */
   assessmentNote?: string | null;
+  /**
+   * Format the assessment sentence and add links if needed.
+   */
+  assessmentNoteContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * The assessment button text (e.g. "Start Assessment").
    */
@@ -706,15 +853,33 @@ export interface FeedingTheStreet {
    */
   title: string;
   /**
-   * Add headings, paragraphs and photos in the order they should appear on the page. Use a blank line between paragraphs in a text block.
+   * Add headings, formatted paragraphs and photos in the order they should appear on the page. Use the paragraph editor toolbar to format text and add links.
    */
   blocks?:
     | {
         type: 'Heading' | 'Paragraph' | 'Photo';
         /**
-         * The paragraph or heading text. Use a blank line between paragraphs.
+         * The heading text.
          */
         text?: string | null;
+        /**
+         * Format the paragraph and add links using the editor toolbar.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         /**
          * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
          */
@@ -898,6 +1063,7 @@ export interface EventsSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        content?: T;
         image?: T;
         caption?: T;
         id?: T;
@@ -936,6 +1102,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface MissionPageSelect<T extends boolean = true> {
   title?: T;
   body?: T;
+  bodyContent?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -987,6 +1154,7 @@ export interface StoriesSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        content?: T;
         image?: T;
         caption?: T;
         id?: T;
@@ -1039,6 +1207,7 @@ export interface StoriesSelect<T extends boolean = true> {
 export interface DonateSelect<T extends boolean = true> {
   title?: T;
   intro?: T;
+  introContent?: T;
   paypal?:
     | T
     | {
@@ -1064,6 +1233,7 @@ export interface DonateSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        content?: T;
         phone?: T;
         phoneHref?: T;
       };
@@ -1072,6 +1242,7 @@ export interface DonateSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        content?: T;
         image?: T;
         caption?: T;
         linkLabel?: T;
@@ -1093,6 +1264,7 @@ export interface CustomPagesSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        content?: T;
         image?: T;
         caption?: T;
         id?: T;
@@ -1107,8 +1279,10 @@ export interface CustomPagesSelect<T extends boolean = true> {
 export interface GetHelpNowSelect<T extends boolean = true> {
   heading?: T;
   body?: T;
+  bodyContent?: T;
   showAssessment?: T;
   assessmentNote?: T;
+  assessmentNoteContent?: T;
   ctaLabel?: T;
   ctaHref?: T;
   ctaNote?: T;
@@ -1156,6 +1330,7 @@ export interface FeedingTheStreetsSelect<T extends boolean = true> {
     | {
         type?: T;
         text?: T;
+        content?: T;
         linkLabel?: T;
         linkHref?: T;
         image?: T;
