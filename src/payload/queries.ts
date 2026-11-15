@@ -829,16 +829,20 @@ function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
           },
         ];
       }
-      // Paragraph/Heading rows render their text with the optional link.
-      // An empty-text row (half-filled in the admin panel) is skipped.
+      // Headings remain plain text. Paragraphs prefer Lexical content,
+      // falling back to the legacy textarea until existing copy is migrated.
+      const formatted = (block as typeof block & { content?: unknown }).content;
       const text = block.text ?? "";
+      if (block.type === "Heading") {
+        if (!text.trim()) return [];
+        return [{ type: "heading" as const, text }];
+      }
+      if (formatted) {
+        return [{ type: "paragraph" as const, text, content: formatted }];
+      }
       if (!text.trim()) return [];
-      return [
-        {
-          type: block.type === "Heading" ? "heading" : "paragraph",
-          text,
-        },
-      ];
+      return [{ type: "paragraph" as const, text }];
+
     }),
   };
 }
