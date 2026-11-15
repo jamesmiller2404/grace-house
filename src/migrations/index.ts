@@ -37,6 +37,7 @@ import * as migration_20261109_012056 from './20261109_012056';
 import * as migration_20261110_074900_story_date_to_date_field from './20261110_074900_story_date_to_date_field';
 import * as migration_20261114_031204 from './20261114_031204';
 import * as migration_20261114_110127_IntroBlocks from './20261114_110127_IntroBlocks';
+import * as migration_20261114_130000_add_lexical_fields from './20261114_130000_add_lexical_fields';
 
 export const migrations = [
   {
@@ -233,5 +234,10 @@ export const migrations = [
     up: migration_20261114_110127_IntroBlocks.up,
     down: migration_20261114_110127_IntroBlocks.down,
     name: '20261114_110127_IntroBlocks'
+  },
+  {
+    up: migration_20261114_130000_add_lexical_fields.up,
+    down: migration_20261114_130000_add_lexical_fields.down,
+    name: '20261114_130000_add_lexical_fields',
   },
 ];
