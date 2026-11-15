@@ -353,7 +353,6 @@ export const Donate: CollectionConfig = {
           label: false,
           admin: {
             className: "gh-donate-paragraph-input",
-            description: "Format the paragraph and add links using the editor toolbar.",
             condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Paragraph",
           },
         },
