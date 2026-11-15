@@ -279,14 +279,24 @@ export const Events: CollectionConfig = {
           type: "textarea",
           label: false,
           admin: {
-            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Heading",
             components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
-            placeholder: "Text...",
+            placeholder: "Heading...",
           },
           validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
-            (siblingData as { type?: string } | undefined)?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
+            (siblingData as { type?: string } | undefined)?.type !== "Heading" || (typeof value === "string" && value.trim().length > 0)
               ? true
-              : "Enter text for this Header or Paragraph block.",
+              : "Enter text for this Heading block.",
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
+          admin: {
+            className: "gh-event-paragraph-input",
+            description: "Format the paragraph and add links using the editor toolbar.",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Paragraph",
+          },
         },
         {
           name: "image",
