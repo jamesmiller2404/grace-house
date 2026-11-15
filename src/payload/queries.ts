@@ -235,7 +235,7 @@ export const getMissionPage = cache(
       const formatted = (doc as PayloadMissionPage & { bodyContent?: unknown }).bodyContent;
       return {
         title: doc.title,
-        body: doc.body,
+        body: doc.body ?? "",
         bodyContent: formatted,
       };
     }
