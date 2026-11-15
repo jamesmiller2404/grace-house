@@ -1,13 +1,16 @@
 import Link from "next/link";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export type HelpStripProps = {
   heading: string;
   body: string;
+  bodyContent?: unknown;
   /**
    * The assessment sentence ("Or you can fill out the assessment below...")
    * shown right after the body while the assessment call-to-action is on.
    */
   assessmentNote?: string;
+  assessmentNoteContent?: unknown;
   phone: string;
   phoneHref: string;
   /**
@@ -27,7 +30,9 @@ export type HelpStripProps = {
 export default function HelpStrip({
   heading,
   body,
+  bodyContent,
   assessmentNote,
+  assessmentNoteContent,
   phone,
   phoneHref,
   cta,
@@ -52,10 +57,14 @@ export default function HelpStrip({
             >
               {heading}
             </h2>
-            <p className="mt-2 text-lg">
-              {body}
-              {assessmentNote && ` ${assessmentNote}`}
-            </p>
+            <div className="mt-2 text-lg leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4">
+              {bodyContent ? <RichText data={bodyContent as never} /> : <p>{body}</p>}
+              {assessmentNoteContent ? (
+                <RichText data={assessmentNoteContent as never} />
+              ) : assessmentNote ? (
+                <p>{assessmentNote}</p>
+              ) : null}
+            </div>
 
             {cta && (
               <div className="mt-6">
