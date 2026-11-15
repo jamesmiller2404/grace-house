@@ -246,19 +246,4 @@ export const migrations = [
     down: migration_20261115_021337.down,
     name: '20261115_021337'
   },
-  {
-    up: migration_20261114_110127_IntroBlocks.up,
-    down: migration_20261114_110127_IntroBlocks.down,
-    name: '20261114_110127_IntroBlocks',
-  },
-  {
-    up: migration_20261114_120000_add_intro_content.up,
-    down: migration_20261114_120000_add_intro_content.down,
-    name: '20261114_120000_add_intro_content',
-  },
-  {
-    up: migration_20261115_021337.up,
-    down: migration_20261115_021337.down,
-    name: '20261115_021337',
-  },
 ];
