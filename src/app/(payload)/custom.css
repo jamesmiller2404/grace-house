@@ -1168,28 +1168,30 @@ html {
   color: #f5f5f5 !important;
 }
 
-/* All Paragraph Lexical editors inside array blocks, across every collection.
-   The array row intentionally uses #7c7a8b for its card surface; the editor
-   itself must remain near-black. Match the shared Payload rich-text wrapper
-   and its nested editor surface rather than collection-specific field names. */
-.payload .array-field__row .rich-text-lexical,
-.payload .array-field__row [class*="rich-text"]:has([contenteditable="true"]),
-.payload .array-field__row .editor-container,
-.payload .array-field__row .lexical-editor,
-.payload .array-field__row [contenteditable="true"],
-.payload .array-field__row [data-lexical-editor="true"] {
+/* Shared Lexical Paragraph editor surface inside array blocks.
+   Do not scope this to .payload or collection-specific field classes:
+   Payload's field wrapper varies by collection, while the array editor
+   consistently contains a contenteditable Lexical root. */
+html[data-theme] .array-field__row .rich-text-lexical,
+html[data-theme] .array-field__row .rich-text-lexical .editor-container,
+html[data-theme] .array-field__row .rich-text-lexical .lexical-editor,
+html[data-theme] .array-field__row .field-type:has([contenteditable="true"]),
+html[data-theme] .array-field__row .field-type:has([contenteditable="true"]) > div,
+html[data-theme] .array-field__row .field-type:has([contenteditable="true"]) > div > div,
+html[data-theme] .array-field__row [contenteditable="true"],
+html[data-theme] .array-field__row [data-lexical-editor="true"] {
   background: #080808 !important;
   background-color: #080808 !important;
   color: #f5f5f5 !important;
 }
 
-.payload .array-field__row [contenteditable="true"] p,
-.payload .array-field__row [contenteditable="true"] li,
-.payload .array-field__row [data-lexical-editor="true"] p,
-.payload .array-field__row [data-lexical-editor="true"] li {
+html[data-theme] .array-field__row [contenteditable="true"] p,
+html[data-theme] .array-field__row [contenteditable="true"] li,
+html[data-theme] .array-field__row [data-lexical-editor="true"] p,
+html[data-theme] .array-field__row [data-lexical-editor="true"] li {
   color: #f5f5f5 !important;
 }
 
-.payload .array-field__row [contenteditable="true"] {
+html[data-theme] .array-field__row [contenteditable="true"] {
   caret-color: #f5f5f5 !important;
 }
