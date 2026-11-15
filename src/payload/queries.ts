@@ -142,7 +142,13 @@ function toEventDetail(
             image: mediaUrl(block.image),
             caption: block.caption ?? undefined,
           }
-        : { type: block.type, text: block.text ?? "" },
+        : block.type === "Heading"
+          ? { type: "Heading" as const, text: block.text ?? "" }
+          : {
+              type: "Paragraph" as const,
+              text: block.text ?? "",
+              content: (block as typeof block & { content?: unknown }).content,
+            },
     ).filter((block) => block.type !== "Photo" || Boolean(block.image)),
     contact: {
       questions: "Questions?",
