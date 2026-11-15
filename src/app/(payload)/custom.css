@@ -1142,3 +1142,28 @@ html {
   background-color: #080808 !important;
   color: #f5f5f5 !important;
 }
+
+
+/* Paragraph Lexical editors inside array blocks. The array row intentionally
+   uses #7c7a8b for its card surface; override the editor surfaces themselves
+   so Paragraph inputs remain near-black without changing the card. */
+.payload .array-field__row .gh-intro-paragraph-input,
+.payload .array-field__row .gh-intro-paragraph-input .field-type,
+.payload .array-field__row .gh-intro-paragraph-input .rich-text-lexical,
+.payload .array-field__row .gh-intro-paragraph-input .editor-container,
+.payload .array-field__row .gh-intro-paragraph-input .lexical-editor,
+.payload .array-field__row .gh-intro-paragraph-input [contenteditable="true"],
+.payload .array-field__row .rich-text-lexical .editor-container,
+.payload .array-field__row .rich-text-lexical .lexical-editor,
+.payload .array-field__row .rich-text-lexical [contenteditable="true"] {
+  background: #080808 !important;
+  background-color: #080808 !important;
+  color: #f5f5f5 !important;
+}
+
+.payload .array-field__row .gh-intro-paragraph-input [contenteditable="true"] p,
+.payload .array-field__row .gh-intro-paragraph-input [contenteditable="true"] li,
+.payload .array-field__row .rich-text-lexical [contenteditable="true"] p,
+.payload .array-field__row .rich-text-lexical [contenteditable="true"] li {
+  color: #f5f5f5 !important;
+}
