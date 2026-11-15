@@ -178,7 +178,6 @@ access: {
           label: false,
           admin: {
             className: "gh-custom-page-paragraph-input",
-            description: "Format the paragraph and add links using the editor toolbar.",
             condition: (_data, siblingData) =>
               (siblingData as { type?: string } | null)?.type === "Paragraph",
           },
