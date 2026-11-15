@@ -684,7 +684,11 @@ function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
     }
     return block.type === "Heading"
       ? { type: "h2" as const, text: block.text ?? "" }
-      : { type: "p" as const, text: block.text ?? "" };
+      : {
+          type: "p" as const,
+          text: block.text ?? "",
+          content: (block as typeof block & { content?: unknown }).content,
+        };
   }).filter((block) => block.type !== "photo" || Boolean(block.image));
 }
 
