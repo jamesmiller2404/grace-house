@@ -78,7 +78,7 @@ export const FeedingTheStreets: CollectionConfig = {
       admin: {
         initCollapsed: false,
         description:
-          "Add headings, paragraphs and photos in the order they should appear on the page. Use a blank line between paragraphs in a text block.",
+          "Add headings, formatted paragraphs and photos in the order they should appear on the page. Use the paragraph editor toolbar to format text and add links.",
         components: {
           RowLabel: {
             path: "./src/payload/collections/CustomPages/BlockRowLabel.tsx",
@@ -126,6 +126,7 @@ export const FeedingTheStreets: CollectionConfig = {
           type: "text",
           label: "Link Text (optional)",
           admin: {
+            hidden: true,
             placeholder: "e.g. (916) 470-0408 or Facebook",
             description:
               'The clickable words shown after the block\'s text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.',
@@ -138,6 +139,7 @@ export const FeedingTheStreets: CollectionConfig = {
           type: "text",
           label: "Link URL (optional)",
           admin: {
+            hidden: true,
             placeholder: "e.g. tel:+19169529797 or https://example.com",
             description:
               "Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.",
