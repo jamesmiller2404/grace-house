@@ -160,21 +160,27 @@ access: {
           }),
         },
         {
-          // The block's text — only for Paragraph/Heading blocks (hidden for
-          // a Photo row). Not required here so a half-filled row still
-          // saves; the site skips empty text.
+          // Headings remain plain text; paragraph copy uses Lexical formatting.
           name: "text",
           type: "textarea",
           label: false,
           admin: {
-            placeholder: "Text...",
-            description:
-              "The paragraph or heading text. Use a blank line between paragraphs.",
-            // Hidden when the row is a Photo — condition runs per array row
-            // (siblingData is the row).
+            placeholder: "Heading...",
+            description: "The heading text.",
             condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type !== "Photo",
+              (siblingData as { type?: string } | null)?.type === "Heading",
             components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
+          },
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
+          admin: {
+            className: "gh-custom-page-paragraph-input",
+            description: "Format the paragraph and add links using the editor toolbar.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Paragraph",
           },
         },
         {
