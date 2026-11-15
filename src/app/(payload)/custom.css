@@ -33,7 +33,7 @@ html[data-theme='dark'] {
      --theme-bg to var(--theme-elevation-0). */
   --theme-bg: #111115;
   --theme-text: #f0f0f3;
-  --theme-input-bg: #101012;
+  --theme-input-bg: #080808;
 
   /* Payload's elevation scale, remapped to the dark scheme. Low steps are
      dark surfaces, high steps are light (text on dark), mirroring the
@@ -67,7 +67,7 @@ html[data-theme='light'] {
      requested #bab3d2, text is black. */
   --theme-bg: #bab3d2;
   --theme-text: #000000;
-  --theme-input-bg: #8787a9;
+  --theme-input-bg: #080808;
 
   /* Payload's elevation scale, remapped to the light scheme. Low steps are
      light surfaces, high steps are dark (text on light), the inverse of the
@@ -1115,5 +1115,30 @@ html {
 .payload .rich-text-lexical [contenteditable="true"] li,
 .payload [class*="rich-text"] [contenteditable="true"] p,
 .payload [class*="rich-text"] [contenteditable="true"] li {
+  color: #f5f5f5 !important;
+}
+
+
+/* Standard Payload text-entry controls: keep every editable input dark in
+   both the Light and Dark admin themes. Exclude controls whose native
+   appearance communicates a non-text action or selection. */
+.payload input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"]),
+.payload select,
+.payload textarea {
+  background-color: #080808 !important;
+  color: #f5f5f5 !important;
+  color-scheme: dark;
+}
+
+.payload input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"])::placeholder,
+.payload textarea::placeholder {
+  color: #888888 !important;
+  opacity: 1;
+}
+
+.payload input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"]):focus,
+.payload select:focus,
+.payload textarea:focus {
+  background-color: #080808 !important;
   color: #f5f5f5 !important;
 }
