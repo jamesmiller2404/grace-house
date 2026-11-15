@@ -84,14 +84,24 @@ export const MissionPage: CollectionConfig = {
       },
     },
     {
+      // Keep the original text column for existing content and migration
+      // fallback. Editors use the formatted Lexical field below.
       name: "body",
       type: "textarea",
       required: true,
       label: false,
       admin: {
-        placeholder: "Body text...",
+        hidden: true,
+      },
+    },
+    {
+      name: "bodyContent",
+      type: "richText",
+      label: false,
+      admin: {
+        className: "gh-mission-body-input",
         description:
-          "The mission statement. Use a blank line between paragraphs.",
+          "The mission statement. Use the formatting toolbar for paragraphs, emphasis and links.",
       },
     },
   ],
