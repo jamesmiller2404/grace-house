@@ -103,12 +103,22 @@ export const FeedingTheStreets: CollectionConfig = {
           type: "textarea",
           label: false,
           admin: {
-            placeholder: "Text...",
-            description:
-              "The paragraph or heading text. Use a blank line between paragraphs.",
+            placeholder: "Heading...",
+            description: "The heading text.",
             condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type !== "Photo",
+              (siblingData as { type?: string } | null)?.type === "Heading",
             components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
+          },
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
+          admin: {
+            className: "gh-feeding-paragraph-input",
+            description: "Format the paragraph and add links using the editor toolbar.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Paragraph",
           },
         },
         {
