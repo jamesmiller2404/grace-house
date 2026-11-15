@@ -1167,3 +1167,25 @@ html {
 .payload .array-field__row .rich-text-lexical [contenteditable="true"] li {
   color: #f5f5f5 !important;
 }
+
+/* Lives Changed / Their Story: the Paragraph field uses Payload's Lexical
+   editor, but its field wrapper is distinct from the Intro paragraph field.
+   Paint the editor surface and the nested Lexical containers explicitly;
+   leave the surrounding array-block card and Type buttons unchanged. */
+.payload .gh-story-paragraph-input .rich-text-lexical,
+.payload .gh-story-paragraph-input .rich-text-lexical .editor-container,
+.payload .gh-story-paragraph-input .rich-text-lexical .lexical-editor,
+.payload .gh-story-paragraph-input .rich-text-lexical [contenteditable="true"],
+.payload .gh-story-paragraph-input .rich-text-lexical [data-lexical-editor="true"],
+.payload .gh-story-paragraph-input .rich-text-lexical:has([contenteditable="true"]),
+.payload .gh-story-paragraph-input .rich-text-lexical:has([contenteditable="true"]) > *,
+.payload .gh-story-paragraph-input .rich-text-lexical:has([contenteditable="true"]) > * > * {
+  background: #080808 !important;
+  background-color: #080808 !important;
+  color: #f5f5f5 !important;
+}
+
+.payload .gh-story-paragraph-input [contenteditable="true"] p,
+.payload .gh-story-paragraph-input [contenteditable="true"] li {
+  color: #f5f5f5 !important;
+}
