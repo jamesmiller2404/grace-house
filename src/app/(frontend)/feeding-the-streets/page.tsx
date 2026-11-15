@@ -42,9 +42,10 @@ export default async function FeedingTheStreetsPage() {
     return {
       type: block.type === "Heading" ? "heading" : "paragraph",
       text: block.text ?? "",
+      content: (block as typeof block & { content?: unknown }).content,
       linkLabel: block.linkLabel ?? undefined,
       linkHref: block.linkHref ?? undefined,
-    } as { type: "heading" | "paragraph"; text: string; linkLabel?: string; linkHref?: string };
+    } as { type: "heading" | "paragraph"; text: string; content?: unknown; linkLabel?: string; linkHref?: string };
   });
 
   return (
