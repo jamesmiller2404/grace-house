@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { EventDetail } from "@/content/events";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export type EventPageProps = {
   event: EventDetail;
@@ -161,20 +162,31 @@ export default function EventPage({ event }: EventPageProps) {
                     </figure>
                   );
                 }
-                return block.type === "Heading" ? (
-                  <h2 key={index} className="font-heading text-anchor text-3xl">
-                    {block.text}
-                  </h2>
-                ) : (
-                  splitBlockParagraphs(block.text).map((paragraph, paragraphIndex) => (
-                    <p
-                      key={`${index}-${paragraphIndex}`}
-                      className="mt-3 max-w-prose whitespace-pre-line"
+                if (block.type === "Heading") {
+                  return (
+                    <h2 key={index} className="font-heading text-anchor text-3xl">
+                      {block.text}
+                    </h2>
+                  );
+                }
+                if (block.content) {
+                  return (
+                    <div
+                      key={index}
+                      className="mt-3 max-w-prose [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4 [&_p]:mt-3"
                     >
-                      {paragraph}
-                    </p>
-                  ))
-                );
+                      <RichText data={block.content as never} />
+                    </div>
+                  );
+                }
+                return splitBlockParagraphs(block.text).map((paragraph, paragraphIndex) => (
+                  <p
+                    key={`${index}-${paragraphIndex}`}
+                    className="mt-3 max-w-prose whitespace-pre-line"
+                  >
+                    {paragraph}
+                  </p>
+                ));
               })}
             </section>
           </div>
