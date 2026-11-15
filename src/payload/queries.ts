@@ -586,9 +586,11 @@ export const getHelpStrip = cache(async (): Promise<HelpStripProps> => {
   return {
     heading: doc.heading,
     body: doc.body,
+    bodyContent: (doc as typeof doc & { bodyContent?: unknown }).bodyContent,
     ...(showAssessment
       ? {
           assessmentNote: doc.assessmentNote ?? undefined,
+          assessmentNoteContent: (doc as typeof doc & { assessmentNoteContent?: unknown }).assessmentNoteContent,
           cta: {
             label: doc.ctaLabel ?? helpStripDefaults.cta!.label,
             href: doc.ctaHref ?? helpStripDefaults.cta!.href,
