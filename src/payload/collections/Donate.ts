@@ -92,7 +92,6 @@ export const Donate: CollectionConfig = {
     {
       name: "intro",
       type: "textarea",
-      required: true,
       label: false,
       admin: { hidden: true },
     },
