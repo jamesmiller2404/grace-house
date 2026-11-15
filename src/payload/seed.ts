@@ -614,7 +614,11 @@ export async function seedDonate(payload: Payload): Promise<void> {
       intro: d.intro,
       paypal: d.paypal,
       venmo: d.venmo,
-      note: d.note,
+      note: {
+        text: d.note.text,
+        phone: d.note.phone,
+        phoneHref: d.note.phoneHref,
+      },
       blocks: await Promise.all(
         d.blocks.map(async (block) => {
           if (block.type === "Photo") {
