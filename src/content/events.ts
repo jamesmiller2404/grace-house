@@ -69,7 +69,8 @@ export type EventDetail = {
    * Changed block pattern).
    */
   blocks: (
-    | { type: "Heading" | "Paragraph"; text: string }
+    | { type: "Heading"; text: string }
+    | { type: "Paragraph"; text: string; content?: unknown }
     | { type: "Photo"; image: string; caption?: string }
   )[];
   contact: { questions: string; phone: string; email: string };
