@@ -15,6 +15,7 @@ export type DonatePage = {
   title: string;
   /** The paragraph under the heading. */
   intro: string;
+  introContent?: unknown;
   paypal: {
     heading: string;
     /** Sentence before the email link. */
@@ -44,6 +45,7 @@ export type DonatePage = {
   /** The 501(c)(3) note — phone link rendered after the text. */
   note: {
     text: string;
+    content?: unknown;
     phone: string;
     phoneHref: string;
   };
@@ -65,6 +67,8 @@ export type DonateBlock = {
    * (e.g. "Hours:\nWednesdays: 11am to 4pm.") can share one block.
    */
   text?: string;
+  /** Lexical paragraph content; preferred over legacy plain text. */
+  content?: unknown;
   /** Uploaded photo URL for Photo blocks. */
   image?: string;
   /** Optional caption shown under a photo. */
