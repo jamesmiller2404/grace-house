@@ -109,10 +109,15 @@ export const GetHelpNow: CollectionConfig = {
       type: "textarea",
       required: true,
       label: false,
+      admin: { hidden: true },
+    },
+    {
+      name: "bodyContent",
+      type: "richText",
+      label: false,
       admin: {
-        placeholder: "Opening line...",
-        description:
-          'The opening line (e.g. "You don\'t have to figure this out alone. Talk to a real person.").',
+        className: "gh-help-now-body-input",
+        description: "Format the opening line and add links using the editor toolbar.",
       },
     },
     // The assessment toggle — the option that turns the whole assessment
@@ -132,10 +137,15 @@ export const GetHelpNow: CollectionConfig = {
       name: "assessmentNote",
       type: "textarea",
       label: "Assessment sentence",
+      admin: { hidden: true },
+    },
+    {
+      name: "assessmentNoteContent",
+      type: "richText",
+      label: "Assessment sentence",
       admin: {
-        placeholder: "Assessment sentence...",
-        description:
-          'The sentence shown after the opening line (e.g. "Or you can fill out the assessment below and we will contact you within two business days.").',
+        className: "gh-help-now-assessment-input",
+        description: "Format the assessment sentence and add links if needed.",
         condition: (_data, sibling) => sibling?.showAssessment !== false,
       },
     },
