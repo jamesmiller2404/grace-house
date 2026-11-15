@@ -201,9 +201,6 @@ export interface Event {
     | {
         type: 'Heading' | 'Paragraph' | 'Photo';
         text?: string | null;
-        /**
-         * Format the paragraph and add links using the editor toolbar.
-         */
         content?: {
           root: {
             type: string;
@@ -402,9 +399,6 @@ export interface Story {
     | {
         type: 'Heading' | 'Paragraph' | 'Photo';
         text?: string | null;
-        /**
-         * Format the paragraph and add links using the editor toolbar.
-         */
         content?: {
           root: {
             type: string;
@@ -610,9 +604,6 @@ export interface Donate {
     | {
         type: 'Heading' | 'Paragraph' | 'Photo';
         text?: string | null;
-        /**
-         * Format the paragraph and add links using the editor toolbar.
-         */
         content?: {
           root: {
             type: string;
@@ -673,9 +664,6 @@ export interface CustomPage {
          * The heading text.
          */
         text?: string | null;
-        /**
-         * Format the paragraph and add links using the editor toolbar.
-         */
         content?: {
           root: {
             type: string;
@@ -862,9 +850,6 @@ export interface FeedingTheStreet {
          * The heading text.
          */
         text?: string | null;
-        /**
-         * Format the paragraph and add links using the editor toolbar.
-         */
         content?: {
           root: {
             type: string;
