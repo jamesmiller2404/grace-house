@@ -120,7 +120,7 @@ export default function StoryProfile({
             return (
               <div
                 key={i}
-                className={`mt-6 leading-relaxed [&_p:first-child]:${isFirst ? "drop-cap" : ""} [&_p]:mb-4 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4`}
+                className={`mt-6 leading-relaxed [&_p]:mb-4 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4 ${isFirst ? "[&_p:first-child]:drop-cap" : ""}`}
               >
                 <RichText data={block.content as never} />
               </div>
