@@ -217,7 +217,7 @@ export const getEventBySlug = cache(
  * src/content/mission.ts is shown so the page never breaks.
  */
 export const getMissionPage = cache(
-  async (): Promise<{ title: string; body: string }> => {
+  async (): Promise<{ title: string; body: string; bodyContent?: unknown }> => {
     await connection();
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
@@ -226,7 +226,12 @@ export const getMissionPage = cache(
     });
     const doc = docs[0] as PayloadMissionPage | undefined;
     if (doc) {
-      return { title: doc.title, body: doc.body };
+      const formatted = (doc as PayloadMissionPage & { bodyContent?: unknown }).bodyContent;
+      return {
+        title: doc.title,
+        body: doc.body,
+        bodyContent: formatted,
+      };
     }
     return {
       title: defaultMissionPage.missionHeading,
