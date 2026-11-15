@@ -267,6 +267,7 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
   return {
     title: doc.title || d.title,
     intro: doc.intro || d.intro,
+    introContent: (doc as typeof doc & { introContent?: unknown }).introContent,
     paypal: {
       heading: doc.paypal?.heading || d.paypal.heading,
       bodyStart: doc.paypal?.bodyStart ?? d.paypal.bodyStart,
@@ -286,6 +287,7 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
     },
     note: {
       text: doc.note?.text ?? d.note.text,
+      content: (doc.note as (typeof doc.note & { content?: unknown }) | null | undefined)?.content,
       phone: doc.note?.phone ?? d.note.phone,
       phoneHref: doc.note?.phoneHref ?? d.note.phoneHref,
     },
@@ -300,6 +302,7 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
           : {
               type: block.type,
               text: block.text ?? "",
+              content: (block as typeof block & { content?: unknown }).content,
               linkLabel: block.linkLabel ?? undefined,
               linkHref: block.linkHref ?? undefined,
             },
