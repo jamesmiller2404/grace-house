@@ -1093,3 +1093,27 @@ html {
 .gh-intro-paragraph-input [contenteditable="true"] li {
   color: #f5f5f5 !important;
 }
+
+/* Keep every Payload long-form text editor on a true black input surface,
+   regardless of the selected admin theme. This covers standard textareas
+   and Lexical rich-text editors across collections and globals. */
+.payload .field-type.textarea textarea,
+.payload .field-type.textarea .textarea,
+.payload .rich-text-lexical .editor-container,
+.payload .rich-text-lexical .lexical-editor,
+.payload .rich-text-lexical [contenteditable="true"],
+.payload [class*="rich-text"] [contenteditable="true"] {
+  background-color: #080808 !important;
+  color: #f5f5f5 !important;
+}
+.payload .field-type.textarea textarea,
+.payload .rich-text-lexical [contenteditable="true"],
+.payload [class*="rich-text"] [contenteditable="true"] {
+  caret-color: #f5f5f5;
+}
+.payload .rich-text-lexical [contenteditable="true"] p,
+.payload .rich-text-lexical [contenteditable="true"] li,
+.payload [class*="rich-text"] [contenteditable="true"] p,
+.payload [class*="rich-text"] [contenteditable="true"] li {
+  color: #f5f5f5 !important;
+}
