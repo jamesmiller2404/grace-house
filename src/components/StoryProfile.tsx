@@ -7,6 +7,7 @@ import { formatStoryDate, storyDateLabel } from "@/lib/formatStoryDate";
 import type { StoryProfile as StoryProfileData } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
 import MemoriesGallery from "@/components/MemoriesGallery";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export type StoryProfileProps = {
   profile: StoryProfileData;
@@ -115,6 +116,16 @@ export default function StoryProfile({
             );
           }
           const isFirst = profile.body.findIndex((b) => b.type === "p") === i;
+          if (block.content) {
+            return (
+              <div
+                key={i}
+                className={`mt-6 leading-relaxed [&_p:first-child]:${isFirst ? "drop-cap" : ""} [&_p]:mb-4 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4`}
+              >
+                <RichText data={block.content as never} />
+              </div>
+            );
+          }
           // A blank line starts a new paragraph; a single line break remains
           // a line break within the current paragraph.
           const paragraphs = block.text
