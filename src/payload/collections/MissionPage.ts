@@ -88,7 +88,6 @@ export const MissionPage: CollectionConfig = {
       // fallback. Editors use the formatted Lexical field below.
       name: "body",
       type: "textarea",
-      required: true,
       label: false,
       admin: {
         hidden: true,
