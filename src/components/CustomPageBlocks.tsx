@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CustomPageBlock } from "@/content/customPages";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 /**
  * Renders a custom page's body — the blocks in the order the editor stacked
@@ -54,6 +55,16 @@ export default function CustomPageBlocks({
                 </>
               )}
             </h2>
+          );
+        }
+        if (block.content) {
+          return (
+            <div
+              key={i}
+              className={`text-ink/90 leading-relaxed [&_p]:mt-6 [&_p:first-child]:mt-4 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4`}
+            >
+              <RichText data={block.content as never} />
+            </div>
           );
         }
         const paragraphs = splitBlockParagraphs(block.text);
