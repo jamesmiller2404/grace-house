@@ -94,9 +94,15 @@ export const Donate: CollectionConfig = {
       type: "textarea",
       required: true,
       label: false,
+      admin: { hidden: true },
+    },
+    {
+      name: "introContent",
+      type: "richText",
+      label: false,
       admin: {
-        placeholder: "Intro text...",
-        description: "The paragraph shown under the heading.",
+        className: "gh-donate-intro-input",
+        description: "Format the introduction and add links using the editor toolbar.",
       },
     },
     {
@@ -256,10 +262,15 @@ export const Donate: CollectionConfig = {
           name: "text",
           type: "textarea",
           label: false,
+          admin: { hidden: true },
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
           admin: {
-            placeholder: "Note text...",
-            description:
-              "The nonprofit note, without the phone number (it renders after the text).",
+            className: "gh-donate-note-input",
+            description: "Format the note; the phone link is still added automatically after it.",
           },
         },
         {
@@ -328,14 +339,24 @@ export const Donate: CollectionConfig = {
           type: "textarea",
           label: false,
           admin: {
-            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Heading",
             components: { Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" } },
-            placeholder: "Text...",
+            placeholder: "Heading...",
           },
           validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
-            (siblingData as { type?: string } | undefined)?.type === "Photo" || (typeof value === "string" && value.trim().length > 0)
+            (siblingData as { type?: string } | undefined)?.type !== "Heading" || (typeof value === "string" && value.trim().length > 0)
               ? true
-              : "Enter text for this Header or Paragraph block.",
+              : "Enter text for this Heading block.",
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
+          admin: {
+            className: "gh-donate-paragraph-input",
+            description: "Format the paragraph and add links using the editor toolbar.",
+            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Paragraph",
+          },
         },
         {
           name: "image",
@@ -371,7 +392,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: "Link Text (optional)",
           admin: {
-            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
+            hidden: true,
             placeholder: "e.g. (916) 470-0408 or Facebook",
             description:
               "The clickable words shown after the block's text. Example: for the text \"Call us at\" this would be \"(916) 470-0408\". Leave empty for a plain paragraph with no link.",
@@ -382,7 +403,7 @@ export const Donate: CollectionConfig = {
           type: "text",
           label: "Link URL (optional)",
           admin: {
-            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type !== "Photo",
+            hidden: true,
             placeholder: "e.g. tel:+19169529797 or https://example.com",
             description:
               "Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.",
