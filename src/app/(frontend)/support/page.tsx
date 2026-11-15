@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getDonate } from "@/payload/queries";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export const metadata: Metadata = {
   title: "Donate — Grace House",
@@ -35,9 +36,13 @@ export default async function SupportPage() {
 
         <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
         <h1 className="font-heading text-ink text-5xl">{d.title}</h1>
-        <p className="mt-4 max-w-[60ch] text-lg leading-relaxed">
-          {d.intro}
-        </p>
+        {d.introContent ? (
+          <div className="mt-4 max-w-[60ch] text-lg leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4">
+            <RichText data={d.introContent as never} />
+          </div>
+        ) : (
+          <p className="mt-4 max-w-[60ch] text-lg leading-relaxed">{d.intro}</p>
+        )}
 
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           {/* PayPal */}
@@ -101,16 +106,15 @@ export default async function SupportPage() {
           </section>
         </div>
 
-        <p className="text-ink/70 mt-10 max-w-[70ch] text-base leading-relaxed">
-          {d.note.text}{" "}
-          <a
-            href={d.note.phoneHref}
-            className="font-semibold underline underline-offset-4"
-          >
-            {d.note.phone}
-          </a>
-          .
-        </p>
+        <div className="text-ink/70 mt-10 max-w-[70ch] text-base leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4">
+          {d.note.content ? (
+            <RichText data={d.note.content as never} />
+          ) : (
+            <p>{d.note.text}</p>
+          )}
+          {" "}
+          <a href={d.note.phoneHref}>{d.note.phone}</a>.
+        </div>
         <hr className="border-anchor/20 my-12" />
 
         {/* Additional text blocks (e.g. Underground Clothing Connection) */}
@@ -133,6 +137,16 @@ export default async function SupportPage() {
                     </figcaption>
                   )}
                 </figure>
+              );
+            }
+            if (block.type === "Paragraph" && block.content) {
+              return (
+                <div
+                  key={i}
+                  className="mt-6 leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4 [&_p]:mt-3"
+                >
+                  <RichText data={block.content as never} />
+                </div>
               );
             }
             return block.type === "Heading" ? (
