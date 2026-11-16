@@ -15,8 +15,8 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       "_parent_id" integer NOT NULL,
       "id" varchar PRIMARY KEY NOT NULL,
       "name" varchar NOT NULL,
-      "role" varchar NOT NULL,
-      "image_id" integer NOT NULL
+      "role" varchar,
+      "image_id" integer
     );
 
     ALTER TABLE "payload_locked_documents_rels" ADD COLUMN "board_id" integer;
@@ -29,7 +29,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "board_members"
       ADD CONSTRAINT "board_members_image_id_media_id_fk"
       FOREIGN KEY ("image_id") REFERENCES "public"."media"("id")
-      ON DELETE restrict ON UPDATE no action;
+      ON DELETE set null ON UPDATE no action;
 
     ALTER TABLE "payload_locked_documents_rels"
       ADD CONSTRAINT "payload_locked_documents_rels_board_fk"
