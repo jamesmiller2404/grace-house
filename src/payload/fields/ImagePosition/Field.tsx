@@ -123,8 +123,16 @@ const ImagePositionField: React.FC<
   field,
   aspectRatio: aspectRatioProp,
   imageField: imageFieldName = "image",
-  xField: xFieldPath = "imagePositionX",
+  xField: xFieldName = "imagePositionX",
 }) => {
+  // Resolve sibling fields relative to this field's location.
+  // This supports both root-level fields and fields inside arrays.
+  const parentPath = path.includes(".")
+    ? path.slice(0, path.lastIndexOf(".") + 1)
+    : "";
+
+  const imageFieldPath = `${parentPath}${imageFieldName}`;
+  const xFieldPath = `${parentPath}${xFieldName}`;
   // The frame the preview mimics — must match the frontend's image container.
   const aspectRatio = aspectRatioProp ?? "16 / 10";
   // The two saved percentages. This component is attached to imagePositionY
@@ -134,7 +142,7 @@ const ImagePositionField: React.FC<
   // The sibling upload field's value (a media id), re-read whenever the
   // admin picks a different image or the form hydrates.
   const imageId = useFormFields((fields) =>
-    mediaIdFromFormState(fields[0], imageFieldName),
+    mediaIdFromFormState(fields[0], imageFieldPath),
   );
 
   const [mediaState, setMediaState] = useState<{

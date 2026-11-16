@@ -58,6 +58,9 @@ export default async function BoardPage() {
                       fill
                       sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
                       className="object-cover"
+                      style={{
+                        objectPosition: `${member.imagePositionX}% ${member.imagePositionY}%`,
+                      }}
                     />
                   ) : (
                     <div className="text-ink/50 flex h-full items-center justify-center text-sm">

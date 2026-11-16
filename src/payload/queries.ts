@@ -938,7 +938,10 @@ export const getBoardPage = cache(async (): Promise<{
     id?: string | null;
     name: string;
     role: string;
+    //image: { url: string; alt?: string | null } | null;
     image: { url: string; alt?: string | null } | null;
+    imagePositionX: number | null;
+    imagePositionY: number | null;
   }[];
 }> => {
   await connection();
@@ -963,6 +966,8 @@ export const getBoardPage = cache(async (): Promise<{
       id: member.id,
       name: member.name ?? "",
       role: member.role ?? "",
+      imagePositionX: member.imagePositionX ?? 50,
+      imagePositionY: member.imagePositionY ?? 50,
       image:
         member.image && typeof member.image === "object" && member.image.url
           ? { url: member.image.url, alt: member.image.alt ?? null }

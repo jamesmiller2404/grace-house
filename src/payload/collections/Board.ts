@@ -1,4 +1,6 @@
+
 import type { CollectionConfig } from "payload";
+import { ImagePositionField } from "@/payload/fields/ImagePosition";
 
 /**
  * Board of Directors page — one document controls the page title, introduction,
@@ -97,6 +99,30 @@ export const Board: CollectionConfig = {
             },
             description: "Choose this board member's profile picture from Media.",
           },
+        },
+        {
+          name: "imagePositionX",
+          type: "number",
+          defaultValue: 50,
+          min: 0,
+          max: 100,
+          admin: {
+            hidden: true,
+          },
+        },
+        {
+          ...ImagePositionField(
+            {
+              name: "imagePositionY",
+              label: false,
+              defaultValue: 50,
+              min: 0,
+              max: 100,
+            },
+            {
+              aspectRatio: "4 / 5",
+            },
+          ),
         },
       ],
     },

@@ -928,11 +928,13 @@ export interface Board {
         /**
          * Enter any role or title. This is a text field, not a dropdown.
          */
-        role: string;
+        role?: string | null;
         /**
          * Choose this board member's profile picture from Media.
          */
-        image: number | Media;
+        image?: (number | null) | Media;
+        imagePositionX?: number | null;
+        imagePositionY?: number | null;
         id?: string | null;
       }[]
     | null;
@@ -1394,6 +1396,8 @@ export interface BoardSelect<T extends boolean = true> {
         name?: T;
         role?: T;
         image?: T;
+        imagePositionX?: T;
+        imagePositionY?: T;
         id?: T;
       };
   updatedAt?: T;
