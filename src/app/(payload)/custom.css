@@ -1073,7 +1073,18 @@ html {
   font-size: 2em !important;
   line-height: 1.4 !important;
 }
-
+/* Board member explanatory text: improve readability. */
+[class*="field-description-members__"] {
+  color: #d7d7e0 !important;
+}
+/* Board member explanatory text: improve contrast in the edit form. */
+.collection-edit--board .field-description {
+  color: #d7d7e0 !important;
+}
+/* Board image-positioning explanation: improve readability. */
+.gh-image-position-description {
+  color: #b8b8c0 !important;
+}
 
 /* Intro Paragraph Lexical editor: use the same black input surface as Heading. */
 .gh-intro-paragraph-input .editor-container,

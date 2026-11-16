@@ -318,7 +318,7 @@ const ImagePositionField: React.FC<
         {!media && <div style={styles.empty}>Image</div>}
       </div>
       {media && layout && (
-        <div style={styles.hint}>
+        <div className="gh-image-position-description" style={{ marginTop: 4, fontSize: 12 }}>
           Drag the image with your mouse or finger to set its position in the
           image frame on the page
           {layout.overflowY > 0 ? " (up/down)" : ""}
