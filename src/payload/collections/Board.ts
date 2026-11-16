@@ -78,7 +78,6 @@ export const Board: CollectionConfig = {
         {
           name: "role",
           type: "text",
-          required: true,
           label: "Role",
           admin: {
             placeholder: "e.g. Board President, Treasurer, Member...",
@@ -89,7 +88,6 @@ export const Board: CollectionConfig = {
           name: "image",
           type: "upload",
           relationTo: "media",
-          required: true,
           label: "Profile Picture",
           admin: {
             components: {
