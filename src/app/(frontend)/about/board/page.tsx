@@ -34,7 +34,7 @@ export default async function BoardPage() {
         <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
         <h1 className="font-heading text-ink text-5xl">{board.title}</h1>
 
-        {board.intro && (
+        {Boolean(board.intro) && (
           <div className="gh-board-intro text-ink/80 mt-4 max-w-[70ch] text-lg leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4 [&_p]:mt-4 [&_p:first-child]:mt-0">
             <RichText data={board.intro as never} />
           </div>
