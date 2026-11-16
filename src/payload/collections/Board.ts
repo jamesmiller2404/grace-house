@@ -30,6 +30,16 @@ export const Board: CollectionConfig = {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
       ],
+      edit: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/collections/Board/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/Board/DoneToListButton.tsx",
+          },
+        ],
+      },
     },
   },
   fields: [

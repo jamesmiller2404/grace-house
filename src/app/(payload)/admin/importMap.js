@@ -72,6 +72,8 @@ import { default as default_8a90e0f56f7d88e44ba6dd08ad3db4ca } from '../../../..
 import { default as default_282593289973f99a281e676160689059 } from '../../../../src/payload/collections/Faq/CancelToDashboardButton.tsx'
 import { default as default_d8f3cbc3e7520639191eb7740c405938 } from '../../../../src/payload/collections/Faq/DoneToListButton.tsx'
 import { default as default_6277f6300f53a64de60cd0166499c377 } from '../../../../src/payload/collections/Faq/EditView.tsx'
+import { default as default_3226e0d2c8e56e8807ddb9ce6a7b06eb } from '../../../../src/payload/collections/Board/CancelToDashboardButton.tsx'
+import { default as default_cb9c7a6df18238a84ac29350285f9b8a } from '../../../../src/payload/collections/Board/DoneToListButton.tsx'
 import { default as default_c3f9d01435ae13c1ccc55c2c02b3a4c4 } from '../../../../src/payload/globals/HomeLayout/RowLabel.tsx'
 import { default as default_930d2638a28a6451a167cbcd06f9f842 } from '../../../../src/payload/globals/HomeLayout/CancelToDashboardButton.tsx'
 import { default as default_217a6f9983bacbbe3227d7e99a78de56 } from '../../../../src/payload/globals/HomeLayout/DoneToDashboardButton.tsx'
@@ -173,6 +175,8 @@ export const importMap = {
   "./src/payload/collections/Faq/CancelToDashboardButton.tsx#default": default_282593289973f99a281e676160689059,
   "./src/payload/collections/Faq/DoneToListButton.tsx#default": default_d8f3cbc3e7520639191eb7740c405938,
   "./src/payload/collections/Faq/EditView.tsx#default": default_6277f6300f53a64de60cd0166499c377,
+  "./src/payload/collections/Board/CancelToDashboardButton.tsx#default": default_3226e0d2c8e56e8807ddb9ce6a7b06eb,
+  "./src/payload/collections/Board/DoneToListButton.tsx#default": default_cb9c7a6df18238a84ac29350285f9b8a,
   "./src/payload/globals/HomeLayout/RowLabel.tsx#default": default_c3f9d01435ae13c1ccc55c2c02b3a4c4,
   "./src/payload/globals/HomeLayout/CancelToDashboardButton.tsx#default": default_930d2638a28a6451a167cbcd06f9f842,
   "./src/payload/globals/HomeLayout/DoneToDashboardButton.tsx#default": default_217a6f9983bacbbe3227d7e99a78de56,
