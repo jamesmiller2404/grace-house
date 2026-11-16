@@ -39,6 +39,8 @@ import * as migration_20261114_031204 from './20261114_031204';
 import * as migration_20261114_110127_IntroBlocks from './20261114_110127_IntroBlocks';
 import * as migration_20261114_120000_add_intro_content from './20261114_120000_add_intro_content';
 import * as migration_20261115_021337 from './20261115_021337';
+import * as migration_20261115_162300_board_of_directors from './20261115_162300_board_of_directors';
+import * as migration_20261116_004440 from './20261116_004440';
 
 export const migrations = [
   {
@@ -244,8 +246,16 @@ export const migrations = [
   {
     up: migration_20261115_021337.up,
     down: migration_20261115_021337.down,
-    name: '20261115_021337'
+    name: '20261115_021337',
+  },
+  {
+    up: migration_20261115_162300_board_of_directors.up,
+    down: migration_20261115_162300_board_of_directors.down,
+    name: '20261115_162300_board_of_directors',
+  },
+  {
+    up: migration_20261116_004440.up,
+    down: migration_20261116_004440.down,
+    name: '20261116_004440'
   },
 ];
-
-import * as migration_20261115_162300_board_of_directors from './20261115_162300_board_of_directors';
