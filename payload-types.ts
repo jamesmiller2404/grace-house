@@ -79,6 +79,7 @@ export interface Config {
     'get-help-now': GetHelpNow;
     faq: Faq;
     'feeding-the-streets': FeedingTheStreet;
+    board: Board;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +99,7 @@ export interface Config {
     'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     'feeding-the-streets': FeedingTheStreetsSelect<false> | FeedingTheStreetsSelect<true>;
+    board: BoardSelect<false> | BoardSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -888,6 +890,56 @@ export interface FeedingTheStreet {
   createdAt: string;
 }
 /**
+ * Manage the title, introduction, and board member profiles displayed on /about/board. Use one document for this page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "board".
+ */
+export interface Board {
+  id: number;
+  /**
+   * The heading shown at the top of the public page.
+   */
+  title: string;
+  /**
+   * Introductory text displayed beneath the page title. Use the editor toolbar to format text and add links.
+   */
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Add one section for each board member. Each section includes a profile picture, name, and role. The role is free text, so enter any title you need.
+   */
+  members?:
+    | {
+        name: string;
+        /**
+         * Enter any role or title. This is a text field, not a dropdown.
+         */
+        role: string;
+        /**
+         * Choose this board member's profile picture from Media.
+         */
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -958,6 +1010,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'feeding-the-streets';
         value: number | FeedingTheStreet;
+      } | null)
+    | ({
+        relationTo: 'board';
+        value: number | Board;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1320,6 +1376,24 @@ export interface FeedingTheStreetsSelect<T extends boolean = true> {
         linkHref?: T;
         image?: T;
         caption?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "board_select".
+ */
+export interface BoardSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  members?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        image?: T;
         id?: T;
       };
   updatedAt?: T;
