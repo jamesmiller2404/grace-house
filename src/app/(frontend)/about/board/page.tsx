@@ -69,9 +69,11 @@ export default async function BoardPage() {
                   <h2 className="font-heading text-ink text-2xl">
                     {member.name}
                   </h2>
-                  <p className="text-terra mt-1 text-base font-semibold">
-                    {member.role}
-                  </p>
+                  {member.role && (
+                    <p className="text-terra mt-1 text-base font-semibold">
+                      {member.role}
+                    </p>
+                  )}
                 </div>
               </article>
             ))}
