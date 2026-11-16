@@ -49,5 +49,16 @@ export const MediaLists: CollectionConfig = {
         description: "Optional note explaining what this list is for.",
       },
     },
+    {
+      name: "images",
+      type: "join",
+      collection: "media",
+      on: "lists",
+      admin: {
+        defaultColumns: ["filename", "alt", "updatedAt"],
+        description:
+          "Images currently assigned to this list. Open an image to change its list assignments.",
+      },
+    },
   ],
 };

@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     events: Event;
     media: Media;
+    'media-lists': MediaList;
     'mission-page': MissionPage;
     hero: Hero;
     intro: Intro;
@@ -90,6 +91,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'media-lists': MediaListsSelect<false> | MediaListsSelect<true>;
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     intro: IntroSelect<false> | IntroSelect<true>;
@@ -260,6 +262,24 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+  /** Lists used to organize this image in the Media library. */
+  lists?: (number | MediaList)[] | null;
+}
+/**
+ * A named organizational list for the Media library.
+ */
+export interface MediaList {
+  id: number;
+  name: string;
+  description?: string | null;
+  /** Related images in this list. */
+  images?: {
+    docs?: (number | Media)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * The Title and body text shown on the Mission page (/about/mission).
@@ -1128,6 +1148,7 @@ export interface EventsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  lists?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1137,6 +1158,17 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-lists_select".
+ */
+export interface MediaListsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  images?: T | { docs?: T; hasNextPage?: T; totalDocs?: T };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
