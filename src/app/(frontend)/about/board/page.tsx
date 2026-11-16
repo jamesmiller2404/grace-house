@@ -50,7 +50,7 @@ export default async function BoardPage() {
                 key={member.id ?? `${member.name}-${index}`}
                 className="border-ink/10 bg-white/50 overflow-hidden rounded-xl border shadow-sm"
               >
-                <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink/5">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] bg-ink/5">
                   {member.image ? (
                     <Image
                       src={member.image.url}
