@@ -5,6 +5,7 @@ import { s3Storage } from "@payloadcms/storage-s3";
 import { buildConfig } from "payload";
 
 import { Events } from "@/payload/collections/Events";
+import { Board } from "@/payload/collections/Board";
 import { Hero } from "@/payload/collections/Hero";
 import { Intro } from "@/payload/collections/Intro";
 import { Media } from "@/payload/collections/Media";
@@ -60,6 +61,7 @@ export default buildConfig({
     GetHelpNow,
     Faq,
     FeedingTheStreets,
+    Board,
   ],
   globals: [HomeLayout, ContactInfo, Footer],
   serverURL: siteURL,

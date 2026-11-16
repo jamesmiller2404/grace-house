@@ -247,3 +247,5 @@ export const migrations = [
     name: '20261115_021337'
   },
 ];
+
+import * as migration_20261115_162300_board_of_directors from './20261115_162300_board_of_directors';

@@ -924,3 +924,49 @@ export const getCustomPageBySlug = cache(
     return doc ? toCustomPageContent(doc) : undefined;
   },
 );
+
+
+/**
+ * Board of Directors page content. The first document in the `board`
+ * collection is the source of truth for /about/board. Media is populated so
+ * the public page can render each member's profile picture.
+ */
+export const getBoardPage = cache(async (): Promise<{
+  title: string;
+  intro: unknown;
+  members: {
+    id?: string | null;
+    name: string;
+    role: string;
+    image: { url: string; alt?: string | null } | null;
+  }[];
+}> => {
+  await connection();
+  const payload = await getPayload({ config });
+  // The generated Payload types are refreshed by `payload generate:types`
+  // after this collection is added; keep this query compatible with the
+  // checked-in types until that command is run.
+  const { docs } = await (payload as any).find({
+    collection: "board",
+    limit: 1,
+    depth: 1,
+    sort: "-updatedAt",
+  });
+  const doc = docs[0];
+  if (!doc) {
+    return { title: "Board of Directors", intro: null, members: [] };
+  }
+  return {
+    title: doc.title || "Board of Directors",
+    intro: doc.intro ?? null,
+    members: (doc.members ?? []).map((member: any) => ({
+      id: member.id,
+      name: member.name ?? "",
+      role: member.role ?? "",
+      image:
+        member.image && typeof member.image === "object" && member.image.url
+          ? { url: member.image.url, alt: member.image.alt ?? null }
+          : null,
+    })),
+  };
+});
