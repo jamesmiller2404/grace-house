@@ -1,8 +1,9 @@
 import type { CollectionConfig } from "payload";
 
 /**
- * Images uploaded through the admin panel. Event pages each reference one
- * image from this collection, so images can be reused across events.
+ * Images uploaded through the admin panel. Event pages and other site
+ * sections can reuse the same image; organizational lists do not duplicate
+ * or move the underlying media file.
  */
 export const Media: CollectionConfig = {
   slug: "media",
@@ -19,11 +20,10 @@ export const Media: CollectionConfig = {
   },
   admin: {
     useAsTitle: "alt",
-    defaultColumns: ["filename", "alt", "mimeType", "updatedAt"],
-    // Custom Edit view wrapper that paints the mockup frame:
-    // #111115 page background, rounded #2d2d33 panel around the fields,
-    // #101012 input boxes — the DARK scheme. The same elements are repainted
-    // for the Light theme.
+    defaultColumns: ["filename", "alt", "lists", "mimeType", "updatedAt"],
+    description:
+      "Central image library. Use Lists to organize images by page, section, or purpose. An image can belong to multiple lists.",
+    // Custom Edit view wrapper that paints the mockup frame.
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
@@ -37,10 +37,7 @@ export const Media: CollectionConfig = {
           },
         },
       },
-      // "Cancel" and "Done" buttons next to Save on the create/edit pages —
-      // they render in the document controls bar (before the Save button, in
-      // array order) so the bar reads "Cancel | Done | Save". Cancel returns
-      // to the previous screen; Done returns to the Media list.
+      // Keep the existing Cancel / Done controls beside Save.
       edit: {
         beforeDocumentControls: [
           {
@@ -57,13 +54,10 @@ export const Media: CollectionConfig = {
     // Use the original image for the larger Media list previews.
     adminThumbnail: ({ doc }) =>
       typeof doc.url === "string" ? doc.url : "",
-    // Only allow image files — these accompany event pages.
+    // Only allow image files.
     mimeTypes: ["image/*"],
-    // No image editing (crop / focal point adjustments) from the admin
-    // panel: the "Edit Image" button this enables in the upload drawer is
-    // unwanted on the event create/edit flow — the visible part of the
-    // image is chosen with the draggable preview (ImagePositionField)
-    // instead, so images are always used exactly as uploaded.
+    // Images are used exactly as uploaded; visible positioning is chosen
+    // in the page-specific image-positioning controls.
     crop: false,
     focalPoint: false,
   },
@@ -74,6 +68,16 @@ export const Media: CollectionConfig = {
       required: true,
       admin: {
         description: "Describe the image for screen readers.",
+      },
+    },
+    {
+      name: "lists",
+      type: "relationship",
+      relationTo: "media-lists",
+      hasMany: true,
+      admin: {
+        description:
+          "Add this image to one or more lists. Removing a list here does not delete the image.",
       },
     },
   ],
