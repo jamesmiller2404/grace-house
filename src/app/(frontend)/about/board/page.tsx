@@ -3,9 +3,12 @@ import Link from "next/link";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { getBoardPage } from "@/payload/queries";
 
-export const metadata = {
-  title: "Board of Directors — Grace House",
-};
+export async function generateMetadata() {
+  const board = await getBoardPage();
+  return {
+    title: `${board.title} — Grace House`,
+  };
+}
 
 export default async function BoardPage() {
   const board = await getBoardPage();
