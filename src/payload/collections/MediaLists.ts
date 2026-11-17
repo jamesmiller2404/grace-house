@@ -71,6 +71,9 @@ export const MediaLists: CollectionConfig = {
       edit: {
         beforeDocumentControls: [
           {
+            path: "./src/payload/collections/MediaLists/ImagesMobileLayout.tsx",
+          },
+          {
             path: "./src/payload/collections/MediaLists/CancelButton.tsx",
           },
           {
