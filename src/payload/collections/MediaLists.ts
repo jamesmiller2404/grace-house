@@ -29,6 +29,16 @@ export const MediaLists: CollectionConfig = {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
       ],
+      edit: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/collections/MediaLists/CancelButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/MediaLists/DoneButton.tsx",
+          },
+        ],
+      },
     },
   },
   fields: [
