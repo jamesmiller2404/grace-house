@@ -143,20 +143,16 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             visibility: visible;
             white-space: nowrap;
           }
+          /* Keep Add Image, Bulk Upload, and Media Lists on one row. */
+          .list-header__title-actions,
+          .list-header__actions {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            gap: 8px !important;
+          }
         ` : ""}
-        {isMediaCollection && (
-          <style>{`
-            /* Keep Add Image, Bulk Upload, and Media Lists on one row. */
-            .list-header__title-actions,
-            .list-header__actions {
-              display: flex !important;
-              flex-direction: row !important;
-              flex-wrap: nowrap !important;
-              align-items: center !important;
-              gap: 8px !important;
-            }
-          `}</style>
-        )}
 
         /* The Media collection is an image library: make its list thumbnails
            large enough to inspect without opening each document. */
