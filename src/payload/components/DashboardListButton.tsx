@@ -325,25 +325,38 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             .table tbody tr td:first-child {
               display: block !important;
               grid-column: 1 / -1;
-              min-height: 90px;
+              width: 100% !important;
+              min-width: 0 !important;
+              min-height: 0;
+            }
+            /* Give the image the full card width and enough height to show
+               its complete proportions instead of squeezing it into a
+               small fixed thumbnail box. */
+            .table tbody tr td:first-child:has(img) {
+              width: 100% !important;
+              min-width: 0 !important;
             }
             .table tbody tr td:first-child .thumbnail,
             .table tbody tr td:first-child [class*="thumbnail"] {
-              width: 120px !important;
-              min-width: 120px !important;
-              max-width: 120px !important;
-              height: 90px !important;
-              min-height: 90px !important;
-              max-height: 90px !important;
+              display: block !important;
+              width: 100% !important;
+              min-width: 0 !important;
+              max-width: 100% !important;
+              height: 220px !important;
+              min-height: 220px !important;
+              max-height: 220px !important;
+              overflow: hidden !important;
             }
             .table tbody tr td:first-child img {
-              width: 120px !important;
-              min-width: 120px !important;
-              max-width: 120px !important;
-              height: 90px !important;
-              min-height: 90px !important;
-              max-height: 90px !important;
+              display: block !important;
+              width: 100% !important;
+              min-width: 0 !important;
+              max-width: 100% !important;
+              height: 220px !important;
+              min-height: 220px !important;
+              max-height: 220px !important;
               object-fit: contain !important;
+              background: #222;
             }
             .table tbody tr td:nth-child(2),
             .table tbody tr td:nth-child(5) { grid-column: auto; }
