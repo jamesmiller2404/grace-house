@@ -248,7 +248,7 @@ export interface Event {
   createdAt: string;
 }
 /**
- * Central image library. Use Lists to organize images by page, section, or purpose. An image can belong to multiple lists.
+ * Primary List contains all images. Use additional lists to organize subsets; an image can belong to multiple lists.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
