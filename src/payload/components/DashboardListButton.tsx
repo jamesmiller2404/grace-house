@@ -91,7 +91,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       const nameCell = document.createElement("td");
       const link = document.createElement("a");
       link.href = mediaListURL;
-      link.className = "gh-primary-media-list-link";
+      link.className = "gh-primary-media-list-button";
       link.textContent = "Primary List";
       nameCell.appendChild(link);
 
@@ -227,12 +227,27 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           padding-top: 14px;
           padding-bottom: 14px;
         }
-        .gh-primary-media-list-link {
-          color: #b7a2ff !important;
-          font-weight: 700;
+        .gh-primary-media-list-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          min-height: 42px;
+          padding: 0.6rem 0.9rem;
+          background: var(--theme-elevation-100);
+          border: 1px solid var(--theme-elevation-300);
+          border-radius: 5px;
+          color: var(--theme-elevation-900) !important;
+          font-size: 0.9rem;
+          font-weight: 600;
+          line-height: 1.2;
           text-decoration: none;
         }
-        .gh-primary-media-list-link:hover { text-decoration: underline; }
+        .gh-primary-media-list-button:hover {
+          background: var(--theme-elevation-200);
+          border-color: var(--theme-elevation-500);
+          color: var(--theme-elevation-1000) !important;
+        }
 
       `}</style>
 
