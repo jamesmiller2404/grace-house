@@ -23,10 +23,10 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     serverURL: config.serverURL,
     path: "/collections/media",
   });
-  const createListURL = formatAdminURL({
+  const mediaListsURL = formatAdminURL({
     adminRoute: config.routes.admin,
     serverURL: config.serverURL,
-    path: "/collections/media-lists/create",
+    path: "/collections/media-lists",
   });
   const dashboardURL = formatAdminURL({
     adminRoute: config.routes.admin,
@@ -144,6 +144,20 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             white-space: nowrap;
           }
         ` : ""}
+        {isMediaCollection && (
+          <style>{`
+            /* Keep Add Image, Bulk Upload, and Media Lists on one row. */
+            .list-header__title-actions,
+            .list-header__actions {
+              display: flex !important;
+              flex-direction: row !important;
+              flex-wrap: nowrap !important;
+              align-items: center !important;
+              gap: 8px !important;
+            }
+          `}</style>
+        )}
+
         /* The Media collection is an image library: make its list thumbnails
            large enough to inspect without opening each document. */
         .table td:has(img) {
@@ -226,6 +240,30 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
 
       `}</style>
 
+        {isMediaListsCollection && (
+          <style>{`
+            /* Rename Payload native create action on the Media Lists page. */
+            .list-create-new-doc__create-new-button {
+              position: relative !important;
+              color: transparent !important;
+              font-size: 0 !important;
+            }
+            .list-create-new-doc__create-new-button * { visibility: hidden !important; }
+            .list-create-new-doc__create-new-button::after {
+              content: "Create New List";
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--theme-elevation-900);
+              font-size: 0.9rem;
+              visibility: visible;
+              white-space: nowrap;
+            }
+          `}</style>
+        )}
+
       {isMediaCollection && (
         <nav
           className="gh-media-list-navigation"
@@ -249,24 +287,25 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       {actionsElement &&
         createPortal(
           <>
-            {isMediaCollection && (
+            {isMediaCollection ? (
               <Button
-                buttonStyle="primary"
+                buttonStyle="secondary"
                 el="link"
-                to={createListURL}
-                className="gh-create-media-list-button"
+                to={mediaListsURL}
+                className="gh-media-lists-button"
               >
-                Create New List
+                Media Lists
+              </Button>
+            ) : (
+              <Button
+                buttonStyle="secondary"
+                el="link"
+                to={dashboardURL}
+                className="gh-dashboard-list-button"
+              >
+                Dashboard
               </Button>
             )}
-            <Button
-              buttonStyle="secondary"
-              el="link"
-              to={dashboardURL}
-              className="gh-dashboard-list-button"
-            >
-              Dashboard
-            </Button>
           </>,
           actionsElement,
         )}
