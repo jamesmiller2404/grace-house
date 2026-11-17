@@ -275,6 +275,10 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         }
 
         .gh-media-list-navigation a {
+          display: inline-flex;
+          align-items: center;
+          flex-wrap: nowrap;
+          white-space: nowrap;
           color: var(--theme-text);
           text-decoration: none;
           font-size: 13px;
@@ -319,6 +323,18 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           border-bottom: 1px solid var(--theme-elevation-200);
           padding-top: 14px;
           padding-bottom: 14px;
+          vertical-align: middle;
+        }
+        .gh-primary-media-list-row td:first-child {
+          white-space: nowrap;
+        }
+        .table tbody tr td:first-child:has(.gh-media-list-count),
+        .table tbody tr td:first-child:has(.gh-media-list-count) a {
+          white-space: nowrap;
+        }
+        .table tbody tr td:first-child:has(.gh-media-list-count) a {
+          display: inline-flex;
+          align-items: center;
           vertical-align: middle;
         }
         .gh-primary-media-list-button {
