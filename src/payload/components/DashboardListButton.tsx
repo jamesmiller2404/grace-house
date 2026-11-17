@@ -121,6 +121,16 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   return (
     <>
       <style>{`
+        ${isMediaCollection ? `
+          /* Rename Payload's native create-document action on the Media page. */
+          .list-create-new-doc__create-new-button {
+            font-size: 0 !important;
+          }
+          .list-create-new-doc__create-new-button::after {
+            content: "Add Image";
+            font-size: 0.9rem;
+          }
+        ` : ""}
         /* The Media collection is an image library: make its list thumbnails
            large enough to inspect without opening each document. */
         .table td:has(img) {
