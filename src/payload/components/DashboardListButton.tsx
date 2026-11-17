@@ -81,7 +81,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
 
 
   useEffect(() => {
-    if ((!isMediaCollection && !isMediaListsCollection) || lists.length === 0) return;
+    if (!isMediaCollection && !isMediaListsCollection) return;
 
     let active = true;
     const getCount = async (url: string): Promise<number> => {
@@ -185,7 +185,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       observer.disconnect();
       document.querySelectorAll(".gh-primary-media-list-row").forEach((row) => row.remove());
     };
-  }, [isMediaListsCollection, mediaListURL]);
+  }, [isMediaListsCollection, mediaListURL, imageCounts]);
 
 
 
