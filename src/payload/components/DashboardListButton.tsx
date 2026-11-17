@@ -275,7 +275,6 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           display: block;
           width: 11px;
           height: 11px;
-          border: 2px solid #fff;
           border-radius: 50%;
           background: #00ff5d;
           box-shadow: 0 1px 4px rgb(0 0 0 / 45%);
@@ -308,7 +307,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           <>
             {isMediaCollection && (
               <Button
-                buttonStyle="secondary"
+                buttonStyle="primary"
                 el="link"
                 to={createListURL}
                 className="gh-create-media-list-button"

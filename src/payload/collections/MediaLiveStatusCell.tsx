@@ -57,7 +57,6 @@ export default function MediaLiveStatusCell({
         height: 11,
         borderRadius: "50%",
         backgroundColor: "#00ff5d",
-        border: "2px solid rgba(255,255,255,.8)",
         boxShadow: "0 1px 4px rgba(0,0,0,.45)",
         verticalAlign: "middle",
       }}
