@@ -105,7 +105,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
 
     insertPrimaryListRow();
     const observer = new MutationObserver(insertPrimaryListRow);
-    observer.observe(document.querySelector(".list-controls") ?? document.body, {
+    observer.observe(document.body, {
       childList: true,
       subtree: true,
     });
