@@ -315,7 +315,8 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               min-width: 0 !important;
             }
             .table tbody tr td:first-child .thumbnail,
-            .table tbody tr td:first-child [class*="thumbnail"] {
+            .table tbody tr td:first-child [class*="thumbnail"],
+            .table tbody tr td:first-child a:has(img) {
               display: block !important;
               width: 100% !important;
               min-width: 0 !important;
@@ -325,6 +326,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               max-height: none !important;
               aspect-ratio: auto !important;
               overflow: visible !important;
+              position: static !important;
             }
             .table tbody tr td:first-child img {
               display: block !important;
@@ -360,42 +362,43 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           }
         ` : ""}
 
-        /* The Media collection is an image library: make its list thumbnails
-           large enough to inspect without opening each document. */
-        .table td:has(img) {
-          min-width: 200px !important;
-          vertical-align: middle;
-        }
+        /* Desktop/tablet thumbnails use a consistent preview size. Do not
+           apply these fixed dimensions to the stacked mobile cards. */
+        @media (min-width: 768px) {
+          .table td:has(img) {
+            min-width: 200px !important;
+            vertical-align: middle;
+          }
 
-        /* Payload wraps admin thumbnails in a fixed-size Thumbnail element.
-           Override both the wrapper and image dimensions, not just the row. */
-        .table td:has(img) .thumbnail,
-        .table td:has(img) [class*="thumbnail"] {
-          width: 180px !important;
-          height: 120px !important;
-          min-width: 180px !important;
-          min-height: 120px !important;
-          max-width: 180px !important;
-          max-height: 120px !important;
-          overflow: hidden !important;
-          position: relative !important;
-        }
+          .table td:has(img) .thumbnail,
+          .table td:has(img) [class*="thumbnail"] {
+            display: block !important;
+            width: 180px !important;
+            height: 120px !important;
+            min-width: 180px !important;
+            min-height: 120px !important;
+            max-width: 180px !important;
+            max-height: 120px !important;
+            overflow: hidden !important;
+            position: relative !important;
+          }
 
-        .table td:has(img) img {
-          display: block !important;
-          width: 180px !important;
-          height: 120px !important;
-          min-width: 180px !important;
-          min-height: 120px !important;
-          max-width: 180px !important;
-          max-height: 120px !important;
-          object-fit: contain !important;
-          background: #222;
-          border-radius: 6px;
-        }
+          .table td:has(img) img {
+            display: block !important;
+            width: 180px !important;
+            height: 120px !important;
+            min-width: 180px !important;
+            min-height: 120px !important;
+            max-width: 180px !important;
+            max-height: 120px !important;
+            object-fit: contain !important;
+            background: #222;
+            border-radius: 6px;
+          }
 
-        .table tr:has(td img) {
-          height: 136px;
+          .table tr:has(td img) {
+            height: 136px;
+          }
         }
 
         .gh-media-list-navigation {
