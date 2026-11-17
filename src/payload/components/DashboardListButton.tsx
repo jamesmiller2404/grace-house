@@ -116,73 +116,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     };
   }, [isMediaListsCollection, mediaListURL]);
 
-  useEffect(() => {
-    if (!isMediaCollection) return;
 
-    let active = true;
-    let liveIDs = new Set<string>();
-
-    const decorateLiveImages = () => {
-      const rows = document.querySelectorAll<HTMLTableRowElement>(
-        ".table tbody tr",
-      );
-
-      rows.forEach((row) => {
-        const mediaLink = row.querySelector<HTMLAnchorElement>(
-          'a[href*="/collections/media/"]',
-        );
-        const match = mediaLink?.href.match(/\/collections\/media\/([^/?#]+)/);
-        const isLive = Boolean(match && liveIDs.has(decodeURIComponent(match[1])));
-
-        const thumbnailCell = row.querySelector<HTMLElement>("td:has(img)");
-        if (!thumbnailCell) return;
-
-        const thumbnail =
-          thumbnailCell.querySelector<HTMLElement>(
-            ".thumbnail, [class*='thumbnail']",
-          ) ?? thumbnailCell;
-
-        const existing = thumbnail.querySelector(".gh-media-live-indicator");
-        if (!isLive) {
-          existing?.remove();
-          return;
-        }
-        if (existing) return;
-
-        const indicator = document.createElement("span");
-        indicator.className = "gh-media-live-indicator";
-        indicator.setAttribute("role", "img");
-        indicator.setAttribute("aria-label", "Live on website");
-        indicator.title = "Live on website";
-        thumbnail.appendChild(indicator);
-      });
-    };
-
-    fetch("/api/media/live-ids", { credentials: "include" })
-      .then((response) => {
-        if (!response.ok) throw new Error("Could not load live image usage.");
-        return response.json();
-      })
-      .then((data: { ids?: Array<string | number> }) => {
-        if (!active) return;
-        liveIDs = new Set((data.ids ?? []).map(String));
-        decorateLiveImages();
-      })
-      .catch(() => {
-        // A failed usage lookup must not display a misleading live marker.
-      });
-
-    const observer = new MutationObserver(decorateLiveImages);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      active = false;
-      observer.disconnect();
-      document
-        .querySelectorAll(".gh-media-live-indicator")
-        .forEach((indicator) => indicator.remove());
-    };
-  }, [isMediaCollection]);
 
   return (
     <>
@@ -267,19 +201,6 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         }
         .gh-primary-media-list-link:hover { text-decoration: underline; }
 
-        .gh-media-live-indicator {
-          position: absolute;
-          top: 7px;
-          right: 7px;
-          z-index: 2;
-          display: block;
-          width: 11px;
-          height: 11px;
-          border-radius: 50%;
-          background: #00ff5d;
-          box-shadow: 0 1px 4px rgb(0 0 0 / 45%);
-          pointer-events: none;
-        }
       `}</style>
 
       {isMediaCollection && (
