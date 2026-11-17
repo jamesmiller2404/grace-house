@@ -230,6 +230,64 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             align-items: center !important;
             gap: 8px !important;
           }
+          /* Keep Media metadata accessible instead of letting Payload hide
+             columns at narrower viewport widths. The table scrolls as a unit. */
+          .table-wrap,
+          .collection-list__wrap,
+          .collection-list__table-wrap {
+            display: block !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: visible !important;
+            -webkit-overflow-scrolling: touch;
+          }
+          .table {
+            width: 100% !important;
+            min-width: 1050px !important;
+            table-layout: fixed !important;
+          }
+          .table thead th:nth-child(1),
+          .table tbody td:nth-child(1) { width: 220px !important; }
+          .table thead th:nth-child(2),
+          .table tbody td:nth-child(2) { width: 90px !important; }
+          .table thead th:nth-child(3),
+          .table tbody td:nth-child(3) { width: 270px !important; }
+          .table thead th:nth-child(4),
+          .table tbody td:nth-child(4) { width: 180px !important; }
+          .table thead th:nth-child(5),
+          .table tbody td:nth-child(5) { width: 120px !important; }
+          .table thead th:nth-child(6),
+          .table tbody td:nth-child(6) { width: 170px !important; }
+
+          /* Let descriptive metadata wrap instead of being clipped. */
+          .table tbody td:nth-child(3),
+          .table tbody td:nth-child(4) {
+            white-space: normal !important;
+            overflow-wrap: anywhere;
+            vertical-align: middle !important;
+          }
+          .table tbody td:nth-child(6),
+          .table thead th:nth-child(6) {
+            white-space: nowrap !important;
+          }
+
+          @media (max-width: 1100px) {
+            .table {
+              min-width: 950px !important;
+            }
+            .table thead th:nth-child(1),
+            .table tbody td:nth-child(1) { width: 165px !important; }
+            .table td:has(img) .thumbnail,
+            .table td:has(img) [class*="thumbnail"],
+            .table td:has(img) img {
+              width: 130px !important;
+              min-width: 130px !important;
+              max-width: 130px !important;
+              height: 90px !important;
+              min-height: 90px !important;
+              max-height: 90px !important;
+            }
+          }
         ` : ""}
 
         /* The Media collection is an image library: make its list thumbnails
