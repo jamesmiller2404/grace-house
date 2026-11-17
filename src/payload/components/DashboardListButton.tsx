@@ -163,13 +163,20 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           tally.className = "gh-media-list-count";
           link.appendChild(tally);
         }
-        tally.textContent = String(count);
+        const countText = String(count);
+        if (tally.textContent !== countText) {
+          tally.textContent = countText;
+        }
       });
 
       const primaryTally = document.querySelector<HTMLElement>(
         ".gh-primary-media-list-count",
       );
-      if (primaryTally && typeof imageCounts.primary === "number") {
+      if (
+        primaryTally &&
+        typeof imageCounts.primary === "number" &&
+        primaryTally.textContent !== String(imageCounts.primary)
+      ) {
         primaryTally.textContent = String(imageCounts.primary);
       }
     };
