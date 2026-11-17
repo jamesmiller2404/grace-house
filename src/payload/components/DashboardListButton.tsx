@@ -5,6 +5,7 @@ import type { BeforeListClientProps } from "payload";
 import { formatAdminURL } from "payload/shared";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 
 type MediaList = {
   id: number | string;
@@ -14,8 +15,9 @@ type MediaList = {
 const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const { config } = useConfig();
   const [actionsElement, setActionsElement] = useState<HTMLElement | null>(null);
-  const [isMediaCollection, setIsMediaCollection] = useState(false);
-  const [isMediaListsCollection, setIsMediaListsCollection] = useState(false);
+  const pathname = usePathname();
+  const isMediaCollection = pathname.endsWith("/collections/media");
+  const isMediaListsCollection = pathname.endsWith("/collections/media-lists");
   const [lists, setLists] = useState<MediaList[]>([]);
   const [imageCounts, setImageCounts] = useState<Record<string, number>>({});
 
@@ -44,13 +46,6 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       setActionsElement(element);
       return true;
     };
-
-    setIsMediaCollection(
-      window.location.pathname.endsWith("/collections/media"),
-    );
-    setIsMediaListsCollection(
-      window.location.pathname.endsWith("/collections/media-lists"),
-    );
 
     // Only watch briefly while Payload mounts the list header. Keeping a
     // document-wide observer alive causes needless work during admin updates.
