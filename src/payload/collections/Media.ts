@@ -1,5 +1,36 @@
 import type { CollectionConfig } from "payload";
 
+const mediaReferenceFields = new Set(["image", "memorialPhoto"]);
+
+function collectMediaIDs(value: unknown, ids: Set<string>, fieldName?: string): void {
+  if (Array.isArray(value)) {
+    for (const item of value) collectMediaIDs(item, ids, fieldName);
+    return;
+  }
+
+  if (value && typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    if (fieldName && mediaReferenceFields.has(fieldName)) {
+      const id = record.id;
+      if (typeof id === "string" || typeof id === "number") {
+        ids.add(String(id));
+      }
+    }
+    for (const [key, child] of Object.entries(record)) {
+      collectMediaIDs(child, ids, key);
+    }
+    return;
+  }
+
+  if (
+    fieldName &&
+    mediaReferenceFields.has(fieldName) &&
+    (typeof value === "string" || typeof value === "number")
+  ) {
+    ids.add(String(value));
+  }
+}
+
 /**
  * Images uploaded through the admin panel. Event pages and other site
  * sections can reuse the same image; organizational lists do not duplicate
@@ -18,6 +49,54 @@ export const Media: CollectionConfig = {
     delete: ({ req }) =>
       req.user?.role === "admin" || req.user?.role === "editor",
   },
+  endpoints: [
+    {
+      path: "/live-ids",
+      method: "get",
+      handler: async (req) => {
+        if (
+          req.user?.role !== "admin" &&
+          req.user?.role !== "editor"
+        ) {
+          return Response.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const ids = new Set<string>();
+        const collections = [
+          "events",
+          "board",
+          "custom-pages",
+          "donate",
+          "feeding-the-streets",
+          "hero",
+          "intro",
+          "stories",
+        ] as const;
+
+        await Promise.all(
+          collections.map(async (collection) => {
+            const result = await req.payload.find({
+              collection,
+              depth: 0,
+              limit: 1000,
+              pagination: false,
+              overrideAccess: true,
+            });
+            for (const doc of result.docs) collectMediaIDs(doc, ids);
+          }),
+        );
+
+        const footer = await req.payload.findGlobal({
+          slug: "footer",
+          depth: 0,
+          overrideAccess: true,
+        });
+        collectMediaIDs(footer, ids);
+
+        return Response.json({ ids: Array.from(ids) });
+      },
+    },
+  ],
   admin: {
     useAsTitle: "alt",
     defaultColumns: ["filename", "alt", "lists", "mimeType", "updatedAt"],

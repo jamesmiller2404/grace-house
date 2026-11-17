@@ -6,13 +6,32 @@ import { formatAdminURL } from "payload/shared";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-/**
- * Render a Dashboard link beside Payload's Create New action on collection
- * list pages. The two controls share the title-actions container.
- */
+type MediaList = {
+  id: number | string;
+  name: string;
+};
+
 const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const { config } = useConfig();
   const [actionsElement, setActionsElement] = useState<HTMLElement | null>(null);
+  const [isMediaCollection, setIsMediaCollection] = useState(false);
+  const [lists, setLists] = useState<MediaList[]>([]);
+
+  const mediaListURL = formatAdminURL({
+    adminRoute: config.routes.admin,
+    serverURL: config.serverURL,
+    path: "/collections/media",
+  });
+  const createListURL = formatAdminURL({
+    adminRoute: config.routes.admin,
+    serverURL: config.serverURL,
+    path: "/collections/media-lists/create",
+  });
+  const dashboardURL = formatAdminURL({
+    adminRoute: config.routes.admin,
+    serverURL: config.serverURL,
+    path: "",
+  });
 
   useEffect(() => {
     const findActions = () => {
@@ -22,6 +41,9 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       if (element) setActionsElement(element);
     };
 
+    setIsMediaCollection(
+      window.location.pathname.endsWith("/collections/media"),
+    );
     findActions();
     const observer = new MutationObserver(findActions);
     observer.observe(document.body, { childList: true, subtree: true });
@@ -29,11 +51,96 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     return () => observer.disconnect();
   }, []);
 
-  const dashboardURL = formatAdminURL({
-    adminRoute: config.routes.admin,
-    serverURL: config.serverURL,
-    path: "",
-  });
+  useEffect(() => {
+    if (!isMediaCollection) return;
+
+    let active = true;
+    fetch("/api/media-lists?limit=100&sort=name&depth=0", {
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not load image lists.");
+        return response.json();
+      })
+      .then((data: { docs?: MediaList[] }) => {
+        if (active) setLists(Array.isArray(data.docs) ? data.docs : []);
+      })
+      .catch(() => {
+        if (active) setLists([]);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [isMediaCollection]);
+
+  useEffect(() => {
+    if (!isMediaCollection) return;
+
+    let active = true;
+    let liveIDs = new Set<string>();
+
+    const decorateLiveImages = () => {
+      const rows = document.querySelectorAll<HTMLTableRowElement>(
+        ".table tbody tr",
+      );
+
+      rows.forEach((row) => {
+        const mediaLink = row.querySelector<HTMLAnchorElement>(
+          'a[href*="/collections/media/"]',
+        );
+        const match = mediaLink?.href.match(/\/collections\/media\/([^/?#]+)/);
+        const isLive = Boolean(match && liveIDs.has(decodeURIComponent(match[1])));
+
+        const thumbnailCell = row.querySelector<HTMLElement>("td:has(img)");
+        if (!thumbnailCell) return;
+
+        const thumbnail =
+          thumbnailCell.querySelector<HTMLElement>(
+            ".thumbnail, [class*='thumbnail']",
+          ) ?? thumbnailCell;
+
+        const existing = thumbnail.querySelector(".gh-media-live-indicator");
+        if (!isLive) {
+          existing?.remove();
+          return;
+        }
+        if (existing) return;
+
+        const indicator = document.createElement("span");
+        indicator.className = "gh-media-live-indicator";
+        indicator.setAttribute("role", "img");
+        indicator.setAttribute("aria-label", "Live on website");
+        indicator.title = "Live on website";
+        thumbnail.appendChild(indicator);
+      });
+    };
+
+    fetch("/api/media/live-ids", { credentials: "include" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not load live image usage.");
+        return response.json();
+      })
+      .then((data: { ids?: Array<string | number> }) => {
+        if (!active) return;
+        liveIDs = new Set((data.ids ?? []).map(String));
+        decorateLiveImages();
+      })
+      .catch(() => {
+        // A failed usage lookup must not display a misleading live marker.
+      });
+
+    const observer = new MutationObserver(decorateLiveImages);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      active = false;
+      observer.disconnect();
+      document
+        .querySelectorAll(".gh-media-live-indicator")
+        .forEach((indicator) => indicator.remove());
+    };
+  }, [isMediaCollection]);
 
   return (
     <>
@@ -56,6 +163,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           max-width: 180px !important;
           max-height: 120px !important;
           overflow: hidden !important;
+          position: relative !important;
         }
 
         .table td:has(img) img {
@@ -73,17 +181,88 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         .table tr:has(td img) {
           height: 136px;
         }
+
+        .gh-media-list-navigation {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px 18px;
+          margin: 0 0 22px;
+          padding: 14px 16px;
+          border: 1px solid var(--theme-elevation-150);
+          border-radius: 10px;
+          background: var(--theme-elevation-50);
+        }
+
+        .gh-media-list-navigation a {
+          color: var(--theme-text);
+          text-decoration: none;
+          font-size: 13px;
+        }
+
+        .gh-media-list-navigation a:hover {
+          text-decoration: underline;
+        }
+
+        .gh-media-list-navigation a.gh-primary-list-link {
+          color: #b7a2ff;
+          font-weight: 700;
+        }
+
+        .gh-media-live-indicator {
+          position: absolute;
+          top: 7px;
+          right: 7px;
+          z-index: 2;
+          display: block;
+          width: 11px;
+          height: 11px;
+          border: 2px solid #fff;
+          border-radius: 50%;
+          background: #22c55e;
+          box-shadow: 0 1px 4px rgb(0 0 0 / 45%);
+          pointer-events: none;
+        }
       `}</style>
+
+      {isMediaCollection && (
+        <nav className="gh-media-list-navigation" aria-label="Media image lists">
+          <a className="gh-primary-list-link" href={mediaListURL}>
+            Primary List
+          </a>
+          {lists.map((list) => (
+            <a
+              key={String(list.id)}
+              href={`${mediaListURL}?where[lists][in]=${encodeURIComponent(String(list.id))}`}
+            >
+              {list.name}
+            </a>
+          ))}
+        </nav>
+      )}
+
       {actionsElement &&
         createPortal(
-          <Button
-            buttonStyle="secondary"
-            el="link"
-            to={dashboardURL}
-            className="gh-dashboard-list-button"
-          >
-            Dashboard
-          </Button>,
+          <>
+            {isMediaCollection && (
+              <Button
+                buttonStyle="secondary"
+                el="link"
+                to={createListURL}
+                className="gh-create-media-list-button"
+              >
+                Create New List
+              </Button>
+            )}
+            <Button
+              buttonStyle="secondary"
+              el="link"
+              to={dashboardURL}
+              className="gh-dashboard-list-button"
+            >
+              Dashboard
+            </Button>
+          </>,
           actionsElement,
         )}
     </>
