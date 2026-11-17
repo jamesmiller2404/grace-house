@@ -434,7 +434,9 @@ html {
 .list-header__title-actions .list-create-new-doc__create-new-button,
 .list-header__title-actions button[aria-label="Bulk Upload"],
 .list-header__title-actions .gh-dashboard-list-button,
-.list-header__actions .gh-dashboard-list-button {
+.list-header__actions .gh-dashboard-list-button,
+.list-header__title-actions .gh-media-lists-button,
+.list-header__actions .gh-media-lists-button {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -452,14 +454,18 @@ html {
 .list-header__title-actions .list-create-new-doc__create-new-button:hover,
 .list-header__title-actions button[aria-label="Bulk Upload"]:hover,
 .list-header__title-actions .gh-dashboard-list-button:hover,
-.list-header__actions .gh-dashboard-list-button:hover {
+.list-header__actions .gh-dashboard-list-button:hover,
+.list-header__title-actions .gh-media-lists-button:hover,
+.list-header__actions .gh-media-lists-button:hover {
   background: var(--theme-elevation-200) !important;
   border-color: var(--theme-elevation-500) !important;
   color: var(--theme-elevation-1000) !important;
 }
 
 .list-header__title-actions .gh-dashboard-list-button,
-.list-header__actions .gh-dashboard-list-button {
+.list-header__actions .gh-dashboard-list-button,
+.list-header__title-actions .gh-media-lists-button,
+.list-header__actions .gh-media-lists-button {
   margin: 0 !important;
 }
 

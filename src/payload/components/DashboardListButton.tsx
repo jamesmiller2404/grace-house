@@ -257,6 +257,13 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               visibility: visible;
               white-space: nowrap;
             }
+            .list-create-new-doc__create-new-button {
+              box-sizing: border-box !important;
+              width: max-content !important;
+              min-width: 150px !important;
+              padding-left: 1rem !important;
+              padding-right: 1rem !important;
+            }
           `}</style>
         )}
 
