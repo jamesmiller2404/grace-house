@@ -86,7 +86,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'media-lists': {
+      images: 'media';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
@@ -244,6 +248,8 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * Central image library. Use Lists to organize images by page, section, or purpose. An image can belong to multiple lists.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -253,6 +259,10 @@ export interface Media {
    * Describe the image for screen readers.
    */
   alt: string;
+  /**
+   * Add this image to one or more lists. Removing a list here does not delete the image.
+   */
+  lists?: (number | MediaList)[] | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -262,17 +272,26 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
-  /** Lists used to organize this image in the Media library. */
-  lists?: (number | MediaList)[] | null;
 }
 /**
- * A named organizational list for the Media library.
+ * Create and manage named groups for images in the Media library. Assign images to lists from the Media edit screen.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-lists".
  */
 export interface MediaList {
   id: number;
+  /**
+   * A clear name such as Home Page, Board Members, Events, or Staff.
+   */
   name: string;
+  /**
+   * Optional note explaining what this list is for.
+   */
   description?: string | null;
-  /** Related images in this list. */
+  /**
+   * Images currently assigned to this list. Open an image to change its list assignments.
+   */
   images?: {
     docs?: (number | Media)[];
     hasNextPage?: boolean;
@@ -998,6 +1017,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'media-lists';
+        value: number | MediaList;
+      } | null)
+    | ({
         relationTo: 'mission-page';
         value: number | MissionPage;
       } | null)
@@ -1166,7 +1189,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface MediaListsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
-  images?: T | { docs?: T; hasNextPage?: T; totalDocs?: T };
+  images?: T;
   updatedAt?: T;
   createdAt?: T;
 }
