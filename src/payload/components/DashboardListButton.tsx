@@ -507,6 +507,80 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               padding-left: 1rem !important;
               padding-right: 1rem !important;
             }
+
+            /* Stack Media Lists rows into readable cards on narrow screens. */
+            @media (max-width: 767px) {
+              .table-wrap,
+              .collection-list__wrap,
+              .collection-list__table-wrap {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: visible !important;
+              }
+              .table,
+              .table tbody {
+                display: block !important;
+                width: 100% !important;
+                min-width: 0 !important;
+              }
+              .table thead {
+                display: none !important;
+              }
+              .table tbody tr {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 10px;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 0 12px !important;
+                padding: 14px !important;
+                box-sizing: border-box;
+                border: 1px solid var(--theme-elevation-200);
+                border-radius: 8px;
+                background: var(--theme-elevation-50);
+              }
+              .table tbody tr td {
+                display: flex !important;
+                align-items: flex-start;
+                gap: 8px;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                border: 0 !important;
+                white-space: normal !important;
+                overflow-wrap: anywhere;
+                box-sizing: border-box;
+              }
+              .table tbody tr td:first-child {
+                font-weight: 600;
+              }
+              .table tbody tr:not(.gh-primary-media-list-row) td:nth-child(2)::before {
+                content: "Description";
+              }
+              .table tbody tr:not(.gh-primary-media-list-row) td:nth-child(3)::before {
+                content: "Updated";
+              }
+              .table tbody tr:not(.gh-primary-media-list-row) td:nth-child(n+2)::before {
+                flex: 0 0 76px;
+                color: var(--theme-elevation-500);
+                font-size: 11px;
+                font-weight: 600;
+                line-height: 1.5;
+              }
+              .gh-primary-media-list-row {
+                grid-template-columns: minmax(0, 1fr) !important;
+              }
+              .gh-primary-media-list-row td:first-child {
+                white-space: normal !important;
+                flex-wrap: wrap;
+                align-items: center !important;
+              }
+              .gh-primary-media-list-row td:nth-child(2) {
+                color: var(--theme-elevation-600);
+                font-weight: 400;
+              }
+            }
           `}</style>
         )}
 
