@@ -463,8 +463,8 @@ html {
   margin: 0 !important;
 }
 
-/* The Media list action uses the same 42px control height, with the dark
-   neutral treatment used by the surrounding admin controls. */
+/* Match Create New List to the neighboring collection actions while
+   retaining the same 42px control height. */
 .list-header__title-actions .gh-create-media-list-button,
 .list-header__actions .gh-create-media-list-button {
   display: inline-flex !important;
@@ -474,8 +474,8 @@ html {
   height: 42px !important;
   min-height: 42px !important;
   padding: 0.6rem 0.9rem !important;
-  background: #343434 !important;
-  border: 1px solid #444444 !important;
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-elevation-300) !important;
   border-radius: 5px !important;
   color: #ffffff !important;
   font-size: 0.9rem !important;
@@ -485,8 +485,8 @@ html {
 
 .list-header__title-actions .gh-create-media-list-button:hover,
 .list-header__actions .gh-create-media-list-button:hover {
-  background: #3b3b3b !important;
-  border-color: #555555 !important;
+  background: var(--theme-elevation-200) !important;
+  border-color: var(--theme-elevation-500) !important;
   color: #ffffff !important;
 }
 
