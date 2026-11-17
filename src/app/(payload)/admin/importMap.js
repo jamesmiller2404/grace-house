@@ -42,6 +42,7 @@ import { default as default_c8ad4c18c750a643537cc845c379b91a } from '../../../..
 import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
 import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
 import { default as default_1aef17eeafcdfd11df80e2f285bac85f } from '../../../../src/payload/collections/MediaEditView.tsx'
+import { default as default_43fc865273b5537fd2eef65a56b3c61d } from '../../../../src/payload/collections/MediaLists/ImagesMobileLayout.tsx'
 import { default as default_40eb3aa079d83f93776cb5035724aff2 } from '../../../../src/payload/collections/MediaLists/CancelButton.tsx'
 import { default as default_fb841bca741192ee26e0b753977259c2 } from '../../../../src/payload/collections/MediaLists/DoneButton.tsx'
 import { default as default_015db43890ec4fd0759f106472cfb6a7 } from '../../../../src/payload/collections/MissionPage/CancelToDashboardButton.tsx'
@@ -148,6 +149,7 @@ export const importMap = {
   "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
   "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
   "./src/payload/collections/MediaEditView.tsx#default": default_1aef17eeafcdfd11df80e2f285bac85f,
+  "./src/payload/collections/MediaLists/ImagesMobileLayout.tsx#default": default_43fc865273b5537fd2eef65a56b3c61d,
   "./src/payload/collections/MediaLists/CancelButton.tsx#default": default_40eb3aa079d83f93776cb5035724aff2,
   "./src/payload/collections/MediaLists/DoneButton.tsx#default": default_fb841bca741192ee26e0b753977259c2,
   "./src/payload/collections/MissionPage/CancelToDashboardButton.tsx#default": default_015db43890ec4fd0759f106472cfb6a7,
