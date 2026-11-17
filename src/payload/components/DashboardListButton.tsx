@@ -15,6 +15,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const { config } = useConfig();
   const [actionsElement, setActionsElement] = useState<HTMLElement | null>(null);
   const [isMediaCollection, setIsMediaCollection] = useState(false);
+  const [isMediaListsCollection, setIsMediaListsCollection] = useState(false);
   const [lists, setLists] = useState<MediaList[]>([]);
 
   const mediaListURL = formatAdminURL({
@@ -44,6 +45,9 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     setIsMediaCollection(
       window.location.pathname.endsWith("/collections/media"),
     );
+    setIsMediaListsCollection(
+      window.location.pathname.endsWith("/collections/media-lists"),
+    );
     findActions();
     const observer = new MutationObserver(findActions);
     observer.observe(document.body, { childList: true, subtree: true });
@@ -52,7 +56,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   }, []);
 
   useEffect(() => {
-    if (!isMediaCollection) return;
+    if (!isMediaCollection && !isMediaListsCollection) return;
 
     let active = true;
     fetch("/api/media-lists?limit=100&sort=name&depth=0", {
@@ -72,7 +76,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     return () => {
       active = false;
     };
-  }, [isMediaCollection]);
+  }, [isMediaCollection, isMediaListsCollection]);
 
   useEffect(() => {
     if (!isMediaCollection) return;
@@ -225,19 +229,23 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         }
       `}</style>
 
-      {isMediaCollection && (
-        <nav className="gh-media-list-navigation" aria-label="Media image lists">
+      {(isMediaCollection || isMediaListsCollection) && (
+        <nav
+          className="gh-media-list-navigation"
+          aria-label="Media image lists"
+        >
           <a className="gh-primary-list-link" href={mediaListURL}>
             Primary List
           </a>
-          {lists.map((list) => (
-            <a
-              key={String(list.id)}
-              href={`${mediaListURL}?where[lists][in]=${encodeURIComponent(String(list.id))}`}
-            >
-              {list.name}
-            </a>
-          ))}
+          {isMediaCollection &&
+            lists.map((list) => (
+              <a
+                key={String(list.id)}
+                href={`${mediaListURL}?where[lists][in]=${encodeURIComponent(String(list.id))}`}
+              >
+                {list.name}
+              </a>
+            ))}
         </nav>
       )}
 
