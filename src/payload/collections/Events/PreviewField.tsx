@@ -46,7 +46,7 @@ export default function EventsPreviewField() {
     return () => controller.abort();
   }, [open]);
   useEffect(() => {
-    if (!open || imageKeys.length === 0) { setResolvedMedia({}); return; }
+    if (!open || imageKeys.length === 0) return;
     const controller = new AbortController();
     void Promise.all(imageKeys.map(async (id) => {
       const current = mediaValues.find((value) => mediaId(value) === id);

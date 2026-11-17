@@ -31,12 +31,9 @@ export default function HeroPreviewField() {
   const imageId = mediaId(data.image);
 
   useEffect(() => {
-    if (!open || !imageId) { setResolvedMedia({}); return; }
-    const direct = mediaUrl(data.image);
-    if (direct) {
-      setResolvedMedia({ [imageId]: direct });
-      return;
-    }
+    // Directly available URLs are read from form data in the preview itself.
+    // This effect only resolves media documents whose URL is not yet populated.
+    if (!open || !imageId || mediaUrl(data.image)) return;
     const controller = new AbortController();
     void fetch("/api/media/" + encodeURIComponent(imageId) + "?depth=0", {
       credentials: "same-origin",
