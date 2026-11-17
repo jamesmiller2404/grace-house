@@ -314,6 +314,21 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               max-width: 100% !important;
               min-height: 0 !important;
             }
+            /* Clear fixed sizing on every nested Payload thumbnail wrapper.
+               Wide images are naturally shorter; a fixed-height ancestor was
+               leaving a blank block below them before the metadata begins. */
+            .table tbody tr td:has(img),
+            .table tbody tr td:has(img) :not(img) {
+              height: auto !important;
+              min-height: 0 !important;
+              max-height: none !important;
+              aspect-ratio: auto !important;
+              align-self: start !important;
+            }
+            .table tbody tr td:has(img) {
+              line-height: 0 !important;
+              margin-bottom: 0 !important;
+            }
             /* Let the thumbnail follow the source image's aspect ratio. */
             .table tbody tr td:has(img) .thumbnail,
             .table tbody tr td:has(img) [class*="thumbnail"],
