@@ -78,6 +78,44 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     };
   }, [isMediaCollection, isMediaListsCollection]);
 
+
+  useEffect(() => {
+    if (!isMediaListsCollection) return;
+
+    const insertPrimaryListRow = () => {
+      const tableBody = document.querySelector<HTMLTableSectionElement>(".table tbody");
+      if (!tableBody || tableBody.querySelector(".gh-primary-media-list-row")) return;
+
+      const row = document.createElement("tr");
+      row.className = "gh-primary-media-list-row";
+      const nameCell = document.createElement("td");
+      const link = document.createElement("a");
+      link.href = mediaListURL;
+      link.className = "gh-primary-media-list-link";
+      link.textContent = "Primary List";
+      nameCell.appendChild(link);
+
+      const descriptionCell = document.createElement("td");
+      descriptionCell.textContent = "All images in the Media library";
+      const updatedCell = document.createElement("td");
+      updatedCell.textContent = "—";
+      row.append(nameCell, descriptionCell, updatedCell);
+      tableBody.prepend(row);
+    };
+
+    insertPrimaryListRow();
+    const observer = new MutationObserver(insertPrimaryListRow);
+    observer.observe(document.querySelector(".list-controls") ?? document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      document.querySelectorAll(".gh-primary-media-list-row").forEach((row) => row.remove());
+    };
+  }, [isMediaListsCollection, mediaListURL]);
+
   useEffect(() => {
     if (!isMediaCollection) return;
 
@@ -213,6 +251,22 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           font-weight: 700;
         }
 
+        .gh-primary-media-list-row {
+          background: var(--theme-elevation-100);
+          font-weight: 600;
+        }
+        .gh-primary-media-list-row td {
+          border-bottom: 1px solid var(--theme-elevation-200);
+          padding-top: 14px;
+          padding-bottom: 14px;
+        }
+        .gh-primary-media-list-link {
+          color: #b7a2ff !important;
+          font-weight: 700;
+          text-decoration: none;
+        }
+        .gh-primary-media-list-link:hover { text-decoration: underline; }
+
         .gh-media-live-indicator {
           position: absolute;
           top: 7px;
@@ -223,13 +277,13 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           height: 11px;
           border: 2px solid #fff;
           border-radius: 50%;
-          background: #22c55e;
+          background: #00ff5d;
           box-shadow: 0 1px 4px rgb(0 0 0 / 45%);
           pointer-events: none;
         }
       `}</style>
 
-      {(isMediaCollection || isMediaListsCollection) && (
+      {isMediaCollection && (
         <nav
           className="gh-media-list-navigation"
           aria-label="Media image lists"
