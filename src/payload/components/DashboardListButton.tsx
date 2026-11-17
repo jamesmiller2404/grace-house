@@ -89,17 +89,18 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       const row = document.createElement("tr");
       row.className = "gh-primary-media-list-row";
       const nameCell = document.createElement("td");
+      const table = tableBody.closest("table");
+      const columnCount =
+        table?.querySelector("thead tr")?.children.length || 1;
+      nameCell.colSpan = columnCount;
+
       const link = document.createElement("a");
       link.href = mediaListURL;
       link.className = "gh-primary-media-list-link";
       link.textContent = "Primary List";
       nameCell.appendChild(link);
 
-      const descriptionCell = document.createElement("td");
-      descriptionCell.textContent = "All images in the Media library";
-      const updatedCell = document.createElement("td");
-      updatedCell.textContent = "—";
-      row.append(nameCell, descriptionCell, updatedCell);
+      row.appendChild(nameCell);
       tableBody.prepend(row);
     };
 
@@ -223,14 +224,21 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           font-weight: 600;
         }
         .gh-primary-media-list-row td {
+          background: var(--theme-elevation-100) !important;
           border-bottom: 1px solid var(--theme-elevation-200);
-          padding-top: 14px;
-          padding-bottom: 14px;
+          padding: 0 !important;
         }
         .gh-primary-media-list-link {
+          display: block;
+          box-sizing: border-box;
+          width: 100%;
+          padding: 14px 16px;
           color: #b7a2ff !important;
           font-weight: 700;
           text-decoration: none;
+        }
+        .gh-primary-media-list-row:hover td {
+          background: var(--theme-elevation-200) !important;
         }
         .gh-primary-media-list-link:hover { text-decoration: underline; }
 
