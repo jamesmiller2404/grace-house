@@ -300,23 +300,24 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               overflow-wrap: anywhere;
               box-sizing: border-box;
             }
-            .table tbody tr td:first-child {
+            /* Payload adds a selection-checkbox cell before the image cell.
+               Hide that utility cell on phones and target the image by content,
+               not by assuming it is always the first table column. */
+            .table tbody tr td:first-child:has(input[type="checkbox"]) {
+              display: none !important;
+            }
+            .table tbody tr td:has(img) {
               display: block !important;
-              grid-column: 1 / -1;
+              grid-column: 1 / -1 !important;
               width: 100% !important;
               min-width: 0 !important;
-              min-height: 0;
+              max-width: 100% !important;
+              min-height: 0 !important;
             }
-            /* Let the thumbnail follow the source image's aspect ratio.
-               Fixed-height wrappers were clipping wide and tall images. */
-            .table tbody tr td:first-child:has(img) {
-              display: block !important;
-              width: 100% !important;
-              min-width: 0 !important;
-            }
-            .table tbody tr td:first-child .thumbnail,
-            .table tbody tr td:first-child [class*="thumbnail"],
-            .table tbody tr td:first-child a:has(img) {
+            /* Let the thumbnail follow the source image's aspect ratio. */
+            .table tbody tr td:has(img) .thumbnail,
+            .table tbody tr td:has(img) [class*="thumbnail"],
+            .table tbody tr td:has(img) a:has(img) {
               display: block !important;
               width: 100% !important;
               min-width: 0 !important;
@@ -328,7 +329,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               overflow: visible !important;
               position: static !important;
             }
-            .table tbody tr td:first-child img {
+            .table tbody tr td:has(img) img {
               display: block !important;
               width: 100% !important;
               min-width: 0 !important;
@@ -342,17 +343,41 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               background: #222;
               border-radius: 6px;
             }
-            .table tbody tr td:nth-child(2),
-            .table tbody tr td:nth-child(5) { grid-column: auto; }
-            .table tbody tr td:nth-child(3),
-            .table tbody tr td:nth-child(4),
-            .table tbody tr td:nth-child(6) { grid-column: 1 / -1; }
-            .table tbody tr td:nth-child(2)::before { content: "Website"; }
-            .table tbody tr td:nth-child(3)::before { content: "Alt text"; }
-            .table tbody tr td:nth-child(4)::before { content: "Lists"; }
-            .table tbody tr td:nth-child(5)::before { content: "Type"; }
-            .table tbody tr td:nth-child(6)::before { content: "Updated"; }
-            .table tbody tr td:nth-child(n+2)::before {
+
+            /* Standard Media rows without a selection cell. */
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(2),
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(5) {
+              grid-column: auto;
+            }
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(3),
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(4),
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(6) {
+              grid-column: 1 / -1;
+            }
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(2)::before { content: "Website"; }
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(3)::before { content: "Alt text"; }
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(4)::before { content: "Lists"; }
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(5)::before { content: "Type"; }
+            .table tbody tr:not(:has(td:first-child input[type="checkbox"])) td:nth-child(6)::before { content: "Updated"; }
+
+            /* Primary List rows include Payload's checkbox column, shifting
+               every data column one position to the right. */
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(3),
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(6) {
+              grid-column: auto;
+            }
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(4),
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(5),
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(7) {
+              grid-column: 1 / -1;
+            }
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(3)::before { content: "Website"; }
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(4)::before { content: "Alt text"; }
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(5)::before { content: "Lists"; }
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(6)::before { content: "Type"; }
+            .table tbody tr:has(td:first-child input[type="checkbox"]) td:nth-child(7)::before { content: "Updated"; }
+
+            .table tbody tr td:not(:has(img))::before {
               flex: 0 0 76px;
               color: var(--theme-elevation-500);
               font-size: 11px;
