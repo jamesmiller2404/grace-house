@@ -230,62 +230,111 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             align-items: center !important;
             gap: 8px !important;
           }
-          /* Keep Media metadata accessible instead of letting Payload hide
-             columns at narrower viewport widths. The table scrolls as a unit. */
+          /* Desktop and tablet: preserve all Media columns and let text wrap. */
           .table-wrap,
           .collection-list__wrap,
           .collection-list__table-wrap {
-            display: block !important;
             max-width: 100% !important;
-            overflow-x: auto !important;
-            overflow-y: visible !important;
-            -webkit-overflow-scrolling: touch;
+            overflow-x: visible !important;
           }
           .table {
             width: 100% !important;
-            min-width: 1050px !important;
-            table-layout: fixed !important;
+            min-width: 0 !important;
+            table-layout: auto !important;
           }
-          .table thead th:nth-child(1),
-          .table tbody td:nth-child(1) { width: 220px !important; }
-          .table thead th:nth-child(2),
-          .table tbody td:nth-child(2) { width: 90px !important; }
-          .table thead th:nth-child(3),
-          .table tbody td:nth-child(3) { width: 270px !important; }
-          .table thead th:nth-child(4),
-          .table tbody td:nth-child(4) { width: 180px !important; }
-          .table thead th:nth-child(5),
-          .table tbody td:nth-child(5) { width: 120px !important; }
-          .table thead th:nth-child(6),
-          .table tbody td:nth-child(6) { width: 170px !important; }
-
-          /* Let descriptive metadata wrap instead of being clipped. */
+          .table tbody td {
+            vertical-align: middle !important;
+          }
           .table tbody td:nth-child(3),
           .table tbody td:nth-child(4) {
             white-space: normal !important;
             overflow-wrap: anywhere;
-            vertical-align: middle !important;
           }
           .table tbody td:nth-child(6),
           .table thead th:nth-child(6) {
             white-space: nowrap !important;
           }
 
-          @media (max-width: 1100px) {
-            .table {
-              min-width: 950px !important;
+          /* On phones, each image becomes a card with labelled metadata. */
+          @media (max-width: 767px) {
+            .table-wrap,
+            .collection-list__wrap,
+            .collection-list__table-wrap {
+              overflow: visible !important;
+              max-width: 100% !important;
             }
-            .table thead th:nth-child(1),
-            .table tbody td:nth-child(1) { width: 165px !important; }
-            .table td:has(img) .thumbnail,
-            .table td:has(img) [class*="thumbnail"],
-            .table td:has(img) img {
-              width: 130px !important;
-              min-width: 130px !important;
-              max-width: 130px !important;
+            .table,
+            .table tbody {
+              display: block !important;
+              width: 100% !important;
+              min-width: 0 !important;
+            }
+            .table thead { display: none !important; }
+            .table tbody tr {
+              display: grid !important;
+              grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+              gap: 10px 14px;
+              width: 100% !important;
+              height: auto !important;
+              margin: 0 0 14px !important;
+              padding: 14px !important;
+              border: 1px solid var(--theme-elevation-200);
+              border-radius: 8px;
+              background: var(--theme-elevation-50);
+              box-sizing: border-box;
+            }
+            .table tbody tr td {
+              display: flex !important;
+              align-items: flex-start;
+              gap: 8px;
+              width: auto !important;
+              min-width: 0 !important;
+              max-width: 100% !important;
+              padding: 0 !important;
+              border: 0 !important;
+              white-space: normal !important;
+              overflow-wrap: anywhere;
+              box-sizing: border-box;
+            }
+            .table tbody tr td:first-child {
+              display: block !important;
+              grid-column: 1 / -1;
+              min-height: 90px;
+            }
+            .table tbody tr td:first-child .thumbnail,
+            .table tbody tr td:first-child [class*="thumbnail"] {
+              width: 120px !important;
+              min-width: 120px !important;
+              max-width: 120px !important;
               height: 90px !important;
               min-height: 90px !important;
               max-height: 90px !important;
+            }
+            .table tbody tr td:first-child img {
+              width: 120px !important;
+              min-width: 120px !important;
+              max-width: 120px !important;
+              height: 90px !important;
+              min-height: 90px !important;
+              max-height: 90px !important;
+              object-fit: contain !important;
+            }
+            .table tbody tr td:nth-child(2),
+            .table tbody tr td:nth-child(5) { grid-column: auto; }
+            .table tbody tr td:nth-child(3),
+            .table tbody tr td:nth-child(4),
+            .table tbody tr td:nth-child(6) { grid-column: 1 / -1; }
+            .table tbody tr td:nth-child(2)::before { content: "Website"; }
+            .table tbody tr td:nth-child(3)::before { content: "Alt text"; }
+            .table tbody tr td:nth-child(4)::before { content: "Lists"; }
+            .table tbody tr td:nth-child(5)::before { content: "Type"; }
+            .table tbody tr td:nth-child(6)::before { content: "Updated"; }
+            .table tbody tr td:nth-child(n+2)::before {
+              flex: 0 0 76px;
+              color: var(--theme-elevation-500);
+              font-size: 11px;
+              font-weight: 600;
+              line-height: 1.5;
             }
           }
         ` : ""}
