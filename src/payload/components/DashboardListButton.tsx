@@ -17,6 +17,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const [isMediaCollection, setIsMediaCollection] = useState(false);
   const [isMediaListsCollection, setIsMediaListsCollection] = useState(false);
   const [lists, setLists] = useState<MediaList[]>([]);
+  const [imageCounts, setImageCounts] = useState<Record<string, number>>({});
 
   const mediaListURL = formatAdminURL({
     adminRoute: config.routes.admin,
@@ -80,6 +81,45 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
 
 
   useEffect(() => {
+    if ((!isMediaCollection && !isMediaListsCollection) || lists.length === 0) return;
+
+    let active = true;
+    const getCount = async (url: string): Promise<number> => {
+      const response = await fetch(url, { credentials: "include" });
+      if (!response.ok) throw new Error("Could not load image count.");
+      const data = (await response.json()) as { totalDocs?: number };
+      return typeof data.totalDocs === "number" ? data.totalDocs : 0;
+    };
+
+    const primaryURL = "/api/media?limit=1&depth=0";
+    const requests = [
+      getCount(primaryURL).then((count) => ["primary", count] as const),
+      ...lists.map((list) => {
+        const params = new URLSearchParams({
+          limit: "1",
+          depth: "0",
+          "where[lists][in]": String(list.id),
+        });
+        return getCount(`/api/media?${params.toString()}`).then(
+          (count) => [String(list.id), count] as const,
+        );
+      }),
+    ];
+
+    Promise.all(requests)
+      .then((entries) => {
+        if (active) setImageCounts(Object.fromEntries(entries));
+      })
+      .catch(() => {
+        if (active) setImageCounts({});
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [isMediaCollection, isMediaListsCollection, lists]);
+
+  useEffect(() => {
     if (!isMediaListsCollection) return;
 
     const insertPrimaryListRow = () => {
@@ -95,14 +135,47 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       link.textContent = "Primary List";
       nameCell.appendChild(link);
 
+      const primaryCount = document.createElement("span");
+      primaryCount.className = "gh-media-list-count gh-primary-media-list-count";
+      primaryCount.textContent = String(imageCounts.primary ?? "—");
+      nameCell.appendChild(primaryCount);
+
       const descriptionCell = document.createElement("td");
       descriptionCell.textContent = "All images in the Media library";
       row.append(nameCell, descriptionCell);
       tableBody.prepend(row);
     };
 
-    insertPrimaryListRow();
-    const observer = new MutationObserver(insertPrimaryListRow);
+    const updateListCounts = () => {
+      insertPrimaryListRow();
+      document.querySelectorAll<HTMLAnchorElement>(
+        '.table tbody a[href*="/collections/media-lists/"]',
+      ).forEach((link) => {
+        const match = link.pathname.match(/\/collections\/media-lists\/([^/]+)/);
+        if (!match) return;
+        const count = imageCounts[match[1]];
+        if (typeof count !== "number") return;
+        let tally = link.parentElement?.querySelector<HTMLElement>(
+          ".gh-media-list-count:not(.gh-primary-media-list-count)",
+        );
+        if (!tally) {
+          tally = document.createElement("span");
+          tally.className = "gh-media-list-count";
+          link.insertAdjacentElement("afterend", tally);
+        }
+        tally.textContent = String(count);
+      });
+
+      const primaryTally = document.querySelector<HTMLElement>(
+        ".gh-primary-media-list-count",
+      );
+      if (primaryTally && typeof imageCounts.primary === "number") {
+        primaryTally.textContent = String(imageCounts.primary);
+      }
+    };
+
+    updateListCounts();
+    const observer = new MutationObserver(updateListCounts);
     observer.observe(document.body, {
       childList: true,
       subtree: true,
@@ -216,6 +289,28 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           font-weight: 700;
         }
 
+        .gh-media-list-count {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 20px;
+          margin-left: 8px;
+          padding: 2px 6px;
+          border: 1px solid var(--theme-elevation-200);
+          border-radius: 10px;
+          color: var(--theme-elevation-500);
+          font-size: 11px;
+          font-weight: 500;
+          line-height: 1.2;
+          vertical-align: middle;
+        }
+
+        .gh-primary-media-list-count {
+          margin-left: 9px;
+          border-color: var(--theme-elevation-300);
+          color: var(--theme-elevation-600);
+        }
+
         .gh-primary-media-list-row {
           background: var(--theme-elevation-100);
           font-weight: 600;
@@ -288,6 +383,9 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         >
           <a className="gh-primary-list-link" href={mediaListURL}>
             Primary List
+            <span className="gh-media-list-count">
+              {typeof imageCounts.primary === "number" ? imageCounts.primary : "—"}
+            </span>
           </a>
           {isMediaCollection &&
             lists.map((list) => (
@@ -296,6 +394,11 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
                 href={`${mediaListURL}?where[lists][in]=${encodeURIComponent(String(list.id))}`}
               >
                 {list.name}
+                <span className="gh-media-list-count">
+                  {typeof imageCounts[String(list.id)] === "number"
+                    ? imageCounts[String(list.id)]
+                    : "—"}
+                </span>
               </a>
             ))}
         </nav>
