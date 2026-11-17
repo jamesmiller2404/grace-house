@@ -155,13 +155,13 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         if (!match) return;
         const count = imageCounts[match[1]];
         if (typeof count !== "number") return;
-        let tally = link.parentElement?.querySelector<HTMLElement>(
+        let tally = link.querySelector<HTMLElement>(
           ".gh-media-list-count:not(.gh-primary-media-list-count)",
         );
         if (!tally) {
           tally = document.createElement("span");
           tally.className = "gh-media-list-count";
-          link.insertAdjacentElement("afterend", tally);
+          link.appendChild(tally);
         }
         tally.textContent = String(count);
       });
@@ -333,8 +333,11 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           white-space: nowrap;
         }
         .table tbody tr td:first-child:has(.gh-media-list-count) a {
-          display: inline-flex;
+          display: inline-flex !important;
           align-items: center;
+          flex-wrap: nowrap;
+          width: max-content;
+          max-width: 100%;
           vertical-align: middle;
         }
         .gh-primary-media-list-button {
