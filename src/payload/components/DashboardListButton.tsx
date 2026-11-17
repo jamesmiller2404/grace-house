@@ -124,11 +124,24 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         ${isMediaCollection ? `
           /* Rename Payload's native create-document action on the Media page. */
           .list-create-new-doc__create-new-button {
+            position: relative !important;
+            color: transparent !important;
             font-size: 0 !important;
+          }
+          .list-create-new-doc__create-new-button * {
+            visibility: hidden !important;
           }
           .list-create-new-doc__create-new-button::after {
             content: "Add Image";
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-elevation-900);
             font-size: 0.9rem;
+            visibility: visible;
+            white-space: nowrap;
           }
         ` : ""}
         /* The Media collection is an image library: make its list thumbnails
