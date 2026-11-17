@@ -40,7 +40,9 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       const element = document.querySelector<HTMLElement>(
         ".list-header__title-actions, .list-header__actions",
       );
-      if (element) setActionsElement(element);
+      if (!element) return false;
+      setActionsElement(element);
+      return true;
     };
 
     setIsMediaCollection(
@@ -49,8 +51,13 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     setIsMediaListsCollection(
       window.location.pathname.endsWith("/collections/media-lists"),
     );
-    findActions();
-    const observer = new MutationObserver(findActions);
+
+    // Only watch briefly while Payload mounts the list header. Keeping a
+    // document-wide observer alive causes needless work during admin updates.
+    if (findActions()) return;
+    const observer = new MutationObserver(() => {
+      if (findActions()) observer.disconnect();
+    });
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => observer.disconnect();
@@ -182,14 +189,33 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     };
 
     updateListCounts();
-    const observer = new MutationObserver(updateListCounts);
-    observer.observe(document.body, {
+
+    // Observe only the list table, not the whole admin document. Ignore
+    // mutations inside our count badges so updating a badge cannot schedule
+    // another full table scan.
+    const tableBody = document.querySelector<HTMLTableSectionElement>(
+      ".table tbody",
+    );
+    const observer = tableBody
+      ? new MutationObserver((records) => {
+          const hasTableChanges = records.some((record) => {
+            const target =
+              record.target instanceof Element
+                ? record.target
+                : record.target.parentElement;
+            return !target?.closest(".gh-media-list-count");
+          });
+          if (hasTableChanges) updateListCounts();
+        })
+      : null;
+
+    observer?.observe(tableBody!, {
       childList: true,
       subtree: true,
     });
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
       document.querySelectorAll(".gh-primary-media-list-row").forEach((row) => row.remove());
     };
   }, [isMediaListsCollection, mediaListURL, imageCounts]);
