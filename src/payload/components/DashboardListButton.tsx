@@ -261,7 +261,8 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           min-height: 120px !important;
           max-width: 180px !important;
           max-height: 120px !important;
-          object-fit: cover !important;
+          object-fit: contain !important;
+          background: #222;
           border-radius: 6px;
         }
 
