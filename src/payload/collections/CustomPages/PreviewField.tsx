@@ -35,7 +35,7 @@ export default function CustomPagesPreviewField() {
   const imageKeys = useMemo(() => [...new Set(mediaValues.map(mediaId).filter(Boolean))], [mediaValues]);
 
   useEffect(() => {
-    if (!open || imageKeys.length === 0) { setResolvedMedia({}); return; }
+    if (!open || imageKeys.length === 0) return;
     const controller = new AbortController();
     void Promise.all(imageKeys.map(async (id) => {
       const current = mediaValues.find((value) => mediaId(value) === id);

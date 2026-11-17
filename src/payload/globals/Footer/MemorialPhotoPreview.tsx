@@ -22,26 +22,29 @@ export default function MemorialPhotoPreview() {
   const selectedId = typeof selectedValue === "string" || typeof selectedValue === "number"
     ? String(selectedValue)
     : selectedMedia?.id != null ? String(selectedMedia.id) : "";
-  const [fetchedMedia, setFetchedMedia] = useState<MediaValue | null>(null);
+  const [fetchedMedia, setFetchedMedia] = useState<{ id: string; media: MediaValue | null } | null>(null);
 
   useEffect(() => {
-    if (!selectedId || selectedMedia?.url) {
-      setFetchedMedia(null);
-      return;
-    }
+    if (!selectedId || selectedMedia?.url) return;
     const controller = new AbortController();
     void fetch(`/api/media/${encodeURIComponent(selectedId)}?depth=0`, {
       credentials: "same-origin",
       signal: controller.signal,
     }).then((response) => response.ok ? response.json() : null)
       .then((payload: unknown) => {
-        if (payload && typeof payload === "object") setFetchedMedia(payload as MediaValue);
-        else setFetchedMedia(null);
-      }).catch(() => setFetchedMedia(null));
+        setFetchedMedia({
+          id: selectedId,
+          media: payload && typeof payload === "object" ? payload as MediaValue : null,
+        });
+      }).catch(() => setFetchedMedia({ id: selectedId, media: null }));
     return () => controller.abort();
   }, [selectedId, selectedMedia?.url]);
 
-  const media = selectedMedia?.url ? selectedMedia : fetchedMedia ?? selectedMedia;
+  const media = selectedMedia?.url
+    ? selectedMedia
+    : fetchedMedia?.id === selectedId
+      ? fetchedMedia.media
+      : selectedMedia;
   const mimeType = typeof media?.mimeType === "string" ? media.mimeType : "";
   const url = typeof media?.url === "string"
     ? media.url

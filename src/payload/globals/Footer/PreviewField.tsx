@@ -34,7 +34,7 @@ export default function FooterPreviewField() {
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
   const [ready, setReady] = useState(false);
   const [contacts, setContacts] = useState<{ phones: Data[]; emails: Data[]; addresses: Data[] }>({ phones: [], emails: [], addresses: [] });
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [fetchedPhoto, setFetchedPhoto] = useState<{ id: string; url: string } | null>(null);
   const frameRef = useRef<HTMLIFrameElement>(null);
 
   const photo = record(data.memorialPhoto);
@@ -52,18 +52,19 @@ export default function FooterPreviewField() {
   }, [open]);
 
   useEffect(() => {
-    if (!open || !photoKey) { setPhotoUrl(""); return; }
-    if (typeof photo.url === "string" && photo.url) { setPhotoUrl(photo.url); return; }
+    if (!open || !photoKey || (typeof photo.url === "string" && photo.url)) return;
     const controller = new AbortController();
     void fetch(`/api/media/${encodeURIComponent(photoKey)}?depth=0`, { credentials: "same-origin", signal: controller.signal })
       .then((r) => r.ok ? r.json() : null)
       .then((payload: unknown) => {
         const doc = record(record(payload).doc ?? payload);
         const thumb = record(record(doc.sizes).thumbnail);
-        setPhotoUrl(text(doc.url, text(thumb.url)));
-      }).catch(() => setPhotoUrl(""));
+        setFetchedPhoto({ id: photoKey, url: text(doc.url, text(thumb.url)) });
+      }).catch(() => setFetchedPhoto({ id: photoKey, url: "" }));
     return () => controller.abort();
   }, [open, photoKey, photo.url]);
+
+  const photoUrl = text(photo.url) || (fetchedPhoto?.id === photoKey ? fetchedPhoto.url : "");
 
   const preview = useMemo<FooterProps>(() => {
     const phone = selectedContact(data.phoneChoice, data.phoneCustom, contacts.phones, site.phone);

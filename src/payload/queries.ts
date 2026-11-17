@@ -946,10 +946,30 @@ export const getBoardPage = cache(async (): Promise<{
 }> => {
   await connection();
   const payload = await getPayload({ config });
-  // The generated Payload types are refreshed by `payload generate:types`
-  // after this collection is added; keep this query compatible with the
-  // checked-in types until that command is run.
-  const { docs } = await (payload as any).find({
+  type BoardMemberRecord = {
+    id?: string | number | null;
+    name?: string | null;
+    role?: string | null;
+    imagePositionX?: number | null;
+    imagePositionY?: number | null;
+    image?: unknown;
+  };
+  type BoardDocument = {
+    title?: string | null;
+    intro?: unknown;
+    members?: BoardMemberRecord[] | null;
+  };
+  // The generated Payload types may not yet include the newly added board
+  // collection, so narrow the query result to the fields this page consumes.
+  const boardPayload = payload as unknown as {
+    find: (args: {
+      collection: string;
+      limit: number;
+      depth: number;
+      sort: string;
+    }) => Promise<{ docs: BoardDocument[] }>;
+  };
+  const { docs } = await boardPayload.find({
     collection: "board",
     limit: 1,
     depth: 1,
@@ -962,16 +982,20 @@ export const getBoardPage = cache(async (): Promise<{
   return {
     title: doc.title || "Board of Directors",
     intro: doc.intro ?? null,
-    members: (doc.members ?? []).map((member: any) => ({
-      id: member.id,
-      name: member.name ?? "",
-      role: member.role ?? "",
-      imagePositionX: member.imagePositionX ?? 50,
-      imagePositionY: member.imagePositionY ?? 50,
-      image:
-        member.image && typeof member.image === "object" && member.image.url
-          ? { url: member.image.url, alt: member.image.alt ?? null }
+    members: (doc.members ?? []).map((member) => {
+      const image = member.image && typeof member.image === "object"
+        ? member.image as { url?: unknown; alt?: unknown }
+        : null;
+      return {
+        id: member.id == null ? undefined : String(member.id),
+        name: member.name ?? "",
+        role: member.role ?? "",
+        imagePositionX: member.imagePositionX ?? 50,
+        imagePositionY: member.imagePositionY ?? 50,
+        image: image && typeof image.url === "string"
+          ? { url: image.url, alt: typeof image.alt === "string" ? image.alt : null }
           : null,
-    })),
+      };
+    }),
   };
 });
