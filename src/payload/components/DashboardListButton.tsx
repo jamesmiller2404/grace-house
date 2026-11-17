@@ -91,31 +91,13 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     if (!isMediaCollection && !isMediaListsCollection) return;
 
     let active = true;
-    const getCount = async (url: string): Promise<number> => {
-      const response = await fetch(url, { credentials: "include" });
-      if (!response.ok) throw new Error("Could not load image count.");
-      const data = (await response.json()) as { totalDocs?: number };
-      return typeof data.totalDocs === "number" ? data.totalDocs : 0;
-    };
-
-    const primaryURL = "/api/media?limit=1&depth=0";
-    const requests = [
-      getCount(primaryURL).then((count) => ["primary", count] as const),
-      ...lists.map((list) => {
-        const params = new URLSearchParams({
-          limit: "1",
-          depth: "0",
-          "where[lists][in]": String(list.id),
-        });
-        return getCount(`/api/media?${params.toString()}`).then(
-          (count) => [String(list.id), count] as const,
-        );
-      }),
-    ];
-
-    Promise.all(requests)
-      .then((entries) => {
-        if (active) setImageCounts(Object.fromEntries(entries));
+    fetch("/api/media-lists/counts", { credentials: "include" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not load image counts.");
+        return response.json() as Promise<{ counts?: Record<string, number> }>;
+      })
+      .then((data) => {
+        if (active) setImageCounts(data.counts ?? {});
       })
       .catch(() => {
         if (active) setImageCounts({});
@@ -124,7 +106,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     return () => {
       active = false;
     };
-  }, [isMediaCollection, isMediaListsCollection, lists]);
+  }, [isMediaCollection, isMediaListsCollection]);
 
   useEffect(() => {
     if (!isMediaListsCollection) return;
@@ -188,31 +170,27 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       }
     };
 
-    updateListCounts();
-
-    // Observe only the list table, not the whole admin document. Ignore
-    // mutations inside our count badges so updating a badge cannot schedule
-    // another full table scan.
     const tableBody = document.querySelector<HTMLTableSectionElement>(
       ".table tbody",
     );
-    const observer = tableBody
-      ? new MutationObserver((records) => {
-          const hasTableChanges = records.some((record) => {
-            const target =
-              record.target instanceof Element
-                ? record.target
-                : record.target.parentElement;
-            return !target?.closest(".gh-media-list-count");
-          });
-          if (hasTableChanges) updateListCounts();
-        })
-      : null;
+    if (tableBody) {
+      updateListCounts();
+    }
 
-    observer?.observe(tableBody!, {
-      childList: true,
-      subtree: true,
-    });
+    // Payload may mount its table after this component. Watch only until the
+    // tbody exists, then disconnect; ongoing table mutations do not need a
+    // full-document scan or repeated count-badge updates.
+    const observer = tableBody
+      ? null
+      : new MutationObserver(() => {
+          const mountedBody = document.querySelector<HTMLTableSectionElement>(
+            ".table tbody",
+          );
+          if (!mountedBody) return;
+          updateListCounts();
+          observer?.disconnect();
+        });
+    observer?.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       observer?.disconnect();
@@ -329,10 +307,10 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               min-width: 0 !important;
               min-height: 0;
             }
-            /* Give the image the full card width and enough height to show
-               its complete proportions instead of squeezing it into a
-               small fixed thumbnail box. */
+            /* Let the thumbnail follow the source image's aspect ratio.
+               Fixed-height wrappers were clipping wide and tall images. */
             .table tbody tr td:first-child:has(img) {
+              display: block !important;
               width: 100% !important;
               min-width: 0 !important;
             }
@@ -342,21 +320,25 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               width: 100% !important;
               min-width: 0 !important;
               max-width: 100% !important;
-              height: 220px !important;
-              min-height: 220px !important;
-              max-height: 220px !important;
-              overflow: hidden !important;
+              height: auto !important;
+              min-height: 0 !important;
+              max-height: none !important;
+              aspect-ratio: auto !important;
+              overflow: visible !important;
             }
             .table tbody tr td:first-child img {
               display: block !important;
               width: 100% !important;
               min-width: 0 !important;
               max-width: 100% !important;
-              height: 220px !important;
-              min-height: 220px !important;
-              max-height: 220px !important;
+              height: auto !important;
+              min-height: 0 !important;
+              max-height: 360px !important;
+              aspect-ratio: auto !important;
               object-fit: contain !important;
+              object-position: center !important;
               background: #222;
+              border-radius: 6px;
             }
             .table tbody tr td:nth-child(2),
             .table tbody tr td:nth-child(5) { grid-column: auto; }
