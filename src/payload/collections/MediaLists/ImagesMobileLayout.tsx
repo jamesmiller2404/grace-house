@@ -229,6 +229,44 @@ const MediaListImagesMobileLayout: React.FC = () => {
         }
       }
 
+      /* Match the Primary List desktop/tablet thumbnail dimensions exactly. */
+      @media (min-width: 768px) {
+        #field-images .table td:has(img) {
+          min-width: 200px !important;
+          vertical-align: middle;
+        }
+
+        #field-images .table td:has(img) .thumbnail,
+        #field-images .table td:has(img) [class*="thumbnail"] {
+          display: block !important;
+          width: 180px !important;
+          height: 120px !important;
+          min-width: 180px !important;
+          min-height: 120px !important;
+          max-width: 180px !important;
+          max-height: 120px !important;
+          overflow: hidden !important;
+          position: relative !important;
+        }
+
+        #field-images .table td:has(img) img {
+          display: block !important;
+          width: 180px !important;
+          height: 120px !important;
+          min-width: 180px !important;
+          min-height: 120px !important;
+          max-width: 180px !important;
+          max-height: 120px !important;
+          object-fit: contain !important;
+          background: #222;
+          border-radius: 6px;
+        }
+
+        #field-images .table tr:has(td img) {
+          height: 136px;
+        }
+      }
+
       @media (max-width: 767px) {
         #field-images {
           width: 100%;
