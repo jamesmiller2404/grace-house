@@ -142,6 +142,11 @@ const MediaAlbumUploadButtons: React.FC = () => {
           display: inline-flex;
         }
 
+        /* The custom Add Image button above replaces the Join field's link. */
+        .join#field-images .relationship-table__add-new {
+          display: none !important;
+        }
+
         .join#field-images .no-results h3 {
           font-size: 0;
         }
