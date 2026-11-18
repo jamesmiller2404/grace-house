@@ -131,11 +131,12 @@ export const Media: CollectionConfig = {
     {
       name: "lists",
       type: "relationship",
+      label: "Albums",
       relationTo: "media-lists",
       hasMany: true,
       admin: {
         description:
-          "Add this image to one or more lists. Removing a list here does not delete the image.",
+          "Add this image to one or more albums. Removing an album here does not delete the image.",
       },
     },
   ],
