@@ -289,9 +289,6 @@ export interface MediaList {
    * Optional note explaining what this list is for.
    */
   description?: string | null;
-  /**
-   * Images currently assigned to this list. Open an image to change its list assignments.
-   */
   images?: {
     docs?: (number | Media)[];
     hasNextPage?: boolean;
