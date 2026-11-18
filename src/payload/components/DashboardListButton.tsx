@@ -681,7 +681,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
                 to={mediaListsURL}
                 className="gh-media-lists-button"
               >
-                Media Lists
+                Media Albums
               </Button>
             ) : (
               <Button
