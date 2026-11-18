@@ -74,6 +74,9 @@ export const MediaLists: CollectionConfig = {
             path: "./src/payload/collections/MediaLists/ImagesMobileLayout.tsx",
           },
           {
+            path: "./src/payload/collections/MediaLists/AlbumUploadButtons.tsx",
+          },
+          {
             path: "./src/payload/collections/MediaLists/CancelButton.tsx",
           },
           {
