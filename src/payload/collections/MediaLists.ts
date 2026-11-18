@@ -8,8 +8,8 @@ import type { CollectionConfig } from "payload";
 export const MediaLists: CollectionConfig = {
   slug: "media-lists",
   labels: {
-    singular: "Media List",
-    plural: "Media Lists",
+    singular: "Media Album",
+    plural: "Media Albums",
   },
   access: {
     read: () => true,
