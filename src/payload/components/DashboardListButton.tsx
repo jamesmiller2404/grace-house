@@ -106,32 +106,43 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   useEffect(() => {
     if (!isMediaListsCollection) return;
 
-    const insertPrimaryListRow = () => {
-      const tableBody = document.querySelector<HTMLTableSectionElement>(".table tbody");
-      if (!tableBody || tableBody.querySelector(".gh-primary-media-list-row")) return;
+    const insertPrimaryListBanner = () => {
+      const table = document.querySelector<HTMLTableElement>(".table");
+      const tableParent = table?.parentElement;
+      if (
+        !table ||
+        !tableParent ||
+        tableParent.querySelector(".gh-primary-media-list-banner")
+      ) {
+        return;
+      }
 
-      const row = document.createElement("tr");
-      row.className = "gh-primary-media-list-row";
-      const nameCell = document.createElement("td");
+      const banner = document.createElement("div");
+      banner.className = "gh-primary-media-list-banner";
+
+      const nameGroup = document.createElement("div");
+      nameGroup.className = "gh-primary-media-list-banner__name";
       const link = document.createElement("a");
       link.href = mediaListURL;
       link.className = "gh-primary-media-list-button";
       link.textContent = "Primary List";
-      nameCell.appendChild(link);
+      nameGroup.appendChild(link);
 
       const primaryCount = document.createElement("span");
       primaryCount.className = "gh-media-list-count gh-primary-media-list-count";
       primaryCount.textContent = String(imageCounts.primary ?? "—");
-      nameCell.appendChild(primaryCount);
+      nameGroup.appendChild(primaryCount);
 
-      const descriptionCell = document.createElement("td");
-      descriptionCell.textContent = "All images in the Media library";
-      row.append(nameCell, descriptionCell);
-      tableBody.prepend(row);
+      const description = document.createElement("div");
+      description.className = "gh-primary-media-list-banner__description";
+      description.textContent = "All images in the Media library";
+
+      banner.append(nameGroup, description);
+      tableParent.insertBefore(banner, table);
     };
 
     const updateListCounts = () => {
-      insertPrimaryListRow();
+      insertPrimaryListBanner();
       document.querySelectorAll<HTMLAnchorElement>(
         '.table tbody a[href*="/collections/media-lists/"]',
       ).forEach((link) => {
@@ -165,23 +176,18 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       }
     };
 
-    const tableBody = document.querySelector<HTMLTableSectionElement>(
-      ".table tbody",
-    );
-    if (tableBody) {
+    const table = document.querySelector<HTMLTableElement>(".table");
+    if (table) {
       updateListCounts();
     }
 
     // Payload may mount its table after this component. Watch only until the
-    // tbody exists, then disconnect; ongoing table mutations do not need a
-    // full-document scan or repeated count-badge updates.
-    const observer = tableBody
+    // table exists, then disconnect; ongoing table mutations need no observer.
+    const observer = table
       ? null
       : new MutationObserver(() => {
-          const mountedBody = document.querySelector<HTMLTableSectionElement>(
-            ".table tbody",
-          );
-          if (!mountedBody) return;
+          const mountedTable = document.querySelector<HTMLTableElement>(".table");
+          if (!mountedTable) return;
           updateListCounts();
           observer?.disconnect();
         });
@@ -189,7 +195,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
 
     return () => {
       observer?.disconnect();
-      document.querySelectorAll(".gh-primary-media-list-row").forEach((row) => row.remove());
+      document.querySelectorAll(".gh-primary-media-list-banner").forEach((banner) => banner.remove());
     };
   }, [isMediaListsCollection, mediaListURL, imageCounts]);
 
@@ -489,19 +495,6 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           color: var(--theme-elevation-600);
         }
 
-        .gh-primary-media-list-row {
-          background: var(--theme-elevation-100);
-          font-weight: 600;
-        }
-        .gh-primary-media-list-row td {
-          border-bottom: 1px solid var(--theme-elevation-200);
-          padding-top: 14px;
-          padding-bottom: 14px;
-          vertical-align: middle;
-        }
-        .gh-primary-media-list-row td:first-child {
-          white-space: nowrap;
-        }
         .table tbody tr td:first-child:has(.gh-media-list-count),
         .table tbody tr td:first-child:has(.gh-media-list-count) a {
           white-space: nowrap;
@@ -567,6 +560,33 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
               padding-right: 1rem !important;
             }
 
+            /* Keep Primary List above the column headings as a separate full-width row. */
+            .gh-primary-media-list-banner {
+              display: grid;
+              grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+              align-items: center;
+              gap: 16px;
+              width: 100%;
+              box-sizing: border-box;
+              margin: 0 0 12px;
+              padding: 12px 16px;
+              border: 1px solid var(--theme-elevation-200);
+              border-radius: 8px;
+              background: var(--theme-elevation-100);
+              font-weight: 600;
+            }
+            .gh-primary-media-list-banner__name {
+              display: flex;
+              min-width: 0;
+              align-items: center;
+              gap: 8px;
+            }
+            .gh-primary-media-list-banner__description {
+              min-width: 0;
+              color: var(--theme-elevation-600);
+              font-weight: 400;
+            }
+
             /* Stack Media Lists rows into readable cards on narrow screens. */
             @media (max-width: 767px) {
               .table-wrap,
@@ -627,15 +647,18 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
                 font-weight: 600;
                 line-height: 1.5;
               }
-              .gh-primary-media-list-row {
-                grid-template-columns: minmax(0, 1fr) !important;
+              .gh-primary-media-list-banner {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 8px;
+                margin-bottom: 10px;
+                padding: 12px 14px;
+                border: 1px solid var(--theme-elevation-200);
+                border-radius: 8px;
               }
-              .gh-primary-media-list-row td:first-child {
-                white-space: normal !important;
+              .gh-primary-media-list-banner__name {
                 flex-wrap: wrap;
-                align-items: center !important;
               }
-              .gh-primary-media-list-row td:nth-child(2) {
+              .gh-primary-media-list-banner__description {
                 color: var(--theme-elevation-600);
                 font-weight: 400;
               }
