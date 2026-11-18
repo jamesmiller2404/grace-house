@@ -1243,3 +1243,14 @@ html[data-theme] .array-field__row [contenteditable="true"] {
 .table tbody tr td {
   vertical-align: middle !important;
 }
+
+
+/*
+ * Keep the Media collection fully available to the Primary List while
+ * removing only its standalone sidebar navigation link. The Primary List
+ * links inside Media Albums are outside Payload's .nav and remain visible.
+ */
+.nav a[href$="/collections/media"],
+.nav__link[href$="/collections/media"] {
+  display: none !important;
+}
