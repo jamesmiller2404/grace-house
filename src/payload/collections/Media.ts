@@ -63,7 +63,6 @@ export const Media: CollectionConfig = {
     },
   ],
   admin: {
-    hidden: true,
     useAsTitle: "alt",
     defaultColumns: [
       "filename",
