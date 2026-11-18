@@ -142,6 +142,19 @@ const MediaAlbumUploadButtons: React.FC = () => {
           display: inline-flex;
         }
 
+        .join#field-images .no-results h3 {
+          font-size: 0;
+        }
+
+        .join#field-images .no-results h3::after {
+          content: "No Images";
+          font-size: 1rem;
+        }
+
+        .join#field-images .no-results p {
+          display: none;
+        }
+
         .gh-album-upload-controls button:disabled {
           opacity: 1;
           color: #999999;
