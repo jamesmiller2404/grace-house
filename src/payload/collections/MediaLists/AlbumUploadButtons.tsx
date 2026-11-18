@@ -5,6 +5,7 @@ import {
   Button,
   useBulkUpload,
   useConfig,
+  useDocumentDrawer,
   useDocumentInfo,
   useModal,
 } from "@payloadcms/ui";
@@ -19,6 +20,11 @@ const MediaAlbumUploadButtons: React.FC = () => {
   const router = useRouter();
   const saved =
     typeof albumID === "string" || typeof albumID === "number";
+  const [
+    MediaCreateDrawer,
+    ,
+    { closeDrawer: closeMediaCreateDrawer, openDrawer: openMediaCreateDrawer },
+  ] = useDocumentDrawer({ collectionSlug: "media" });
   const {
     drawerSlug,
     setCollectionSlug,
@@ -30,19 +36,19 @@ const MediaAlbumUploadButtons: React.FC = () => {
     setSelectableCollections,
   } = useBulkUpload();
 
-  const openMediaUpload = (files?: FileList) => {
+  const openMediaUpload = () => {
     if (!saved) return;
 
     setCollectionSlug("media");
     setFolderID(undefined);
-    setInitialFiles((files ?? undefined) as FileList);
+    setInitialFiles(undefined as unknown as FileList);
     setInitialForms([]);
-    setMaxFiles((files ? 1 : undefined) as number);
+    setMaxFiles(undefined as unknown as number);
     setSelectableCollections(null);
     setOnSuccess((uploadedForms) => {
       void (async () => {
         let assignmentFailed = false;
-        const apiRoot = config.routes.api.replace(/\/+$/, "");
+        const apiRoot = config.routes.api.replace(/\\/+$/, "");
 
         await Promise.all(
           uploadedForms.map(async ({ doc }) => {
@@ -83,21 +89,6 @@ const MediaAlbumUploadButtons: React.FC = () => {
     openModal(drawerSlug);
   };
 
-  const chooseSingleImage = () => {
-    if (!saved) return;
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.addEventListener("change", () => {
-      const selectedFile = input.files?.[0];
-      if (!selectedFile) return;
-      const transfer = new DataTransfer();
-      transfer.items.add(selectedFile);
-      openMediaUpload(transfer.files);
-    });
-    input.click();
-  };
-
   const tooltip = saved
     ? undefined
     : "Name and save the album first to upload images.";
@@ -109,7 +100,7 @@ const MediaAlbumUploadButtons: React.FC = () => {
           <Button
             buttonStyle="secondary"
             disabled={!saved}
-            onClick={chooseSingleImage}
+            onClick={openMediaCreateDrawer}
           >
             Add Image
           </Button>
@@ -118,12 +109,21 @@ const MediaAlbumUploadButtons: React.FC = () => {
           <Button
             buttonStyle="secondary"
             disabled={!saved}
-            onClick={() => openMediaUpload()}
+            onClick={openMediaUpload}
           >
             Bulk Upload
           </Button>
         </span>
       </div>
+      <MediaCreateDrawer
+        initialData={saved ? { lists: [albumID] } : undefined}
+        onSave={({ operation }) => {
+          if (operation === "create") {
+            closeMediaCreateDrawer();
+            router.refresh();
+          }
+        }}
+      />
       <style>{`
         .gh-album-upload-controls {
           display: inline-flex;
