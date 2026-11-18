@@ -1244,3 +1244,10 @@ html[data-theme] .array-field__row [contenteditable="true"] {
   vertical-align: middle !important;
 }
 
+
+
+/* Document controls separator color. */
+.doc-controls__divider {
+  background-color: #681313 !important;
+  border-color: #681313 !important;
+}
