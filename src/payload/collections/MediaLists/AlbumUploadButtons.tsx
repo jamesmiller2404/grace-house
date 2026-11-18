@@ -156,8 +156,9 @@ const MediaAlbumUploadButtons: React.FC = () => {
           font-size: 1rem;
         }
 
-        .join#field-images .no-results p {
-          display: none;
+        .join#field-images .no-results p,
+        .join#field-images .no-results__actions {
+          display: none !important;
         }
 
         .gh-album-upload-controls button:disabled {
