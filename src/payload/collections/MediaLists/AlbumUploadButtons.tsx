@@ -5,7 +5,6 @@ import {
   Button,
   useBulkUpload,
   useConfig,
-  useDocumentDrawer,
   useDocumentInfo,
   useModal,
 } from "@payloadcms/ui";
@@ -20,11 +19,6 @@ const MediaAlbumUploadButtons: React.FC = () => {
   const router = useRouter();
   const saved =
     typeof albumID === "string" || typeof albumID === "number";
-  const [
-    MediaCreateDrawer,
-    ,
-    { closeDrawer: closeMediaCreateDrawer, openDrawer: openMediaCreateDrawer },
-  ] = useDocumentDrawer({ collectionSlug: "media" });
   const {
     drawerSlug,
     setCollectionSlug,
@@ -35,6 +29,24 @@ const MediaAlbumUploadButtons: React.FC = () => {
     setOnSuccess,
     setSelectableCollections,
   } = useBulkUpload();
+
+  const openAddImage = () => {
+    if (!saved) return;
+
+    // Use the Join field's own Add New control. Its drawer prepopulates the
+    // Media document's "lists" relationship with this album and refreshes the
+    // joined-image table itself after the Media document is saved.
+    const addImageButton = document
+      .getElementById("field-images")
+      ?.querySelector<HTMLElement>(".relationship-table__add-new");
+
+    if (!addImageButton) {
+      toast.error("The album image controls are not available. Refresh the album and try again.");
+      return;
+    }
+
+    addImageButton.click();
+  };
 
   const openMediaUpload = () => {
     if (!saved) return;
@@ -48,7 +60,7 @@ const MediaAlbumUploadButtons: React.FC = () => {
     setOnSuccess((uploadedForms) => {
       void (async () => {
         let assignmentFailed = false;
-        const apiRoot = config.routes.api.replace(/\/+$/, "");
+        const apiRoot = config.routes.api.replace(/\\/+$/, "");
 
         await Promise.all(
           uploadedForms.map(async ({ doc }) => {
@@ -100,7 +112,7 @@ const MediaAlbumUploadButtons: React.FC = () => {
           <Button
             buttonStyle="secondary"
             disabled={!saved}
-            onClick={openMediaCreateDrawer}
+            onClick={openAddImage}
           >
             Add Image
           </Button>
@@ -115,15 +127,6 @@ const MediaAlbumUploadButtons: React.FC = () => {
           </Button>
         </span>
       </div>
-      <MediaCreateDrawer
-        initialData={saved ? { lists: [albumID] } : undefined}
-        onSave={({ operation }) => {
-          if (operation === "create") {
-            closeMediaCreateDrawer();
-            router.refresh();
-          }
-        }}
-      />
       <style>{`
         .gh-album-upload-controls {
           display: inline-flex;
