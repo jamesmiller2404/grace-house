@@ -42,7 +42,7 @@ const MediaListImagesMobileLayout: React.FC = () => {
           if (typeof albumID !== "string" && typeof albumID !== "number") {
             assignmentFailed = uploadedForms.length > 0;
           } else {
-            const apiRoot = config.routes.api.replace(/\\/$/, "");
+            const apiRoot = config.routes.api.replace(/\/+$/, "");
 
             await Promise.all(
               uploadedForms.map(async ({ doc }) => {
