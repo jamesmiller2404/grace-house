@@ -143,7 +143,8 @@ const MediaAlbumUploadButtons: React.FC = () => {
         }
 
         .gh-album-upload-controls button:disabled {
-          opacity: 0.8;
+          opacity: 1;
+          color: #999999;
           cursor: not-allowed;
         }
 
