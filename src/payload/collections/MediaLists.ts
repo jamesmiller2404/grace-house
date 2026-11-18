@@ -111,8 +111,6 @@ export const MediaLists: CollectionConfig = {
       on: "lists",
       admin: {
         defaultColumns: ["filename", "alt", "updatedAt"],
-        description:
-          "Images currently assigned to this list. Open an image to change its list assignments.",
       },
     },
   ],
