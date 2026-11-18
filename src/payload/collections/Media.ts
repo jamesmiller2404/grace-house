@@ -129,6 +129,17 @@ export const Media: CollectionConfig = {
       },
     },
     {
+      name: "albumAssignmentNotice",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/MediaAlbumAssignmentNotice.tsx",
+          },
+        },
+      },
+    },
+    {
       name: "lists",
       type: "relationship",
       label: "Albums",
