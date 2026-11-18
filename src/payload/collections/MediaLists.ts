@@ -63,7 +63,7 @@ export const MediaLists: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["name", "description", "updatedAt"],
     description:
-      "Create and manage named groups for images in the Media library. Assign images to lists from the Media edit screen.",
+      "Create a new album. Give the album a name and hit the save button. Then add your images. All images are automatically saved to the Primary List, and an image can exist in multiple different albums.",
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
