@@ -248,7 +248,7 @@ export interface Event {
   createdAt: string;
 }
 /**
- * Primary List contains all images. Use additional lists to organize subsets; an image can belong to multiple lists.
+ * Primary List contains all images. Use albums to organize images into groups; an image can belong to multiple different albums.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".

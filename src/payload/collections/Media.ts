@@ -4,6 +4,8 @@ import type { CollectionConfig } from "payload";
  * Upload collection for the central image library. Primary List is the
  * unfiltered Media collection view; user-created Media Lists are subsets.
  */
+
+  
 export const Media: CollectionConfig = {
   slug: "media",
   access: {
@@ -74,7 +76,7 @@ export const Media: CollectionConfig = {
       "updatedAt",
     ],
     description:
-      "Primary List contains all images. Use additional lists to organize subsets; an image can belong to multiple lists.",
+      "Primary List contains all images. Use albums to organize images into groups; an image can belong to multiple different albums.",
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
