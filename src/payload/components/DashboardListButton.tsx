@@ -548,7 +548,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             }
             .list-create-new-doc__create-new-button * { visibility: hidden !important; }
             .list-create-new-doc__create-new-button::after {
-              content: "Create New List";
+              content: "Create New Album";
               position: absolute;
               inset: 0;
               display: flex;
