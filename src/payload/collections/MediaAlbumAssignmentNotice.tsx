@@ -69,7 +69,7 @@ const MediaAlbumAssignmentNotice: React.FC = () => {
         }
       `}</style>
       <p className="field-description">
-        Image assigned to{" "}
+        Image assigned to{"\u00A0"}
         <strong>
           <u>{albumName ?? "this album"}.</u>
         </strong>
