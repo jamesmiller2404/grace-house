@@ -60,7 +60,7 @@ const MediaAlbumUploadButtons: React.FC = () => {
     setOnSuccess((uploadedForms) => {
       void (async () => {
         let assignmentFailed = false;
-        const apiRoot = config.routes.api.replace(/\\/+$/, "");
+        const apiRoot = config.routes.api.replace(/\/+$/, "");
 
         await Promise.all(
           uploadedForms.map(async ({ doc }) => {
