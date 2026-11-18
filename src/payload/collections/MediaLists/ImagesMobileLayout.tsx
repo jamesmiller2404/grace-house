@@ -5,65 +5,6 @@ import React from "react";
 const MediaListImagesMobileLayout: React.FC = () => {
   return (
     <style>{`
-      #field-images .no-results > :not(.gh-album-empty-state) {
-        display: none !important;
-      }
-
-      #field-images .gh-album-empty-state {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding-top: calc(var(--base) / 2);
-      }
-
-      #field-images .gh-album-empty-state__message {
-        margin: 0;
-        color: var(--theme-elevation-900);
-        font-size: 0.95rem;
-      }
-
-      #field-images .gh-album-empty-state__actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 1rem;
-      }
-
-      #field-images .gh-album-empty-state__button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        min-height: 42px;
-        padding: 0.6rem 0.9rem;
-        background: var(--theme-elevation-100);
-        border: 1px solid var(--theme-elevation-300);
-        border-radius: 5px;
-        color: var(--theme-elevation-900);
-        font: inherit;
-        font-size: 0.9rem;
-        font-weight: 600;
-        line-height: 1.2;
-        cursor: pointer;
-      }
-
-      #field-images .gh-album-empty-state__button:hover {
-        background: var(--theme-elevation-200);
-        border-color: var(--theme-elevation-500);
-        color: var(--theme-elevation-1000);
-      }
-
-      @media (max-width: 767px) {
-        #field-images .gh-album-empty-state__actions {
-          width: 100%;
-        }
-
-        #field-images .gh-album-empty-state__button {
-          flex: 1 1 auto;
-        }
-      }
-
       /* Match the Primary List desktop/tablet thumbnail dimensions exactly. */
       @media (min-width: 768px) {
         #field-images .table td:has(img) {
