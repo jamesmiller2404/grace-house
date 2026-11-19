@@ -171,10 +171,13 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
             flex-basis: 100%;
           }
 
-          /* This component only renders on the Media Library route, so
-             target Payload's real list/table classes directly. */
-          .collection-list .table th#heading-_select,
-          .collection-list .table td.cell-_select {
+          /*
+           * Payload hides the first checkbox cell on mobile with:
+           * .table tbody tr td:first-child:has(input[type="checkbox"])
+           * Match that element more specifically so the native checkbox remains
+           * visible. Keep the existing card/grid layout and cell sizing intact.
+           */
+          .collection-list .table tbody tr td.cell-_select:first-child:has(input[type="checkbox"]) {
             display: table-cell !important;
             position: relative !important;
             width: 48px !important;
