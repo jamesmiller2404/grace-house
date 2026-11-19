@@ -186,6 +186,8 @@ export const Media: CollectionConfig = {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
         { path: "./src/payload/collections/BulkMediaUpload.tsx" },
+      ],
+      beforeListTable: [
         { path: "./src/payload/collections/MediaTagFilters.tsx" },
       ],
       views: {
