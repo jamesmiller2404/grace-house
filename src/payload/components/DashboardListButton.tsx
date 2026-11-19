@@ -15,7 +15,8 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const pathname = usePathname();
   const { config } = useConfig();
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
-  const isCollectionList = /\/collections\/[^/]+\/?$/.test(pathname);\n  const isMediaCollection = pathname.endsWith("/collections/media");
+  const isCollectionList = /\/collections\/[^/]+\/?$/.test(pathname);
+  const isMediaCollection = pathname.endsWith("/collections/media");
 
   const dashboardURL = formatAdminURL({
     adminRoute: config.routes.admin,
