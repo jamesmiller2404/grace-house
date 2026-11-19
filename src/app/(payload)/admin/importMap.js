@@ -40,6 +40,7 @@ import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../..
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
 import { default as default_c8ad4c18c750a643537cc845c379b91a } from '../../../../src/payload/collections/MediaLiveStatusCell.tsx'
 import { default as default_1d716f087508f854431c94cf72fee1c0 } from '../../../../src/payload/collections/MediaAlbumAssignmentNotice.tsx'
+import { default as default_f8264a153eb702d05d6c426361977a2f } from '../../../../src/payload/collections/MediaTagFilters.tsx'
 import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
 import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
 import { default as default_1aef17eeafcdfd11df80e2f285bac85f } from '../../../../src/payload/collections/MediaEditView.tsx'
@@ -149,6 +150,7 @@ export const importMap = {
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
   "./src/payload/collections/MediaLiveStatusCell.tsx#default": default_c8ad4c18c750a643537cc845c379b91a,
   "./src/payload/collections/MediaAlbumAssignmentNotice.tsx#default": default_1d716f087508f854431c94cf72fee1c0,
+  "./src/payload/collections/MediaTagFilters.tsx#default": default_f8264a153eb702d05d6c426361977a2f,
   "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
   "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
   "./src/payload/collections/MediaEditView.tsx#default": default_1aef17eeafcdfd11df80e2f285bac85f,
