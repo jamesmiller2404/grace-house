@@ -25,27 +25,34 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const isMediaCollection = pathname.endsWith("/collections/media");
 
   useEffect(() => {
-    if (!isMediaCollection) {
-      setActionsContainer(null);
-      return;
-    }
+    if (!isMediaCollection) return;
 
+    let frame = 0;
     const findActionsContainer = () => {
       const container = document.querySelector<HTMLElement>(
         ".list-header__title-actions",
       );
       if (!container) return false;
       setActionsContainer(container);
+      observer.disconnect();
       return true;
     };
 
-    if (findActionsContainer()) return;
-
     const observer = new MutationObserver(() => {
-      if (findActionsContainer()) observer.disconnect();
+      if (findActionsContainer()) cancelAnimationFrame(frame);
     });
     observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
+
+    // Defer the initial DOM lookup so state is updated from an async callback,
+    // not synchronously inside the effect body.
+    frame = requestAnimationFrame(() => {
+      findActionsContainer();
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [isMediaCollection, pathname]);
 
   useEffect(() => {
