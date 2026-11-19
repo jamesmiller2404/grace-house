@@ -1,13 +1,12 @@
 import type { CollectionConfig } from "payload";
 
-/**
- * Upload collection for the central image library. Primary List is the
- * unfiltered Media collection view; user-created Media Lists are subsets.
- */
-
-  
+/** Central image library used by every content collection. */
 export const Media: CollectionConfig = {
   slug: "media",
+  labels: {
+    singular: "Image",
+    plural: "Media Library",
+  },
   access: {
     read: () => true,
     create: ({ req }) =>
@@ -179,12 +178,11 @@ export const Media: CollectionConfig = {
       "liveStatus",
       "alt",
       "tags",
-      "lists",
       "mimeType",
       "updatedAt",
     ],
     description:
-      "Primary List contains all images. Use albums to organize images into groups; an image can belong to multiple different albums.",
+      "The central library for all website images. Use tags to organize and filter images.",
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
@@ -240,17 +238,6 @@ export const Media: CollectionConfig = {
       },
     },
     {
-      name: "albumAssignmentNotice",
-      type: "ui",
-      admin: {
-        components: {
-          Field: {
-            path: "./src/payload/collections/MediaAlbumAssignmentNotice.tsx",
-          },
-        },
-      },
-    },
-    {
       name: "tags",
       type: "relationship",
       label: "Tags",
@@ -258,17 +245,6 @@ export const Media: CollectionConfig = {
       hasMany: true,
       admin: {
         description: "Assign one or more reusable tags to this image.",
-      },
-    },
-    {
-      name: "lists",
-      type: "relationship",
-      label: "Albums",
-      relationTo: "media-lists",
-      hasMany: true,
-      admin: {
-        description:
-          "Add this image to one or more albums. Removing an album here does not delete the image.",
       },
     },
   ],
