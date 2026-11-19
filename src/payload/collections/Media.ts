@@ -190,6 +190,9 @@ export const Media: CollectionConfig = {
       beforeListTable: [
         { path: "./src/payload/collections/MediaTagFilters.tsx" },
       ],
+      afterListTable: [
+        { path: "./src/payload/collections/MediaMobileCards.tsx" },
+      ],
       views: {
         edit: {
           default: {
