@@ -104,7 +104,14 @@ export const Footer: GlobalConfig = {
       type: "upload",
       relationTo: "media",
       label: "Memorial photo",
-      admin: { description: "The photo displayed in the center column of the footer." },
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/fields/MediaPickerUploadField.tsx",
+          },
+        },
+        description: "The photo displayed in the center column of the footer.",
+      },
     },
     {
       type: "ui",
