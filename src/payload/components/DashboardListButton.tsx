@@ -1,7 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
+import { Button, useConfig } from "@payloadcms/ui";
+import { formatAdminURL } from "payload/shared";
 import type { BeforeListClientProps } from "payload";
 
 /**
@@ -10,12 +13,33 @@ import type { BeforeListClientProps } from "payload";
  */
 const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const pathname = usePathname();
+  const { config } = useConfig();
+  const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
   const isMediaCollection = pathname.endsWith("/collections/media");
+
+  const dashboardURL = formatAdminURL({
+    adminRoute: config.routes.admin,
+    serverURL: config.serverURL,
+    path: "/",
+  });
+
+  useEffect(() => {
+    if (!isMediaCollection) {
+      setActionsContainer(null);
+      return;
+    }
+    const container = document.querySelector<HTMLElement>(".list-header__actions");
+    setActionsContainer(container);
+  }, [isMediaCollection, pathname]);
 
   if (!isMediaCollection) return null;
 
   return (
+    <>
     <style>{`
+      .collection-list__header { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 16px !important; }
+      .collection-list__header h1, .collection-list__header .list-header__title { margin: 0 !important; align-self: center !important; }
+      .list-header__actions { display: flex !important; align-items: center !important; justify-content: flex-end !important; flex-wrap: nowrap; gap: 8px !important; margin-top: 0 !important; }
       .list-create-new-doc__create-new-button {
         position: relative !important;
         color: transparent !important;
@@ -224,6 +248,8 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
         .table tr:has(td img) { height: 136px; }
       }
     `}</style>
+      {actionsContainer && createPortal(<Button buttonStyle="secondary" el="link" to={dashboardURL}>Dashboard</Button>, actionsContainer)}
+    </>
   );
 };
 
