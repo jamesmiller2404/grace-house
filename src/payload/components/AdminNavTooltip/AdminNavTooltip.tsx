@@ -11,7 +11,7 @@ const TOOLTIP_TEXT: Record<string, string> = {
   users: "Manage site users and their access roles (admin / editor).",
   events:
     "Create and manage upcoming events — dates, locations, images, and contact info.",
-  media: "Upload and manage images used on event pages.",
+  media: "Upload, organize, tag, and manage all images used throughout the website.",
   "mission-page":
     "The Title and body text shown on the Mission page (/about/mission).",
   hero: "The front page hero: the main heading, the subline beneath it, and the background image.",
