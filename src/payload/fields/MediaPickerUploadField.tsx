@@ -64,10 +64,9 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const relationTo = props.field.relationTo;
   const relationCollectionSlug =
     typeof relationTo === "string" ? relationTo : relationTo[0];
+  const currentID = useMemo(() => getRelationshipID(value), [value]);
   const pendingOriginUpload = useRef(false);
   const previousMediaID = useRef<number | string | null>(currentID);
-
-  const currentID = useMemo(() => getRelationshipID(value), [value]);
   //const isProfilePhoto = path === "image";
   const isProfilePhoto =
     path === "image" || /^members\.\d+\.image$/.test(path);
