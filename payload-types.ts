@@ -252,9 +252,9 @@ export interface Event {
 export interface Media {
   id: number;
   /**
-   * Describe the image for screen readers.
+   * Describe the image for screen readers. Leave blank for decorative images.
    */
-  alt: string;
+  alt?: string | null;
   /**
    * Assign one or more reusable tags to this image.
    */

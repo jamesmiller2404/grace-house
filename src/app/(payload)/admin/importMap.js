@@ -39,6 +39,7 @@ import { default as default_ba23fe87f40460cfacd78b7ad3ca2ada } from '../../../..
 import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../../src/payload/collections/Events/DoneToListButton.tsx'
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
 import { default as default_c8ad4c18c750a643537cc845c379b91a } from '../../../../src/payload/collections/MediaLiveStatusCell.tsx'
+import { default as default_e9e8e5360c4c5f4d21b5525e0f651e10 } from '../../../../src/payload/collections/BulkMediaUpload.tsx'
 import { default as default_f8264a153eb702d05d6c426361977a2f } from '../../../../src/payload/collections/MediaTagFilters.tsx'
 import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
 import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
@@ -101,12 +102,9 @@ import { default as default_2d93c0f1ec8c2928bf72abe31dfe79d2 } from '../../../..
 import { default as default_93115a163f211dca91015775c3f5f710 } from '../../../../src/payload/components/ForgotPasswordView.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
-import { default as default_e9e8e5360c4c5f4d21b5525e0f651e10 } from '../../../../src/payload/collections/BulkMediaUpload.tsx'
-
 /** @type import('payload').ImportMap */
 export const importMap = {
   "./src/payload/components/DashboardListButton.tsx#default": default_e889d5011edb8e6606ecd09103a08b96,
-  "./src/payload/collections/BulkMediaUpload.tsx#default": default_e9e8e5360c4c5f4d21b5525e0f651e10,
   "./src/payload/collections/UsersCancelToDashboardButton.tsx#default": default_0dda18def457283302775b43747f5a9f,
   "./src/payload/collections/UsersDoneToListButton.tsx#default": default_406610a7604472cb1b28c015b6a61a3f,
   "./src/payload/collections/UsersEditView.tsx#default": default_d1e94d5abbb0ceb34ab990b1be6f4ecc,
@@ -147,6 +145,7 @@ export const importMap = {
   "./src/payload/collections/Events/DoneToListButton.tsx#default": default_efa9dffc52114b53adee79502de11280,
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
   "./src/payload/collections/MediaLiveStatusCell.tsx#default": default_c8ad4c18c750a643537cc845c379b91a,
+  "./src/payload/collections/BulkMediaUpload.tsx#default": default_e9e8e5360c4c5f4d21b5525e0f651e10,
   "./src/payload/collections/MediaTagFilters.tsx#default": default_f8264a153eb702d05d6c426361977a2f,
   "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
   "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
