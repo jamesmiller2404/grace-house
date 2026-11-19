@@ -298,10 +298,11 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       {actionsContainer &&
         createPortal(
           <a
+            type="button"
             href={dashboardURL}
             aria-label="Dashboard"
             title="Dashboard"
-            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill"
+            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
           >
             <span className="btn__content">
               <span className="btn__label">Dashboard</span>
