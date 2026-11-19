@@ -185,6 +185,7 @@ export const Media: CollectionConfig = {
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
+        { path: "./src/payload/collections/BulkMediaUpload.tsx" },
         { path: "./src/payload/collections/MediaTagFilters.tsx" },
       ],
       views: {
@@ -231,9 +232,9 @@ export const Media: CollectionConfig = {
     {
       name: "alt",
       type: "text",
-      required: true,
+      required: false,
       admin: {
-        description: "Describe the image for screen readers.",
+        description: "Describe the image for screen readers. Leave blank for decorative images.",
       },
     },
     {
