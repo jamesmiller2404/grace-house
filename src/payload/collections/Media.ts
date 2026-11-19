@@ -188,6 +188,7 @@ export const Media: CollectionConfig = {
     components: {
       beforeList: [
         { path: "./src/payload/components/DashboardListButton.tsx" },
+        { path: "./src/payload/collections/MediaTagFilters.tsx" },
       ],
       views: {
         edit: {
