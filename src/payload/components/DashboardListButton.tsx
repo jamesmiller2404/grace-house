@@ -297,17 +297,19 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       `}</style>
       {actionsContainer &&
         createPortal(
-          <a
+          <button
             type="button"
-            href={dashboardURL}
             aria-label="Dashboard"
             title="Dashboard"
             className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+            onClick={() => {
+              window.location.href = dashboardURL;
+            }}
           >
             <span className="btn__content">
               <span className="btn__label">Dashboard</span>
             </span>
-          </a>,
+          </button>,
           actionsContainer,
         )}
     </>
