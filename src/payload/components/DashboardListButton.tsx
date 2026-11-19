@@ -300,13 +300,14 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
           .table tr:has(td img) { height: 136px; }
         }
       `}</style>}
-      {actionsContainer &&
-        createPortal(
-          <Button buttonStyle="secondary" el="link" to={dashboardURL}>
-            Dashboard
-          </Button>,
-          actionsContainer,
-        )}
+      {actionsContainer
+        ? createPortal(
+            <Button buttonStyle="secondary" el="link" to={dashboardURL}>
+              Dashboard
+            </Button>,
+            actionsContainer,
+          )
+        : null}
     </>
   );
 };
