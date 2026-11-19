@@ -301,7 +301,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
             type="button"
             aria-label="Dashboard"
             title="Dashboard"
-            className="btn btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
+            className="btn gh-dashboard-list-button btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
             onClick={() => {
               window.location.href = dashboardURL;
             }}
