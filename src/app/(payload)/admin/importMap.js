@@ -39,15 +39,10 @@ import { default as default_ba23fe87f40460cfacd78b7ad3ca2ada } from '../../../..
 import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../../src/payload/collections/Events/DoneToListButton.tsx'
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
 import { default as default_c8ad4c18c750a643537cc845c379b91a } from '../../../../src/payload/collections/MediaLiveStatusCell.tsx'
-import { default as default_1d716f087508f854431c94cf72fee1c0 } from '../../../../src/payload/collections/MediaAlbumAssignmentNotice.tsx'
 import { default as default_f8264a153eb702d05d6c426361977a2f } from '../../../../src/payload/collections/MediaTagFilters.tsx'
 import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
 import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
 import { default as default_1aef17eeafcdfd11df80e2f285bac85f } from '../../../../src/payload/collections/MediaEditView.tsx'
-import { default as default_43fc865273b5537fd2eef65a56b3c61d } from '../../../../src/payload/collections/MediaLists/ImagesMobileLayout.tsx'
-import { default as default_c7ff49680a0227fafcd2d092658d865c } from '../../../../src/payload/collections/MediaLists/AlbumUploadButtons.tsx'
-import { default as default_40eb3aa079d83f93776cb5035724aff2 } from '../../../../src/payload/collections/MediaLists/CancelButton.tsx'
-import { default as default_fb841bca741192ee26e0b753977259c2 } from '../../../../src/payload/collections/MediaLists/DoneButton.tsx'
 import { default as default_015db43890ec4fd0759f106472cfb6a7 } from '../../../../src/payload/collections/MissionPage/CancelToDashboardButton.tsx'
 import { default as default_9b60535ca21064260bab2c5008a55b0c } from '../../../../src/payload/collections/MissionPage/DoneToListButton.tsx'
 import { default as default_b3783d9fad9fa582346bbc830ab9a03d } from '../../../../src/payload/collections/MissionPage/EditView.tsx'
@@ -149,15 +144,10 @@ export const importMap = {
   "./src/payload/collections/Events/DoneToListButton.tsx#default": default_efa9dffc52114b53adee79502de11280,
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
   "./src/payload/collections/MediaLiveStatusCell.tsx#default": default_c8ad4c18c750a643537cc845c379b91a,
-  "./src/payload/collections/MediaAlbumAssignmentNotice.tsx#default": default_1d716f087508f854431c94cf72fee1c0,
   "./src/payload/collections/MediaTagFilters.tsx#default": default_f8264a153eb702d05d6c426361977a2f,
   "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
   "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
   "./src/payload/collections/MediaEditView.tsx#default": default_1aef17eeafcdfd11df80e2f285bac85f,
-  "./src/payload/collections/MediaLists/ImagesMobileLayout.tsx#default": default_43fc865273b5537fd2eef65a56b3c61d,
-  "./src/payload/collections/MediaLists/AlbumUploadButtons.tsx#default": default_c7ff49680a0227fafcd2d092658d865c,
-  "./src/payload/collections/MediaLists/CancelButton.tsx#default": default_40eb3aa079d83f93776cb5035724aff2,
-  "./src/payload/collections/MediaLists/DoneButton.tsx#default": default_fb841bca741192ee26e0b753977259c2,
   "./src/payload/collections/MissionPage/CancelToDashboardButton.tsx#default": default_015db43890ec4fd0759f106472cfb6a7,
   "./src/payload/collections/MissionPage/DoneToListButton.tsx#default": default_9b60535ca21064260bab2c5008a55b0c,
   "./src/payload/collections/MissionPage/EditView.tsx#default": default_b3783d9fad9fa582346bbc830ab9a03d,

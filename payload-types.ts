@@ -70,7 +70,6 @@ export interface Config {
     users: User;
     events: Event;
     media: Media;
-    'media-lists': MediaList;
     'media-tags': MediaTag;
     'mission-page': MissionPage;
     hero: Hero;
@@ -87,16 +86,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    'media-lists': {
-      images: 'media';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'media-lists': MediaListsSelect<false> | MediaListsSelect<true>;
     'media-tags': MediaTagsSelect<false> | MediaTagsSelect<true>;
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
@@ -250,7 +244,7 @@ export interface Event {
   createdAt: string;
 }
 /**
- * Primary List contains all images. Use albums to organize images into groups; an image can belong to multiple different albums.
+ * The central library for all website images. Use tags to organize and filter images.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -265,10 +259,6 @@ export interface Media {
    * Assign one or more reusable tags to this image.
    */
   tags?: (number | MediaTag)[] | null;
-  /**
-   * Add this image to one or more albums. Removing an album here does not delete the image.
-   */
-  lists?: (number | MediaList)[] | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -295,30 +285,6 @@ export interface MediaTag {
    * Optional note explaining how this tag should be used.
    */
   description?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Create a new album. Give the album a name and hit the save button. Then add your images. All images are automatically saved to the Primary List, and an image can exist in multiple different albums.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-lists".
- */
-export interface MediaList {
-  id: number;
-  /**
-   * A clear name such as Home Page, Board Members, Events, or Staff.
-   */
-  name: string;
-  /**
-   * Optional note explaining what this list is for.
-   */
-  description?: string | null;
-  images?: {
-    docs?: (number | Media)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1039,10 +1005,6 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'media-lists';
-        value: number | MediaList;
-      } | null)
-    | ({
         relationTo: 'media-tags';
         value: number | MediaTag;
       } | null)
@@ -1198,7 +1160,6 @@ export interface EventsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   tags?: T;
-  lists?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1208,17 +1169,6 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-lists_select".
- */
-export interface MediaListsSelect<T extends boolean = true> {
-  name?: T;
-  description?: T;
-  images?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
