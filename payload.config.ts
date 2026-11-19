@@ -10,6 +10,7 @@ import { Hero } from "@/payload/collections/Hero";
 import { Intro } from "@/payload/collections/Intro";
 import { Media } from "@/payload/collections/Media";
 import { MediaLists } from "@/payload/collections/MediaLists";
+import { MediaTags } from "@/payload/collections/MediaTags";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Stories } from "@/payload/collections/Stories";
 import { Users } from "@/payload/collections/Users";
@@ -54,6 +55,7 @@ export default buildConfig({
     Events,
     Media,
     MediaLists,
+    MediaTags,
     MissionPage,
     Hero,
     Intro,
