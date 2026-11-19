@@ -58,7 +58,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
     };
   }, [isCollectionList, pathname]);
 
-  if (!isMediaCollection) return null;
+  if (!isCollectionList) return null;
 
   return (
     <>
