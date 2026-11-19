@@ -92,7 +92,7 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
         }
         .list-controls .search-bar__actions {
           position: absolute;
-          top: calc(100% + 12px);
+          top: calc(100% + 24px);
           right: 14px;
           z-index: 2;
           display: flex;
@@ -141,7 +141,7 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
         }
         @media (max-width: 767px) {
           .list-controls .search-bar__actions {
-            top: calc(100% + 12px);
+            top: calc(100% + 24px);
             right: 8px;
             gap: 6px;
           }
