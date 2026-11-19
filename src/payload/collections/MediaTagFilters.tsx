@@ -171,6 +171,43 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
             flex-basis: 100%;
           }
 
+          /* Keep Payload's native row-selection checkbox visible as its own
+             first cell in each Media row/card, never over the image. */
+          .collection-list--media .table table {
+            overflow: visible !important;
+          }
+
+          .collection-list--media .table th#heading-_select,
+          .collection-list--media .table td.cell-_select {
+            display: table-cell !important;
+            position: sticky !important;
+            left: 0 !important;
+            z-index: 5 !important;
+            width: 48px !important;
+            min-width: 48px !important;
+            max-width: 48px !important;
+            padding: 10px 8px !important;
+            vertical-align: middle !important;
+            background: var(--theme-bg) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+          }
+
+          .collection-list--media .table td.cell-_select .select-row,
+          .collection-list--media .table td.cell-_select .checkbox-input,
+          .collection-list--media .table td.cell-_select .checkbox-input__input {
+            display: inline-flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+          }
+
+          .collection-list--media .table td.cell-_select .checkbox-input__input {
+            width: 24px !important;
+            height: 24px !important;
+            min-width: 24px !important;
+            min-height: 24px !important;
+          }
+
         }
       `}</style>
     </nav>
