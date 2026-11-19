@@ -91,11 +91,14 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
           position: relative;
         }
         /*
-         * Remove the entire SearchBar layout wrapper. display: contents keeps
-         * Payload's native action controls available for positioning below.
+         * Remove the complete Search by Alt section: its search icon, label/input,
+         * and wrapper layout. Keep only Payload's native Columns/Filters actions.
          */
         .list-controls .search-bar {
           display: contents;
+        }
+        .list-controls .search-bar > :not(.search-bar__actions) {
+          display: none !important;
         }
         .list-controls .search-bar__actions {
           position: absolute;
