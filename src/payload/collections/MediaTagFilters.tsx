@@ -172,57 +172,73 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
           }
 
           /*
-           * Payload hides the first checkbox cell on mobile with:
-           * .table tbody tr td:first-child:has(input[type="checkbox"])
-           * Match that element more specifically so the native checkbox remains
-           * visible. Keep the existing card/grid layout and cell sizing intact.
+           * Override Payload's mobile rule hiding the native selection cell.
+           * Preserve the card layout and keep the checkbox control compact.
            */
           .collection-list .table tbody tr td.cell-_select:first-child:has(input[type="checkbox"]) {
             display: table-cell !important;
             position: relative !important;
-            width: 48px !important;
-            min-width: 48px !important;
-            max-width: 48px !important;
-            padding: 12px 10px !important;
+            width: 36px !important;
+            min-width: 36px !important;
+            max-width: 36px !important;
+            padding: 10px 6px !important;
             vertical-align: middle !important;
-            background: var(--theme-elevation-100) !important;
+            background: transparent !important;
             opacity: 1 !important;
             visibility: visible !important;
           }
 
-          .collection-list .table td.cell-_select .checkbox-input,
-          .collection-list .table td.cell-_select .checkbox-input__input {
+          .collection-list .table td.cell-_select .checkbox-input {
             display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             visibility: visible !important;
             opacity: 1 !important;
           }
 
+          /* Keep a comfortable hit target while making the visible box subtle. */
           .collection-list .table td.cell-_select .checkbox-input__input {
+            position: relative !important;
             box-sizing: border-box !important;
             width: 26px !important;
             height: 26px !important;
             min-width: 26px !important;
             min-height: 26px !important;
-            border: 2px solid var(--theme-elevation-600) !important;
-            border-radius: 4px !important;
-            background: var(--theme-bg) !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
           }
 
           .collection-list .table td.cell-_select .checkbox-input__input input[type="checkbox"] {
+            position: absolute !important;
+            inset: 0 !important;
             width: 100% !important;
             height: 100% !important;
             opacity: 0 !important;
           }
 
           .collection-list .table td.cell-_select .checkbox-input__icon {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            width: 9px !important;
+            height: 9px !important;
+            min-width: 9px !important;
+            min-height: 9px !important;
+            transform: translate(-50%, -50%) !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            inset: 0 !important;
+            border: 1px solid var(--theme-elevation-500) !important;
+            border-radius: 2px !important;
+            background: var(--theme-elevation-100) !important;
+            opacity: 0.75 !important;
           }
 
           .collection-list .table td.cell-_select .checkbox-input__icon svg {
-            opacity: 1 !important;
+            width: 7px !important;
+            height: 7px !important;
+            opacity: 0.8 !important;
           }
         }
       `}</style>
