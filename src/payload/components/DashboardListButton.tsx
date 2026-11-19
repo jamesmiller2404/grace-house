@@ -24,34 +24,38 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   });
 
   useEffect(() => {
-    if (!isMediaCollection) {
-      setActionsContainer(null);
-      return;
-    }
+    if (!isMediaCollection) return;
 
+    let frame = 0;
     const findActionsContainer = () => {
       const container = document.querySelector<HTMLElement>(
         ".list-header__title-actions",
       );
 
-      if (container) {
-        setActionsContainer(container);
-        return true;
-      }
+      if (!container) return false;
 
-      return false;
+      setActionsContainer(container);
+      observer.disconnect();
+      return true;
     };
-
-    if (findActionsContainer()) return;
 
     // The list header can be rendered after this beforeList component.
     const observer = new MutationObserver(() => {
-      if (findActionsContainer()) observer.disconnect();
+      if (findActionsContainer()) cancelAnimationFrame(frame);
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
 
-    return () => observer.disconnect();
+    // Defer the initial DOM lookup so state is updated from an async callback,
+    // not synchronously inside the effect body.
+    frame = requestAnimationFrame(() => {
+      findActionsContainer();
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [isMediaCollection, pathname]);
 
   if (!isMediaCollection) return null;
