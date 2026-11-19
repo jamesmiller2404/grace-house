@@ -43,6 +43,7 @@ import * as migration_20261115_162300_board_of_directors from './20261115_162300
 import * as migration_20261116_020000_add_board_image_position from './20261116_020000_add_board_image_position';
 
 import * as migration_20261116_180000_media_lists from "./20261116_180000_media_lists";
+import * as migration_20261118_000000_media_tags from "./20261118_000000_media_tags";
 
 export const migrations = [
   {
@@ -264,5 +265,10 @@ export const migrations = [
     up: migration_20261116_180000_media_lists.up,
     down: migration_20261116_180000_media_lists.down,
     name: "20261116_180000_media_lists",
+  },
+  {
+    up: migration_20261118_000000_media_tags.up,
+    down: migration_20261118_000000_media_tags.down,
+    name: "20261118_000000_media_tags",
   },
 ];
