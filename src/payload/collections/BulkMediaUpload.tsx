@@ -51,24 +51,30 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   useEffect(() => {
     if (!actionsContainer) return;
 
-    const hideNativeBulkUpload = () => {
-      actionsContainer.querySelectorAll<HTMLElement>("button, a").forEach((element) => {
-        const label = (element.textContent || "").replace(/\\s+/g, " ").trim().toLowerCase();
-        if (
-          label === "bulk upload" &&
-          !element.classList.contains("gh-bulk-upload-button")
-        ) {
-          element.hidden = true;
-          element.setAttribute("aria-hidden", "true");
-          element.tabIndex = -1;
-        }
-      });
+    // Keep Payload's native Bulk Upload button and styling, but route its click
+    // to the custom uploader instead of opening Payload's sequential uploader.
+    const handleBulkUploadClick = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const button = target.closest<HTMLElement>("button, a");
+      if (!button || !actionsContainer.contains(button)) return;
+
+      const label = (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      if (label !== "bulk upload") return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      setError("");
+      setProgress("");
+      setIsOpen(true);
     };
 
-    hideNativeBulkUpload();
-    const observer = new MutationObserver(hideNativeBulkUpload);
-    observer.observe(actionsContainer, { childList: true, subtree: true, characterData: true });
-    return () => observer.disconnect();
+    actionsContainer.addEventListener("click", handleBulkUploadClick, true);
+    return () => {
+      actionsContainer.removeEventListener("click", handleBulkUploadClick, true);
+    };
   }, [actionsContainer]);
 
   useEffect(() => {
@@ -160,24 +166,6 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
 
   return (
     <>
-      {actionsContainer &&
-        createPortal(
-          <button
-            type="button"
-            className="btn gh-bulk-upload-button btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill"
-            onClick={() => {
-              setError("");
-              setProgress("");
-              setIsOpen(true);
-            }}
-          >
-            <span className="btn__content">
-              <span className="btn__label">Bulk Upload</span>
-            </span>
-          </button>,
-          actionsContainer,
-        )}
-
       {isOpen &&
         createPortal(
           <div className="gh-bulk-upload-overlay" role="presentation">
@@ -284,9 +272,6 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
         )}
 
       <style>{`
-        .gh-bulk-upload-button {
-          color: var(--theme-elevation-900) !important;
-        }
         .gh-bulk-upload-overlay {
           position: fixed;
           inset: 0;
