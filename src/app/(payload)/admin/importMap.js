@@ -102,11 +102,13 @@ import { default as default_93115a163f211dca91015775c3f5f710 } from '../../../..
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 import { default as default_e9e8e5360c4c5f4d21b5525e0f651e10 } from '../../../../src/payload/collections/BulkMediaUpload.tsx'
+import { default as default_7c4e3a91f2b64a8d9e1c6f503a2b7d11 } from '../../../../src/payload/collections/MediaMobileCards.tsx'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
   "./src/payload/components/DashboardListButton.tsx#default": default_e889d5011edb8e6606ecd09103a08b96,
   "./src/payload/collections/BulkMediaUpload.tsx#default": default_e9e8e5360c4c5f4d21b5525e0f651e10,
+  "./src/payload/collections/MediaMobileCards.tsx#default": default_7c4e3a91f2b64a8d9e1c6f503a2b7d11,
   "./src/payload/collections/UsersCancelToDashboardButton.tsx#default": default_0dda18def457283302775b43747f5a9f,
   "./src/payload/collections/UsersDoneToListButton.tsx#default": default_406610a7604472cb1b28c015b6a61a3f,
   "./src/payload/collections/UsersEditView.tsx#default": default_d1e94d5abbb0ceb34ab990b1be6f4ecc,
