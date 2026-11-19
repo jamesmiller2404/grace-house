@@ -155,12 +155,46 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
             right: 8px;
             gap: 6px;
           }
+          .list-controls .search-bar__actions > .pill {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            min-width: max-content !important;
+            white-space: nowrap !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+          }
           .gh-media-tag-filters {
             align-items: flex-start;
             padding-right: 150px;
           }
           .gh-media-tag-filters__label {
             flex-basis: 100%;
+          }
+
+          /* Keep Payload's native selection column visible while the wide
+             Media table scrolls horizontally on small screens. */
+          .collection-list--media .table {
+            overflow-x: auto;
+          }
+          .collection-list--media .table th#heading-_select,
+          .collection-list--media .table td.cell-_select {
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            min-width: 42px !important;
+            width: 42px !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+            background: var(--theme-bg) !important;
+          }
+          .collection-list--media .table th#heading-_select {
+            z-index: 4;
+          }
+          .collection-list--media .table .cell-_select .select-row,
+          .collection-list--media .table .cell-_select .checkbox-input {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
           }
         }
       `}</style>
