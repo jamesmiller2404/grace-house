@@ -221,10 +221,10 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
             position: absolute !important;
             top: 50% !important;
             left: 50% !important;
-            width: 9px !important;
-            height: 9px !important;
-            min-width: 9px !important;
-            min-height: 9px !important;
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            min-height: 16px !important;
             transform: translate(-50%, -50%) !important;
             display: flex !important;
             align-items: center !important;
@@ -236,8 +236,8 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
           }
 
           .collection-list .table td.cell-_select .checkbox-input__icon svg {
-            width: 7px !important;
-            height: 7px !important;
+            width: 12px !important;
+            height: 12px !important;
             opacity: 0.8 !important;
           }
         }
