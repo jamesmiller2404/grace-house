@@ -49,6 +49,29 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   }, [isMediaCollection, pathname]);
 
   useEffect(() => {
+    if (!actionsContainer) return;
+
+    const hideNativeBulkUpload = () => {
+      actionsContainer.querySelectorAll<HTMLElement>("button, a").forEach((element) => {
+        const label = (element.textContent || "").replace(/\\s+/g, " ").trim().toLowerCase();
+        if (
+          label === "bulk upload" &&
+          !element.classList.contains("gh-bulk-upload-button")
+        ) {
+          element.hidden = true;
+          element.setAttribute("aria-hidden", "true");
+          element.tabIndex = -1;
+        }
+      });
+    };
+
+    hideNativeBulkUpload();
+    const observer = new MutationObserver(hideNativeBulkUpload);
+    observer.observe(actionsContainer, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
+  }, [actionsContainer]);
+
+  useEffect(() => {
     if (!isOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
