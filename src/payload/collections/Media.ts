@@ -26,9 +26,9 @@ export const Media: CollectionConfig = {
           return Response.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const body = (await req.json()) as { sourceCollection?: unknown };
+        const body = (await req.json?.()) as { sourceCollection?: unknown } | undefined;
         const collectionSlug =
-          typeof body.sourceCollection === "string" ? body.sourceCollection : "";
+          typeof body?.sourceCollection === "string" ? body.sourceCollection : "";
 
         const originTags: Record<string, string> = {
           events: "events",
@@ -50,9 +50,15 @@ export const Media: CollectionConfig = {
           );
         }
 
-        const mediaID = req.routeParams.id;
-        if (!mediaID) {
-          return Response.json({ error: "A Media ID is required." }, { status: 400 });
+        const rawMediaID = req.routeParams?.id;
+        const mediaID =
+          typeof rawMediaID === "number"
+            ? rawMediaID
+            : typeof rawMediaID === "string" && /^\d+$/.test(rawMediaID)
+              ? Number(rawMediaID)
+              : null;
+        if (mediaID === null) {
+          return Response.json({ error: "A valid Media ID is required." }, { status: 400 });
         }
 
         const mediaDoc = await req.payload.findByID({
@@ -97,16 +103,16 @@ export const Media: CollectionConfig = {
         const currentTags = Array.isArray(mediaDoc.tags) ? mediaDoc.tags : [];
         const tagIDs = currentTags
           .map((item) => {
-            if (typeof item === "string" || typeof item === "number") return item;
+            if (typeof item === "number") return item;
             if (item && typeof item === "object" && "id" in item) {
-              const id = (item as { id?: unknown }).id;
-              return typeof id === "string" || typeof id === "number" ? id : null;
+              const id = item.id;
+              return typeof id === "number" ? id : null;
             }
             return null;
           })
-          .filter((id): id is string | number => id !== null);
+          .filter((id): id is number => id !== null);
 
-        if (!tagIDs.some((id) => String(id) === String(tag.id))) {
+        if (!tagIDs.includes(tag.id)) {
           tagIDs.push(tag.id);
           await req.payload.update({
             collection: "media",
