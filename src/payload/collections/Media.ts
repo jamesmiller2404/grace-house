@@ -39,6 +39,7 @@ export const Media: CollectionConfig = {
           donate: "donate",
           hero: "hero",
           intro: "intro",
+          footer: "footer",
         };
         const tagName = originTags[collectionSlug];
 
