@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname, useSearchParams } from "next/navigation";
 import { formatAdminURL } from "payload/shared";
 import { useConfig } from "@payloadcms/ui";
@@ -16,6 +17,7 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [tags, setTags] = useState<MediaTag[]>([]);
+  const [controlsRow, setControlsRow] = useState<HTMLElement | null>(null);
   const isMediaCollection = pathname.endsWith("/collections/media");
   const selectedTagID = searchParams.get("where[tags][in]");
 
@@ -24,6 +26,28 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
     serverURL: config.serverURL,
     path: "/collections/media",
   });
+
+  useEffect(() => {
+    if (!isMediaCollection) return;
+
+    const findControlsRow = () => {
+      const row = document.querySelector<HTMLElement>(".list-controls__search-row");
+      if (row) {
+        setControlsRow(row);
+        return true;
+      }
+      return false;
+    };
+
+    if (findControlsRow()) return;
+
+    const observer = new MutationObserver(() => {
+      if (findControlsRow()) observer.disconnect();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [isMediaCollection]);
 
   useEffect(() => {
     if (!isMediaCollection) return;
@@ -56,42 +80,54 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
     return () => controller.abort();
   }, [isMediaCollection]);
 
-  if (!isMediaCollection || tags.length === 0) return null;
+  if (!isMediaCollection || tags.length === 0 || !controlsRow) return null;
 
-  return (
-    <nav className="gh-media-tag-filters" aria-label="Filter Media by tag">
-      <span className="gh-media-tag-filters__label">Filter by Tag</span>
-      <a
-        className={selectedTagID ? "gh-media-tag-filters__link" : "gh-media-tag-filters__link is-active"}
-        href={mediaListURL}
-        aria-current={selectedTagID ? undefined : "page"}
-      >
-        All Images
-      </a>
-      {tags.map((tag) => {
-        const isActive = selectedTagID === String(tag.id);
-        return (
-          <a
-            className={isActive ? "gh-media-tag-filters__link is-active" : "gh-media-tag-filters__link"}
-            href={`${mediaListURL}?where[tags][in]=${encodeURIComponent(String(tag.id))}`}
-            key={String(tag.id)}
-            aria-current={isActive ? "page" : undefined}
-          >
-            {tag.name}
-          </a>
-        );
-      })}
+  return createPortal(
+    <>
+      <nav className="gh-media-tag-filters" aria-label="Filter Media by tag">
+        <span className="gh-media-tag-filters__label">Filter by Tag</span>
+        <a
+          className={selectedTagID ? "gh-media-tag-filters__link" : "gh-media-tag-filters__link is-active"}
+          href={mediaListURL}
+          aria-current={selectedTagID ? undefined : "page"}
+        >
+          All Images
+        </a>
+        {tags.map((tag) => {
+          const isActive = selectedTagID === String(tag.id);
+          return (
+            <a
+              className={isActive ? "gh-media-tag-filters__link is-active" : "gh-media-tag-filters__link"}
+              href={`${mediaListURL}?where[tags][in]=${encodeURIComponent(String(tag.id))}`}
+              key={String(tag.id)}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {tag.name}
+            </a>
+          );
+        })}
+      </nav>
       <style>{`
+        .list-controls__search-row:has(.gh-media-tag-filters) > .list-controls__left,
+        .list-controls__search-row:has(.gh-media-tag-filters) > .list-controls__spacer {
+          display: none !important;
+        }
+        .list-controls__search-row:has(.gh-media-tag-filters) {
+          align-items: center;
+          width: 100%;
+        }
+        .list-controls__search-row:has(.gh-media-tag-filters) > .list-controls__actions {
+          margin-left: auto;
+        }
         .gh-media-tag-filters {
           display: flex;
+          flex: 1 1 auto;
+          min-width: 0;
           flex-wrap: wrap;
           align-items: center;
           gap: 8px;
-          margin: 0 0 18px;
-          padding: 12px 14px;
-          border: 1px solid var(--theme-elevation-150);
-          border-radius: 8px;
-          background: var(--theme-elevation-50);
+          margin: 0;
+          padding: 0;
         }
         .gh-media-tag-filters__label {
           margin-right: 4px;
@@ -121,16 +157,20 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
           color: #e3d8ff;
           font-weight: 600;
         }
-        @media (max-width: 767px) {
-          .gh-media-tag-filters {
+        @media (max-width: 768px) {
+          .list-controls__search-row:has(.gh-media-tag-filters) {
             align-items: flex-start;
           }
-          .gh-media-tag-filters__label {
+          .list-controls__search-row:has(.gh-media-tag-filters) > .list-controls__actions {
+            margin-left: 0;
+          }
+          .gh-media-tag-filters {
             flex-basis: 100%;
           }
         }
       `}</style>
-    </nav>
+    </>,
+    controlsRow,
   );
 };
 
