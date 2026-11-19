@@ -142,6 +142,16 @@ export const Media: CollectionConfig = {
       },
     },
     {
+      name: "tags",
+      type: "relationship",
+      label: "Tags",
+      relationTo: "media-tags",
+      hasMany: true,
+      admin: {
+        description: "Assign one or more reusable tags to this image.",
+      },
+    },
+    {
       name: "lists",
       type: "relationship",
       label: "Albums",
