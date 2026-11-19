@@ -71,6 +71,7 @@ export interface Config {
     events: Event;
     media: Media;
     'media-lists': MediaList;
+    'media-tags': MediaTag;
     'mission-page': MissionPage;
     hero: Hero;
     intro: Intro;
@@ -96,6 +97,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'media-lists': MediaListsSelect<false> | MediaListsSelect<true>;
+    'media-tags': MediaTagsSelect<false> | MediaTagsSelect<true>;
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     intro: IntroSelect<false> | IntroSelect<true>;
@@ -260,6 +262,10 @@ export interface Media {
    */
   alt: string;
   /**
+   * Assign one or more reusable tags to this image.
+   */
+  tags?: (number | MediaTag)[] | null;
+  /**
    * Add this image to one or more albums. Removing an album here does not delete the image.
    */
   lists?: (number | MediaList)[] | null;
@@ -272,6 +278,25 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+}
+/**
+ * Create reusable tags to organize images in the Media Library. An image can have multiple tags.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-tags".
+ */
+export interface MediaTag {
+  id: number;
+  /**
+   * Use a short, descriptive tag name, such as Events.
+   */
+  name: string;
+  /**
+   * Optional note explaining how this tag should be used.
+   */
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Create a new album. Give the album a name and hit the save button. Then add your images. All images are automatically saved to the Primary List, and an image can exist in multiple different albums.
@@ -1018,6 +1043,10 @@ export interface PayloadLockedDocument {
         value: number | MediaList;
       } | null)
     | ({
+        relationTo: 'media-tags';
+        value: number | MediaTag;
+      } | null)
+    | ({
         relationTo: 'mission-page';
         value: number | MissionPage;
       } | null)
@@ -1168,6 +1197,7 @@ export interface EventsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  tags?: T;
   lists?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1187,6 +1217,16 @@ export interface MediaListsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   images?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-tags_select".
+ */
+export interface MediaTagsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }
