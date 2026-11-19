@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
-import { useConfig } from "@payloadcms/ui";
+import { Button, useConfig } from "@payloadcms/ui";
 import { formatAdminURL } from "payload/shared";
 import type { BeforeListClientProps } from "payload";
 
@@ -302,19 +302,9 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       `}</style>}
       {actionsContainer &&
         createPortal(
-          <button
-            type="button"
-            aria-label="Dashboard"
-            title="Dashboard"
-            className="btn gh-dashboard-list-button btn--icon-style-without-border btn--size-small btn--withoutPopup btn--style-pill btn--withoutPopup"
-            onClick={() => {
-              window.location.href = dashboardURL;
-            }}
-          >
-            <span className="btn__content">
-              <span className="btn__label">Dashboard</span>
-            </span>
-          </button>,
+          <Button buttonStyle="secondary" el="link" to={dashboardURL}>
+            Dashboard
+          </Button>,
           actionsContainer,
         )}
     </>
