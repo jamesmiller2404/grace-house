@@ -9,7 +9,6 @@ import { Board } from "@/payload/collections/Board";
 import { Hero } from "@/payload/collections/Hero";
 import { Intro } from "@/payload/collections/Intro";
 import { Media } from "@/payload/collections/Media";
-import { MediaLists } from "@/payload/collections/MediaLists";
 import { MediaTags } from "@/payload/collections/MediaTags";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Stories } from "@/payload/collections/Stories";
@@ -54,7 +53,6 @@ export default buildConfig({
     Users,
     Events,
     Media,
-    MediaLists,
     MediaTags,
     MissionPage,
     Hero,
