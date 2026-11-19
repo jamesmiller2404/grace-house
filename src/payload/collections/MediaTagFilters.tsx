@@ -171,43 +171,56 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
             flex-basis: 100%;
           }
 
-          /* Keep Payload's native row-selection checkbox visible as its own
-             first cell in each Media row/card, never over the image. */
-          .collection-list--media .table table {
-            overflow: visible !important;
-          }
-
-          .collection-list--media .table th#heading-_select,
-          .collection-list--media .table td.cell-_select {
+          /* This component only renders on the Media Library route, so
+             target Payload's real list/table classes directly. */
+          .collection-list .table th#heading-_select,
+          .collection-list .table td.cell-_select {
             display: table-cell !important;
-            position: sticky !important;
-            left: 0 !important;
-            z-index: 5 !important;
+            position: relative !important;
             width: 48px !important;
             min-width: 48px !important;
             max-width: 48px !important;
-            padding: 10px 8px !important;
+            padding: 12px 10px !important;
             vertical-align: middle !important;
-            background: var(--theme-bg) !important;
+            background: var(--theme-elevation-100) !important;
             opacity: 1 !important;
             visibility: visible !important;
           }
 
-          .collection-list--media .table td.cell-_select .select-row,
-          .collection-list--media .table td.cell-_select .checkbox-input,
-          .collection-list--media .table td.cell-_select .checkbox-input__input {
+          .collection-list .table td.cell-_select .checkbox-input,
+          .collection-list .table td.cell-_select .checkbox-input__input {
             display: inline-flex !important;
             visibility: visible !important;
             opacity: 1 !important;
           }
 
-          .collection-list--media .table td.cell-_select .checkbox-input__input {
-            width: 24px !important;
-            height: 24px !important;
-            min-width: 24px !important;
-            min-height: 24px !important;
+          .collection-list .table td.cell-_select .checkbox-input__input {
+            box-sizing: border-box !important;
+            width: 26px !important;
+            height: 26px !important;
+            min-width: 26px !important;
+            min-height: 26px !important;
+            border: 2px solid var(--theme-elevation-600) !important;
+            border-radius: 4px !important;
+            background: var(--theme-bg) !important;
           }
 
+          .collection-list .table td.cell-_select .checkbox-input__input input[type="checkbox"] {
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0 !important;
+          }
+
+          .collection-list .table td.cell-_select .checkbox-input__icon {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            inset: 0 !important;
+          }
+
+          .collection-list .table td.cell-_select .checkbox-input__icon svg {
+            opacity: 1 !important;
+          }
         }
       `}</style>
     </nav>
