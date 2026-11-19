@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { UploadField, useConfig, useField } from "@payloadcms/ui";
+import { UploadField, useConfig, useDocumentInfo, useField } from "@payloadcms/ui";
 import type { UploadFieldClientProps } from "payload";
 
 type MediaDocument = {
@@ -56,13 +56,16 @@ function getMediaDocument(value: unknown): MediaDocument | null {
  */
 const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const { config } = useConfig();
+  const { collectionSlug: sourceCollectionSlug } = useDocumentInfo();
   const fieldRef = useRef<HTMLDivElement>(null);
   const { path } = props;
   const { value, setValue } = useField({ path });
 
   const relationTo = props.field.relationTo;
-  const collectionSlug =
+  const relationCollectionSlug =
     typeof relationTo === "string" ? relationTo : relationTo[0];
+  const pendingOriginUpload = useRef(false);
+  const previousMediaID = useRef<number | string | null>(null);
 
   const currentID = useMemo(() => getRelationshipID(value), [value]);
   //const isProfilePhoto = path === "image";
@@ -73,8 +76,8 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
 
   const apiRoot = useMemo(() => {
     const apiRoute = config.routes.api.replace(/\/$/, "");
-    return `${apiRoute}/${collectionSlug}`;
-  }, [collectionSlug, config.routes.api]);
+    return `${apiRoute}/${relationCollectionSlug}`;
+  }, [relationCollectionSlug, config.routes.api]);
 
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -86,6 +89,42 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // A source tag is applied only when the native "New Photo" flow changes
+  // this field's value. Selecting an existing image in the Media browser
+  // never triggers the origin-tag endpoint.
+  useEffect(() => {
+    if (previousMediaID.current === null) {
+      previousMediaID.current = currentID;
+      return;
+    }
+
+    if (previousMediaID.current === currentID) return;
+
+    previousMediaID.current = currentID;
+    if (!pendingOriginUpload.current) return;
+
+    pendingOriginUpload.current = false;
+    if (currentID === null || !sourceCollectionSlug || sourceCollectionSlug === "media") {
+      return;
+    }
+
+    void fetch(
+      `${apiRoot}/${encodeURIComponent(String(currentID))}/apply-origin-tag`,
+      {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ sourceCollection: sourceCollectionSlug }),
+      },
+    ).then((response) => {
+      if (!response.ok) {
+        console.error("Could not apply the Media upload-origin tag.", response.status);
+      }
+    }).catch((tagError: unknown) => {
+      console.error("Could not apply the Media upload-origin tag.", tagError);
+    });
+  }, [apiRoot, currentID, sourceCollectionSlug]);
 
   // Present one clear path for each action: our "New Photo" button
   // activates Payload's native upload/URL workflow, while the separate
@@ -125,10 +164,14 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     ).find((button) =>
       (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase().includes("create new"),
     );
-    createButton?.click();
+    if (createButton) {
+      pendingOriginUpload.current = true;
+      createButton.click();
+    }
   };
 
   const openPicker = () => {
+    pendingOriginUpload.current = false;
     setSearch("");
     setSearchTerm("");
     setPage(1);
@@ -302,6 +345,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const chooseMedia = () => {
     if (!selectedMedia || props.readOnly) return;
 
+    pendingOriginUpload.current = false;
     setValue(selectedMedia.id);
     setOpen(false);
   };
