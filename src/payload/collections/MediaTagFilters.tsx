@@ -82,13 +82,31 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
         );
       })}
       <style>{`
+        /*
+         * Keep Payload's native controls mounted in their original React tree,
+         * but position their action row over the right side of the tag strip.
+         * This preserves the built-in Columns and Filters dropdown behavior.
+         */
+        .list-controls {
+          position: relative;
+        }
+        .list-controls .search-bar__actions {
+          position: absolute;
+          top: calc(100% + 12px);
+          right: 14px;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 8px;
+        }
         .gh-media-tag-filters {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           gap: 8px;
           margin: 0 0 18px;
-          padding: 12px 14px;
+          padding: 12px 170px 12px 14px;
           border: 1px solid var(--theme-elevation-150);
           border-radius: 8px;
           background: var(--theme-elevation-50);
@@ -122,8 +140,14 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
           font-weight: 600;
         }
         @media (max-width: 767px) {
+          .list-controls .search-bar__actions {
+            top: calc(100% + 12px);
+            right: 8px;
+            gap: 6px;
+          }
           .gh-media-tag-filters {
             align-items: flex-start;
+            padding-right: 150px;
           }
           .gh-media-tag-filters__label {
             flex-basis: 100%;
