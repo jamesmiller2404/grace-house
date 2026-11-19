@@ -90,6 +90,11 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
         .list-controls {
           position: relative;
         }
+        /* Hide the Alt search input and its icon, but retain native list actions. */
+        .list-controls .search-bar > .search-filter,
+        .list-controls .search-bar > .icon--search {
+          display: none;
+        }
         .list-controls .search-bar__actions {
           position: absolute;
           top: calc(100% + 24px);
