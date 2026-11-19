@@ -19,6 +19,109 @@ export const Media: CollectionConfig = {
   },
   endpoints: [
     {
+      path: "/:id/apply-origin-tag",
+      method: "post",
+      handler: async (req) => {
+        if (req.user?.role !== "admin" && req.user?.role !== "editor") {
+          return Response.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const sourceCollection = req.routeParams.id
+          ? undefined
+          : undefined;
+        const body = (await req.json()) as { sourceCollection?: unknown };
+        const collectionSlug =
+          typeof body.sourceCollection === "string" ? body.sourceCollection : "";
+
+        const originTags: Record<string, string> = {
+          events: "events",
+          stories: "lives-changed",
+          board: "board-members",
+          "feeding-the-streets": "feeding-the-streets",
+          "custom-pages": "custom-pages",
+          donate: "donate",
+          hero: "hero",
+          intro: "intro",
+        };
+        const tagName = originTags[collectionSlug];
+
+        if (!tagName) {
+          return Response.json(
+            { error: "No automatic tag is configured for this upload source." },
+            { status: 400 },
+          );
+        }
+
+        const mediaID = req.routeParams.id;
+        if (!mediaID) {
+          return Response.json({ error: "A Media ID is required." }, { status: 400 });
+        }
+
+        const mediaDoc = await req.payload.findByID({
+          collection: "media",
+          id: mediaID,
+          depth: 0,
+          overrideAccess: true,
+        });
+
+        const existingTag = await req.payload.find({
+          collection: "media-tags",
+          where: { name: { equals: tagName } },
+          limit: 1,
+          depth: 0,
+          overrideAccess: true,
+        });
+
+        let tag = existingTag.docs[0];
+        if (!tag) {
+          try {
+            tag = await req.payload.create({
+              collection: "media-tags",
+              data: {
+                name: tagName,
+                description: `Default tag for images newly uploaded through the ${collectionSlug} collection.`,
+              },
+              overrideAccess: true,
+            });
+          } catch {
+            const retry = await req.payload.find({
+              collection: "media-tags",
+              where: { name: { equals: tagName } },
+              limit: 1,
+              depth: 0,
+              overrideAccess: true,
+            });
+            tag = retry.docs[0];
+            if (!tag) throw new Error(`Could not create or find the ${tagName} media tag.`);
+          }
+        }
+
+        const currentTags = Array.isArray(mediaDoc.tags) ? mediaDoc.tags : [];
+        const tagIDs = currentTags
+          .map((item) => {
+            if (typeof item === "string" || typeof item === "number") return item;
+            if (item && typeof item === "object" && "id" in item) {
+              const id = (item as { id?: unknown }).id;
+              return typeof id === "string" || typeof id === "number" ? id : null;
+            }
+            return null;
+          })
+          .filter((id): id is string | number => id !== null);
+
+        if (!tagIDs.some((id) => String(id) === String(tag.id))) {
+          tagIDs.push(tag.id);
+          await req.payload.update({
+            collection: "media",
+            id: mediaID,
+            data: { tags: tagIDs },
+            overrideAccess: true,
+          });
+        }
+
+        return Response.json({ success: true, tag: tagName });
+      },
+    },
+    {
       path: "/live-ids",
       method: "get",
       handler: async (req) => {
