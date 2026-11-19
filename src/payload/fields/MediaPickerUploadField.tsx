@@ -56,7 +56,8 @@ function getMediaDocument(value: unknown): MediaDocument | null {
  */
 const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const { config } = useConfig();
-  const { collectionSlug: sourceCollectionSlug } = useDocumentInfo();
+  const { collectionSlug: sourceCollectionSlug, globalSlug: sourceGlobalSlug } = useDocumentInfo();
+  const sourceEntitySlug = sourceCollectionSlug ?? sourceGlobalSlug;
   const fieldRef = useRef<HTMLDivElement>(null);
   const { path } = props;
   const { value, setValue } = useField({ path });
@@ -99,7 +100,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     if (!pendingOriginUpload.current) return;
 
     pendingOriginUpload.current = false;
-    if (currentID === null || !sourceCollectionSlug || sourceCollectionSlug === "media") {
+    if (currentID === null || !sourceEntitySlug || sourceEntitySlug === "media") {
       return;
     }
 
@@ -109,7 +110,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ sourceCollection: sourceCollectionSlug }),
+        body: JSON.stringify({ sourceCollection: sourceEntitySlug }),
       },
     ).then((response) => {
       if (!response.ok) {
@@ -118,7 +119,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     }).catch((tagError: unknown) => {
       console.error("Could not apply the Media upload-origin tag.", tagError);
     });
-  }, [apiRoot, currentID, sourceCollectionSlug]);
+  }, [apiRoot, currentID, sourceEntitySlug]);
 
   // Present one clear path for each action: our "New Photo" button
   // activates Payload's native upload/URL workflow, while the separate
