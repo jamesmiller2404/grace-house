@@ -26,9 +26,6 @@ export const Media: CollectionConfig = {
           return Response.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const sourceCollection = req.routeParams.id
-          ? undefined
-          : undefined;
         const body = (await req.json()) as { sourceCollection?: unknown };
         const collectionSlug =
           typeof body.sourceCollection === "string" ? body.sourceCollection : "";
