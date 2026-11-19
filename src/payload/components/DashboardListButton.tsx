@@ -15,7 +15,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   const pathname = usePathname();
   const { config } = useConfig();
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
-  const isMediaCollection = pathname.endsWith("/collections/media");
+  const isCollectionList = /\/collections\/[^/]+\/?$/.test(pathname);\n  const isMediaCollection = pathname.endsWith("/collections/media");
 
   const dashboardURL = formatAdminURL({
     adminRoute: config.routes.admin,
@@ -24,7 +24,7 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
   });
 
   useEffect(() => {
-    if (!isMediaCollection) return;
+    if (!isCollectionList) return;
 
     let frame = 0;
     const findActionsContainer = () => {
@@ -56,13 +56,13 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [isMediaCollection, pathname]);
+  }, [isCollectionList, pathname]);
 
   if (!isMediaCollection) return null;
 
   return (
     <>
-      <style>{`
+      {isMediaCollection && <style>{`
         .list-header__title-and-actions {
           display: flex !important;
           align-items: center !important;
