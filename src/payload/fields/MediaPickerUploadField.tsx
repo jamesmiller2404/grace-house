@@ -65,7 +65,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const relationCollectionSlug =
     typeof relationTo === "string" ? relationTo : relationTo[0];
   const pendingOriginUpload = useRef(false);
-  const previousMediaID = useRef<number | string | null>(null);
+  const previousMediaID = useRef<number | string | null>(currentID);
 
   const currentID = useMemo(() => getRelationshipID(value), [value]);
   //const isProfilePhoto = path === "image";
@@ -94,11 +94,6 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   // this field's value. Selecting an existing image in the Media browser
   // never triggers the origin-tag endpoint.
   useEffect(() => {
-    if (previousMediaID.current === null) {
-      previousMediaID.current = currentID;
-      return;
-    }
-
     if (previousMediaID.current === currentID) return;
 
     previousMediaID.current = currentID;
