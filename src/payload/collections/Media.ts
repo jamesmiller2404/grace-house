@@ -71,6 +71,7 @@ export const Media: CollectionConfig = {
       "filename",
       "liveStatus",
       "alt",
+      "tags",
       "lists",
       "mimeType",
       "updatedAt",
