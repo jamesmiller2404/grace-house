@@ -24,6 +24,21 @@ export const MediaTags: CollectionConfig = {
     defaultColumns: ["name", "description", "updatedAt"],
     description:
       "Create reusable tags to organize images in the Media Library. An image can have multiple tags.",
+    components: {
+      beforeList: [
+        { path: "./src/payload/components/DashboardListButton.tsx" },
+      ],
+      edit: {
+        beforeDocumentControls: [
+          {
+            path: "./src/payload/collections/MediaTags/CancelToDashboardButton.tsx",
+          },
+          {
+            path: "./src/payload/collections/MediaTags/DoneToListButton.tsx",
+          },
+        ],
+      },
+    },
   },
   fields: [
     {

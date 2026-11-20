@@ -44,6 +44,8 @@ import { default as default_f8264a153eb702d05d6c426361977a2f } from '../../../..
 import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
 import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
 import { default as default_1aef17eeafcdfd11df80e2f285bac85f } from '../../../../src/payload/collections/MediaEditView.tsx'
+import { default as default_350fcb323f6f45746cee47a4dfdc4326 } from '../../../../src/payload/collections/MediaTags/CancelToDashboardButton.tsx'
+import { default as default_88c09cd28936908b95ba7f5d240c4445 } from '../../../../src/payload/collections/MediaTags/DoneToListButton.tsx'
 import { default as default_015db43890ec4fd0759f106472cfb6a7 } from '../../../../src/payload/collections/MissionPage/CancelToDashboardButton.tsx'
 import { default as default_9b60535ca21064260bab2c5008a55b0c } from '../../../../src/payload/collections/MissionPage/DoneToListButton.tsx'
 import { default as default_b3783d9fad9fa582346bbc830ab9a03d } from '../../../../src/payload/collections/MissionPage/EditView.tsx'
@@ -150,6 +152,8 @@ export const importMap = {
   "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
   "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
   "./src/payload/collections/MediaEditView.tsx#default": default_1aef17eeafcdfd11df80e2f285bac85f,
+  "./src/payload/collections/MediaTags/CancelToDashboardButton.tsx#default": default_350fcb323f6f45746cee47a4dfdc4326,
+  "./src/payload/collections/MediaTags/DoneToListButton.tsx#default": default_88c09cd28936908b95ba7f5d240c4445,
   "./src/payload/collections/MissionPage/CancelToDashboardButton.tsx#default": default_015db43890ec4fd0759f106472cfb6a7,
   "./src/payload/collections/MissionPage/DoneToListButton.tsx#default": default_9b60535ca21064260bab2c5008a55b0c,
   "./src/payload/collections/MissionPage/EditView.tsx#default": default_b3783d9fad9fa582346bbc830ab9a03d,

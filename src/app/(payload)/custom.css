@@ -422,13 +422,44 @@ html {
   color: #111114 !important;
 }
 
-/* Collection-list actions: keep Create New, Bulk Upload, and Dashboard
-   visually consistent. Custom Pages uses list-header__actions because its
-   custom list view does not render the usual title-actions wrapper. */
+/* Collection-list header: vertically center the collection heading label
+   and action buttons (Create New, Dashboard, Bulk Upload) across all collections. */
+.list-header {
+  align-items: center !important;
+}
+
+.list-header__content {
+  align-items: center !important;
+}
+
+.list-header__title-and-actions {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: calc(var(--base, 16px) * 0.75) !important;
+}
+
+.list-header__title,
+.list-header__title-and-actions > .list-header__title {
+  margin: 0 !important;
+  align-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+  line-height: normal !important;
+}
+
 .list-header__title-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  gap: 0.5rem !important;
+}
+
+.list-header__actions {
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 0 !important;
 }
 
 .list-header__title-actions .list-create-new-doc__create-new-button,
@@ -440,15 +471,18 @@ html {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  box-sizing: border-box !important;
+  height: 42px !important;
+  min-height: 42px !important;
   background: var(--theme-elevation-100) !important;
   border: 1px solid var(--theme-elevation-300) !important;
   border-radius: 5px !important;
   color: var(--theme-elevation-900) !important;
   font-size: 0.9rem !important;
   font-weight: 600 !important;
-  min-height: 42px !important;
   padding: 0.6rem 0.9rem !important;
   text-decoration: none !important;
+  margin: 0 !important;
 }
 
 .list-header__title-actions .list-create-new-doc__create-new-button:hover,
