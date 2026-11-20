@@ -29,9 +29,9 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
 
     let frame = 0;
     const findActionsContainer = () => {
-      const container = document.querySelector<HTMLElement>(
-        ".list-header__title-actions",
-      );
+      const container =
+        document.querySelector<HTMLElement>(".list-header__title-actions") ||
+        document.querySelector<HTMLElement>(".list-header__actions");
 
       if (!container) return false;
 
@@ -302,7 +302,14 @@ const DashboardListButton: React.FC<BeforeListClientProps> = () => {
       `}</style>}
       {actionsContainer
         ? createPortal(
-            <Button buttonStyle="secondary" el="link" to={dashboardURL}>
+            <Button
+              aria-label="Dashboard"
+              buttonStyle="pill"
+              className="gh-dashboard-list-button"
+              el="link"
+              size="small"
+              to={dashboardURL}
+            >
               Dashboard
             </Button>,
             actionsContainer,

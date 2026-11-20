@@ -462,6 +462,7 @@ html {
   color: var(--theme-elevation-1000) !important;
 }
 
+.list-header__title-actions .list-create-new-doc__create-new-button,
 .list-header__title-actions .gh-dashboard-list-button,
 .list-header__actions .gh-dashboard-list-button,
 .list-header__title-actions .gh-media-lists-button,
