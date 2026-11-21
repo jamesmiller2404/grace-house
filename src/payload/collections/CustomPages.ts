@@ -42,6 +42,7 @@ access: {
     req.user?.role === "admin" || req.user?.role === "editor",
 },
   admin: {
+    group: "Site Pages",
     useAsTitle: "title",
     defaultColumns: ["title", "enabled", "updatedAt"],
     description:

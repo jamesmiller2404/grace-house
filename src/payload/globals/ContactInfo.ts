@@ -27,6 +27,7 @@ export const ContactInfo: GlobalConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Site Settings & Access",
     description:
       "The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for.",
     // Custom Edit view wrapper that paints the admin panel style the other

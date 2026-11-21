@@ -22,6 +22,7 @@ export const Board: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Site Pages",
     useAsTitle: "title",
     defaultColumns: ["title", "updatedAt"],
     description:

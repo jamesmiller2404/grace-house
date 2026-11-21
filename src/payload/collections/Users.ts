@@ -52,6 +52,7 @@ export const Users: CollectionConfig = {
   ],
 
   admin: {
+    group: "Site Settings & Access",
     defaultColumns: ["name", "email", "role"],
     useAsTitle: "name",
     // Custom Edit view wrapper that paints the mockup frame:

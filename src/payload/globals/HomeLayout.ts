@@ -32,6 +32,7 @@ export const HomeLayout: GlobalConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Home Page",
     description:
       'Choose which sections appear on the home page and in what order. Drag a section to reorder it, or open its "..." menu and use Move Up / Move Down (the easiest way on a phone). Untick "Show on home page" to hide a section without removing it.',
     // Custom Edit view wrapper that paints the mockup frame

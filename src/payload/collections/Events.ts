@@ -34,6 +34,7 @@ export const Events: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Community & Content",
     useAsTitle: "title",
     defaultColumns: ["title", "date", "startTime", "location", "city", "cost"],
     // Custom Edit view wrapper that paints the mockup frame

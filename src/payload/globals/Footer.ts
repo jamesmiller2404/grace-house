@@ -32,6 +32,7 @@ export const Footer: GlobalConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Site Settings & Access",
     description:
       "The phone number, email address and street address shown in the footer's 'Get Help' column. Pick each one from the entries registered in the Contact Info panel (editing them there updates the footer automatically), or choose 'Other (enter manually)' for a one-off.",
     // Custom Edit view wrapper that paints the admin panel style the other

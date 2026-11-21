@@ -26,6 +26,7 @@ export const Hero: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Home Page",
     useAsTitle: "heading",
     defaultColumns: ["heading", "eyebrow", "updatedAt"],
     description:

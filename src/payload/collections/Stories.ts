@@ -46,6 +46,7 @@ export const Stories: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Community & Content",
     useAsTitle: "name",
     defaultColumns: ["name", "role", "gender", "date", "pillar"],
     description:

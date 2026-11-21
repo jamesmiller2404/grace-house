@@ -12,8 +12,12 @@ const TOOLTIP_TEXT: Record<string, string> = {
   events:
     "Create and manage upcoming events — dates, locations, images, and contact info.",
   media: "Upload, organize, tag, and manage all images used throughout the website.",
+  "media-tags":
+    "Create reusable tags to organize and filter images in the Media Library.",
   "mission-page":
     "The Title and body text shown on the Mission page (/about/mission).",
+  board:
+    "Manage the Board of Directors page (/about/board) — page title, introduction, and member profiles.",
   hero: "The front page hero: the main heading, the subline beneath it, and the background image.",
   intro:
     'The "What is Grace House" section on the home page: its heading, body text, link and colors.',
@@ -45,12 +49,12 @@ const css = `
 .gh-admin-tooltip {
   position: fixed;
   z-index: 2147483647;
-  background: #f0e6d2;
-  color: #1a1a1a;
-  border: 1px solid #d4c7a8;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-  padding: 9px 11px;
+  background: #f5efe3;
+  color: #1c1823;
+  border: 1px solid #c9a45c;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(6, 4, 10, 0.45);
+  padding: 9px 12px;
   font-size: 12px;
   line-height: 1.45;
   width: max-content;

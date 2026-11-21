@@ -50,20 +50,24 @@ const trustedOrigins = [
 
 export default buildConfig({
   collections: [
-    Users,
-    Events,
-    Media,
-    MediaTags,
-    MissionPage,
+    // Home Page
     Hero,
     Intro,
-    Stories,
-    Donate,
-    CustomPages,
     GetHelpNow,
+    // Community & Content
+    Events,
+    Stories,
     Faq,
     FeedingTheStreets,
+    Media,
+    MediaTags,
+    // Site Pages
+    MissionPage,
+    Donate,
     Board,
+    CustomPages,
+    // Site Settings & Access
+    Users,
   ],
   globals: [HomeLayout, ContactInfo, Footer],
   serverURL: siteURL,

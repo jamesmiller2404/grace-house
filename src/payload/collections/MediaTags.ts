@@ -20,6 +20,7 @@ export const MediaTags: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Community & Content",
     useAsTitle: "name",
     defaultColumns: ["name", "description", "updatedAt"],
     description:

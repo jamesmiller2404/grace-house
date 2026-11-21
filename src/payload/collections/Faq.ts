@@ -4,6 +4,7 @@ export const Faq: CollectionConfig = {
   slug: 'faq',
   labels: { singular: 'Common Question', plural: 'Common Questions' },
   admin: {
+    group: 'Community & Content',
     useAsTitle: 'question',
     defaultColumns: ['question', 'order', 'published', 'updatedAt'],
     // Custom Edit view wrapper that paints the mockup frame

@@ -27,6 +27,7 @@ export const FeedingTheStreets: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
+    group: "Community & Content",
     useAsTitle: "title",
     defaultColumns: ["title", "updatedAt"],
     description:

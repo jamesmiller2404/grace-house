@@ -28,38 +28,65 @@
  */
 
 html[data-theme='dark'] {
-  /* Page background and core text colors.
-     Payload paints `html { background: var(--theme-bg) }`, and defaults
-     --theme-bg to var(--theme-elevation-0). */
-  --theme-bg: #111115;
-  --theme-text: #f0f0f3;
-  --theme-input-bg: #080808;
+  /* Warm "Midnight Aubergine & Gold" palette inspired by Grace House's
+     public brand tokens (aubergine #32243f, gold #c9a45c, warm amber #e3a857,
+     ivory #f5f1ea). Scoped strictly to dark mode; light mode remains locked
+     off in payload.config.ts. */
+  --theme-bg: #141118;
+  --theme-text: #f5f1ea;
+  --theme-input-bg: #100d14;
 
-  /* Payload's elevation scale, remapped to the dark scheme. Low steps are
-     dark surfaces, high steps are light (text on dark), mirroring the
-     direction of Payload's built-in dark theme. */
-  --theme-elevation-0: #111115; /* page background */
-  --theme-elevation-50: #1a1a1c; /* subtle layer above the page */
-  --theme-elevation-100: #222222; /* dropdown menus, secondary fills */
-  --theme-elevation-150: #2d2d33; /* borders, the form "frame" */
-  --theme-elevation-200: #343434; /* secondary fills (input borders) */
-  --theme-elevation-250: #3b3b3b;
-  --theme-elevation-300: #414141; /* hover fills */
-  --theme-elevation-350: #4f4f55;
-  --theme-elevation-400: #6e6e76; /* muted labels (sidebar group headers) */
-  --theme-elevation-450: #454560;
-;
-  --theme-elevation-500: #9d9da4; /* helper text */
-  --theme-elevation-550: #a7a7ae;
-  --theme-elevation-600: #b1b1b8;
-  --theme-elevation-650: #babac1;
-  --theme-elevation-700: #c4c4cb;
-  --theme-elevation-750: #ceced4;
-  --theme-elevation-800: #d8d8de; /* primary (Save) button fill */
-  --theme-elevation-850: #e2e2e6;
-  --theme-elevation-900: #eaeaed;
-  --theme-elevation-950: #eeeff1;
-  --theme-elevation-1000: #f0f0f3; /* primary text */
+  /* Payload's elevation scale, remapped to a warm plum-charcoal dark ramp.
+     Low steps are dark surfaces, high steps are warm ivory text on dark. */
+  --theme-elevation-0: #141118; /* page background */
+  --theme-elevation-50: #1c1823; /* sidebar, cards, subtle raised layers */
+  --theme-elevation-100: #241f2d; /* dropdown menus, secondary fills */
+  --theme-elevation-150: #312a3d; /* hairline borders, form frames */
+  --theme-elevation-200: #3d344c; /* input borders, active fills */
+  --theme-elevation-250: #4a405c; /* stronger borders */
+  --theme-elevation-300: #564b6a; /* hover fills */
+  --theme-elevation-350: #685c7d;
+  --theme-elevation-400: #8d839e; /* muted labels (sidebar group headers) */
+  --theme-elevation-450: #9b92ac;
+  --theme-elevation-500: #ada5bc; /* helper text */
+  --theme-elevation-550: #b8b1c4;
+  --theme-elevation-600: #c4becd;
+  --theme-elevation-650: #cfc9d5;
+  --theme-elevation-700: #dad5dd;
+  --theme-elevation-750: #e4dfd7;
+  --theme-elevation-800: #ece6dc; /* high-emphasis text & icons */
+  --theme-elevation-850: #f1ece4;
+  --theme-elevation-900: #f5f1ea;
+  --theme-elevation-950: #f9f6f1;
+  --theme-elevation-1000: #fcfaf7; /* primary headings */
+
+  /* Harmonized Payload semantic feedback tokens */
+  --theme-success-500: #5fa883;
+  --theme-warning-500: #e3a857;
+  --theme-error-500: #d46655;
+
+  /* Shared Grace House admin semantic tokens (used across dashboard,
+     navigation, buttons, cards, and custom edit views) */
+  --gh-accent: #c9a45c;
+  --gh-accent-hover: #e3a857;
+  --gh-accent-ink: #141118;
+  --gh-accent-soft: rgba(201, 164, 92, 0.14);
+  --gh-accent-border: rgba(201, 164, 92, 0.45);
+  --gh-aubergine: #32243f;
+  --gh-aubergine-soft: #261e32;
+  --gh-surface-card: #1d1825;
+  --gh-surface-card-hover: #262030;
+  --gh-surface-input: #100d14;
+  --gh-border-subtle: #312a3d;
+  --gh-border-strong: #4a405c;
+  --gh-danger: #c45645;
+  --gh-danger-hover: #d46655;
+  --gh-success: #5fa883;
+  --gh-success-soft: rgba(95, 168, 131, 0.16);
+  --gh-warning: #e3a857;
+  --gh-warning-soft: rgba(227, 168, 87, 0.16);
+  --gh-shadow-card: 0 4px 16px rgba(6, 4, 10, 0.32);
+  --gh-shadow-card-hover: 0 10px 26px rgba(6, 4, 10, 0.48);
 }
 
 html[data-theme='light'] {
@@ -1283,6 +1310,214 @@ html[data-theme] .array-field__row [contenteditable="true"] {
 
 /* Document controls separator color. */
 .doc-controls__divider {
-  background-color: #681313 !important;
-  border-color: #681313 !important;
+  background-color: var(--gh-border-subtle, #312a3d) !important;
+  border-color: var(--gh-border-subtle, #312a3d) !important;
 }
+
+/* ============================================================================
+   Phase 1 — Grace House Dark Theme Surfaces (Midnight Aubergine & Gold)
+   Scoped strictly under html[data-theme='dark'] so light mode remains
+   disabled and unaltered.
+   ============================================================================ */
+
+/* Warm deep-ink input surfaces and focus ring across standard text inputs
+   and Lexical editors in dark mode. */
+html[data-theme='dark'] .payload input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"]),
+html[data-theme='dark'] .payload select,
+html[data-theme='dark'] .payload textarea,
+html[data-theme='dark'] .payload .field-type.textarea textarea,
+html[data-theme='dark'] .payload .field-type.textarea .textarea,
+html[data-theme='dark'] .payload .rich-text-lexical .editor-container,
+html[data-theme='dark'] .payload .rich-text-lexical .lexical-editor,
+html[data-theme='dark'] .payload .rich-text-lexical [contenteditable="true"],
+html[data-theme='dark'] .payload [class*="rich-text"] [contenteditable="true"],
+html[data-theme='dark'] .array-field__row .rich-text-lexical,
+html[data-theme='dark'] .array-field__row .rich-text-lexical .editor-container,
+html[data-theme='dark'] .array-field__row .rich-text-lexical .lexical-editor,
+html[data-theme='dark'] .array-field__row [contenteditable="true"],
+html[data-theme='dark'] .array-field__row [data-lexical-editor="true"] {
+  background-color: var(--gh-surface-input) !important;
+  color: var(--theme-text) !important;
+}
+
+html[data-theme='dark'] .payload input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]):not([type="range"]):not([type="color"]):focus,
+html[data-theme='dark'] .payload select:focus,
+html[data-theme='dark'] .payload textarea:focus {
+  border-color: var(--gh-accent) !important;
+  box-shadow: 0 0 0 2px var(--gh-accent-soft) !important;
+  outline: none;
+}
+
+/* Accessible gold keyboard focus rings */
+html[data-theme='dark'] a:focus-visible,
+html[data-theme='dark'] button:focus-visible,
+html[data-theme='dark'] [tabindex]:focus-visible {
+  outline: 2px solid var(--gh-accent);
+  outline-offset: 2px;
+}
+
+/* Primary action buttons (Save, Publish, Login submit, modal confirmations) */
+html[data-theme='dark'] .btn--style-primary {
+  background-color: var(--gh-accent);
+  border: 1px solid var(--gh-accent);
+  color: var(--gh-accent-ink);
+  font-weight: 600;
+  border-radius: 7px;
+  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+html[data-theme='dark'] .btn--style-primary:hover:not(:disabled),
+html[data-theme='dark'] .btn--style-primary:focus-visible:not(:disabled) {
+  background-color: var(--gh-accent-hover);
+  border-color: var(--gh-accent-hover);
+  color: var(--gh-accent-ink);
+  box-shadow: 0 4px 14px rgba(201, 164, 92, 0.28);
+}
+
+html[data-theme='dark'] .btn--style-secondary {
+  border-radius: 7px;
+  border-color: var(--gh-border-strong);
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+html[data-theme='dark'] .btn--style-secondary:hover:not(:disabled) {
+  border-color: var(--gh-accent-border);
+  background-color: var(--gh-aubergine-soft);
+}
+
+/* List header Create New button: warm aubergine + gold accent border so
+   primary creation stands out cleanly (and keeps Media Library's ::after
+   "Add Images" ivory label high-contrast). */
+html[data-theme='dark'] .list-header__title-actions .list-create-new-doc__create-new-button {
+  background: var(--gh-aubergine-soft) !important;
+  border-color: var(--gh-accent-border) !important;
+  border-radius: 7px !important;
+  color: var(--theme-elevation-1000) !important;
+  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+html[data-theme='dark'] .list-header__title-actions .list-create-new-doc__create-new-button:hover {
+  background: var(--gh-aubergine) !important;
+  border-color: var(--gh-accent) !important;
+  box-shadow: 0 4px 12px rgba(201, 164, 92, 0.18);
+}
+
+html[data-theme='dark'] .list-header__title-actions button[aria-label="Bulk Upload"],
+html[data-theme='dark'] .list-header__title-actions .gh-dashboard-list-button,
+html[data-theme='dark'] .list-header__actions .gh-dashboard-list-button {
+  border-radius: 7px !important;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+/* Sidebar navigation polish */
+html[data-theme='dark'] .nav {
+  background-color: var(--theme-elevation-50);
+  border-right: 1px solid var(--gh-border-subtle);
+}
+
+html[data-theme='dark'] .nav-group__toggle {
+  color: var(--gh-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[data-theme='dark'] .nav__link {
+  border-radius: 6px;
+  color: var(--theme-elevation-800);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+html[data-theme='dark'] .nav__link:hover {
+  background-color: var(--theme-elevation-100);
+  color: var(--theme-elevation-1000);
+}
+
+html[data-theme='dark'] .nav__link--active,
+html[data-theme='dark'] .nav__link[aria-current="page"] {
+  background-color: var(--gh-accent-soft);
+  color: var(--theme-elevation-1000);
+  font-weight: 600;
+}
+
+html[data-theme='dark'] .nav__link-indicator {
+  background-color: var(--gh-accent);
+}
+
+/* Top bar subtle border */
+html[data-theme='dark'] .app-header {
+  border-bottom: 1px solid var(--gh-border-subtle);
+}
+
+/* Dashboard section groups and cards */
+html[data-theme='dark'] .dashboard__group {
+  margin-bottom: 2.25rem;
+}
+
+html[data-theme='dark'] .dashboard__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--gh-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+html[data-theme='dark'] .dashboard__label::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  border-radius: 999px;
+  background-color: var(--gh-accent);
+}
+
+html[data-theme='dark'] .dashboard .card {
+  background-color: var(--gh-surface-card);
+  border: 1px solid var(--gh-border-subtle);
+  border-radius: 10px;
+  box-shadow: var(--gh-shadow-card);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+html[data-theme='dark'] .dashboard .card:hover,
+html[data-theme='dark'] .dashboard .card:focus-within {
+  background-color: var(--gh-surface-card-hover);
+  border-color: var(--gh-accent-border);
+  box-shadow: var(--gh-shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+html[data-theme='dark'] .dashboard .card__title {
+  color: var(--theme-elevation-950);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme='dark'] .dashboard .card,
+  html[data-theme='dark'] .btn--style-primary,
+  html[data-theme='dark'] .btn--style-secondary {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Collection list table subtle row hover */
+html[data-theme='dark'] .table tbody tr:hover {
+  background-color: rgba(201, 164, 92, 0.05);
+}
+
+/* Bulk selection toolbar warm accent border */
+html[data-theme='dark'] .list-selection {
+  background: var(--gh-aubergine-soft) !important;
+  border-color: var(--gh-accent-border) !important;
+}
+
