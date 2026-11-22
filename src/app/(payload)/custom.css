@@ -1720,21 +1720,10 @@ html[data-theme='dark'] .gh-quick-action:hover {
   color: var(--theme-elevation-1000);
 }
 
-html[data-theme='dark'] .gh-quick-action--primary {
-  background: var(--gh-accent);
-  border-color: var(--gh-accent);
-  color: var(--gh-accent-ink);
-}
-
-html[data-theme='dark'] .gh-quick-action--primary:hover {
-  background: var(--gh-accent-hover);
-  border-color: var(--gh-accent-hover);
-  color: var(--gh-accent-ink);
-  box-shadow: 0 4px 14px rgba(201, 164, 92, 0.28);
-}
-
 html[data-theme='dark'] .gh-quick-action__plus {
+  color: var(--gh-accent);
   font-size: 1.05rem;
+  font-weight: 700;
   line-height: 1;
 }
 

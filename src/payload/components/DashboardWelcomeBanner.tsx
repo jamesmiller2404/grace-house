@@ -84,22 +84,22 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
     {
       label: "New Event",
       href: "/admin/collections/events/create",
-      primary: true,
+      hasPlus: true,
     },
     {
       label: "New Story",
       href: "/admin/collections/stories/create",
-      primary: false,
+      hasPlus: true,
     },
     {
       label: "Add Images",
       href: "/admin/collections/media/create",
-      primary: false,
+      hasPlus: true,
     },
     {
       label: "Home Layout",
       href: "/admin/globals/home-layout",
-      primary: false,
+      hasPlus: false,
     },
   ];
 
@@ -167,15 +167,11 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
         <div className="gh-welcome-banner__actions-list">
           {quickActions.map((action) => (
             <Link
-              className={
-                action.primary
-                  ? "gh-quick-action gh-quick-action--primary"
-                  : "gh-quick-action"
-              }
+              className="gh-quick-action"
               href={action.href}
               key={action.href}
             >
-              {action.primary ? (
+              {action.hasPlus ? (
                 <span aria-hidden="true" className="gh-quick-action__plus">
                   +
                 </span>
