@@ -43,50 +43,55 @@ const css = `
   margin: 0 0 20px;
 }
 .gh-custom-pages-edit .gh-story-preview-launch {
-  border: 1px solid #000;
+  border: 1px solid var(--gh-accent, #c9a45c);
   border-radius: 6px;
-  background: #00aeef;
-  color: #000;
+  background: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
   padding: 9px 18px;
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 140ms ease;
 }
-.gh-custom-pages-edit .gh-story-preview-launch:hover { background: #28bdf3; }
-.gh-custom-pages-edit .gh-story-preview-hint { color: #bdbdc5; font-size: 1rem; line-height: 1.5; }
+.gh-custom-pages-edit .gh-story-preview-launch:hover { background: var(--gh-accent-hover, #e3a857); }
+.gh-custom-pages-edit .gh-story-preview-hint { color: var(--gh-text-muted, #b8afc4); font-size: 1rem; line-height: 1.5; }
 .gh-custom-pages-edit .gh-story-preview-backdrop {
   position: fixed; z-index: 100000; inset: 0; display: flex;
   align-items: center; justify-content: center; padding: 18px;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(10, 8, 14, 0.85);
+  backdrop-filter: blur(4px);
 }
 .gh-custom-pages-edit .gh-story-preview-dialog {
   display: flex; flex-direction: column; width: min(1500px, 100%);
   height: min(94vh, 1100px); min-height: 0; overflow: hidden;
-  border: 1px solid #55555f; border-radius: 12px; background: #25252b;
-  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--gh-border-strong, #4a405c); border-radius: 12px; background: var(--theme-elevation-50, #1c1823);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.65);
 }
 .gh-custom-pages-edit .gh-story-preview-toolbar {
   display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 12px 16px; background: #19191e; color: #f0f0f3;
+  gap: 12px; padding: 12px 16px; background: var(--theme-elevation-0, #141118); color: var(--gh-text-primary, #f6f3eb);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
 }
 .gh-custom-pages-edit .gh-story-preview-heading { display: flex; flex-direction: column; gap: 2px; }
 .gh-custom-pages-edit .gh-story-preview-heading strong { font-size: 1rem; }
-.gh-custom-pages-edit .gh-story-preview-heading span { color: #b0b0ba; font-size: 0.78rem; }
+.gh-custom-pages-edit .gh-story-preview-heading span { color: var(--gh-text-muted, #b8afc4); font-size: 0.78rem; }
 .gh-custom-pages-edit .gh-story-preview-actions { display: flex; align-items: center; gap: 12px; }
 .gh-custom-pages-edit .gh-story-preview-device-switch {
-  display: inline-flex; gap: 3px; padding: 3px; border: 1px solid #55555f; border-radius: 7px;
+  display: inline-flex; gap: 3px; padding: 3px; border: 1px solid var(--gh-border-subtle, #312a3d); border-radius: 7px;
+  background: var(--theme-elevation-50, #1c1823);
 }
 .gh-custom-pages-edit .gh-story-preview-device-switch button,
 .gh-custom-pages-edit .gh-story-preview-close {
   border: 1px solid transparent; border-radius: 5px; padding: 7px 11px;
-  background: transparent; color: #f0f0f3; font: inherit; font-size: 0.85rem; cursor: pointer;
+  background: transparent; color: var(--gh-text-primary, #f6f3eb); font: inherit; font-size: 0.85rem; cursor: pointer;
+  transition: all 140ms ease;
 }
-.gh-custom-pages-edit .gh-story-preview-device-switch button.is-active { background: #00aeef; color: #080808; font-weight: 700; }
-.gh-custom-pages-edit .gh-story-preview-close { border-color: #6b6b75; background: #393940; }
-.gh-custom-pages-edit .gh-story-preview-close:hover { background: #4b4b54; }
+.gh-custom-pages-edit .gh-story-preview-device-switch button.is-active { background: var(--gh-accent, #c9a45c); color: var(--gh-accent-ink, #141118); font-weight: 700; }
+.gh-custom-pages-edit .gh-story-preview-close { border-color: var(--gh-border-strong, #4a405c); background: var(--gh-aubergine-soft, #261e32); }
+.gh-custom-pages-edit .gh-story-preview-close:hover { background: var(--gh-aubergine, #32243f); border-color: var(--gh-accent, #c9a45c); }
 .gh-custom-pages-edit .gh-story-preview-stage {
   display: flex; flex: 1 1 auto; justify-content: center; min-height: 0;
-  overflow: auto; padding: 14px; background: #505057;
+  overflow: auto; padding: 14px; background: #221d2b;
 }
 .gh-custom-pages-edit .gh-story-preview-frame {
   display: block; flex: 0 0 auto; height: 100%; min-height: 500px; max-width: 100%;
@@ -107,12 +112,12 @@ const css = `
    DARK scheme (the original mockup); the html[data-theme='light'] block
    below repaints the same variables for the Light theme. */
 .gh-custom-pages-edit {
-  --gh-custom-pages-bg: #111115; /* page background */
-  --gh-custom-pages-frame: #2d2d33; /* the rounded form frame */
-  --gh-custom-pages-field: #101012; /* text field boxes */
-  --gh-custom-pages-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-custom-pages-text: #f0f0f3; /* labels, general text */
-  --gh-custom-pages-help: #9d9da4; /* field helper text */
+  --gh-custom-pages-bg: #141118; /* page background */
+  --gh-custom-pages-frame: #1d1825; /* the rounded form frame */
+  --gh-custom-pages-field: #100d14; /* text field boxes */
+  --gh-custom-pages-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-custom-pages-text: #f6f3eb; /* labels, general text */
+  --gh-custom-pages-help: #b8afc4; /* field helper text */
   background: var(--gh-custom-pages-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -130,6 +135,8 @@ html[data-theme='light'] .gh-custom-pages-edit {
    so it stays on the page background like the mockup. */
 .gh-custom-pages-edit .collection-edit__main-wrapper {
   background: var(--gh-custom-pages-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;

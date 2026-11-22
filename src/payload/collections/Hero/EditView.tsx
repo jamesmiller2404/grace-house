@@ -42,50 +42,55 @@ const css = `
   margin: 0 0 20px;
 }
 .gh-hero-edit .gh-story-preview-launch {
-  border: 1px solid #000;
+  border: 1px solid var(--gh-accent, #c9a45c);
   border-radius: 6px;
-  background: #00aeef;
-  color: #000;
+  background: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
   padding: 9px 18px;
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 140ms ease;
 }
-.gh-hero-edit .gh-story-preview-launch:hover { background: #28bdf3; }
-.gh-hero-edit .gh-story-preview-hint { color: #bdbdc5; font-size: 1rem; line-height: 1.5; }
+.gh-hero-edit .gh-story-preview-launch:hover { background: var(--gh-accent-hover, #e3a857); }
+.gh-hero-edit .gh-story-preview-hint { color: var(--gh-text-muted, #b8afc4); font-size: 1rem; line-height: 1.5; }
 .gh-hero-edit .gh-story-preview-backdrop {
   position: fixed; z-index: 100000; inset: 0; display: flex;
   align-items: center; justify-content: center; padding: 18px;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(10, 8, 14, 0.85);
+  backdrop-filter: blur(4px);
 }
 .gh-hero-edit .gh-story-preview-dialog {
   display: flex; flex-direction: column; width: min(1500px, 100%);
   height: min(94vh, 1100px); min-height: 0; overflow: hidden;
-  border: 1px solid #55555f; border-radius: 12px; background: #25252b;
-  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--gh-border-strong, #4a405c); border-radius: 12px; background: var(--theme-elevation-50, #1c1823);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.65);
 }
 .gh-hero-edit .gh-story-preview-toolbar {
   display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 12px 16px; background: #19191e; color: #f0f0f3;
+  gap: 12px; padding: 12px 16px; background: var(--theme-elevation-0, #141118); color: var(--gh-text-primary, #f6f3eb);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
 }
 .gh-hero-edit .gh-story-preview-heading { display: flex; flex-direction: column; gap: 2px; }
 .gh-hero-edit .gh-story-preview-heading strong { font-size: 1rem; }
-.gh-hero-edit .gh-story-preview-heading span { color: #b0b0ba; font-size: 0.78rem; }
+.gh-hero-edit .gh-story-preview-heading span { color: var(--gh-text-muted, #b8afc4); font-size: 0.78rem; }
 .gh-hero-edit .gh-story-preview-actions { display: flex; align-items: center; gap: 12px; }
 .gh-hero-edit .gh-story-preview-device-switch {
-  display: inline-flex; gap: 3px; padding: 3px; border: 1px solid #55555f; border-radius: 7px;
+  display: inline-flex; gap: 3px; padding: 3px; border: 1px solid var(--gh-border-subtle, #312a3d); border-radius: 7px;
+  background: var(--theme-elevation-50, #1c1823);
 }
 .gh-hero-edit .gh-story-preview-device-switch button,
 .gh-hero-edit .gh-story-preview-close {
   border: 1px solid transparent; border-radius: 5px; padding: 7px 11px;
-  background: transparent; color: #f0f0f3; font: inherit; font-size: 0.85rem; cursor: pointer;
+  background: transparent; color: var(--gh-text-primary, #f6f3eb); font: inherit; font-size: 0.85rem; cursor: pointer;
+  transition: all 140ms ease;
 }
-.gh-hero-edit .gh-story-preview-device-switch button.is-active { background: #00aeef; color: #080808; font-weight: 700; }
-.gh-hero-edit .gh-story-preview-close { border-color: #6b6b75; background: #393940; }
-.gh-hero-edit .gh-story-preview-close:hover { background: #4b4b54; }
+.gh-hero-edit .gh-story-preview-device-switch button.is-active { background: var(--gh-accent, #c9a45c); color: var(--gh-accent-ink, #141118); font-weight: 700; }
+.gh-hero-edit .gh-story-preview-close { border-color: var(--gh-border-strong, #4a405c); background: var(--gh-aubergine-soft, #261e32); }
+.gh-hero-edit .gh-story-preview-close:hover { background: var(--gh-aubergine, #32243f); border-color: var(--gh-accent, #c9a45c); }
 .gh-hero-edit .gh-story-preview-stage {
   display: flex; flex: 1 1 auto; justify-content: center; min-height: 0;
-  overflow: auto; padding: 14px; background: #505057;
+  overflow: auto; padding: 14px; background: #221d2b;
 }
 .gh-hero-edit .gh-story-preview-frame {
   display: block; flex: 0 0 auto; height: 100%; min-height: 500px; max-width: 100%;
@@ -106,13 +111,13 @@ const css = `
    (the original mockup); the html[data-theme='light'] block below repaints
    the same variables for the Light theme. */
 .gh-hero-edit {
-  --gh-hero-bg: #111115; /* page background */
-  --gh-hero-frame: #2d2d33; /* the rounded form frame */
-  --gh-hero-field: #101012; /* text field boxes */
-  --gh-hero-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-hero-text: #f0f0f3; /* labels, general text */
-  --gh-hero-upload: #515151; /* Upload / Choose from Media buttons */
-  --gh-hero-help: #9d9da4; /* field helper text */
+  --gh-hero-bg: #141118; /* page background */
+  --gh-hero-frame: #1d1825; /* the rounded form frame */
+  --gh-hero-field: #100d14; /* text field boxes */
+  --gh-hero-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-hero-text: #f6f3eb; /* labels, general text */
+  --gh-hero-upload: #261e32; /* Upload / Choose from Media buttons */
+  --gh-hero-help: #b8afc4; /* field helper text */
   background: var(--gh-hero-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -131,6 +136,8 @@ html[data-theme='light'] .gh-hero-edit {
    so it stays on the page background like the mockup. */
 .gh-hero-edit .collection-edit__main-wrapper {
   background: var(--gh-hero-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;
@@ -161,9 +168,15 @@ html[data-theme='light'] .gh-hero-edit {
 /* Text boxes */
 .gh-hero-edit input:not([type="checkbox"]):not([type="radio"]) {
   background: var(--gh-hero-field) !important;
-  border: 1px solid var(--gh-hero-field) !important;
+  border: 1px solid var(--gh-border-subtle, #312a3d) !important;
   border-radius: 8px !important;
   color: var(--gh-hero-field-text);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.gh-hero-edit input:not([type="checkbox"]):not([type="radio"]):focus {
+  border-color: var(--gh-accent, #c9a45c) !important;
+  box-shadow: 0 0 0 2px var(--gh-accent-soft, rgba(201, 164, 92, 0.2)) !important;
+  outline: none !important;
 }
 .gh-hero-edit input::placeholder {
   color: var(--gh-hero-field-text);
@@ -197,6 +210,14 @@ html[data-theme='light'] .gh-hero-edit {
 .gh-hero-edit .upload__createNewToggler,
 .gh-hero-edit .upload__listToggler {
   --bg-color: var(--gh-hero-upload);
+  border: 1px solid var(--gh-border-strong, #4a405c);
+  border-radius: 6px;
+  transition: all 140ms ease;
+}
+.gh-hero-edit .upload__createNewToggler:hover,
+.gh-hero-edit .upload__listToggler:hover {
+  background-color: var(--gh-aubergine, #32243f) !important;
+  border-color: var(--gh-accent, #c9a45c) !important;
 }
 .gh-hero-edit .upload__createNewToggler .btn__label,
 .gh-hero-edit .upload__listToggler .btn__label {

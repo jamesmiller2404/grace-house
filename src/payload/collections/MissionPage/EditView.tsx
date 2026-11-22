@@ -38,12 +38,12 @@ const css = `
    scheme (the original mockup); the html[data-theme='light'] block below
    repaints the same variables for the Light theme. */
 .gh-mission-edit {
-  --gh-mission-bg: #111115; /* page background */
-  --gh-mission-frame: #2d2d33; /* the rounded form frame */
-  --gh-mission-field: #101012; /* text field boxes */
-  --gh-mission-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-mission-text: #f0f0f3; /* labels, general text */
-  --gh-mission-help: #9d9da4; /* field helper text */
+  --gh-mission-bg: #141118; /* page background */
+  --gh-mission-frame: #1d1825; /* the rounded form frame */
+  --gh-mission-field: #100d14; /* text field boxes */
+  --gh-mission-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-mission-text: #f6f3eb; /* labels, general text */
+  --gh-mission-help: #b8afc4; /* field helper text */
   background: var(--gh-mission-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -61,6 +61,8 @@ html[data-theme='light'] .gh-mission-edit {
    so it stays on the page background like the mockup. */
 .gh-mission-edit .collection-edit__main-wrapper {
   background: var(--gh-mission-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;

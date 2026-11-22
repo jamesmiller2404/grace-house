@@ -37,12 +37,12 @@ const css = `
    scheme (the original mockup); the html[data-theme='light'] block below
    repaints the same variables for the Light theme. */
 .gh-get-help-edit {
-  --gh-gh-bg: #111115; /* page background */
-  --gh-gh-frame: #2d2d33; /* the rounded form frame */
-  --gh-gh-field: #101012; /* text field boxes and textareas */
-  --gh-gh-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-gh-text: #f0f0f3; /* labels, general text */
-  --gh-gh-help: #9d9da4; /* field helper text */
+  --gh-gh-bg: #141118; /* page background */
+  --gh-gh-frame: #1d1825; /* the rounded form frame */
+  --gh-gh-field: #100d14; /* text field boxes and textareas */
+  --gh-gh-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-gh-text: #f6f3eb; /* labels, general text */
+  --gh-gh-help: #b8afc4; /* field helper text */
   background: var(--gh-gh-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -60,6 +60,8 @@ html[data-theme='light'] .gh-get-help-edit {
    so it stays on the page background like the mockup. */
 .gh-get-help-edit .collection-edit__main-wrapper {
   background: var(--gh-gh-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;
@@ -94,9 +96,16 @@ html[data-theme='light'] .gh-get-help-edit {
 .gh-get-help-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-get-help-edit textarea {
   background: var(--gh-gh-field) !important;
-  border: 1px solid var(--gh-gh-field) !important;
+  border: 1px solid var(--gh-border-subtle, #312a3d) !important;
   border-radius: 8px !important;
   color: var(--gh-gh-field-text);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.gh-get-help-edit input:not([type="checkbox"]):not([type="radio"]):focus,
+.gh-get-help-edit textarea:focus {
+  border-color: var(--gh-accent, #c9a45c) !important;
+  box-shadow: 0 0 0 2px var(--gh-accent-soft, rgba(201, 164, 92, 0.2)) !important;
+  outline: none !important;
 }
 .gh-get-help-edit input::placeholder,
 .gh-get-help-edit textarea::placeholder {
@@ -113,42 +122,47 @@ html[data-theme='light'] .gh-get-help-edit {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 20px;
 }
 .gh-get-help-edit .gh-story-preview-launch {
-  border: 1px solid #000; border-radius: 6px; background: #00aeef; color: #000;
+  border: 1px solid var(--gh-accent, #c9a45c); border-radius: 6px; background: var(--gh-accent, #c9a45c); color: var(--gh-accent-ink, #141118);
   padding: 9px 18px; font: inherit; font-weight: 700; cursor: pointer;
+  transition: background-color 140ms ease;
 }
-.gh-get-help-edit .gh-story-preview-launch:hover { background: #28bdf3; }
+.gh-get-help-edit .gh-story-preview-launch:hover { background: var(--gh-accent-hover, #e3a857); }
 .gh-get-help-edit .gh-story-preview-hint { color: var(--gh-gh-help); font-size: 1rem; line-height: 1.5; }
 .gh-get-help-edit .gh-story-preview-backdrop {
   position: fixed; z-index: 100000; inset: 0; display: flex; align-items: center;
-  justify-content: center; padding: 18px; background: rgba(0,0,0,.82);
+  justify-content: center; padding: 18px; background: rgba(10, 8, 14, 0.85); backdrop-filter: blur(4px);
 }
 .gh-get-help-edit .gh-story-preview-dialog {
   display: flex; flex-direction: column; width: min(1500px,100%); height: min(94vh,1100px);
-  min-height: 0; overflow: hidden; border: 1px solid #55555f; border-radius: 12px;
-  background: #25252b; box-shadow: 0 18px 70px rgba(0,0,0,.55);
+  min-height: 0; overflow: hidden; border: 1px solid var(--gh-border-strong, #4a405c); border-radius: 12px;
+  background: var(--theme-elevation-50, #1c1823); box-shadow: 0 18px 70px rgba(0,0,0,.65);
 }
 .gh-get-help-edit .gh-story-preview-toolbar {
   display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 12px 16px; background: #19191e; color: #f0f0f3;
+  gap: 12px; padding: 12px 16px; background: var(--theme-elevation-0, #141118); color: var(--gh-text-primary, #f6f3eb);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
 }
 .gh-get-help-edit .gh-story-preview-heading,
 .gh-get-help-edit .gh-story-preview-actions { display: flex; align-items: center; gap: 12px; }
 .gh-get-help-edit .gh-story-preview-heading { flex-direction: column; align-items: flex-start; gap: 2px; }
 .gh-get-help-edit .gh-story-preview-heading strong { font-size: 1rem; }
-.gh-get-help-edit .gh-story-preview-heading span { color: #b0b0ba; font-size: .78rem; }
+.gh-get-help-edit .gh-story-preview-heading span { color: var(--gh-text-muted, #b8afc4); font-size: .78rem; }
 .gh-get-help-edit .gh-story-preview-device-switch {
-  display: inline-flex; gap: 3px; padding: 3px; border: 1px solid #55555f; border-radius: 7px;
+  display: inline-flex; gap: 3px; padding: 3px; border: 1px solid var(--gh-border-subtle, #312a3d); border-radius: 7px;
+  background: var(--theme-elevation-50, #1c1823);
 }
 .gh-get-help-edit .gh-story-preview-device-switch button,
 .gh-get-help-edit .gh-story-preview-close {
   border: 1px solid transparent; border-radius: 5px; padding: 7px 11px;
-  background: transparent; color: #f0f0f3; font: inherit; font-size: .85rem; cursor: pointer;
+  background: transparent; color: var(--gh-text-primary, #f6f3eb); font: inherit; font-size: .85rem; cursor: pointer;
+  transition: all 140ms ease;
 }
-.gh-get-help-edit .gh-story-preview-device-switch button.is-active { background: #00aeef; color: #080808; font-weight: 700; }
-.gh-get-help-edit .gh-story-preview-close { border-color: #6b6b75; background: #393940; }
+.gh-get-help-edit .gh-story-preview-device-switch button.is-active { background: var(--gh-accent, #c9a45c); color: var(--gh-accent-ink, #141118); font-weight: 700; }
+.gh-get-help-edit .gh-story-preview-close { border-color: var(--gh-border-strong, #4a405c); background: var(--gh-aubergine-soft, #261e32); }
+.gh-get-help-edit .gh-story-preview-close:hover { background: var(--gh-aubergine, #32243f); border-color: var(--gh-accent, #c9a45c); }
 .gh-get-help-edit .gh-story-preview-stage {
   display: flex; flex: 1 1 auto; justify-content: center; min-height: 0; overflow: auto;
-  padding: 14px; background: #505057;
+  padding: 14px; background: #221d2b;
 }
 .gh-get-help-edit .gh-story-preview-frame {
   display: block; flex: 0 0 auto; height: 100%; min-height: 500px; max-width: 100%;

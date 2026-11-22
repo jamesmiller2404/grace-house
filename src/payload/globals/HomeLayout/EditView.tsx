@@ -36,15 +36,15 @@ const css = `
    DARK scheme (the original mockup); the html[data-theme='light'] block below
    repaints the same variables for the Light theme. */
 .gh-home-layout-edit {
-  --gh-hl-bg: #111115; /* page background */
-  --gh-hl-card: #2d2d33; /* each section row card */
-  --gh-hl-card-header: #414141; /* the card's header strip */
-  --gh-hl-field: #101012; /* the Section dropdown box */
-  --gh-hl-field-text: #f0f0f3; /* text inside the dropdown */
-  --gh-hl-text: #f0f0f3; /* row labels, menu options */
-  --gh-hl-menu: #222222; /* dropdown options menu */
-  --gh-hl-hover: #414141; /* dropdown hover / current option */
-  --gh-hl-help: #9d9da4; /* field helper text */
+  --gh-hl-bg: #141118; /* page background */
+  --gh-hl-card: #1d1825; /* each section row card */
+  --gh-hl-card-header: #261e32; /* the card's header strip */
+  --gh-hl-field: #100d14; /* the Section dropdown box */
+  --gh-hl-field-text: #f6f3eb; /* text inside the dropdown */
+  --gh-hl-text: #f6f3eb; /* row labels, menu options */
+  --gh-hl-menu: #241f2d; /* dropdown options menu */
+  --gh-hl-hover: #32243f; /* dropdown hover / current option */
+  --gh-hl-help: #b8afc4; /* field helper text */
   background: var(--gh-hl-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -72,11 +72,8 @@ html[data-theme='light'] .gh-home-layout-edit {
 }
 .gh-home-layout-edit .array-field__row.collapsible {
   background: var(--gh-hl-card);
-  /* The mockup outlines each card with a 1px edge in the card's own body
-     colour, so the #414141 header strip is inset by a single pixel. Using the
-     card colour (rather than removing the border) also overrides the default
-     .collapsible--style-default border and its hover border. */
-  border: 1px solid var(--gh-hl-card);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 4px 16px rgba(6, 4, 10, 0.25);
   border-radius: 14px;
   /* Deliberately NO overflow: hidden here — the "Section" select renders its
      options menu inline (react-select, no portal), so clipping the card cuts
@@ -88,6 +85,7 @@ html[data-theme='light'] .gh-home-layout-edit {
    the collapse chevron). */
 .gh-home-layout-edit .array-field__row .collapsible__toggle-wrap {
   background: var(--gh-hl-card-header);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
   border-top-left-radius: 13px;
   border-top-right-radius: 13px;
 }
@@ -96,6 +94,7 @@ html[data-theme='light'] .gh-home-layout-edit {
 }
 /* A collapsed row shows only its header, so that needs the bottom corners too. */
 .gh-home-layout-edit .array-field__row.collapsible--collapsed .collapsible__toggle-wrap {
+  border-bottom: none;
   border-bottom-left-radius: 13px;
   border-bottom-right-radius: 13px;
 }
@@ -115,9 +114,14 @@ html[data-theme='light'] .gh-home-layout-edit {
    dropdown and the Intro color dropdowns. */
 .gh-home-layout-edit .rs__control {
   background: var(--gh-hl-field);
-  border-color: var(--gh-hl-field);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 8px;
   color: var(--gh-hl-field-text);
+}
+.gh-home-layout-edit .rs__control:hover,
+.gh-home-layout-edit .rs__control--is-focused {
+  border-color: var(--gh-accent, #c9a45c) !important;
+  box-shadow: 0 0 0 1px var(--gh-accent, #c9a45c) !important;
 }
 .gh-home-layout-edit .rs__single-value,
 .gh-home-layout-edit .rs__placeholder,
@@ -126,6 +130,9 @@ html[data-theme='light'] .gh-home-layout-edit {
 }
 .gh-home-layout-edit .rs__menu {
   background: var(--gh-hl-menu);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(6, 4, 10, 0.4);
 }
 .gh-home-layout-edit .rs__option {
   color: var(--gh-hl-text);
@@ -133,10 +140,15 @@ html[data-theme='light'] .gh-home-layout-edit {
 .gh-home-layout-edit .rs__option--is-focused,
 .gh-home-layout-edit .rs__option--is-selected {
   background: var(--gh-hl-hover);
+  color: #c9a45c;
 }
 /* "Add Section" button below the cards. */
 .gh-home-layout-edit .array-field__add-row.btn {
-  --btn-color: var(--gh-hl-help);
+  --btn-color: var(--gh-accent, #c9a45c);
+  border-color: var(--gh-border-subtle, #312a3d);
+}
+.gh-home-layout-edit .array-field__add-row.btn:hover {
+  border-color: var(--gh-accent, #c9a45c);
 }
 /* Field helper text ("Which home page section this row controls." / "Untick to
    hide this section without removing it from the order."). */

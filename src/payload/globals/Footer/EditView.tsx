@@ -38,14 +38,14 @@ const css = `
    (the original mockup); the html[data-theme='light'] block below repaints the
    same variables for the Light theme. */
 .gh-footer-edit {
-  --gh-ft-bg: #111115; /* page background */
-  --gh-ft-frame: #2d2d33; /* the rounded form frame */
-  --gh-ft-field: #101012; /* text field boxes and the pickers */
-  --gh-ft-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-ft-text: #f0f0f3; /* labels, menu options, general text */
-  --gh-ft-menu: #222222; /* picker options menu */
-  --gh-ft-hover: #414141; /* dropdown hover / current option */
-  --gh-ft-help: #9d9da4; /* field helper text */
+  --gh-ft-bg: #141118; /* page background */
+  --gh-ft-frame: #1d1825; /* the rounded form frame */
+  --gh-ft-field: #100d14; /* text field boxes and the pickers */
+  --gh-ft-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-ft-text: #f6f3eb; /* labels, menu options, general text */
+  --gh-ft-menu: #241f2d; /* picker options menu */
+  --gh-ft-hover: #32243f; /* dropdown hover / current option */
+  --gh-ft-help: #b8afc4; /* field helper text */
   background: var(--gh-ft-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -65,6 +65,8 @@ html[data-theme='light'] .gh-footer-edit {
    so it stays on the page background like the mockup. */
 .gh-footer-edit .collection-edit__main-wrapper {
   background: var(--gh-ft-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;
@@ -126,18 +128,19 @@ html[data-theme='light'] .gh-footer-edit {
   margin: 0 0 20px;
 }
 .gh-footer-edit .gh-story-preview-launch {
-  border: 1px solid #000;
+  border: 1px solid var(--gh-accent, #c9a45c);
   border-radius: 6px;
-  background: #00aeef;
-  color: #000;
+  background: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
   padding: 9px 18px;
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 140ms ease;
 }
-.gh-footer-edit .gh-story-preview-launch:hover { background: #28bdf3; }
+.gh-footer-edit .gh-story-preview-launch:hover { background: var(--gh-accent-hover, #e3a857); }
 .gh-footer-edit .gh-story-preview-hint {
-  color: #bdbdc5;
+  color: var(--gh-text-muted, #b8afc4);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -149,7 +152,8 @@ html[data-theme='light'] .gh-footer-edit {
   align-items: center;
   justify-content: center;
   padding: 18px;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(10, 8, 14, 0.85);
+  backdrop-filter: blur(4px);
 }
 .gh-footer-edit .gh-story-preview-dialog {
   display: flex;
@@ -158,10 +162,10 @@ html[data-theme='light'] .gh-footer-edit {
   height: min(94vh, 1100px);
   min-height: 0;
   overflow: hidden;
-  border: 1px solid #55555f;
+  border: 1px solid var(--gh-border-strong, #4a405c);
   border-radius: 12px;
-  background: #25252b;
-  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+  background: var(--theme-elevation-50, #1c1823);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.65);
 }
 .gh-footer-edit .gh-story-preview-toolbar {
   display: flex;
@@ -170,19 +174,21 @@ html[data-theme='light'] .gh-footer-edit {
   justify-content: space-between;
   gap: 12px;
   padding: 12px 16px;
-  background: #19191e;
-  color: #f0f0f3;
+  background: var(--theme-elevation-0, #141118);
+  color: var(--gh-text-primary, #f6f3eb);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
 }
 .gh-footer-edit .gh-story-preview-heading { display: flex; flex-direction: column; gap: 2px; }
 .gh-footer-edit .gh-story-preview-heading strong { font-size: 1rem; }
-.gh-footer-edit .gh-story-preview-heading span { color: #b0b0ba; font-size: 0.78rem; }
+.gh-footer-edit .gh-story-preview-heading span { color: var(--gh-text-muted, #b8afc4); font-size: 0.78rem; }
 .gh-footer-edit .gh-story-preview-actions { display: flex; align-items: center; gap: 12px; }
 .gh-footer-edit .gh-story-preview-device-switch {
   display: inline-flex;
   gap: 3px;
   padding: 3px;
-  border: 1px solid #55555f;
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 7px;
+  background: var(--theme-elevation-50, #1c1823);
 }
 .gh-footer-edit .gh-story-preview-device-switch button,
 .gh-footer-edit .gh-story-preview-close {
@@ -190,18 +196,19 @@ html[data-theme='light'] .gh-footer-edit {
   border-radius: 5px;
   padding: 7px 11px;
   background: transparent;
-  color: #f0f0f3;
+  color: var(--gh-text-primary, #f6f3eb);
   font: inherit;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: all 140ms ease;
 }
 .gh-footer-edit .gh-story-preview-device-switch button.is-active {
-  background: #00aeef;
-  color: #080808;
+  background: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
   font-weight: 700;
 }
-.gh-footer-edit .gh-story-preview-close { border-color: #6b6b75; background: #393940; }
-.gh-footer-edit .gh-story-preview-close:hover { background: #4b4b54; }
+.gh-footer-edit .gh-story-preview-close { border-color: var(--gh-border-strong, #4a405c); background: var(--gh-aubergine-soft, #261e32); }
+.gh-footer-edit .gh-story-preview-close:hover { background: var(--gh-aubergine, #32243f); border-color: var(--gh-accent, #c9a45c); }
 .gh-footer-edit .gh-story-preview-stage {
   display: flex;
   flex: 1 1 auto;
@@ -209,7 +216,7 @@ html[data-theme='light'] .gh-footer-edit {
   min-height: 0;
   overflow: auto;
   padding: 14px;
-  background: #505057;
+  background: #221d2b;
 }
 .gh-footer-edit .gh-story-preview-frame {
   display: block;

@@ -45,11 +45,11 @@ const timeOptions = buildTimeOptions();
  */
 const popupCss = `
 .time-picker-popup {
-  --gh-tp-panel: #222222;
-  --gh-tp-border: #414141;
-  --gh-tp-text: #cfcfcf;
-  --gh-tp-hover: #414141;
-  --gh-tp-current-text: #ffffff;
+  --gh-tp-panel: #241f2d;
+  --gh-tp-border: #4a405c;
+  --gh-tp-text: #b8afc4;
+  --gh-tp-hover: #32243f;
+  --gh-tp-current-text: #c9a45c;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -74,7 +74,7 @@ html[data-theme='light'] .time-picker-popup {
 .time-picker-popup .tp-option {
   background: transparent;
   border: 1px solid var(--gh-tp-border);
-  border-radius: 3px;
+  border-radius: 4px;
   color: var(--gh-tp-text);
   cursor: pointer;
   font-family: var(--font-body, sans-serif);
@@ -82,14 +82,17 @@ html[data-theme='light'] .time-picker-popup {
   line-height: 1;
   padding: 8px 2px;
   text-align: center;
-  transition: background 0.1s ease;
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 .time-picker-popup .tp-option:hover {
   background: var(--gh-tp-hover);
+  border-color: #c9a45c;
+  color: #f6f3eb;
 }
 .time-picker-popup .tp-option.tp-option-current {
-  background: var(--gh-tp-hover);
+  background: rgba(201, 164, 92, 0.15);
+  border-color: #c9a45c;
   color: var(--gh-tp-current-text);
   font-weight: 600;
 }
@@ -125,11 +128,11 @@ const styles: Record<string, React.CSSProperties> = {
     // same way the date picker's calendar card does (no clipping by
     // scroll containers). The position values are set from the input's
     // bounding rect when the popup opens.
-    background: "var(--gh-tp-panel, #222222)",
-    border: "1px solid var(--gh-tp-border, #414141)",
-    borderRadius: 4,
+    background: "var(--gh-tp-panel, #241f2d)",
+    border: "1px solid var(--gh-tp-border, #4a405c)",
+    borderRadius: 8,
     boxShadow:
-      "0 4px 6px -2px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.3)",
+      "0 8px 24px rgba(6, 4, 10, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3)",
     boxSizing: "border-box",
     // Grid layout lives in popupCss (not here) so the narrow-viewport media
     // query can reflow the columns on mobile without inline styles winning.

@@ -40,16 +40,16 @@ const css = `
    the same variables for the Light theme. --gh-ev-placeholder is the variable
    the shared ImagePosition field component reads for its preview gradient. */
 .gh-stories-edit {
-  --gh-st-bg: #111115; /* page background */
-  --gh-st-frame: #2d2d33; /* the rounded form frame */
-  --gh-st-field: #101012; /* text field boxes */
-  --gh-st-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-st-text: #f0f0f3; /* labels, menu options, general text */
-  --gh-st-menu: #222222; /* select dropdown options menu */
-  --gh-st-hover: #414141; /* dropdown hover / current option */
-  --gh-st-upload: #515151; /* Upload / Choose from Media buttons */
-  --gh-st-help: #9d9da4; /* field helper text */
-  --gh-ev-placeholder: linear-gradient(126deg, #535353, #202020); /* image preview */
+  --gh-st-bg: #141118; /* page background */
+  --gh-st-frame: #1d1825; /* the rounded form frame */
+  --gh-st-field: #100d14; /* text field boxes */
+  --gh-st-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-st-text: #f6f3eb; /* labels, menu options, general text */
+  --gh-st-menu: #241f2d; /* select dropdown options menu */
+  --gh-st-hover: #32243f; /* dropdown hover / current option */
+  --gh-st-upload: #261e32; /* Upload / Choose from Media buttons */
+  --gh-st-help: #b8afc4; /* field helper text */
+  --gh-ev-placeholder: linear-gradient(126deg, #32243f, #141118); /* image preview */
   background: var(--gh-st-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -71,6 +71,8 @@ html[data-theme='light'] .gh-stories-edit {
    so it stays on the page background like the mockup. */
 .gh-stories-edit .collection-edit__main-wrapper {
   background: var(--gh-st-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;
@@ -406,20 +408,21 @@ html[data-theme='light'] .gh-stories-edit {
   margin: 0 0 20px;
 }
 .gh-story-preview-launch {
-  border: 1px solid #000;
+  border: 1px solid var(--gh-accent, #c9a45c);
   border-radius: 6px;
-  background: #00aeef;
-  color: #000;
+  background: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
   padding: 9px 18px;
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 140ms ease;
 }
 .gh-story-preview-launch:hover {
-  background: #28bdf3;
+  background: var(--gh-accent-hover, #e3a857);
 }
 .gh-story-preview-hint {
-  color: #bdbdc5;
+  color: var(--gh-text-muted, #b8afc4);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -431,7 +434,8 @@ html[data-theme='light'] .gh-stories-edit {
   align-items: center;
   justify-content: center;
   padding: 18px;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(10, 8, 14, 0.85);
+  backdrop-filter: blur(4px);
 }
 .gh-story-preview-dialog {
   display: flex;
@@ -440,10 +444,10 @@ html[data-theme='light'] .gh-stories-edit {
   height: min(94vh, 1100px);
   min-height: 0;
   overflow: hidden;
-  border: 1px solid #55555f;
+  border: 1px solid var(--gh-border-strong, #4a405c);
   border-radius: 12px;
-  background: #25252b;
-  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+  background: var(--theme-elevation-50, #1c1823);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.65);
 }
 .gh-story-preview-toolbar {
   display: flex;
@@ -452,8 +456,9 @@ html[data-theme='light'] .gh-stories-edit {
   justify-content: space-between;
   gap: 12px;
   padding: 12px 16px;
-  background: #19191e;
-  color: #f0f0f3;
+  background: var(--theme-elevation-0, #141118);
+  color: var(--gh-text-primary, #f6f3eb);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
 }
 .gh-story-preview-heading {
   display: flex;
@@ -464,7 +469,7 @@ html[data-theme='light'] .gh-stories-edit {
   font-size: 1rem;
 }
 .gh-story-preview-heading span {
-  color: #b0b0ba;
+  color: var(--gh-text-muted, #b8afc4);
   font-size: 0.78rem;
 }
 .gh-story-preview-actions {
@@ -476,8 +481,9 @@ html[data-theme='light'] .gh-stories-edit {
   display: inline-flex;
   gap: 3px;
   padding: 3px;
-  border: 1px solid #55555f;
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 7px;
+  background: var(--theme-elevation-50, #1c1823);
 }
 .gh-story-preview-device-switch button,
 .gh-story-preview-close {
@@ -485,22 +491,24 @@ html[data-theme='light'] .gh-stories-edit {
   border-radius: 5px;
   padding: 7px 11px;
   background: transparent;
-  color: #f0f0f3;
+  color: var(--gh-text-primary, #f6f3eb);
   font: inherit;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: all 140ms ease;
 }
 .gh-story-preview-device-switch button.is-active {
-  background: #00aeef;
-  color: #080808;
+  background: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
   font-weight: 700;
 }
 .gh-story-preview-close {
-  border-color: #6b6b75;
-  background: #393940;
+  border-color: var(--gh-border-strong, #4a405c);
+  background: var(--gh-aubergine-soft, #261e32);
 }
 .gh-story-preview-close:hover {
-  background: #4b4b54;
+  background: var(--gh-aubergine, #32243f);
+  border-color: var(--gh-accent, #c9a45c);
 }
 .gh-story-preview-stage {
   display: flex;
@@ -509,7 +517,7 @@ html[data-theme='light'] .gh-stories-edit {
   min-height: 0;
   overflow: auto;
   padding: 14px;
-  background: #505057;
+  background: #221d2b;
 }
 .gh-story-preview-frame {
   display: block;

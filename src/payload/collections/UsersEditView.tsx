@@ -33,15 +33,15 @@ const css = `
    (the original mockup); the html[data-theme='light'] block below repaints
    the same variables for the Light theme. */
 .gh-user-edit {
-  --gh-ev-bg: #111115; /* page background */
-  --gh-ev-frame: #2d2d33; /* the rounded form frame */
-  --gh-ev-field: #101012; /* text field boxes */
-  --gh-ev-field-text: #f0f0f3; /* text typed into the fields */
-  --gh-ev-text: #f0f0f3; /* labels, menu options, general text */
-  --gh-ev-menu: #222222; /* Role dropdown options menu */
-  --gh-ev-hover: #414141; /* dropdown hover / current option */
-  --gh-ev-upload: #515151; /* buttons */
-  --gh-ev-help: #9d9da4; /* field helper text */
+  --gh-ev-bg: #141118; /* page background */
+  --gh-ev-frame: #1d1825; /* the rounded form frame */
+  --gh-ev-field: #100d14; /* text field boxes */
+  --gh-ev-field-text: #f6f3eb; /* text typed into the fields */
+  --gh-ev-text: #f6f3eb; /* labels, menu options, general text */
+  --gh-ev-menu: #241f2d; /* Role dropdown options menu */
+  --gh-ev-hover: #32243f; /* dropdown hover / current option */
+  --gh-ev-upload: #261e32; /* buttons */
+  --gh-ev-help: #b8afc4; /* field helper text */
   background: var(--gh-ev-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -64,6 +64,8 @@ html[data-theme='light'] .gh-user-edit {
    background like the mockup. */
 .gh-user-edit .collection-edit__main-wrapper {
   background: var(--gh-ev-frame);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4);
   border-radius: 16px;
   margin-top: 12px;
   padding: 28px;

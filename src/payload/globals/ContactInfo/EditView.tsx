@@ -42,14 +42,14 @@ const css = `
    scheme (the original mockup); the html[data-theme='light'] block below
    repaints the same variables for the Light theme. */
 .gh-contact-info-edit {
-  --gh-ci-bg: #111115; /* page background */
-  --gh-ci-card: #2d2d33; /* each contact row card */
-  --gh-ci-card-header: #414141; /* the card's header strip */
-  --gh-ci-field: #101012; /* the Label / value boxes */
-  --gh-ci-field-text: #f0f0f3; /* text typed into the boxes */
-  --gh-ci-text: #f0f0f3; /* list titles, field labels, menu options */
-  --gh-ci-hover: #414141; /* the card header's hover fill */
-  --gh-ci-help: #9d9da4; /* field helper text, "Add ..." buttons */
+  --gh-ci-bg: #141118; /* page background */
+  --gh-ci-card: #1d1825; /* each contact row card */
+  --gh-ci-card-header: #261e32; /* the card's header strip */
+  --gh-ci-field: #100d14; /* the Label / value boxes */
+  --gh-ci-field-text: #f6f3eb; /* text typed into the boxes */
+  --gh-ci-text: #f6f3eb; /* list titles, field labels, menu options */
+  --gh-ci-hover: #32243f; /* the card header's hover fill */
+  --gh-ci-help: #b8afc4; /* field helper text, "Add ..." buttons */
   background: var(--gh-ci-bg);
   min-height: 100%;
   padding-bottom: 40px;
@@ -76,17 +76,15 @@ html[data-theme='light'] .gh-contact-info-edit {
 }
 .gh-contact-info-edit .array-field__row.collapsible {
   background: var(--gh-ci-card);
-  /* The mockup outlines each card with a 1px edge in the card's own body
-     colour, so the #414141 header strip is inset by a single pixel. Using the
-     card colour (rather than removing the border) also overrides the default
-     .collapsible--style-default border and its hover border. */
-  border: 1px solid var(--gh-ci-card);
+  border: 1px solid var(--gh-border-subtle, #312a3d);
+  box-shadow: 0 4px 16px rgba(6, 4, 10, 0.25);
   border-radius: 14px;
 }
 /* Header strip (drag handle, the "1. Office — (916) 470-0408" label, the
    row's "..." menu and the collapse chevron). */
 .gh-contact-info-edit .array-field__row .collapsible__toggle-wrap {
   background: var(--gh-ci-card-header);
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
   border-top-left-radius: 13px;
   border-top-right-radius: 13px;
 }
@@ -95,6 +93,7 @@ html[data-theme='light'] .gh-contact-info-edit {
 }
 /* A collapsed row shows only its header, so that needs the bottom corners too. */
 .gh-contact-info-edit .array-field__row.collapsible--collapsed .collapsible__toggle-wrap {
+  border-bottom: none;
   border-bottom-left-radius: 13px;
   border-bottom-right-radius: 13px;
 }
@@ -115,9 +114,15 @@ html[data-theme='light'] .gh-contact-info-edit {
 .gh-contact-info-edit input:not([type="checkbox"]):not([type="radio"]),
 .gh-contact-info-edit textarea {
   background: var(--gh-ci-field) !important;
-  border: 1px solid var(--gh-ci-field) !important;
+  border: 1px solid var(--gh-border-subtle, #312a3d) !important;
   border-radius: 8px !important;
   color: var(--gh-ci-field-text);
+}
+.gh-contact-info-edit input:not([type="checkbox"]):not([type="radio"]):focus,
+.gh-contact-info-edit textarea:focus {
+  border-color: var(--gh-accent, #c9a45c) !important;
+  box-shadow: 0 0 0 1px var(--gh-accent, #c9a45c) !important;
+  outline: none !important;
 }
 .gh-contact-info-edit input::placeholder,
 .gh-contact-info-edit textarea::placeholder {
@@ -126,7 +131,11 @@ html[data-theme='light'] .gh-contact-info-edit {
 }
 /* "Add Phone Number" / "Add Email" / "Add Address" buttons below each list. */
 .gh-contact-info-edit .array-field__add-row.btn {
-  --btn-color: var(--gh-ci-help);
+  --btn-color: var(--gh-accent, #c9a45c);
+  border-color: var(--gh-border-subtle, #312a3d);
+}
+.gh-contact-info-edit .array-field__add-row.btn:hover {
+  border-color: var(--gh-accent, #c9a45c);
 }
 /* Field helper text ("What this number is for — e.g. ..."). */
 .gh-contact-info-edit .field-description {

@@ -237,13 +237,13 @@ html {
   gap: 14px;
   width: 100%;
   margin: 0 0 12px;
-  background-color: #403F47;
+  background-color: transparent !important;
 }
 
 .gh-block-type-field__label {
-  color: var(--theme-text);
-  font-size: 1.15rem;
-  font-weight: 700;
+  color: var(--gh-text-primary, #f6f3eb);
+  font-size: 1.05rem;
+  font-weight: 600;
   line-height: 1;
 }
 
@@ -251,48 +251,49 @@ html {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .gh-block-type-field__button {
   min-width: 0;
-  min-height: 22px;
-  padding: 5px 8px;
-  margin: 5px 1px 5px 2px;
-  border: 1px solid #000000;
-  border-radius: 999px;
-  background: #929292;
-  color: #000000;
+  min-height: 32px;
+  padding: 6px 14px;
+  margin: 4px 2px;
+  border: 1px solid var(--gh-border-strong, #4a405c) !important;
+  border-radius: 999px !important;
+  background: var(--theme-elevation-100, #241f2d) !important;
+  color: var(--theme-elevation-900, #f6f3eb) !important;
   box-shadow: none;
   font: inherit;
-  font-size: 0.85em;
+  font-size: 0.88em;
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 120ms ease;
+  transition: all 140ms ease;
 }
 
 .gh-block-type-field__button:hover:not(:disabled) {
-  background: #7f7f7f !important;
-  color: #000000 !important;
+  background: var(--gh-aubergine, #32243f) !important;
+  border-color: var(--gh-accent-border, rgba(201, 164, 92, 0.45)) !important;
+  color: #ffffff !important;
 }
 
 .gh-block-type-field__button.is-selected {
-  border-color: #000000;
-  background: #ffffff;
-  color: #000000;
-  box-shadow: none;
-  font-weight: 700;
+  border-color: var(--gh-accent, #c9a45c) !important;
+  background: var(--gh-accent, #c9a45c) !important;
+  color: var(--gh-accent-ink, #141118) !important;
+  box-shadow: 0 2px 8px rgba(201, 164, 92, 0.3) !important;
+  font-weight: 700 !important;
 }
 
 .gh-block-type-field__button:focus-visible {
-  outline: 3px solid var(--theme-elevation-600);
+  outline: 2px solid var(--gh-accent, #c9a45c);
   outline-offset: 2px;
 }
 
 .gh-block-type-field__button:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.45;
 }
 
 .gh-block-text-input {
@@ -306,9 +307,15 @@ html {
   width: 100%;
   min-height: 70px;
   overflow: hidden;
-  border: 1px solid #44444a;
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 8px;
-  background: #080808;
+  background: var(--gh-surface-input, #100d14);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.gh-block-text-input__control:focus-within {
+  border-color: var(--gh-accent, #c9a45c);
+  box-shadow: 0 0 0 2px var(--gh-accent-soft, rgba(201, 164, 92, 0.2));
 }
 
 /* Block text box: starts two lines tall for both Heading and Paragraph
@@ -317,30 +324,26 @@ html {
   display: block;
   width: 100%;
   min-height: 80px;
-  padding: 16px 58px 16px 30px;
+  padding: 16px 58px 16px 20px;
   border: 0;
   outline: 0;
   background: transparent;
-  color: #f5f5f5;
+  color: var(--gh-text-primary, #f6f3eb);
   font: inherit;
-  font-size: 1.05rem;
-  line-height: 1.45;
+  font-size: 1.02rem;
+  line-height: 1.5;
   resize: vertical;
 }
 
 .gh-block-text-input__textarea::placeholder {
-  color: #777777;
-  opacity: 1;
-}
-
-.gh-block-text-input__textarea:focus {
-  box-shadow: inset 0 0 0 2px #777777;
+  color: var(--theme-elevation-450, #9b92ac);
+  opacity: 0.7;
 }
 
 .gh-block-text-input__clear {
   position: absolute;
   top: 50%;
-  right: 18px;
+  right: 14px;
   display: grid;
   width: 28px;
   height: 28px;
@@ -349,11 +352,16 @@ html {
   place-items: center;
   border: 0;
   background: transparent;
-  color: #f5f5f5;
-  font-size: 1.8rem;
+  color: var(--theme-elevation-450, #9b92ac);
+  font-size: 1.6rem;
   font-weight: 400;
   line-height: 1;
   cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.gh-block-text-input__clear:hover:not(:disabled) {
+  color: var(--gh-accent, #c9a45c);
 }
 
 .gh-block-text-input__clear:disabled {
@@ -364,11 +372,11 @@ html {
 .gh-block-photo-input {
   width: 100%;
   overflow: hidden;
-  border: 1px solid #44444a;
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 8px;
-  background: #080808;
-  color: #f5f5f5;
-  padding: 12px 18px;
+  background: var(--gh-surface-input, #100d14);
+  color: var(--gh-text-primary, #f6f3eb);
+  padding: 14px 18px;
 }
 
 .gh-block-photo-input .upload,
@@ -402,51 +410,43 @@ html {
     font-size: 0.9em;
   }
 }
-/* Background for Heading / Paragraph / Photo cards */
+/* Grace House array card & collapsible styling */
 .array-field__row {
-  --theme-elevation-0: #7c7a8b;
+  border: 1px solid var(--gh-border-subtle, #312a3d) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(6, 4, 10, 0.25);
+  margin-bottom: 1.25rem !important;
 }
 
 .array-field__row .collapsible__content {
-  background-color: var(--theme-elevation-0) !important;
-}
-
-.gh-block-type-field {
-  background-color: #7c7a8b !important;
+  background-color: var(--gh-surface-card, #1d1825) !important;
+  padding: 1.25rem !important;
 }
 
 .collapsible__toggle-wrap {
-  background-color:#403f47;
+  background-color: var(--gh-aubergine-soft, #261e32) !important;
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d) !important;
+  transition: background-color 140ms ease;
 }
 
-.gh-block-type-field__button {
-  border-radius: 8px !important;
-  border: 1px solid #000000 !important;
+.collapsible__toggle-wrap:hover {
+  background-color: var(--gh-aubergine, #32243f) !important;
 }
 
-.gh-block-type-field__button:hover {
-  background-color: #403f47 !important;
-  color: #ffffff !important;
-  /*border-color: #ffffff !important;*/
+.collapsible__toggle-wrap .collapsible__title,
+.collapsible__toggle-wrap .row-label {
+  color: var(--theme-elevation-950, #f6f3eb) !important;
+  font-weight: 600 !important;
 }
 
-/* Keep the selected mode visibly selected after a tap. Mobile browsers can
-   retain :hover on the tapped button until the user taps elsewhere, so this
-   rule must come after the general hover styling and win over it. */
-.gh-block-type-field__button.is-selected,
-.gh-block-type-field__button.is-selected:hover,
-.gh-block-type-field__button.is-selected:active {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border-color: #000000 !important;
+.collapsible__toggle-wrap svg {
+  color: var(--gh-accent, #c9a45c) !important;
 }
 
-/* Darker helper/description text inside Heading / Paragraph / Photo cards
-   on Donate, Custom Pages, and Feeding the Streets only. Feeding the Streets
-   shares the Custom Pages edit-view wrapper. */
-.gh-donate-edit .array-field__row .field-description,
-.gh-custom-pages-edit .array-field__row .field-description {
-  color: #111114 !important;
+/* Helper/description text inside Heading / Paragraph / Photo cards */
+.array-field__row .field-description {
+  color: var(--gh-text-muted, #b8afc4) !important;
 }
 
 /* Collection-list header: vertically center the collection heading label
@@ -600,43 +600,47 @@ html {
   justify-content: center;
   min-height: 44px;
   padding: 9px 16px;
-  border: 1px solid #696975;
+  border: 1px solid var(--gh-border-strong, #4a405c);
   border-radius: 8px;
-  background: #34343b;
-  color: #f0f0f3;
+  background: var(--gh-aubergine-soft, #261e32);
+  color: var(--gh-text-primary, #f6f3eb);
   font: inherit;
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.25;
   cursor: pointer;
   text-decoration: none;
+  transition: all 140ms ease;
 }
 
 .gh-media-picker__open-button,
 .gh-media-picker__new-button {
   min-height: 46px;
-  background: #41414b;
-  border-color: #858592;
+  background: var(--gh-aubergine-soft, #261e32);
+  border-color: var(--gh-border-strong, #4a405c);
 }
 
 .gh-media-picker__open-button:hover,
 .gh-media-picker__new-button:hover,
 .gh-media-picker__secondary:hover:not(:disabled),
 .gh-media-picker__back:hover {
-  background: #50505b;
-  border-color: #a1a1ad;
+  background: var(--gh-aubergine, #32243f);
+  border-color: var(--gh-accent, #c9a45c);
+  color: #ffffff;
 }
 
 .gh-media-picker__choose {
-  background: #e1e1e8;
-  border-color: #e1e1e8;
-  color: #17171b;
+  background: var(--gh-accent, #c9a45c);
+  border-color: var(--gh-accent, #c9a45c);
+  color: var(--gh-accent-ink, #141118);
+  font-weight: 700;
 }
 
 .gh-media-picker__choose:hover:not(:disabled) {
-  background: #ffffff;
-  border-color: #ffffff;
-  color: #111115;
+  background: var(--gh-accent-hover, #e3a857);
+  border-color: var(--gh-accent-hover, #e3a857);
+  color: var(--gh-accent-ink, #141118);
+  box-shadow: 0 4px 12px rgba(201, 164, 92, 0.35);
 }
 
 .gh-media-picker__secondary:disabled,
@@ -653,8 +657,9 @@ html {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.78);
-  color: #f0f0f3;
+  background: rgba(10, 8, 14, 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--gh-text-primary, #f6f3eb);
 }
 
 .gh-media-picker__dialog {
@@ -664,10 +669,10 @@ html {
   height: min(900px, calc(100dvh - 40px));
   min-height: 420px;
   overflow: hidden;
-  border: 1px solid #53535d;
+  border: 1px solid var(--gh-border-strong, #4a405c);
   border-radius: 14px;
-  background: #1c1c21;
-  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+  background: var(--theme-elevation-50, #1c1823);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.65);
 }
 
 .gh-media-picker__header {
@@ -677,19 +682,20 @@ html {
   justify-content: space-between;
   gap: 16px;
   padding: 20px 22px 14px;
-  border-bottom: 1px solid #3f3f48;
+  border-bottom: 1px solid var(--gh-border-subtle, #312a3d);
+  background: var(--theme-elevation-0, #141118);
 }
 
 .gh-media-picker__header h2 {
   margin: 0;
-  color: #f5f5f7;
+  color: var(--theme-elevation-1000, #fcfaf7);
   font-size: 1.25rem;
   font-weight: 700;
 }
 
 .gh-media-picker__header p {
   margin: 5px 0 0;
-  color: #b5b5bf;
+  color: var(--gh-text-muted, #b8afc4);
   font-size: 0.9rem;
 }
 
@@ -701,17 +707,20 @@ html {
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid #55555f;
+  border: 1px solid var(--gh-border-strong, #4a405c);
   border-radius: 8px;
-  background: #303038;
-  color: #f5f5f7;
+  background: var(--gh-aubergine-soft, #261e32);
+  color: var(--gh-text-primary, #f6f3eb);
   font-size: 1.8rem;
   line-height: 1;
   cursor: pointer;
+  transition: all 140ms ease;
 }
 
 .gh-media-picker__close:hover {
-  background: #484851;
+  background: var(--gh-aubergine, #32243f);
+  border-color: var(--gh-accent, #c9a45c);
+  color: #ffffff;
 }
 
 .gh-media-picker__search {
@@ -720,10 +729,11 @@ html {
   flex-direction: column;
   gap: 7px;
   padding: 14px 22px 10px;
+  background: var(--theme-elevation-50, #1c1823);
 }
 
 .gh-media-picker__search label {
-  color: #d0d0d7;
+  color: var(--theme-elevation-700, #dad5dd);
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -732,18 +742,19 @@ html {
   width: 100%;
   min-height: 48px;
   padding: 10px 14px;
-  border: 1px solid #55555f;
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 8px;
   outline: none;
-  background: #101014;
-  color: #f0f0f3;
+  background: var(--gh-surface-input, #100d14);
+  color: var(--gh-text-primary, #f6f3eb);
   font: inherit;
   font-size: 1rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
 }
 
 .gh-media-picker__search input:focus {
-  border-color: #a8a8b5;
-  box-shadow: 0 0 0 2px rgba(168, 168, 181, 0.2);
+  border-color: var(--gh-accent, #c9a45c);
+  box-shadow: 0 0 0 2px var(--gh-accent-soft, rgba(201, 164, 92, 0.2));
 }
 
 .gh-media-picker__grid {
@@ -768,19 +779,21 @@ html {
   gap: 7px;
   padding: 8px;
   overflow: hidden;
-  border: 1px solid #4b4b55;
+  border: 1px solid var(--gh-border-subtle, #312a3d);
   border-radius: 10px;
-  background: #292930;
-  color: #f0f0f3;
+  background: var(--gh-surface-card, #1d1825);
+  color: var(--gh-text-primary, #f6f3eb);
   text-align: left;
   cursor: pointer;
+  transition: all 140ms ease;
 }
 
 .gh-media-picker__tile:hover,
 .gh-media-picker__tile:focus-visible {
-  border-color: #b4b4c2;
-  background: #383840;
+  border-color: var(--gh-accent, #c9a45c);
+  background: var(--gh-aubergine-soft, #261e32);
   outline: none;
+  transform: translateY(-2px);
 }
 
 .gh-media-picker__thumb {
@@ -850,8 +863,8 @@ html {
   justify-content: space-between;
   gap: 12px;
   padding: 12px 22px;
-  border-top: 1px solid #3f3f48;
-  background: #202026;
+  border-top: 1px solid var(--gh-border-subtle, #312a3d);
+  background: var(--theme-elevation-0, #141118);
 }
 
 .gh-media-picker__page {
@@ -1519,6 +1532,47 @@ html[data-theme='dark'] .table tbody tr:hover {
 html[data-theme='dark'] .list-selection {
   background: var(--gh-aubergine-soft) !important;
   border-color: var(--gh-accent-border) !important;
+}
+
+/* Document Edit Views: form frame styling across collections & globals */
+html[data-theme='dark'] .collection-edit__main-wrapper,
+html[data-theme='dark'] .global-edit__main-wrapper {
+  background: var(--gh-surface-card, #1d1825) !important;
+  border: 1px solid var(--gh-border-subtle, #312a3d) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 30px rgba(6, 4, 10, 0.4) !important;
+  margin-top: 12px !important;
+  padding: 28px !important;
+}
+
+html[data-theme='dark'] .collection-edit__main-wrapper .field-label,
+html[data-theme='dark'] .global-edit__main-wrapper .field-label {
+  color: var(--gh-text-primary, #f6f3eb);
+}
+
+html[data-theme='dark'] .collection-edit__main-wrapper input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme='dark'] .global-edit__main-wrapper input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme='dark'] .collection-edit__main-wrapper textarea,
+html[data-theme='dark'] .global-edit__main-wrapper textarea {
+  background: var(--gh-surface-input, #100d14) !important;
+  border: 1px solid var(--gh-border-subtle, #312a3d) !important;
+  border-radius: 8px !important;
+  color: var(--gh-text-primary, #f6f3eb) !important;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+html[data-theme='dark'] .collection-edit__main-wrapper input:not([type="checkbox"]):not([type="radio"]):focus,
+html[data-theme='dark'] .global-edit__main-wrapper input:not([type="checkbox"]):not([type="radio"]):focus,
+html[data-theme='dark'] .collection-edit__main-wrapper textarea:focus,
+html[data-theme='dark'] .global-edit__main-wrapper textarea:focus {
+  border-color: var(--gh-accent, #c9a45c) !important;
+  box-shadow: 0 0 0 2px var(--gh-accent-soft, rgba(201, 164, 92, 0.2)) !important;
+  outline: none !important;
+}
+
+html[data-theme='dark'] .collection-edit__main-wrapper .field-description,
+html[data-theme='dark'] .global-edit__main-wrapper .field-description {
+  color: var(--gh-text-muted, #b8afc4) !important;
 }
 
 /* ============================================================================
