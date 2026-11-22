@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { Button, useConfig } from "@payloadcms/ui";
 import { formatAdminURL } from "payload/shared";
 import React from "react";
@@ -15,15 +16,17 @@ import React from "react";
  */
 const MediaDoneToListButton: React.FC = () => {
   const { config } = useConfig();
+  const searchParams = useSearchParams();
+  const fromDashboard = searchParams.get("from") === "dashboard";
 
-  const mediaListURL = formatAdminURL({
+  const targetURL = formatAdminURL({
     adminRoute: config.routes.admin,
     serverURL: config.serverURL,
-    path: "/collections/media",
+    path: fromDashboard ? "/" : "/collections/media",
   });
 
   return (
-    <Button buttonStyle="secondary" el="link" to={mediaListURL}>
+    <Button buttonStyle="secondary" el="link" to={targetURL}>
       Done
     </Button>
   );
