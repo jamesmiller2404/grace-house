@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { Button, useConfig } from "@payloadcms/ui";
 import { formatAdminURL } from "payload/shared";
 import React from "react";
@@ -24,19 +25,17 @@ import React from "react";
 
 const CancelToDashboardButton: React.FC = () => {
   const { config } = useConfig();
+  const searchParams = useSearchParams();
+  const fromDashboard = searchParams.get("from") === "dashboard";
 
-  // The collection list view lives at routes.admin ("/admin") joined with
-  // the collection's own route ("/collections/stories"), combined onto
-  // serverURL via formatAdminURL — the same helper Payload's own list
-  // navigation builds.
-  const storiesListURL = formatAdminURL({
+  const targetURL = formatAdminURL({
     adminRoute: config.routes.admin,
     serverURL: config.serverURL,
-    path: "/collections/stories",
+    path: fromDashboard ? "/" : "/collections/stories",
   });
 
   return (
-    <Button buttonStyle="secondary" el="link" to={storiesListURL}>
+    <Button buttonStyle="secondary" el="link" to={targetURL}>
       Cancel
     </Button>
   );
