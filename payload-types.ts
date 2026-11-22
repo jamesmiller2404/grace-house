@@ -67,20 +67,20 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    hero: Hero;
+    intro: Intro;
+    'get-help-now': GetHelpNow;
     events: Event;
+    stories: Story;
+    faq: Faq;
+    'feeding-the-streets': FeedingTheStreet;
     media: Media;
     'media-tags': MediaTag;
     'mission-page': MissionPage;
-    hero: Hero;
-    intro: Intro;
-    stories: Story;
     donate: Donate;
-    'custom-pages': CustomPage;
-    'get-help-now': GetHelpNow;
-    faq: Faq;
-    'feeding-the-streets': FeedingTheStreet;
     board: Board;
+    'custom-pages': CustomPage;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,20 +88,20 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
+    intro: IntroSelect<false> | IntroSelect<true>;
+    'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    stories: StoriesSelect<false> | StoriesSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
+    'feeding-the-streets': FeedingTheStreetsSelect<false> | FeedingTheStreetsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'media-tags': MediaTagsSelect<false> | MediaTagsSelect<true>;
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
-    hero: HeroSelect<false> | HeroSelect<true>;
-    intro: IntroSelect<false> | IntroSelect<true>;
-    stories: StoriesSelect<false> | StoriesSelect<true>;
     donate: DonateSelect<false> | DonateSelect<true>;
-    'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
-    'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
-    faq: FaqSelect<false> | FaqSelect<true>;
-    'feeding-the-streets': FeedingTheStreetsSelect<false> | FeedingTheStreetsSelect<true>;
     board: BoardSelect<false> | BoardSelect<true>;
+    'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -150,32 +150,231 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * The front page hero: the main heading, the subline beneath it, and the background image.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "hero".
  */
-export interface User {
+export interface Hero {
   id: number;
-  name?: string | null;
-  role: 'admin' | 'editor';
+  /**
+   * The main heading over the hero image (e.g. "Hope Starts Here").
+   */
+  heading: string;
+  /**
+   * The subline shown beneath the heading (e.g. "Faith-Based Recovery").
+   */
+  eyebrow?: string | null;
+  /**
+   * The background image behind the hero text. Optional — the site falls back to the default image when empty.
+   */
+  image?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
+}
+/**
+ * The central library for all website images. Use tags to organize and filter images.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe the image for screen readers. Leave blank for decorative images.
+   */
+  alt?: string | null;
+  /**
+   * Assign one or more reusable tags to this image.
+   */
+  tags?: (number | MediaTag)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * Create reusable tags to organize images in the Media Library. An image can have multiple tags.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-tags".
+ */
+export interface MediaTag {
+  id: number;
+  /**
+   * Use a short, descriptive tag name, such as Events.
+   */
+  name: string;
+  /**
+   * Optional note explaining how this tag should be used.
+   */
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The "What is Grace House" section on the home page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "intro".
+ */
+export interface Intro {
+  id: number;
+  /**
+   * The title displayed above this section's content.
+   */
+  title: string;
+  /**
+   * Add headings, paragraphs and photos in the order they should appear. A Photo block shows an image from the Media collection.
+   */
+  blocks?:
     | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        /**
+         * The header or paragraph text.
+         */
+        text?: string | null;
+        /**
+         * Write the paragraph and use the link tool to add clickable links.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Text shown under the photo.
+         */
+        caption?: string | null;
+        id?: string | null;
       }[]
     | null;
-  password?: string | null;
-  collection: 'users';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number (picked from the Contact Info panel or entered manually) and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-help-now".
+ */
+export interface GetHelpNow {
+  id: number;
+  /**
+   * The strip's main heading (e.g. "Need help now?").
+   */
+  heading: string;
+  body: string;
+  /**
+   * Format the opening line and add links using the editor toolbar.
+   */
+  bodyContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.
+   */
+  showAssessment?: boolean | null;
+  assessmentNote?: string | null;
+  /**
+   * Format the assessment sentence and add links if needed.
+   */
+  assessmentNoteContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The assessment button text (e.g. "Start Assessment").
+   */
+  ctaLabel?: string | null;
+  /**
+   * Where the assessment button links to (e.g. "/assessment").
+   */
+  ctaHref?: string | null;
+  /**
+   * The note next to the button (e.g. "Fill out the Grace House Assessment Form").
+   */
+  ctaNote?: string | null;
+  /**
+   * The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.
+   */
+  phoneChoice: string;
+  /**
+   * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
+   */
+  phoneCustom?: string | null;
+  /**
+   * The office hours shown under the phone number.
+   */
+  hours: string;
+  /**
+   * The ✓ lines shown on the right of the strip.
+   */
+  facts?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The heading above the crisis resources (e.g. "RESOURCES THAT ARE AVAILABLE 24/7").
+   */
+  crisisTitle?: string | null;
+  /**
+   * The 24/7 crisis resources shown at the bottom of the strip.
+   */
+  crisisLines?:
+    | {
+        label: string;
+        text: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -240,162 +439,6 @@ export interface Event {
     emailChoice?: string | null;
     emailCustom?: string | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The central library for all website images. Use tags to organize and filter images.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  /**
-   * Describe the image for screen readers. Leave blank for decorative images.
-   */
-  alt?: string | null;
-  /**
-   * Assign one or more reusable tags to this image.
-   */
-  tags?: (number | MediaTag)[] | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-}
-/**
- * Create reusable tags to organize images in the Media Library. An image can have multiple tags.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-tags".
- */
-export interface MediaTag {
-  id: number;
-  /**
-   * Use a short, descriptive tag name, such as Events.
-   */
-  name: string;
-  /**
-   * Optional note explaining how this tag should be used.
-   */
-  description?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The Title and body text shown on the Mission page (/about/mission).
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "mission-page".
- */
-export interface MissionPage {
-  id: number;
-  /**
-   * The page heading (e.g. "Mission") and breadcrumb label.
-   */
-  title: string;
-  body?: string | null;
-  /**
-   * The mission statement. Use the formatting toolbar for paragraphs, emphasis and links.
-   */
-  bodyContent?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The front page hero: the main heading, the subline beneath it, and the background image.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hero".
- */
-export interface Hero {
-  id: number;
-  /**
-   * The main heading over the hero image (e.g. "Hope Starts Here").
-   */
-  heading: string;
-  /**
-   * The subline shown beneath the heading (e.g. "Faith-Based Recovery").
-   */
-  eyebrow?: string | null;
-  /**
-   * The background image behind the hero text. Optional — the site falls back to the default image when empty.
-   */
-  image?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The "What is Grace House" section on the home page.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "intro".
- */
-export interface Intro {
-  id: number;
-  /**
-   * The title displayed above this section's content.
-   */
-  title: string;
-  /**
-   * Add headings, paragraphs and photos in the order they should appear. A Photo block shows an image from the Media collection.
-   */
-  blocks?:
-    | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
-        /**
-         * The header or paragraph text.
-         */
-        text?: string | null;
-        /**
-         * Write the paragraph and use the link tool to add clickable links.
-         */
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        /**
-         * The photo shown by this block.
-         */
-        image?: (number | null) | Media;
-        /**
-         * Text shown under the photo.
-         */
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -507,6 +550,129 @@ export interface Story {
    * Choose the pillar that mattered most to this person.
    */
   pillar?: ('Select a pillar...' | 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Lower numbers appear first (10, 20, 30...). Defaults to the last order + 10 on create.
+   */
+  order?: number | null;
+  published?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The Title and heading/paragraph/photo blocks shown on the Feeding the Streets page (/feeding-the-streets).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feeding-the-streets".
+ */
+export interface FeedingTheStreet {
+  id: number;
+  /**
+   * The page heading (e.g. "Feeding the Streets") and breadcrumb label.
+   */
+  title: string;
+  /**
+   * Add headings, formatted paragraphs and photos in the order they should appear on the page. Use the paragraph editor toolbar to format text and add links.
+   */
+  blocks?:
+    | {
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        /**
+         * The heading text.
+         */
+        text?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
+         */
+        linkLabel?: string | null;
+        /**
+         * Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.
+         */
+        linkHref?: string | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Text shown in small type under the photo.
+         */
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The Title and body text shown on the Mission page (/about/mission).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mission-page".
+ */
+export interface MissionPage {
+  id: number;
+  /**
+   * The page heading (e.g. "Mission") and breadcrumb label.
+   */
+  title: string;
+  body?: string | null;
+  /**
+   * The mission statement. Use the formatting toolbar for paragraphs, emphasis and links.
+   */
+  bodyContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -668,6 +834,58 @@ export interface Donate {
   createdAt: string;
 }
 /**
+ * Manage the title, introduction, and board member profiles displayed on /about/board. Use one document for this page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "board".
+ */
+export interface Board {
+  id: number;
+  /**
+   * The heading shown at the top of the public page.
+   */
+  title: string;
+  /**
+   * Introductory text displayed beneath the page title. Use the editor toolbar to format text and add links.
+   */
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Add one section for each board member. Each section includes a profile picture, name, and role. The role is free text, so enter any title you need.
+   */
+  members?:
+    | {
+        name: string;
+        /**
+         * Enter any role or title. This is a text field, not a dropdown.
+         */
+        role?: string | null;
+        /**
+         * Choose this board member's profile picture from Media.
+         */
+        image?: (number | null) | Media;
+        imagePositionX?: number | null;
+        imagePositionY?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Spare pages you can use for anything. Tick "Show in header menu", name the page and add heading/paragraph/photo blocks — the page goes live at /pages/<page-name> and its name appears in the header's "More" dropdown.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -723,250 +941,32 @@ export interface CustomPage {
   createdAt: string;
 }
 /**
- * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number (picked from the Contact Info panel or entered manually) and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
- *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "get-help-now".
+ * via the `definition` "users".
  */
-export interface GetHelpNow {
+export interface User {
   id: number;
-  /**
-   * The strip's main heading (e.g. "Need help now?").
-   */
-  heading: string;
-  body: string;
-  /**
-   * Format the opening line and add links using the editor toolbar.
-   */
-  bodyContent?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.
-   */
-  showAssessment?: boolean | null;
-  assessmentNote?: string | null;
-  /**
-   * Format the assessment sentence and add links if needed.
-   */
-  assessmentNoteContent?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * The assessment button text (e.g. "Start Assessment").
-   */
-  ctaLabel?: string | null;
-  /**
-   * Where the assessment button links to (e.g. "/assessment").
-   */
-  ctaHref?: string | null;
-  /**
-   * The note next to the button (e.g. "Fill out the Grace House Assessment Form").
-   */
-  ctaNote?: string | null;
-  /**
-   * The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.
-   */
-  phoneChoice: string;
-  /**
-   * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
-   */
-  phoneCustom?: string | null;
-  /**
-   * The office hours shown under the phone number.
-   */
-  hours: string;
-  /**
-   * The ✓ lines shown on the right of the strip.
-   */
-  facts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * The heading above the crisis resources (e.g. "RESOURCES THAT ARE AVAILABLE 24/7").
-   */
-  crisisTitle?: string | null;
-  /**
-   * The 24/7 crisis resources shown at the bottom of the strip.
-   */
-  crisisLines?:
-    | {
-        label: string;
-        text: string;
-        href: string;
-        id?: string | null;
-      }[]
-    | null;
+  name?: string | null;
+  role: 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
- */
-export interface Faq {
-  id: number;
-  question: string;
-  answer: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Lower numbers appear first (10, 20, 30...). Defaults to the last order + 10 on create.
-   */
-  order?: number | null;
-  published?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The Title and heading/paragraph/photo blocks shown on the Feeding the Streets page (/feeding-the-streets).
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "feeding-the-streets".
- */
-export interface FeedingTheStreet {
-  id: number;
-  /**
-   * The page heading (e.g. "Feeding the Streets") and breadcrumb label.
-   */
-  title: string;
-  /**
-   * Add headings, formatted paragraphs and photos in the order they should appear on the page. Use the paragraph editor toolbar to format text and add links.
-   */
-  blocks?:
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
-        /**
-         * The heading text.
-         */
-        text?: string | null;
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        /**
-         * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
-         */
-        linkLabel?: string | null;
-        /**
-         * Where the link goes. Use https://... for a website (opens in a new tab), tel:+1... for a phone number (opens the phone's dialer) or mailto:... for an email (opens the mail app). Only used when Link Text is filled in.
-         */
-        linkHref?: string | null;
-        /**
-         * The photo shown by this block.
-         */
-        image?: (number | null) | Media;
-        /**
-         * Text shown in small type under the photo.
-         */
-        caption?: string | null;
-        id?: string | null;
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Manage the title, introduction, and board member profiles displayed on /about/board. Use one document for this page.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "board".
- */
-export interface Board {
-  id: number;
-  /**
-   * The heading shown at the top of the public page.
-   */
-  title: string;
-  /**
-   * Introductory text displayed beneath the page title. Use the editor toolbar to format text and add links.
-   */
-  intro?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Add one section for each board member. Each section includes a profile picture, name, and role. The role is free text, so enter any title you need.
-   */
-  members?:
-    | {
-        name: string;
-        /**
-         * Enter any role or title. This is a text field, not a dropdown.
-         */
-        role?: string | null;
-        /**
-         * Choose this board member's profile picture from Media.
-         */
-        image?: (number | null) | Media;
-        imagePositionX?: number | null;
-        imagePositionY?: number | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -993,12 +993,32 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'hero';
+        value: number | Hero;
+      } | null)
+    | ({
+        relationTo: 'intro';
+        value: number | Intro;
+      } | null)
+    | ({
+        relationTo: 'get-help-now';
+        value: number | GetHelpNow;
       } | null)
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'stories';
+        value: number | Story;
+      } | null)
+    | ({
+        relationTo: 'faq';
+        value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'feeding-the-streets';
+        value: number | FeedingTheStreet;
       } | null)
     | ({
         relationTo: 'media';
@@ -1013,40 +1033,20 @@ export interface PayloadLockedDocument {
         value: number | MissionPage;
       } | null)
     | ({
-        relationTo: 'hero';
-        value: number | Hero;
-      } | null)
-    | ({
-        relationTo: 'intro';
-        value: number | Intro;
-      } | null)
-    | ({
-        relationTo: 'stories';
-        value: number | Story;
-      } | null)
-    | ({
         relationTo: 'donate';
         value: number | Donate;
+      } | null)
+    | ({
+        relationTo: 'board';
+        value: number | Board;
       } | null)
     | ({
         relationTo: 'custom-pages';
         value: number | CustomPage;
       } | null)
     | ({
-        relationTo: 'get-help-now';
-        value: number | GetHelpNow;
-      } | null)
-    | ({
-        relationTo: 'faq';
-        value: number | Faq;
-      } | null)
-    | ({
-        relationTo: 'feeding-the-streets';
-        value: number | FeedingTheStreet;
-      } | null)
-    | ({
-        relationTo: 'board';
-        value: number | Board;
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1092,28 +1092,68 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "hero_select".
  */
-export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  role?: T;
+export interface HeroSelect<T extends boolean = true> {
+  heading?: T;
+  eyebrow?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "intro_select".
+ */
+export interface IntroSelect<T extends boolean = true> {
+  title?: T;
+  blocks?:
     | T
     | {
+        type?: T;
+        text?: T;
+        content?: T;
+        image?: T;
+        caption?: T;
         id?: T;
-        createdAt?: T;
-        expiresAt?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-help-now_select".
+ */
+export interface GetHelpNowSelect<T extends boolean = true> {
+  heading?: T;
+  body?: T;
+  bodyContent?: T;
+  showAssessment?: T;
+  assessmentNote?: T;
+  assessmentNoteContent?: T;
+  ctaLabel?: T;
+  ctaHref?: T;
+  ctaNote?: T;
+  phoneChoice?: T;
+  phoneCustom?: T;
+  hours?: T;
+  facts?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  crisisTitle?: T;
+  crisisLines?:
+    | T
+    | {
+        label?: T;
+        text?: T;
+        href?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1149,74 +1189,6 @@ export interface EventsSelect<T extends boolean = true> {
         phoneCustom?: T;
         emailChoice?: T;
         emailCustom?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  tags?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-tags_select".
- */
-export interface MediaTagsSelect<T extends boolean = true> {
-  name?: T;
-  description?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "mission-page_select".
- */
-export interface MissionPageSelect<T extends boolean = true> {
-  title?: T;
-  body?: T;
-  bodyContent?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hero_select".
- */
-export interface HeroSelect<T extends boolean = true> {
-  heading?: T;
-  eyebrow?: T;
-  image?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "intro_select".
- */
-export interface IntroSelect<T extends boolean = true> {
-  title?: T;
-  blocks?:
-    | T
-    | {
-        type?: T;
-        text?: T;
-        content?: T;
-        image?: T;
-        caption?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1287,6 +1259,77 @@ export interface StoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  order?: T;
+  published?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feeding-the-streets_select".
+ */
+export interface FeedingTheStreetsSelect<T extends boolean = true> {
+  title?: T;
+  blocks?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        content?: T;
+        linkLabel?: T;
+        linkHref?: T;
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-tags_select".
+ */
+export interface MediaTagsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mission-page_select".
+ */
+export interface MissionPageSelect<T extends boolean = true> {
+  title?: T;
+  body?: T;
+  bodyContent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "donate_select".
  */
 export interface DonateSelect<T extends boolean = true> {
@@ -1339,6 +1382,26 @@ export interface DonateSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "board_select".
+ */
+export interface BoardSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  members?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        image?: T;
+        imagePositionX?: T;
+        imagePositionY?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "custom-pages_select".
  */
 export interface CustomPagesSelect<T extends boolean = true> {
@@ -1359,91 +1422,28 @@ export interface CustomPagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "get-help-now_select".
+ * via the `definition` "users_select".
  */
-export interface GetHelpNowSelect<T extends boolean = true> {
-  heading?: T;
-  body?: T;
-  bodyContent?: T;
-  showAssessment?: T;
-  assessmentNote?: T;
-  assessmentNoteContent?: T;
-  ctaLabel?: T;
-  ctaHref?: T;
-  ctaNote?: T;
-  phoneChoice?: T;
-  phoneCustom?: T;
-  hours?: T;
-  facts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  crisisTitle?: T;
-  crisisLines?:
-    | T
-    | {
-        label?: T;
-        text?: T;
-        href?: T;
-        id?: T;
-      };
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq_select".
- */
-export interface FaqSelect<T extends boolean = true> {
-  question?: T;
-  answer?: T;
-  order?: T;
-  published?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "feeding-the-streets_select".
- */
-export interface FeedingTheStreetsSelect<T extends boolean = true> {
-  title?: T;
-  blocks?:
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
     | T
     | {
-        type?: T;
-        text?: T;
-        content?: T;
-        linkLabel?: T;
-        linkHref?: T;
-        image?: T;
-        caption?: T;
         id?: T;
+        createdAt?: T;
+        expiresAt?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "board_select".
- */
-export interface BoardSelect<T extends boolean = true> {
-  title?: T;
-  intro?: T;
-  members?:
-    | T
-    | {
-        name?: T;
-        role?: T;
-        image?: T;
-        imagePositionX?: T;
-        imagePositionY?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
