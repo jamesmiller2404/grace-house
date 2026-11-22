@@ -16,6 +16,7 @@ type PendingImage = {
 const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { config } = useConfig();
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
   const [images, setImages] = useState<PendingImage[]>([]);
@@ -34,6 +35,15 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const [progress, setProgress] = useState("");
   const [error, setError] = useState("");
   const isMediaCollection = pathname.endsWith("/collections/media");
+
+  useEffect(() => {
+    if (!isMediaCollection) return;
+    if (searchParams.get("bulkUpload") !== "1") return;
+    setError("");
+    setProgress("");
+    setIsOpen(true);
+    router.replace(pathname);
+  }, [isMediaCollection, pathname, router, searchParams]);
 
   useEffect(() => {
     if (!isMediaCollection) return;

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 import type { User } from "../../../payload-types";
+import AddImagesQuickAction from "./AddImagesQuickAction";
 import DashboardCardEnhancer from "./DashboardCardEnhancer";
 
 type DashboardBannerProps = {
@@ -179,6 +180,7 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
               <span>{action.label}</span>
             </Link>
           ))}
+          <AddImagesQuickAction />
         </div>
       </div>
 
