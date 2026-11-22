@@ -19,7 +19,7 @@ export const Intro: CollectionConfig = {
     delete: ({ req }) => req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
-    group: "Home Page",
+    group: "Site Pages",
     useAsTitle: "title",
     defaultColumns: ["title", "updatedAt"],
     description: 'The "What is Grace House" section on the home page.',

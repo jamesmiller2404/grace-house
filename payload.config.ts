@@ -52,8 +52,6 @@ export default buildConfig({
   collections: [
     // Home Page
     Hero,
-    Intro,
-    GetHelpNow,
     // Community & Content
     Events,
     Stories,
@@ -62,6 +60,8 @@ export default buildConfig({
     Media,
     MediaTags,
     // Site Pages
+    Intro,
+    GetHelpNow,
     MissionPage,
     Donate,
     Board,
@@ -69,7 +69,7 @@ export default buildConfig({
     // Site Settings & Access
     Users,
   ],
-  globals: [HomeLayout, ContactInfo, Footer],
+  globals: [HomeLayout, Footer, ContactInfo],
   serverURL: siteURL,
   cors: trustedOrigins,
   csrf: trustedOrigins,

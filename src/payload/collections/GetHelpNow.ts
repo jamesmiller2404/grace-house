@@ -41,7 +41,7 @@ export const GetHelpNow: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
   },
   admin: {
-    group: "Home Page",
+    group: "Site Pages",
     useAsTitle: "heading",
     defaultColumns: ["heading", "phoneChoice", "showAssessment", "updatedAt"],
     description:
