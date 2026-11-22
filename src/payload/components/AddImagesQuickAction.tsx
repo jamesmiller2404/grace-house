@@ -2,22 +2,39 @@
 
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function AddImagesQuickAction() {
   const [open, setOpen] = useState(false);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
 
+    const updatePosition = () => {
+      const rect = buttonRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      setMenuPos({
+        top: rect.bottom + 6,
+        left: rect.left,
+      });
+    };
+
+    updatePosition();
+
     const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
       if (
-        containerRef.current &&
-        event.target instanceof Node &&
-        !containerRef.current.contains(event.target)
+        containerRef.current?.contains(target) ||
+        popoverRef.current?.contains(target)
       ) {
-        setOpen(false);
+        return;
       }
+      setOpen(false);
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -26,15 +43,20 @@ export default function AddImagesQuickAction() {
 
     document.addEventListener("mousedown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
     return () => {
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
     };
   }, [open]);
 
   return (
     <div className="gh-quick-action-menu" ref={containerRef}>
       <button
+        ref={buttonRef}
         type="button"
         className="gh-quick-action"
         aria-expanded={open}
@@ -47,26 +69,34 @@ export default function AddImagesQuickAction() {
         <span>Add Images</span>
       </button>
 
-      {open && (
-        <div className="gh-quick-action-menu__popover" role="menu">
-          <Link
-            href="/admin/collections/media/create"
-            className="gh-quick-action-menu__item"
-            role="menuitem"
-            onClick={() => setOpen(false)}
+      {open &&
+        menuPos &&
+        createPortal(
+          <div
+            ref={popoverRef}
+            className="gh-quick-action-menu__popover"
+            role="menu"
+            style={{ top: menuPos.top, left: menuPos.left }}
           >
-            Single Image
-          </Link>
-          <Link
-            href="/admin/collections/media?bulkUpload=1"
-            className="gh-quick-action-menu__item"
-            role="menuitem"
-            onClick={() => setOpen(false)}
-          >
-            Multiple Images (Bulk)
-          </Link>
-        </div>
-      )}
+            <Link
+              href="/admin/collections/media/create"
+              className="gh-quick-action-menu__item"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+            >
+              Single Image
+            </Link>
+            <Link
+              href="/admin/collections/media?bulkUpload=1"
+              className="gh-quick-action-menu__item"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+            >
+              Multiple Images (Bulk)
+            </Link>
+          </div>,
+          document.body,
+        )}
 
       <style>{`
         .gh-quick-action-menu {
@@ -74,10 +104,8 @@ export default function AddImagesQuickAction() {
           display: inline-flex;
         }
         .gh-quick-action-menu__popover {
-          position: absolute;
-          top: calc(100% + 6px);
-          left: 0;
-          z-index: 50;
+          position: fixed;
+          z-index: 10000;
           display: grid;
           min-width: 196px;
           padding: 6px;

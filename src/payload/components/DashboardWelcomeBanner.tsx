@@ -93,11 +93,6 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
       hasPlus: true,
     },
     {
-      label: "Add Images",
-      href: "/admin/collections/media/create",
-      hasPlus: true,
-    },
-    {
       label: "Home Layout",
       href: "/admin/globals/home-layout",
       hasPlus: false,
