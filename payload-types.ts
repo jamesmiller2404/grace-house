@@ -68,14 +68,14 @@ export interface Config {
   blocks: {};
   collections: {
     hero: Hero;
-    intro: Intro;
-    'get-help-now': GetHelpNow;
     events: Event;
     stories: Story;
     faq: Faq;
     'feeding-the-streets': FeedingTheStreet;
     media: Media;
     'media-tags': MediaTag;
+    intro: Intro;
+    'get-help-now': GetHelpNow;
     'mission-page': MissionPage;
     donate: Donate;
     board: Board;
@@ -89,14 +89,14 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     hero: HeroSelect<false> | HeroSelect<true>;
-    intro: IntroSelect<false> | IntroSelect<true>;
-    'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     stories: StoriesSelect<false> | StoriesSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     'feeding-the-streets': FeedingTheStreetsSelect<false> | FeedingTheStreetsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'media-tags': MediaTagsSelect<false> | MediaTagsSelect<true>;
+    intro: IntroSelect<false> | IntroSelect<true>;
+    'get-help-now': GetHelpNowSelect<false> | GetHelpNowSelect<true>;
     'mission-page': MissionPageSelect<false> | MissionPageSelect<true>;
     donate: DonateSelect<false> | DonateSelect<true>;
     board: BoardSelect<false> | BoardSelect<true>;
@@ -113,13 +113,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-layout': HomeLayout;
-    'contact-info': ContactInfo;
     footer: Footer;
+    'contact-info': ContactInfo;
   };
   globalsSelect: {
     'home-layout': HomeLayoutSelect<false> | HomeLayoutSelect<true>;
-    'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
   };
   locale: null;
   widgets: {
@@ -214,165 +214,6 @@ export interface MediaTag {
    * Optional note explaining how this tag should be used.
    */
   description?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The "What is Grace House" section on the home page.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "intro".
- */
-export interface Intro {
-  id: number;
-  /**
-   * The title displayed above this section's content.
-   */
-  title: string;
-  /**
-   * Add headings, paragraphs and photos in the order they should appear. A Photo block shows an image from the Media collection.
-   */
-  blocks?:
-    | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
-        /**
-         * The header or paragraph text.
-         */
-        text?: string | null;
-        /**
-         * Write the paragraph and use the link tool to add clickable links.
-         */
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        /**
-         * The photo shown by this block.
-         */
-        image?: (number | null) | Media;
-        /**
-         * Text shown under the photo.
-         */
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number (picked from the Contact Info panel or entered manually) and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "get-help-now".
- */
-export interface GetHelpNow {
-  id: number;
-  /**
-   * The strip's main heading (e.g. "Need help now?").
-   */
-  heading: string;
-  body: string;
-  /**
-   * Format the opening line and add links using the editor toolbar.
-   */
-  bodyContent?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.
-   */
-  showAssessment?: boolean | null;
-  assessmentNote?: string | null;
-  /**
-   * Format the assessment sentence and add links if needed.
-   */
-  assessmentNoteContent?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * The assessment button text (e.g. "Start Assessment").
-   */
-  ctaLabel?: string | null;
-  /**
-   * Where the assessment button links to (e.g. "/assessment").
-   */
-  ctaHref?: string | null;
-  /**
-   * The note next to the button (e.g. "Fill out the Grace House Assessment Form").
-   */
-  ctaNote?: string | null;
-  /**
-   * The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.
-   */
-  phoneChoice: string;
-  /**
-   * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
-   */
-  phoneCustom?: string | null;
-  /**
-   * The office hours shown under the phone number.
-   */
-  hours: string;
-  /**
-   * The ✓ lines shown on the right of the strip.
-   */
-  facts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * The heading above the crisis resources (e.g. "RESOURCES THAT ARE AVAILABLE 24/7").
-   */
-  crisisTitle?: string | null;
-  /**
-   * The 24/7 crisis resources shown at the bottom of the strip.
-   */
-  crisisLines?:
-    | {
-        label: string;
-        text: string;
-        href: string;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -636,6 +477,165 @@ export interface FeedingTheStreet {
          * Text shown in small type under the photo.
          */
         caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The "What is Grace House" section on the home page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "intro".
+ */
+export interface Intro {
+  id: number;
+  /**
+   * The title displayed above this section's content.
+   */
+  title: string;
+  /**
+   * Add headings, paragraphs and photos in the order they should appear. A Photo block shows an image from the Media collection.
+   */
+  blocks?:
+    | {
+        type: 'Heading' | 'Paragraph' | 'Photo';
+        /**
+         * The header or paragraph text.
+         */
+        text?: string | null;
+        /**
+         * Write the paragraph and use the link tool to add clickable links.
+         */
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Text shown under the photo.
+         */
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The "Get Help Now" strip, shown on the front page and the /get-help page: the heading, the phone number (picked from the Contact Info panel or entered manually) and office hours, the quick facts, the 24/7 crisis resources, and the assessment call-to-action toggle.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-help-now".
+ */
+export interface GetHelpNow {
+  id: number;
+  /**
+   * The strip's main heading (e.g. "Need help now?").
+   */
+  heading: string;
+  body: string;
+  /**
+   * Format the opening line and add links using the editor toolbar.
+   */
+  bodyContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Untick to hide the assessment sentence, the Start Assessment button and its note from the strip.
+   */
+  showAssessment?: boolean | null;
+  assessmentNote?: string | null;
+  /**
+   * Format the assessment sentence and add links if needed.
+   */
+  assessmentNoteContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The assessment button text (e.g. "Start Assessment").
+   */
+  ctaLabel?: string | null;
+  /**
+   * Where the assessment button links to (e.g. "/assessment").
+   */
+  ctaHref?: string | null;
+  /**
+   * The note next to the button (e.g. "Fill out the Grace House Assessment Form").
+   */
+  ctaNote?: string | null;
+  /**
+   * The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.
+   */
+  phoneChoice: string;
+  /**
+   * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
+   */
+  phoneCustom?: string | null;
+  /**
+   * The office hours shown under the phone number.
+   */
+  hours: string;
+  /**
+   * The ✓ lines shown on the right of the strip.
+   */
+  facts?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The heading above the crisis resources (e.g. "RESOURCES THAT ARE AVAILABLE 24/7").
+   */
+  crisisTitle?: string | null;
+  /**
+   * The 24/7 crisis resources shown at the bottom of the strip.
+   */
+  crisisLines?:
+    | {
+        label: string;
+        text: string;
+        href: string;
         id?: string | null;
       }[]
     | null;
@@ -997,14 +997,6 @@ export interface PayloadLockedDocument {
         value: number | Hero;
       } | null)
     | ({
-        relationTo: 'intro';
-        value: number | Intro;
-      } | null)
-    | ({
-        relationTo: 'get-help-now';
-        value: number | GetHelpNow;
-      } | null)
-    | ({
         relationTo: 'events';
         value: number | Event;
       } | null)
@@ -1027,6 +1019,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media-tags';
         value: number | MediaTag;
+      } | null)
+    | ({
+        relationTo: 'intro';
+        value: number | Intro;
+      } | null)
+    | ({
+        relationTo: 'get-help-now';
+        value: number | GetHelpNow;
       } | null)
     | ({
         relationTo: 'mission-page';
@@ -1098,60 +1098,6 @@ export interface HeroSelect<T extends boolean = true> {
   heading?: T;
   eyebrow?: T;
   image?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "intro_select".
- */
-export interface IntroSelect<T extends boolean = true> {
-  title?: T;
-  blocks?:
-    | T
-    | {
-        type?: T;
-        text?: T;
-        content?: T;
-        image?: T;
-        caption?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "get-help-now_select".
- */
-export interface GetHelpNowSelect<T extends boolean = true> {
-  heading?: T;
-  body?: T;
-  bodyContent?: T;
-  showAssessment?: T;
-  assessmentNote?: T;
-  assessmentNoteContent?: T;
-  ctaLabel?: T;
-  ctaHref?: T;
-  ctaNote?: T;
-  phoneChoice?: T;
-  phoneCustom?: T;
-  hours?: T;
-  facts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  crisisTitle?: T;
-  crisisLines?:
-    | T
-    | {
-        label?: T;
-        text?: T;
-        href?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1314,6 +1260,60 @@ export interface MediaSelect<T extends boolean = true> {
 export interface MediaTagsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "intro_select".
+ */
+export interface IntroSelect<T extends boolean = true> {
+  title?: T;
+  blocks?:
+    | T
+    | {
+        type?: T;
+        text?: T;
+        content?: T;
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-help-now_select".
+ */
+export interface GetHelpNowSelect<T extends boolean = true> {
+  heading?: T;
+  body?: T;
+  bodyContent?: T;
+  showAssessment?: T;
+  assessmentNote?: T;
+  assessmentNoteContent?: T;
+  ctaLabel?: T;
+  ctaHref?: T;
+  ctaNote?: T;
+  phoneChoice?: T;
+  phoneCustom?: T;
+  hours?: T;
+  facts?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  crisisTitle?: T;
+  crisisLines?:
+    | T
+    | {
+        label?: T;
+        text?: T;
+        href?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1512,56 +1512,6 @@ export interface HomeLayout {
   createdAt?: string | null;
 }
 /**
- * The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-info".
- */
-export interface ContactInfo {
-  id: number;
-  phoneNumbers?:
-    | {
-        /**
-         * What this number is for — e.g. "Office", "Intake", "Donations".
-         */
-        label?: string | null;
-        /**
-         * The phone number as it should be shown — e.g. (916) 470-0408.
-         */
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  emails?:
-    | {
-        /**
-         * What this address is for — e.g. "Office", "Intake", "Volunteers".
-         */
-        label?: string | null;
-        /**
-         * The email address — e.g. gracehouse6121@gmail.com.
-         */
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  addresses?:
-    | {
-        /**
-         * What this address is — e.g. "Grace House", "Church", "Mailing Address".
-         */
-        label?: string | null;
-        /**
-         * The address as it should be shown — e.g. 6121 Marwick Way, Carmichael, CA 95608.
-         */
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * The phone number, email address and street address shown in the footer's 'Get Help' column. Pick each one from the entries registered in the Contact Info panel (editing them there updates the footer automatically), or choose 'Other (enter manually)' for a one-off.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1616,6 +1566,56 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * The site's phone numbers, email addresses and physical addresses. Add as many as needed — give each one a label (e.g. Office, Intake, Church, Mailing Address) so it's clear what it's for.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info".
+ */
+export interface ContactInfo {
+  id: number;
+  phoneNumbers?:
+    | {
+        /**
+         * What this number is for — e.g. "Office", "Intake", "Donations".
+         */
+        label?: string | null;
+        /**
+         * The phone number as it should be shown — e.g. (916) 470-0408.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  emails?:
+    | {
+        /**
+         * What this address is for — e.g. "Office", "Intake", "Volunteers".
+         */
+        label?: string | null;
+        /**
+         * The email address — e.g. gracehouse6121@gmail.com.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  addresses?:
+    | {
+        /**
+         * What this address is — e.g. "Grace House", "Church", "Mailing Address".
+         */
+        label?: string | null;
+        /**
+         * The address as it should be shown — e.g. 6121 Marwick Way, Carmichael, CA 95608.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-layout_select".
  */
@@ -1628,6 +1628,31 @@ export interface HomeLayoutSelect<T extends boolean = true> {
         customPage?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  brandName?: T;
+  brandTagline?: T;
+  missionText?: T;
+  memorialPhoto?: T;
+  memorialPhotoAlt?: T;
+  memorialName?: T;
+  memorialDates?: T;
+  getHelpLabel?: T;
+  hoursText?: T;
+  intakesText?: T;
+  phoneChoice?: T;
+  phoneCustom?: T;
+  emailChoice?: T;
+  emailCustom?: T;
+  addressChoice?: T;
+  addressCustom?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1658,31 +1683,6 @@ export interface ContactInfoSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  brandName?: T;
-  brandTagline?: T;
-  missionText?: T;
-  memorialPhoto?: T;
-  memorialPhotoAlt?: T;
-  memorialName?: T;
-  memorialDates?: T;
-  getHelpLabel?: T;
-  hoursText?: T;
-  intakesText?: T;
-  phoneChoice?: T;
-  phoneCustom?: T;
-  emailChoice?: T;
-  emailCustom?: T;
-  addressChoice?: T;
-  addressCustom?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
