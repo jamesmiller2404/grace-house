@@ -151,18 +151,48 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     return () => observer.disconnect();
   }, []);
 
+  const pendingCreateClick = useRef(false);
+
   const openNativeUpload = () => {
     const root = fieldRef.current;
     if (!root) return;
-    const createButton = Array.from(
-      root.querySelectorAll<HTMLElement>("button, a"),
-    ).find((button) =>
-      (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase().includes("create new"),
-    );
+    const findCreateButton = () =>
+      Array.from(root.querySelectorAll<HTMLElement>("button, a")).find((button) =>
+        (button.textContent || "").replace(/\s+/g, " ").trim().toLowerCase().includes("create new"),
+      );
+
+    const createButton = findCreateButton();
     if (createButton) {
+      pendingCreateClick.current = false;
       pendingOriginUpload.current = true;
       createButton.click();
+      return;
     }
+
+    // When an image is already selected, Payload hides "Create New" behind the
+    // selected-file card. Clear the value first, then click "Create New" as soon
+    // as Payload renders it.
+    pendingOriginUpload.current = true;
+    pendingCreateClick.current = true;
+    setValue(null);
+
+    const observer = new MutationObserver(() => {
+      if (!pendingCreateClick.current) {
+        observer.disconnect();
+        return;
+      }
+      const nextCreateButton = findCreateButton();
+      if (nextCreateButton) {
+        pendingCreateClick.current = false;
+        observer.disconnect();
+        nextCreateButton.click();
+      }
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    setTimeout(() => {
+      pendingCreateClick.current = false;
+      observer.disconnect();
+    }, 2000);
   };
 
   const openPicker = () => {
