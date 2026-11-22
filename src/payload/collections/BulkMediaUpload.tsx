@@ -20,6 +20,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const { config } = useConfig();
   const isMediaCollection = pathname.endsWith("/collections/media");
   const shouldAutoOpen = isMediaCollection && searchParams.get("bulkUpload") === "1";
+  const returnToDashboard = useRef(searchParams.get("from") === "dashboard");
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
   const [images, setImages] = useState<PendingImage[]>([]);
   const imagesRef = useRef<PendingImage[]>(images);
@@ -39,6 +40,14 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState("");
   const [error, setError] = useState("");
+
+  const closeModal = () => {
+    setIsOpen(false);
+    if (returnToDashboard.current) {
+      returnToDashboard.current = false;
+      router.push("/admin");
+    }
+  };
 
   useEffect(() => {
     if (!shouldAutoOpen) return;
@@ -110,7 +119,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !isUploading) setIsOpen(false);
+      if (event.key === "Escape" && !isUploading) closeModal();
     };
     document.addEventListener("keydown", onKeyDown);
     return () => {
@@ -255,7 +264,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
                   className="gh-bulk-upload-close"
                   aria-label="Close"
                   disabled={isUploading}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => closeModal()}
                 >
                   ×
                 </button>

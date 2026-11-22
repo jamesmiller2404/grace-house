@@ -84,17 +84,17 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
   const quickActions = [
     {
       label: "New Event",
-      href: "/admin/collections/events/create",
+      href: "/admin/collections/events/create?from=dashboard",
       hasPlus: true,
     },
     {
       label: "New Story",
-      href: "/admin/collections/stories/create",
+      href: "/admin/collections/stories/create?from=dashboard",
       hasPlus: true,
     },
     {
       label: "Home Layout",
-      href: "/admin/globals/home-layout",
+      href: "/admin/globals/home-layout?from=dashboard",
       hasPlus: false,
     },
   ];
@@ -161,7 +161,7 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
       <div className="gh-welcome-banner__actions">
         <span className="gh-welcome-banner__actions-label">Quick actions</span>
         <div className="gh-welcome-banner__actions-list">
-          {quickActions.map((action) => (
+          {quickActions.slice(0, 2).map((action) => (
             <Link
               className="gh-quick-action"
               href={action.href}
@@ -176,6 +176,20 @@ async function DashboardWelcomeBanner({ payload, user }: DashboardBannerProps) {
             </Link>
           ))}
           <AddImagesQuickAction />
+          {quickActions.slice(2).map((action) => (
+            <Link
+              className="gh-quick-action"
+              href={action.href}
+              key={action.href}
+            >
+              {action.hasPlus ? (
+                <span aria-hidden="true" className="gh-quick-action__plus">
+                  +
+                </span>
+              ) : null}
+              <span>{action.label}</span>
+            </Link>
+          ))}
         </div>
       </div>
 

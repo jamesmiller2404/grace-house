@@ -79,7 +79,7 @@ export default function AddImagesQuickAction() {
             style={{ top: menuPos.top, left: menuPos.left }}
           >
             <Link
-              href="/admin/collections/media/create"
+              href="/admin/collections/media/create?from=dashboard"
               className="gh-quick-action-menu__item"
               role="menuitem"
               onClick={() => setOpen(false)}
@@ -87,7 +87,7 @@ export default function AddImagesQuickAction() {
               Single Image
             </Link>
             <Link
-              href="/admin/collections/media?bulkUpload=1"
+              href="/admin/collections/media?bulkUpload=1&from=dashboard"
               className="gh-quick-action-menu__item"
               role="menuitem"
               onClick={() => setOpen(false)}
