@@ -184,6 +184,13 @@ export default buildConfig({
           path: "./src/payload/components/LogoutButton.tsx",
         },
       },
+      // Welcoming overview banner with live counts, quick actions, and
+      // View Live Site shortcut at the top of the dashboard.
+      beforeDashboard: [
+        {
+          path: "./src/payload/components/DashboardWelcomeBanner.tsx",
+        },
+      ],
       // Add a visible sign-out action to the dashboard itself.
       afterDashboard: [
         {
@@ -193,8 +200,11 @@ export default buildConfig({
           path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
         },
       ],
-      // The mobile navigation drawer gets its own labeled sign-out action.
+      // Persistent "View Live Site" link in the sidebar + mobile drawer sign-out.
       afterNavLinks: [
+        {
+          path: "./src/payload/components/ViewLiveSiteNavLink.tsx",
+        },
         {
           path: "./src/payload/components/MobileLogoutButton.tsx",
         },
