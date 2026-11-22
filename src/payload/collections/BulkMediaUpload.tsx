@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname, useRouter } from "next/navigation";
 import { useConfig } from "@payloadcms/ui";
@@ -10,6 +10,7 @@ type PendingImage = {
   id: string;
   file: File;
   alt: string;
+  previewUrl: string;
 };
 
 const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
@@ -18,6 +19,16 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const { config } = useConfig();
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
   const [images, setImages] = useState<PendingImage[]>([]);
+  const imagesRef = useRef<PendingImage[]>(images);
+  imagesRef.current = images;
+
+  useEffect(() => {
+    return () => {
+      for (const image of imagesRef.current) {
+        URL.revokeObjectURL(image.previewUrl);
+      }
+    };
+  }, []);
   const [isOpen, setIsOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState("");
@@ -109,9 +120,18 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
         id: crypto.randomUUID(),
         file,
         alt: "",
+        previewUrl: URL.createObjectURL(file),
       })),
     ]);
     setError("");
+  };
+
+  const removeImage = (id: string) => {
+    setImages((current) => {
+      const target = current.find((item) => item.id === id);
+      if (target) URL.revokeObjectURL(target.previewUrl);
+      return current.filter((item) => item.id !== id);
+    });
   };
 
   const updateAlt = (id: string, alt: string) => {
@@ -154,6 +174,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
         }
 
         uploaded += 1;
+        URL.revokeObjectURL(image.previewUrl);
         setImages((current) => current.filter((item) => item.id !== image.id));
       } catch (uploadError) {
         const message =
@@ -221,6 +242,11 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
                   <div className="gh-bulk-upload-list">
                     {images.map((image) => (
                       <div className="gh-bulk-upload-item" key={image.id}>
+                        <img
+                          className="gh-bulk-upload-thumb"
+                          src={image.previewUrl}
+                          alt=""
+                        />
                         <div className="gh-bulk-upload-file">
                           <strong>{image.file.name}</strong>
                           <span>{(image.file.size / 1024 / 1024).toFixed(2)} MB</span>
@@ -239,7 +265,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
                           type="button"
                           className="gh-bulk-upload-remove"
                           disabled={isUploading}
-                          onClick={() => setImages((current) => current.filter((item) => item.id !== image.id))}
+                          onClick={() => removeImage(image.id)}
                         >
                           Remove
                         </button>
@@ -357,13 +383,22 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
         }
         .gh-bulk-upload-item {
           display: grid;
-          grid-template-columns: minmax(140px, 0.8fr) minmax(220px, 1.5fr) auto;
-          align-items: end;
+          grid-template-columns: 64px minmax(140px, 0.8fr) minmax(220px, 1.5fr) auto;
+          align-items: center;
           gap: 12px;
           padding: 14px;
           border: 1px solid var(--theme-elevation-250);
           border-radius: 8px;
           background: var(--theme-elevation-50);
+        }
+        .gh-bulk-upload-thumb {
+          display: block;
+          width: 64px;
+          height: 64px;
+          object-fit: cover;
+          border: 1px solid var(--theme-elevation-250);
+          border-radius: 6px;
+          background: var(--theme-elevation-100);
         }
         .gh-bulk-upload-file,
         .gh-bulk-upload-alt {
