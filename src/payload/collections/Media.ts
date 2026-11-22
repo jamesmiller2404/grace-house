@@ -212,6 +212,37 @@ export const Media: CollectionConfig = {
       },
     },
   },
+  hooks: {
+    beforeOperation: [
+      async ({ operation, req }) => {
+        if ((operation !== "create" && operation !== "update") || !req.file) {
+          return;
+        }
+        const file = req.file;
+        const lowerName = (file.name || "").toLowerCase();
+        const isHeic =
+          file.mimetype === "image/heic" ||
+          file.mimetype === "image/heif" ||
+          lowerName.endsWith(".heic") ||
+          lowerName.endsWith(".heif");
+        if (!isHeic || !file.data) return;
+
+        const { default: convert } = await import("heic-convert");
+        const output = await convert({
+          buffer: file.data,
+          format: "JPEG",
+          quality: 0.9,
+        });
+        const jpegBuffer = Buffer.isBuffer(output) ? output : Buffer.from(output);
+        file.data = jpegBuffer;
+        file.size = jpegBuffer.length;
+        file.mimetype = "image/jpeg";
+        file.name = file.name
+          ? file.name.replace(/\.(heic|heif)$/i, ".jpg")
+          : "image.jpg";
+      },
+    ],
+  },
   upload: {
     adminThumbnail: ({ doc }) =>
       typeof doc.url === "string" ? doc.url : "",

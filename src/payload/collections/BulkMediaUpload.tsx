@@ -111,25 +111,57 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
 
   if (!isMediaCollection) return null;
 
+  const isHeicFile = (file: File) =>
+    file.type === "image/heic" ||
+    file.type === "image/heif" ||
+    /\.(heic|heif)$/i.test(file.name);
+
   const addFiles = (fileList: FileList | null) => {
     if (!fileList) return;
-    const selected = Array.from(fileList).filter((file) => file.type.startsWith("image/"));
-    setImages((current) => [
-      ...current,
-      ...selected.map((file) => ({
-        id: crypto.randomUUID(),
-        file,
-        alt: "",
-        previewUrl: URL.createObjectURL(file),
-      })),
-    ]);
+    const selected = Array.from(fileList).filter(
+      (file) => file.type.startsWith("image/") || isHeicFile(file),
+    );
+    const newItems: PendingImage[] = selected.map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+      alt: "",
+      previewUrl: isHeicFile(file) ? "" : URL.createObjectURL(file),
+    }));
+
+    setImages((current) => [...current, ...newItems]);
     setError("");
+
+    for (const item of newItems) {
+      if (!isHeicFile(item.file)) continue;
+      void import("heic2any")
+        .then(({ default: heic2any }) =>
+          heic2any({ blob: item.file, toType: "image/jpeg", quality: 0.7 }),
+        )
+        .then((result) => {
+          const blob = Array.isArray(result) ? result[0] : result;
+          if (!blob) return;
+          const url = URL.createObjectURL(blob);
+          const stillQueued = imagesRef.current.some((entry) => entry.id === item.id);
+          if (!stillQueued) {
+            URL.revokeObjectURL(url);
+            return;
+          }
+          setImages((current) =>
+            current.map((entry) =>
+              entry.id === item.id ? { ...entry, previewUrl: url } : entry,
+            ),
+          );
+        })
+        .catch(() => {
+          // Keep placeholder if client-side HEIC preview conversion fails.
+        });
+    }
   };
 
   const removeImage = (id: string) => {
     setImages((current) => {
       const target = current.find((item) => item.id === id);
-      if (target) URL.revokeObjectURL(target.previewUrl);
+      if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
       return current.filter((item) => item.id !== id);
     });
   };
@@ -224,7 +256,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
                   <span>Select Images</span>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/*,.heic,.heif"
                     multiple
                     disabled={isUploading}
                     onChange={(event) => {
@@ -242,11 +274,17 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
                   <div className="gh-bulk-upload-list">
                     {images.map((image) => (
                       <div className="gh-bulk-upload-item" key={image.id}>
-                        <img
-                          className="gh-bulk-upload-thumb"
-                          src={image.previewUrl}
-                          alt=""
-                        />
+                        {image.previewUrl ? (
+                          <img
+                            className="gh-bulk-upload-thumb"
+                            src={image.previewUrl}
+                            alt=""
+                          />
+                        ) : (
+                          <div className="gh-bulk-upload-thumb gh-bulk-upload-thumb--placeholder">
+                            HEIC
+                          </div>
+                        )}
                         <div className="gh-bulk-upload-file">
                           <strong>{image.file.name}</strong>
                           <span>{(image.file.size / 1024 / 1024).toFixed(2)} MB</span>
@@ -399,6 +437,14 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
           border: 1px solid var(--theme-elevation-250);
           border-radius: 6px;
           background: var(--theme-elevation-100);
+        }
+        .gh-bulk-upload-thumb--placeholder {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--theme-elevation-600);
+          font-size: 11px;
+          font-weight: 600;
         }
         .gh-bulk-upload-file,
         .gh-bulk-upload-alt {
