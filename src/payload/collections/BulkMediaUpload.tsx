@@ -342,7 +342,7 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
                     type="button"
                     className="gh-bulk-upload-cancel"
                     disabled={isUploading}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => closeModal()}
                   >
                     {progress.startsWith("Successfully") ? "Close" : "Cancel"}
                   </button>
