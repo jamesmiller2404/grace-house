@@ -1737,10 +1737,10 @@ html[data-theme='dark'] .dashboard .card.gh-card-enhanced {
   flex-direction: column !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
-  gap: 0.55rem !important;
+  gap: 0.35rem !important;
   height: 100% !important;
-  min-height: 162px !important;
-  padding: 1.15rem 1.25rem !important;
+  min-height: 124px !important;
+  padding: 0.85rem 1.05rem !important;
   box-sizing: border-box !important;
 }
 
@@ -1748,9 +1748,9 @@ html[data-theme='dark'] .gh-card-enhanced__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.15rem;
-  min-height: 34px;
+  gap: 0.65rem;
+  margin-bottom: 0.1rem;
+  min-height: 28px;
   pointer-events: none;
 }
 
@@ -1758,30 +1758,30 @@ html[data-theme='dark'] .gh-card-enhanced__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
   border: 1px solid rgba(201, 164, 92, 0.26);
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--gh-accent-soft);
   color: var(--gh-accent);
   flex: 0 0 auto;
 }
 
 html[data-theme='dark'] .gh-card-enhanced__icon svg {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   display: block;
 }
 
 html[data-theme='dark'] .gh-card-enhanced__badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.2rem 0.55rem;
+  padding: 0.15rem 0.5rem;
   border: 1px solid var(--gh-border-strong);
   border-radius: 999px;
   background: rgba(20, 17, 24, 0.6);
   color: var(--theme-elevation-700);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -1799,25 +1799,27 @@ html[data-theme='dark'] .dashboard .card.gh-card-enhanced:hover .gh-card-enhance
 
 html[data-theme='dark'] .dashboard .card.gh-card-enhanced .card__title {
   margin: 0 !important;
-  font-size: 1.02rem !important;
+  font-size: 0.95rem !important;
   font-weight: 600 !important;
-  line-height: 1.35 !important;
-  min-height: 2.7rem !important;
-  display: flex !important;
-  align-items: center !important;
+  line-height: 1.25 !important;
+  min-height: unset !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 html[data-theme='dark'] .gh-card-enhanced__subtitle {
   margin: 0 !important;
   margin-top: auto !important;
   color: var(--theme-elevation-500) !important;
-  font-size: 0.83rem !important;
-  line-height: 1.45 !important;
+  font-size: 0.78rem !important;
+  line-height: 1.35 !important;
   pointer-events: none !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
+  display: block !important;
+  white-space: nowrap !important;
   overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 /* Persistent "View Live Site" shortcut in the sidebar navigation */
