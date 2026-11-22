@@ -18,32 +18,32 @@ const BulkMediaUpload: React.FC<BeforeListClientProps> = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { config } = useConfig();
+  const isMediaCollection = pathname.endsWith("/collections/media");
+  const shouldAutoOpen = isMediaCollection && searchParams.get("bulkUpload") === "1";
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
   const [images, setImages] = useState<PendingImage[]>([]);
   const imagesRef = useRef<PendingImage[]>(images);
-  imagesRef.current = images;
+
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
 
   useEffect(() => {
     return () => {
       for (const image of imagesRef.current) {
-        URL.revokeObjectURL(image.previewUrl);
+        if (image.previewUrl) URL.revokeObjectURL(image.previewUrl);
       }
     };
   }, []);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(shouldAutoOpen);
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState("");
   const [error, setError] = useState("");
-  const isMediaCollection = pathname.endsWith("/collections/media");
 
   useEffect(() => {
-    if (!isMediaCollection) return;
-    if (searchParams.get("bulkUpload") !== "1") return;
-    setError("");
-    setProgress("");
-    setIsOpen(true);
+    if (!shouldAutoOpen) return;
     router.replace(pathname);
-  }, [isMediaCollection, pathname, router, searchParams]);
+  }, [pathname, router, shouldAutoOpen]);
 
   useEffect(() => {
     if (!isMediaCollection) return;
