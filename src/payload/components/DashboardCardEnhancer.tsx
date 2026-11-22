@@ -16,12 +16,12 @@ const CARD_META: Record<string, CardMeta> = {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/></svg>',
   },
   intro: {
-    subtitle: 'Home page "What is Grace House" welcome section and styling.',
+    subtitle: 'Home page "What is Grace House" introduction, body text, and styling.',
     iconSvg:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg>',
   },
   "get-help-now": {
-    subtitle: "Help strip phone, office hours, quick facts, and 24/7 resources.",
+    subtitle: "Helpline contact, office hours, quick facts, and 24/7 crisis resources.",
     iconSvg:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
   },
@@ -70,12 +70,12 @@ const CARD_META: Record<string, CardMeta> = {
 
   // Site Pages
   "mission-page": {
-    subtitle: "Title and story shown on the Mission page (/about/mission).",
+    subtitle: "Mission statement, core principles, and narrative on /about/mission.",
     iconSvg:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
   },
   donate: {
-    subtitle: "Support page intro, PayPal & Venmo cards, and sections.",
+    subtitle: "Donation page intro, PayPal & Venmo cards, and giving options.",
     iconSvg:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
   },
@@ -104,7 +104,7 @@ const CARD_META: Record<string, CardMeta> = {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
   },
   footer: {
-    subtitle: "Phone, email, and address shown in the site footer.",
+    subtitle: "Phone, email, and street address displayed in the website footer column.",
     iconSvg:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="15" x2="21" y2="15"/></svg>',
   },
