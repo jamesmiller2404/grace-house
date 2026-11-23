@@ -12,34 +12,30 @@ export const Users: CollectionConfig = {
   hooks: {
     afterLogin: [
       async ({ req, user }) => {
-        const existing = await req.payload.find({
-          collection: "payload-preferences",
-          where: {
-            key: { equals: "nav" },
-            "user.value": { equals: user.id },
-          },
-          limit: 1,
-          overrideAccess: true,
-        });
-
-        if (existing.docs.length > 0) {
-          await req.payload.update({
+        try {
+          await req.payload.db.upsert({
             collection: "payload-preferences",
-            id: existing.docs[0].id,
-            data: { value: { open: false } },
-            overrideAccess: true,
-          });
-        } else {
-          await req.payload.create({
-            collection: "payload-preferences",
+            req,
+            where: {
+              and: [
+                { key: { equals: "nav" } },
+                { "user.value": { equals: user.id } },
+                { "user.relationTo": { equals: "users" } },
+              ],
+            },
             data: {
               key: "nav",
               user: { relationTo: "users", value: user.id },
               value: { open: false },
             },
-            overrideAccess: true,
           });
+        } catch (error) {
+          req.payload.logger.warn(
+            { error },
+            "Could not reset nav preference on login.",
+          );
         }
+        return user;
       },
     ],
   },

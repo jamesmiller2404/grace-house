@@ -339,12 +339,6 @@ html[data-theme='light'] .gh-stories-edit {
   color: var(--gh-st-help);
 }
 
-/* Enlarge only the explainer beneath the Their Story heading. */
-.gh-stories-edit .gh-story-body-field .field-description {
-  font-size: 2em !important;
-  line-height: 1.4;
-}
-
 
 /* Full-size section headings for optional profile content. The checkboxes
    double as section headings while preserving their existing top-level fields. */
@@ -408,9 +402,9 @@ html[data-theme='light'] .gh-stories-edit {
   margin: 0 0 20px;
 }
 .gh-story-preview-launch {
-  border: 1px solid var(--gh-accent, #c9a45c);
+  border: 1px solid #0081ff;
   border-radius: 6px;
-  background: var(--gh-accent, #c9a45c);
+  background: #0081ff;
   color: var(--gh-accent-ink, #141118);
   padding: 9px 18px;
   font: inherit;

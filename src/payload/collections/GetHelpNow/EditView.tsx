@@ -122,7 +122,7 @@ html[data-theme='light'] .gh-get-help-edit {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 20px;
 }
 .gh-get-help-edit .gh-story-preview-launch {
-  border: 1px solid var(--gh-accent, #c9a45c); border-radius: 6px; background: var(--gh-accent, #c9a45c); color: var(--gh-accent-ink, #141118);
+  border: 1px solid #0081ff; border-radius: 6px; background: #0081ff; color: var(--gh-accent-ink, #141118);
   padding: 9px 18px; font: inherit; font-weight: 700; cursor: pointer;
   transition: background-color 140ms ease;
 }

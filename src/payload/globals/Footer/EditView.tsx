@@ -128,9 +128,9 @@ html[data-theme='light'] .gh-footer-edit {
   margin: 0 0 20px;
 }
 .gh-footer-edit .gh-story-preview-launch {
-  border: 1px solid var(--gh-accent, #c9a45c);
+  border: 1px solid #0081ff;
   border-radius: 6px;
-  background: var(--gh-accent, #c9a45c);
+  background: #0081ff;
   color: var(--gh-accent-ink, #141118);
   padding: 9px 18px;
   font: inherit;
