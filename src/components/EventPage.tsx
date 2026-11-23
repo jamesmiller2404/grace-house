@@ -77,9 +77,16 @@ export default function EventPage({ event }: EventPageProps) {
           {/* Left column: header, photo, about */}
           <div>
             <header>
-              <span className="border-ink inline-block rounded-full border px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
-                {event.status}
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="border-ink inline-block rounded-full border px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
+                  {event.status}
+                </span>
+                {event.visibility && (
+                  <span className="border-ink inline-block rounded-full border px-4 py-1.5 text-xs font-bold tracking-[0.08em] uppercase">
+                    {event.visibility}
+                  </span>
+                )}
+              </div>
               <h1 className="font-heading text-anchor mt-4 text-5xl leading-tight sm:text-6xl">
                 {event.title}
               </h1>

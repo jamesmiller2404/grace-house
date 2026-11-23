@@ -96,7 +96,7 @@ export const Events: CollectionConfig = {
           admin: {
             className: "gh-event-primary-field",
             placeholder: "Title...",
-            width: "75%",
+            width: "50%",
           },
         },
         {
@@ -107,6 +107,19 @@ export const Events: CollectionConfig = {
             options: ["Upcoming", "Past", "Cancelled"],
             defaultValue: "Upcoming",
             required: true,
+            admin: {
+              width: "25%",
+            },
+          }),
+        },
+        {
+          // Optional visibility dropdown (Public / Private). Omitted from
+          // the preview card and event page when left unset.
+          ...StatusSelectField({
+            name: "visibility",
+            label: "Event is",
+            options: ["Public", "Private"],
+            required: false,
             admin: {
               width: "25%",
             },

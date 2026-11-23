@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { UploadField, useConfig, useDocumentInfo, useField } from "@payloadcms/ui";
+import { UploadField, useConfig, useDocumentInfo, useField, useModal } from "@payloadcms/ui";
 import type { UploadFieldClientProps } from "payload";
 
 type MediaDocument = {
@@ -59,8 +59,60 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const { collectionSlug: sourceCollectionSlug, globalSlug: sourceGlobalSlug } = useDocumentInfo();
   const sourceEntitySlug = sourceCollectionSlug ?? sourceGlobalSlug;
   const fieldRef = useRef<HTMLDivElement>(null);
-  const { path } = props;
-  const { value, setValue } = useField({ path });
+  const { path, value, setValue } = useField({
+    potentiallyStalePath: props.path,
+  });
+  const { modalState } = useModal();
+  const valueRef = useRef(value);
+  const previousValueRef = useRef<unknown>(null);
+  const baselineOpenCountRef = useRef(0);
+  const sawOpenModalRef = useRef(false);
+  const restoreTimerRef = useRef<number | null>(null);
+
+  const clearPendingRestore = () => {
+    if (restoreTimerRef.current !== null) {
+      window.clearTimeout(restoreTimerRef.current);
+      restoreTimerRef.current = null;
+    }
+    previousValueRef.current = null;
+    sawOpenModalRef.current = false;
+  };
+
+  useEffect(() => {
+    valueRef.current = value;
+    if (value != null) {
+      clearPendingRestore();
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (previousValueRef.current == null) return;
+    const openCount = Object.values(modalState).filter((m) => m?.isOpen).length;
+    if (openCount > baselineOpenCountRef.current) {
+      sawOpenModalRef.current = true;
+    } else if (sawOpenModalRef.current) {
+      sawOpenModalRef.current = false;
+      if (restoreTimerRef.current !== null) {
+        window.clearTimeout(restoreTimerRef.current);
+      }
+      restoreTimerRef.current = window.setTimeout(() => {
+        restoreTimerRef.current = null;
+        const prev = previousValueRef.current;
+        previousValueRef.current = null;
+        if (valueRef.current == null && prev != null) {
+          setValue(prev);
+        }
+      }, 150);
+    }
+  }, [modalState, setValue]);
+
+  useEffect(() => {
+    return () => {
+      if (restoreTimerRef.current !== null) {
+        window.clearTimeout(restoreTimerRef.current);
+      }
+    };
+  }, []);
 
   const relationTo = props.field.relationTo;
   const relationCollectionSlug =
@@ -170,8 +222,13 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     }
 
     // When an image is already selected, Payload hides "Create New" behind the
-    // selected-file card. Clear the value first, then click "Create New" as soon
-    // as Payload renders it.
+    // selected-file card. Save the previous value, clear it so Payload renders
+    // "Create New", and restore it if the user closes the drawer without
+    // selecting/saving a new photo.
+    clearPendingRestore();
+    previousValueRef.current = value;
+    baselineOpenCountRef.current = Object.values(modalState).filter((m) => m?.isOpen).length;
+    sawOpenModalRef.current = false;
     pendingOriginUpload.current = true;
     pendingCreateClick.current = true;
     setValue(null);
@@ -190,8 +247,14 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
     });
     observer.observe(root, { childList: true, subtree: true });
     setTimeout(() => {
-      pendingCreateClick.current = false;
-      observer.disconnect();
+      if (pendingCreateClick.current) {
+        pendingCreateClick.current = false;
+        observer.disconnect();
+        if (valueRef.current == null && previousValueRef.current != null) {
+          setValue(previousValueRef.current);
+        }
+        clearPendingRestore();
+      }
     }, 2000);
   };
 
@@ -370,7 +433,9 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
   const chooseMedia = () => {
     if (!selectedMedia || props.readOnly) return;
 
+    clearPendingRestore();
     pendingOriginUpload.current = false;
+    setProfilePhoto(selectedMedia);
     setValue(selectedMedia.id);
     setOpen(false);
   };
@@ -386,7 +451,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
           <button
             type="button"
             className="gh-photo-block-preview__remove"
-            onClick={() => { setValue(null); setProfilePhoto(null); }}
+            onClick={() => { clearPendingRestore(); setValue(null); setProfilePhoto(null); }}
             aria-label="Remove photo"
             title="Remove photo"
           >
@@ -399,7 +464,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
           {(displayedProfilePhoto.thumbnailURL || displayedProfilePhoto.url) && (
             <img src={displayedProfilePhoto.thumbnailURL || displayedProfilePhoto.url || ""} alt={displayedProfilePhoto.alt || displayedProfilePhoto.filename || "Selected profile photo"} />
           )}
-          <button type="button" className="gh-profile-photo-preview__remove" onClick={() => { setValue(null); setProfilePhoto(null); }} aria-label="Remove profile photo" title="Remove profile photo">×</button>
+          <button type="button" className="gh-profile-photo-preview__remove" onClick={() => { clearPendingRestore(); setValue(null); setProfilePhoto(null); }} aria-label="Remove profile photo" title="Remove profile photo">×</button>
         </div>
       )}
       {!props.readOnly && (

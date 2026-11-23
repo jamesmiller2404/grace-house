@@ -1458,12 +1458,19 @@ html[data-theme='dark'] .nav__link-indicator {
   background-color: var(--gh-accent);
 }
 
-/* Top bar subtle border */
+/* Top bar divider: 2px app theme gold with extra breathing room below the account icon label */
 html[data-theme='dark'] .app-header {
-  border-bottom: 1px solid var(--gh-border-subtle);
+  height: auto;
+  min-height: var(--app-header-height, 4.5rem);
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid var(--gh-accent);
 }
 
 /* Dashboard section groups and cards */
+html[data-theme='dark'] .dashboard {
+  padding-top: 2.25rem;
+}
+
 html[data-theme='dark'] .dashboard__group {
   margin-bottom: 2.25rem;
 }
@@ -1867,7 +1874,7 @@ html[data-theme='dark'] .gh-card-enhanced__subtitle {
   margin: 0 !important;
   margin-top: auto !important;
   color: var(--theme-elevation-500) !important;
-  font-size: 0.78rem !important;
+  font-size: 1.014rem !important;
   line-height: 1.35 !important;
   pointer-events: none !important;
   display: block !important;

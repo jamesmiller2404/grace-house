@@ -97,6 +97,9 @@ function toEventItem(doc: PayloadEvent): EventItem {
     city: doc.city ?? "",
     description: doc.description ?? "",
     cost: doc.cost ?? "Free",
+    visibility:
+      (doc as PayloadEvent & { visibility?: string | null }).visibility ??
+      undefined,
     href: `/events/${eventSlug(doc.title)}`,
     image:
       typeof doc.image === "object" && doc.image
@@ -123,6 +126,9 @@ function toEventDetail(
     // panel — coalesce to "" so the page can skip them when they're empty.
     description: doc.description ?? "",
     status: doc.status,
+    visibility:
+      (doc as PayloadEvent & { visibility?: string | null }).visibility ??
+      undefined,
     date: toISODate(doc.date),
     startTime: doc.startTime ?? "",
     endTime: doc.endTime ?? "",

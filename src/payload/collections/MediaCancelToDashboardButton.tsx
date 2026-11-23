@@ -1,7 +1,13 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Button, useConfig } from "@payloadcms/ui";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Button,
+  useConfig,
+  useDocumentDrawerContext,
+  useFormModified,
+  useModal,
+} from "@payloadcms/ui";
 import { formatAdminURL } from "payload/shared";
 import React from "react";
 
@@ -23,8 +29,32 @@ import React from "react";
  */
 const MediaCancelToDashboardButton: React.FC = () => {
   const { config } = useConfig();
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const { drawerSlug } = useDocumentDrawerContext();
+  const { closeModal } = useModal();
+  const modified = useFormModified();
   const fromDashboard = searchParams.get("from") === "dashboard";
+
+  const confirmLeaveIfModified = () => {
+    if (!modified) return true;
+    return window.confirm(
+      "You have unsaved changes. Are you sure you want to leave without saving?",
+    );
+  };
+
+  if (drawerSlug) {
+    return (
+      <Button
+        buttonStyle="secondary"
+        onClick={() => {
+          if (confirmLeaveIfModified()) closeModal(drawerSlug);
+        }}
+      >
+        Cancel
+      </Button>
+    );
+  }
 
   const targetURL = formatAdminURL({
     adminRoute: config.routes.admin,
@@ -32,8 +62,22 @@ const MediaCancelToDashboardButton: React.FC = () => {
     path: fromDashboard ? "/" : "/collections/media",
   });
 
+  const handleBack = () => {
+    if (!confirmLeaveIfModified()) return;
+    if (
+      !fromDashboard &&
+      typeof window !== "undefined" &&
+      document.referrer.startsWith(window.location.origin) &&
+      document.referrer.includes("/admin/")
+    ) {
+      router.back();
+      return;
+    }
+    router.push(targetURL);
+  };
+
   return (
-    <Button buttonStyle="secondary" el="link" to={targetURL}>
+    <Button buttonStyle="secondary" onClick={handleBack}>
       Cancel
     </Button>
   );

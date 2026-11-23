@@ -196,9 +196,6 @@ export default buildConfig({
         {
           path: "./src/payload/components/DashboardLogoutButton.tsx",
         },
-        {
-          path: "./src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx",
-        },
       ],
       // Persistent "View Live Site" link in the sidebar + mobile drawer sign-out.
       afterNavLinks: [

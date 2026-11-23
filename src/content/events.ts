@@ -25,6 +25,8 @@ export type EventItem = {
   cost: string;
   /** Where "View event" links to. */
   href: string;
+  /** Optional visibility ("Public" or "Private"); omitted when unset. */
+  visibility?: string;
   /** Event image URL for the card thumbnail (absent when there is none). */
   image?: string;
   /** Composition of the thumbnail, same as the event page's image frame. */
@@ -46,6 +48,8 @@ export type EventDetail = {
   description: string;
   /** Status pill, e.g. "Upcoming". */
   status: string;
+  /** Optional visibility pill ("Public" or "Private"); omitted when unset. */
+  visibility?: string;
   /** ISO date string, e.g. "2026-10-18". */
   date: string;
   /** e.g. "4:00pm". */

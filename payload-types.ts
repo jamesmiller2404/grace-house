@@ -225,6 +225,7 @@ export interface Event {
   id: number;
   title: string;
   status: 'Upcoming' | 'Past' | 'Cancelled';
+  visibility?: ('Public' | 'Private') | null;
   description?: string | null;
   date: string;
   startTime?: string | null;
@@ -1108,6 +1109,7 @@ export interface HeroSelect<T extends boolean = true> {
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
   status?: T;
+  visibility?: T;
   description?: T;
   date?: T;
   startTime?: T;

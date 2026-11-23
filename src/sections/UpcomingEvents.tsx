@@ -307,6 +307,13 @@ export default function UpcomingEvents({
                     <p className="text-ink mt-1 text-base font-semibold">
                       {event.cost}
                     </p>
+
+                    {/* Optional visibility pill (Public / Private) */}
+                    {event.visibility && (
+                      <span className="border-ink text-ink mt-3 inline-block self-start rounded-full border px-2.5 py-0.5 text-xs font-bold tracking-[0.08em] uppercase">
+                        {event.visibility}
+                      </span>
+                    )}
                   </Link>
                 </li>
               );

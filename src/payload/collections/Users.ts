@@ -9,6 +9,41 @@ export const Users: CollectionConfig = {
     tokenExpiration: 2 * 60 * 60, // 2 hours, in seconds.
   },
 
+  hooks: {
+    afterLogin: [
+      async ({ req, user }) => {
+        const existing = await req.payload.find({
+          collection: "payload-preferences",
+          where: {
+            key: { equals: "nav" },
+            "user.value": { equals: user.id },
+          },
+          limit: 1,
+          overrideAccess: true,
+        });
+
+        if (existing.docs.length > 0) {
+          await req.payload.update({
+            collection: "payload-preferences",
+            id: existing.docs[0].id,
+            data: { value: { open: false } },
+            overrideAccess: true,
+          });
+        } else {
+          await req.payload.create({
+            collection: "payload-preferences",
+            data: {
+              key: "nav",
+              user: { relationTo: "users", value: user.id },
+              value: { open: false },
+            },
+            overrideAccess: true,
+          });
+        }
+      },
+    ],
+  },
+
   access: {
     admin: ({ req }) =>
       req.user?.role === "admin" || req.user?.role === "editor",
