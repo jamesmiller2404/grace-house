@@ -173,7 +173,7 @@ export interface Hero {
   createdAt: string;
 }
 /**
- * The central library for all website images. Use tags to organize and filter images.
+ * The central library for website images and videos (up to 220 MB). Use tags or media type filters to organize and browse files.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".

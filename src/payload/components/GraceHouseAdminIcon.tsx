@@ -9,7 +9,7 @@ export default function GraceHouseAdminIcon() {
         whiteSpace: "nowrap",
       }}
     >
-      Dashboard
+      GH
     </span>
   );
 }

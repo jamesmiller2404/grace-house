@@ -88,6 +88,12 @@ export default buildConfig({
           s3Storage({
             collections: { media: true }, // must match the slug in Media.ts
             bucket: process.env.R2_BUCKET,
+            // Allow direct browser-to-R2 uploads so 220 MB videos bypass Node.js
+            // request body limits. Requires PUT/GET/HEAD CORS rules on the R2 bucket.
+            clientUploads: {
+              access: ({ req }) =>
+                req.user?.role === "admin" || req.user?.role === "editor",
+            },
             config: {
               credentials: {
                 accessKeyId: process.env.R2_ACCESS_KEY_ID!,
@@ -163,6 +169,11 @@ export default buildConfig({
     // explaining the purpose of each admin section.
     // See src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx
     components: {
+      providers: [
+        {
+          path: "./src/payload/components/NavClosedOnLoginProvider.tsx",
+        },
+      ],
       beforeLogin: [
         {
           path: "./src/payload/components/LoginNotice.tsx",

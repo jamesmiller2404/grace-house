@@ -8,6 +8,12 @@ const dirname = path.dirname(__filename);
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "220mb",
+    },
+    proxyClientMaxBodySize: "220mb",
+  },
   turbopack: {
     root: path.resolve(dirname),
   },

@@ -1458,12 +1458,13 @@ html[data-theme='dark'] .app-header {
   height: auto;
   min-height: var(--app-header-height, 4.5rem);
   padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   border-bottom: 2px solid var(--gh-accent);
 }
 
 /* Dashboard section groups and cards */
 html[data-theme='dark'] .dashboard {
-  padding-top: 2.25rem;
+  padding-top: 0.75rem;
 }
 
 html[data-theme='dark'] .dashboard__group {

@@ -383,6 +383,7 @@ const MediaPickerUploadField: React.FC<UploadFieldClientProps> = (props) => {
         page: String(page),
         sort: "-updatedAt",
       });
+      params.set("where[mimeType][like]", "image/");
 
       if (searchTerm) {
         params.set("where[or][0][filename][like]", searchTerm);

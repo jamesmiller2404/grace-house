@@ -18,6 +18,10 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
   const [tags, setTags] = useState<MediaTag[]>([]);
   const isMediaCollection = pathname.endsWith("/collections/media");
   const selectedTagID = searchParams.get("where[tags][in]");
+  const selectedMimeFilter = searchParams.get("where[mimeType][like]") || "";
+  const isImagesOnly = selectedMimeFilter === "image/";
+  const isVideosOnly = selectedMimeFilter === "video/";
+  const isAll = !selectedTagID && !isImagesOnly && !isVideosOnly;
 
   const mediaListURL = formatAdminURL({
     adminRoute: config.routes.admin,
@@ -56,17 +60,31 @@ const MediaTagFilters: React.FC<BeforeListClientProps> = () => {
     return () => controller.abort();
   }, [isMediaCollection]);
 
-  if (!isMediaCollection || tags.length === 0) return null;
+  if (!isMediaCollection) return null;
 
   return (
-    <nav className="gh-media-tag-filters" aria-label="Filter Media by tag">
-      <span className="gh-media-tag-filters__label">Filter by Tag</span>
+    <nav className="gh-media-tag-filters" aria-label="Filter Media by type and tag">
+      <span className="gh-media-tag-filters__label">Filter</span>
       <a
-        className={selectedTagID ? "gh-media-tag-filters__link" : "gh-media-tag-filters__link is-active"}
+        className={isAll ? "gh-media-tag-filters__link is-active" : "gh-media-tag-filters__link"}
         href={mediaListURL}
-        aria-current={selectedTagID ? undefined : "page"}
+        aria-current={isAll ? "page" : undefined}
       >
-        All Images
+        All Media
+      </a>
+      <a
+        className={isImagesOnly ? "gh-media-tag-filters__link is-active" : "gh-media-tag-filters__link"}
+        href={`${mediaListURL}?where[mimeType][like]=image%2F`}
+        aria-current={isImagesOnly ? "page" : undefined}
+      >
+        Images
+      </a>
+      <a
+        className={isVideosOnly ? "gh-media-tag-filters__link is-active" : "gh-media-tag-filters__link"}
+        href={`${mediaListURL}?where[mimeType][like]=video%2F`}
+        aria-current={isVideosOnly ? "page" : undefined}
+      >
+        Videos
       </a>
       {tags.map((tag) => {
         const isActive = selectedTagID === String(tag.id);

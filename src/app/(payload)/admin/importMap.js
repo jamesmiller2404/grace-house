@@ -51,8 +51,11 @@ import { default as default_2cca5cc940b58ed57d9c98c3075e0d7d } from '../../../..
 import { default as default_3baff53da50f9c5ccb5f6c18d399aca9 } from '../../../../src/payload/collections/CustomPages/CancelToDashboardButton.tsx'
 import { default as default_17ca3f6b2636ac0759afd28b5fbd9451 } from '../../../../src/payload/collections/CustomPages/DoneToListButton.tsx'
 import { default as default_58e59a9c023b9646ed7227811de2e9fa } from '../../../../src/payload/collections/CustomPages/EditView.tsx'
+import { default as default_cbedc06d0c6a24fd7af3c10e92f850b2 } from '../../../../src/payload/collections/MediaVideoField.tsx'
+import { default as default_1a8422613ec1c5c50d9e7d1e9d6fa5c4 } from '../../../../src/payload/collections/MediaDownloadCell.tsx'
 import { default as default_c8ad4c18c750a643537cc845c379b91a } from '../../../../src/payload/collections/MediaLiveStatusCell.tsx'
 import { default as default_e9e8e5360c4c5f4d21b5525e0f651e10 } from '../../../../src/payload/collections/BulkMediaUpload.tsx'
+import { default as default_5f311aeabf0587798132306d16a1a6ee } from '../../../../src/payload/collections/R2VideosModal.tsx'
 import { default as default_f8264a153eb702d05d6c426361977a2f } from '../../../../src/payload/collections/MediaTagFilters.tsx'
 import { default as default_3c10d7b56ce2db6761ef425981ec3c45 } from '../../../../src/payload/collections/MediaCancelToDashboardButton.tsx'
 import { default as default_2d15f11321971006fa749b662a577e1e } from '../../../../src/payload/collections/MediaDoneToListButton.tsx'
@@ -102,6 +105,7 @@ import { default as default_4e25125131f563a41225af10ddb84275 } from '../../../..
 import { default as default_affbcb01d7c37135bda62799520840e5 } from '../../../../src/payload/components/MobileLogoutButton.tsx'
 import { default as default_b3a14a0640f60ac5042c64c794da4b88 } from '../../../../src/payload/components/DashboardWelcomeBanner.tsx'
 import { default as default_2d93c0f1ec8c2928bf72abe31dfe79d2 } from '../../../../src/payload/components/LoginNotice.tsx'
+import { default as default_8bffbe8c340a21ef392942cece6c6d0c } from '../../../../src/payload/components/NavClosedOnLoginProvider.tsx'
 import { default as default_93115a163f211dca91015775c3f5f710 } from '../../../../src/payload/components/ForgotPasswordView.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -160,8 +164,11 @@ export const importMap = {
   "./src/payload/collections/CustomPages/CancelToDashboardButton.tsx#default": default_3baff53da50f9c5ccb5f6c18d399aca9,
   "./src/payload/collections/CustomPages/DoneToListButton.tsx#default": default_17ca3f6b2636ac0759afd28b5fbd9451,
   "./src/payload/collections/CustomPages/EditView.tsx#default": default_58e59a9c023b9646ed7227811de2e9fa,
+  "./src/payload/collections/MediaVideoField.tsx#default": default_cbedc06d0c6a24fd7af3c10e92f850b2,
+  "./src/payload/collections/MediaDownloadCell.tsx#default": default_1a8422613ec1c5c50d9e7d1e9d6fa5c4,
   "./src/payload/collections/MediaLiveStatusCell.tsx#default": default_c8ad4c18c750a643537cc845c379b91a,
   "./src/payload/collections/BulkMediaUpload.tsx#default": default_e9e8e5360c4c5f4d21b5525e0f651e10,
+  "./src/payload/collections/R2VideosModal.tsx#default": default_5f311aeabf0587798132306d16a1a6ee,
   "./src/payload/collections/MediaTagFilters.tsx#default": default_f8264a153eb702d05d6c426361977a2f,
   "./src/payload/collections/MediaCancelToDashboardButton.tsx#default": default_3c10d7b56ce2db6761ef425981ec3c45,
   "./src/payload/collections/MediaDoneToListButton.tsx#default": default_2d15f11321971006fa749b662a577e1e,
@@ -211,6 +218,7 @@ export const importMap = {
   "./src/payload/components/MobileLogoutButton.tsx#default": default_affbcb01d7c37135bda62799520840e5,
   "./src/payload/components/DashboardWelcomeBanner.tsx#default": default_b3a14a0640f60ac5042c64c794da4b88,
   "./src/payload/components/LoginNotice.tsx#default": default_2d93c0f1ec8c2928bf72abe31dfe79d2,
+  "./src/payload/components/NavClosedOnLoginProvider.tsx#default": default_8bffbe8c340a21ef392942cece6c6d0c,
   "./src/payload/components/ForgotPasswordView.tsx#default": default_93115a163f211dca91015775c3f5f710,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
