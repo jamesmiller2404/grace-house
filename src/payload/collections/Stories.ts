@@ -4,6 +4,10 @@ import { ImagePositionField } from "@/payload/fields/ImagePosition";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 import { StatusSelectField } from "@/payload/fields/StatusSelect";
 import { pillars } from "@/content/pillars";
+import {
+  createAdminNotification,
+  formatActorName,
+} from "@/payload/lib/notifications";
 
 /**
  * Lives Changed / Stories — the Payload version of `StoryProfile` in
@@ -44,6 +48,26 @@ export const Stories: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
     delete: ({ req }) =>
       req.user?.role === "admin" || req.user?.role === "editor",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, operation, req }) => {
+        if (!req.user) return doc;
+        const name = typeof doc.name === "string" && doc.name.trim() ? doc.name : "Story";
+        const actorName = formatActorName(req.user);
+
+        await createAdminNotification(req.payload, {
+          title: operation === "create" ? "New story published" : "Story updated",
+          message: `"${name}" was ${operation === "create" ? "created" : "updated"} by ${actorName}.`,
+          category: "content",
+          severity: "info",
+          actionUrl: `/admin/collections/stories/${doc.id}`,
+          actorId: req.user.id,
+          req,
+        });
+        return doc;
+      },
+    ],
   },
   admin: {
     group: "Community & Content",

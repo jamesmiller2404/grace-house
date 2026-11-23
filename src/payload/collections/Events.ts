@@ -4,6 +4,10 @@ import { ImagePositionField } from "@/payload/fields/ImagePosition";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
 import { StatusSelectField } from "@/payload/fields/StatusSelect";
 import { TimeField } from "@/payload/fields/TimePicker";
+import {
+  createAdminNotification,
+  formatActorName,
+} from "@/payload/lib/notifications";
 
 /**
  * Upcoming events — the Payload version of `EventItem`/`EventDetail` in
@@ -72,6 +76,41 @@ export const Events: CollectionConfig = {
   },
   // Default order in the admin list view: soonest event first.
   defaultSort: "date",
+  hooks: {
+    afterChange: [
+      async ({ doc, previousDoc, operation, req }) => {
+        if (!req.user) return doc;
+        const title = typeof doc.title === "string" ? doc.title : "Untitled Event";
+        const actorName = formatActorName(req.user);
+
+        if (operation === "create") {
+          await createAdminNotification(req.payload, {
+            title: "New event created",
+            message: `"${title}" was created by ${actorName}.`,
+            category: "events",
+            severity: "info",
+            actionUrl: `/admin/collections/events/${doc.id}`,
+            actorId: req.user.id,
+            req,
+          });
+        } else if (
+          doc.status === "Cancelled" &&
+          previousDoc?.status !== "Cancelled"
+        ) {
+          await createAdminNotification(req.payload, {
+            title: "Event cancelled",
+            message: `"${title}" was marked Cancelled by ${actorName}.`,
+            category: "events",
+            severity: "warning",
+            actionUrl: `/admin/collections/events/${doc.id}`,
+            actorId: req.user.id,
+            req,
+          });
+        }
+        return doc;
+      },
+    ],
+  },
   fields: [
     {
       name: "eventPreview",

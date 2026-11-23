@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useConfig } from "@payloadcms/ui";
 import type { BeforeListClientProps } from "payload";
 import {
@@ -40,11 +40,14 @@ function formatBytes(bytes: number): string {
 const R2VideosModal: React.FC<BeforeListClientProps> = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { config } = useConfig();
   const isMediaCollection = pathname.endsWith("/collections/media");
+  const shouldOpenFromUrl =
+    isMediaCollection && searchParams.get("openR2Videos") === "1";
 
   const [actionsContainer, setActionsContainer] = useState<HTMLElement | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(shouldOpenFromUrl);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState("");
@@ -123,6 +126,14 @@ const R2VideosModal: React.FC<BeforeListClientProps> = () => {
   }, [apiRoot]);
 
   useEffect(() => {
+    if (!shouldOpenFromUrl) return;
+    const timer = window.setTimeout(() => {
+      void loadVideos();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [shouldOpenFromUrl, loadVideos]);
+
+  useEffect(() => {
     if (!isOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -175,7 +186,10 @@ const R2VideosModal: React.FC<BeforeListClientProps> = () => {
           const body = (await urlRes.json().catch(() => null)) as { error?: string } | null;
           throw new Error(body?.error || `Could not start R2 upload (${urlRes.status}).`);
         }
-        const { uploadUrl } = (await urlRes.json()) as { uploadUrl: string };
+        const { uploadUrl, key } = (await urlRes.json()) as {
+          uploadUrl: string;
+          key: string;
+        };
 
         await new Promise<void>((resolve, reject) => {
           const xhr = new XMLHttpRequest();
@@ -197,6 +211,17 @@ const R2VideosModal: React.FC<BeforeListClientProps> = () => {
           xhr.onerror = () => reject(new Error("Network error while uploading video to R2."));
           xhr.send(file);
         });
+
+        await fetch(`${apiRoot}/media/r2-videos/notify-upload`, {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            filename: file.name,
+            size: file.size,
+            key,
+          }),
+        }).catch(() => undefined);
       } else {
         setUploadProgress(`Uploading ${file.name}…`);
         const formData = new FormData();
@@ -214,6 +239,7 @@ const R2VideosModal: React.FC<BeforeListClientProps> = () => {
       }
 
       setUploadProgress(`Uploaded ${file.name}.`);
+      window.dispatchEvent(new Event("gh:notifications-updated"));
       await loadVideos();
       router.refresh();
     } catch (uploadError) {
@@ -256,6 +282,7 @@ const R2VideosModal: React.FC<BeforeListClientProps> = () => {
         setActiveVideo(null);
       }
       setVideos((prev) => prev.filter((item) => item.key !== video.key));
+      window.dispatchEvent(new Event("gh:notifications-updated"));
       router.refresh();
     } catch (deleteError) {
       setError(deleteError instanceof Error ? deleteError.message : "Could not delete video.");

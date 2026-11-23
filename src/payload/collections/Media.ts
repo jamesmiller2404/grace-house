@@ -15,6 +15,10 @@ import {
   sanitizeDownloadFilename,
   VIDEO_MIME_TYPES,
 } from "@/payload/lib/r2Media";
+import {
+  createAdminNotification,
+  formatActorName,
+} from "@/payload/lib/notifications";
 
 /** Central media library (images & videos up to 220 MB) used across the site. */
 export const Media: CollectionConfig = {
@@ -331,6 +335,40 @@ export const Media: CollectionConfig = {
       },
     },
     {
+      path: "/r2-videos/notify-upload",
+      method: "post",
+      handler: async (req) => {
+        if (req.user?.role !== "admin" && req.user?.role !== "editor") {
+          return Response.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const body = (await req.json?.()) as
+          | { filename?: unknown; size?: unknown; key?: unknown }
+          | undefined;
+        const filename =
+          typeof body?.filename === "string" && body.filename.trim()
+            ? body.filename.trim()
+            : "video";
+        const sizeBytes = typeof body?.size === "number" ? body.size : 0;
+        const sizeMB =
+          sizeBytes > 0 ? ` (${(sizeBytes / (1024 * 1024)).toFixed(1)} MB)` : "";
+        const prefix = getR2VideoPrefix();
+        const actorName = formatActorName(req.user);
+
+        await createAdminNotification(req.payload, {
+          title: "New video uploaded to R2",
+          message: `${filename}${sizeMB} was uploaded to ${prefix}/ by ${actorName}.`,
+          category: "media-video",
+          severity: "success",
+          actionUrl: "/admin/collections/media?openR2Videos=1",
+          actorId: req.user.id,
+          req,
+        });
+
+        return Response.json({ success: true });
+      },
+    },
+    {
       path: "/r2-videos/download",
       method: "get",
       handler: async (req) => {
@@ -417,6 +455,16 @@ export const Media: CollectionConfig = {
             fs.unlinkSync(filePath);
           }
         }
+
+        await createAdminNotification(req.payload, {
+          title: "Video deleted from R2",
+          message: `${path.basename(key)} was deleted by ${formatActorName(req.user)}.`,
+          category: "media-video",
+          severity: "warning",
+          actionUrl: "/admin/collections/media?openR2Videos=1",
+          actorId: req.user?.id ?? null,
+          req,
+        });
 
         return Response.json({ deleted: true, key });
       },
@@ -575,6 +623,47 @@ export const Media: CollectionConfig = {
         file.name = file.name
           ? file.name.replace(/\.(heic|heif)$/i, ".jpg")
           : "image.jpg";
+      },
+    ],
+    afterChange: [
+      async ({ doc, operation, req }) => {
+        if (operation !== "create") return doc;
+        const mime = typeof doc.mimeType === "string" ? doc.mimeType : "";
+        const filename = typeof doc.filename === "string" ? doc.filename : "";
+        if (!isVideoMimeType(mime) && !isVideoFilename(filename)) return doc;
+
+        const sizeBytes = typeof doc.filesize === "number" ? doc.filesize : 0;
+        const sizeMB =
+          sizeBytes > 0 ? ` (${(sizeBytes / (1024 * 1024)).toFixed(1)} MB)` : "";
+
+        await createAdminNotification(req.payload, {
+          title: "New video uploaded",
+          message: `${filename || "Video"}${sizeMB} was added to the Media Library by ${formatActorName(req.user)}.`,
+          category: "media-video",
+          severity: "success",
+          actionUrl: `/admin/collections/media/${doc.id}`,
+          actorId: req.user?.id ?? null,
+          req,
+        });
+        return doc;
+      },
+    ],
+    afterDelete: [
+      async ({ doc, req }) => {
+        const mime = typeof doc.mimeType === "string" ? doc.mimeType : "";
+        const filename = typeof doc.filename === "string" ? doc.filename : "";
+        if (!isVideoMimeType(mime) && !isVideoFilename(filename)) return doc;
+
+        await createAdminNotification(req.payload, {
+          title: "Video deleted from Media Library",
+          message: `${filename || "Video"} was deleted by ${formatActorName(req.user)}.`,
+          category: "media-video",
+          severity: "warning",
+          actionUrl: "/admin/collections/media",
+          actorId: req.user?.id ?? null,
+          req,
+        });
+        return doc;
       },
     ],
   },

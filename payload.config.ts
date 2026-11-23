@@ -13,6 +13,7 @@ import { MediaTags } from "@/payload/collections/MediaTags";
 import { MissionPage } from "@/payload/collections/MissionPage";
 import { Stories } from "@/payload/collections/Stories";
 import { Users } from "@/payload/collections/Users";
+import { AdminNotifications } from "@/payload/collections/AdminNotifications";
 import { Donate } from "@/payload/collections/Donate";
 import { CustomPages } from "@/payload/collections/CustomPages";
 import { GetHelpNow } from "@/payload/collections/GetHelpNow";
@@ -68,6 +69,7 @@ export default buildConfig({
     CustomPages,
     // Site Settings & Access
     Users,
+    AdminNotifications,
   ],
   globals: [HomeLayout, Footer, ContactInfo],
   serverURL: siteURL,
@@ -169,6 +171,11 @@ export default buildConfig({
     // explaining the purpose of each admin section.
     // See src/payload/components/AdminNavTooltip/AdminNavTooltip.tsx
     components: {
+      actions: [
+        {
+          path: "./src/payload/components/NotificationBell.tsx",
+        },
+      ],
       providers: [
         {
           path: "./src/payload/components/NavClosedOnLoginProvider.tsx",

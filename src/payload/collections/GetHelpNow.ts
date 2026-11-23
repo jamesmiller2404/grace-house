@@ -1,6 +1,10 @@
 import type { CollectionConfig } from "payload";
 
 import { ContactSelectField } from "@/payload/fields/ContactSelect";
+import {
+  createAdminNotification,
+  formatActorName,
+} from "@/payload/lib/notifications";
 
 /**
  * "Get Help Now" strip — the Payload version of `helpStripDefaults` in
@@ -39,6 +43,23 @@ export const GetHelpNow: CollectionConfig = {
       req.user?.role === "admin" || req.user?.role === "editor",
     delete: ({ req }) =>
       req.user?.role === "admin" || req.user?.role === "editor",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        if (!req.user) return doc;
+        await createAdminNotification(req.payload, {
+          title: "Get Help Now page updated",
+          message: `Crisis/help strip info was updated by ${formatActorName(req.user)}.`,
+          category: "content",
+          severity: "warning",
+          actionUrl: `/admin/collections/get-help-now/${doc.id}`,
+          actorId: req.user.id,
+          req,
+        });
+        return doc;
+      },
+    ],
   },
   admin: {
     group: "Site Pages",

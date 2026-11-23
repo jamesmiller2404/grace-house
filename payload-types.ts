@@ -81,6 +81,7 @@ export interface Config {
     board: Board;
     'custom-pages': CustomPage;
     users: User;
+    'admin-notifications': AdminNotification;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -102,6 +103,7 @@ export interface Config {
     board: BoardSelect<false> | BoardSelect<true>;
     'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'admin-notifications': AdminNotificationsSelect<false> | AdminNotificationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -971,6 +973,24 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "admin-notifications".
+ */
+export interface AdminNotification {
+  id: number;
+  title: string;
+  message?: string | null;
+  category?: ('media-video' | 'content' | 'events' | 'security' | 'system') | null;
+  severity?: ('info' | 'success' | 'warning' | 'error') | null;
+  actionUrl?: string | null;
+  actor?: (number | null) | User;
+  targetRoles?: ('admin' | 'editor')[] | null;
+  readBy?: (number | User)[] | null;
+  dedupeKey?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1048,6 +1068,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'admin-notifications';
+        value: number | AdminNotification;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1446,6 +1470,23 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "admin-notifications_select".
+ */
+export interface AdminNotificationsSelect<T extends boolean = true> {
+  title?: T;
+  message?: T;
+  category?: T;
+  severity?: T;
+  actionUrl?: T;
+  actor?: T;
+  targetRoles?: T;
+  readBy?: T;
+  dedupeKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

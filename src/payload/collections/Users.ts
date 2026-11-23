@@ -1,4 +1,8 @@
 import type { CollectionConfig } from "payload";
+import {
+  createAdminNotification,
+  formatActorName,
+} from "@/payload/lib/notifications";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -36,6 +40,41 @@ export const Users: CollectionConfig = {
           );
         }
         return user;
+      },
+    ],
+    afterChange: [
+      async ({ doc, previousDoc, operation, req }) => {
+        if (!req.user) return doc;
+        const targetName =
+          typeof doc.name === "string" && doc.name.trim()
+            ? doc.name.trim()
+            : typeof doc.email === "string"
+              ? doc.email
+              : "User";
+        const actorName = formatActorName(req.user);
+
+        if (operation === "create") {
+          await createAdminNotification(req.payload, {
+            title: "New user account created",
+            message: `${targetName} (${doc.role || "editor"}) was added by ${actorName}.`,
+            category: "security",
+            severity: "warning",
+            actionUrl: `/admin/collections/users/${doc.id}`,
+            actorId: req.user.id,
+            req,
+          });
+        } else if (doc.role && doc.role !== previousDoc?.role) {
+          await createAdminNotification(req.payload, {
+            title: "User role changed",
+            message: `${targetName} role changed from ${previousDoc?.role || "unknown"} to ${doc.role} by ${actorName}.`,
+            category: "security",
+            severity: "warning",
+            actionUrl: `/admin/collections/users/${doc.id}`,
+            actorId: req.user.id,
+            req,
+          });
+        }
+        return doc;
       },
     ],
   },

@@ -1,4 +1,8 @@
 import type { GlobalConfig } from "payload";
+import {
+  createAdminNotification,
+  formatActorName,
+} from "@/payload/lib/notifications";
 
 /**
  * Contact info — the admin panel page (/admin/globals/contact-info) where an
@@ -25,6 +29,23 @@ export const ContactInfo: GlobalConfig = {
     read: () => true,
     update: ({ req }) =>
       req.user?.role === "admin" || req.user?.role === "editor",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        if (!req.user) return doc;
+        await createAdminNotification(req.payload, {
+          title: "Contact Info updated",
+          message: `Organization phone numbers, emails, or addresses were updated by ${formatActorName(req.user)}.`,
+          category: "content",
+          severity: "warning",
+          actionUrl: "/admin/globals/contact-info",
+          actorId: req.user.id,
+          req,
+        });
+        return doc;
+      },
+    ],
   },
   admin: {
     group: "Site Settings & Access",
