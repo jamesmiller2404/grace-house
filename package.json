@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node -e \"process.env.R2_BUCKET ||= 'placeholder'; require('child_process').execSync('npx payload generate:importmap', { stdio: 'inherit' })\" && next build",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
