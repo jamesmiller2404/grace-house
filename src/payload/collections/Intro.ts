@@ -153,8 +153,8 @@ export const Intro: CollectionConfig = {
           type: "text",
           label: "Caption (optional)",
           admin: {
-            placeholder: "Caption...",
-            description: "Text shown under the photo or video.",
+            placeholder: "Descriptive text shown below the photo or video...",
+            description: "Optional descriptive text displayed on the webpage below the photo or video.",
             condition: (_data, siblingData) => {
               const type = (siblingData as { type?: string } | null)?.type;
               return type === "Photo" || type === "Video";

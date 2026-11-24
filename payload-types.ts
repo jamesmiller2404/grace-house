@@ -271,6 +271,9 @@ export interface Event {
          * Paste a YouTube or Vimeo video link to embed on the event page.
          */
         videoUrl?: string | null;
+        /**
+         * Optional descriptive text displayed on the webpage below the photo or video.
+         */
         caption?: string | null;
         id?: string | null;
       }[]
@@ -342,6 +345,9 @@ export interface Story {
          * Paste a YouTube or Vimeo video link to embed in the story.
          */
         videoUrl?: string | null;
+        /**
+         * Optional descriptive text displayed on the webpage below the photo or video.
+         */
         caption?: string | null;
         id?: string | null;
       }[]
@@ -489,7 +495,7 @@ export interface FeedingTheStreet {
          */
         videoUrl?: string | null;
         /**
-         * Text shown in small type under the photo or video.
+         * Optional descriptive text displayed on the webpage below the photo or video.
          */
         caption?: string | null;
         id?: string | null;
@@ -547,7 +553,7 @@ export interface Intro {
          */
         videoUrl?: string | null;
         /**
-         * Text shown under the photo or video.
+         * Optional descriptive text displayed on the webpage below the photo or video.
          */
         caption?: string | null;
         id?: string | null;
@@ -841,6 +847,9 @@ export interface Donate {
          * Paste a YouTube or Vimeo video link shown inline on the Donate page.
          */
         videoUrl?: string | null;
+        /**
+         * Optional descriptive text displayed on the webpage below the photo or video.
+         */
         caption?: string | null;
         /**
          * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
@@ -917,7 +926,7 @@ export interface Board {
 export interface CustomPage {
   id: number;
   /**
-   * Tick to publish this page and add its name to the header's "More" dropdown. Leave unticked to keep it hidden while you work on it.
+   * Tick to add this page to the header's "More" dropdown. Leave unticked to keep it off the header menu while still allowing you to link to it using the Direct Link below.
    */
   enabled?: boolean | null;
   /**
@@ -958,7 +967,7 @@ export interface CustomPage {
          */
         videoUrl?: string | null;
         /**
-         * Text shown in small type under the photo or video.
+         * Optional descriptive text displayed on the webpage below the photo or video.
          */
         caption?: string | null;
         id?: string | null;

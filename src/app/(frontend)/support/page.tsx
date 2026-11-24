@@ -139,7 +139,7 @@ export default async function SupportPage() {
                     alt={block.caption || ""}
                     width={1200}
                     height={800}
-                    className="h-auto w-full rounded-lg"
+                    className="h-auto max-h-[80vh] w-auto max-w-full rounded-lg"
                   />
                   {block.caption && (
                     <figcaption className="text-ink/70 mt-2 text-sm italic">

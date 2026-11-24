@@ -413,7 +413,8 @@ html[data-theme='light'] .gh-stories-edit {
   transition: background-color 140ms ease;
 }
 .gh-story-preview-launch:hover {
-  background: var(--gh-accent-hover, #e3a857);
+  background: #0068d6;
+  border-color: #0068d6;
 }
 .gh-story-preview-hint {
   color: var(--gh-text-muted, #b8afc4);

@@ -396,13 +396,14 @@ condition: (_data, siblingData) => (siblingData as { type?: string } | undefined
         {
           name: "caption",
           type: "text",
-          label: false,
+          label: "Caption (optional)",
           admin: {
             condition: (_data, siblingData) => {
               const type = (siblingData as { type?: string } | undefined)?.type;
               return type === "Photo" || type === "Video";
             },
-            placeholder: "Caption (optional)...",
+            placeholder: "Descriptive text shown below the photo or video...",
+            description: "Optional descriptive text displayed on the webpage below the photo or video.",
           },
         },
       ],

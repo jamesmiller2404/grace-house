@@ -80,6 +80,7 @@ import { default as default_b480e6a4623521c97ef432b42617b6f5 } from '../../../..
 import { default as default_3226e0d2c8e56e8807ddb9ce6a7b06eb } from '../../../../src/payload/collections/Board/CancelToDashboardButton.tsx'
 import { default as default_cb9c7a6df18238a84ac29350285f9b8a } from '../../../../src/payload/collections/Board/DoneToListButton.tsx'
 import { default as default_c75f67b01273843b9738ce13d98c2992 } from '../../../../src/payload/collections/CustomPages/PreviewField.tsx'
+import { default as default_cd99ffc9c8d972182ca8188cf7006282 } from '../../../../src/payload/collections/CustomPages/DirectLinkField.tsx'
 import { default as default_0dda18def457283302775b43747f5a9f } from '../../../../src/payload/collections/UsersCancelToDashboardButton.tsx'
 import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../../src/payload/collections/UsersDoneToListButton.tsx'
 import { default as default_d1e94d5abbb0ceb34ab990b1be6f4ecc } from '../../../../src/payload/collections/UsersEditView.tsx'
@@ -195,6 +196,7 @@ export const importMap = {
   "./src/payload/collections/Board/CancelToDashboardButton.tsx#default": default_3226e0d2c8e56e8807ddb9ce6a7b06eb,
   "./src/payload/collections/Board/DoneToListButton.tsx#default": default_cb9c7a6df18238a84ac29350285f9b8a,
   "./src/payload/collections/CustomPages/PreviewField.tsx#default": default_c75f67b01273843b9738ce13d98c2992,
+  "./src/payload/collections/CustomPages/DirectLinkField.tsx#default": default_cd99ffc9c8d972182ca8188cf7006282,
   "./src/payload/collections/UsersCancelToDashboardButton.tsx#default": default_0dda18def457283302775b43747f5a9f,
   "./src/payload/collections/UsersDoneToListButton.tsx#default": default_406610a7604472cb1b28c015b6a61a3f,
   "./src/payload/collections/UsersEditView.tsx#default": default_d1e94d5abbb0ceb34ab990b1be6f4ecc,

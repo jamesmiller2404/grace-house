@@ -31,13 +31,14 @@ export default function CustomPageBlocks({
         if (block.type === "photo") {
           return (
             <figure key={i} className="mt-10">
-              <div className="border-ink relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-lg border-2">
+              <div className="border-ink inline-block max-w-2xl overflow-hidden rounded-lg border-2">
                 <Image
                   src={block.image}
                   alt={block.alt}
-                  fill
+                  width={1200}
+                  height={800}
                   sizes="(min-width:1024px) 50vw, 100vw"
-                  className="object-cover"
+                  className="block h-auto max-h-[80vh] w-auto max-w-full"
                 />
               </div>
               {block.caption && (

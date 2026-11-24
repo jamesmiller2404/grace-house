@@ -126,7 +126,7 @@ html[data-theme='light'] .gh-get-help-edit {
   padding: 9px 18px; font: inherit; font-weight: 700; cursor: pointer;
   transition: background-color 140ms ease;
 }
-.gh-get-help-edit .gh-story-preview-launch:hover { background: var(--gh-accent-hover, #e3a857); }
+.gh-get-help-edit .gh-story-preview-launch:hover { background: #0068d6; border-color: #0068d6; }
 .gh-get-help-edit .gh-story-preview-hint { color: var(--gh-gh-help); font-size: 1rem; line-height: 1.5; }
 .gh-get-help-edit .gh-story-preview-backdrop {
   position: fixed; z-index: 100000; inset: 0; display: flex; align-items: center;

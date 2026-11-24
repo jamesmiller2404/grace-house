@@ -138,7 +138,7 @@ html[data-theme='light'] .gh-footer-edit {
   cursor: pointer;
   transition: background-color 140ms ease;
 }
-.gh-footer-edit .gh-story-preview-launch:hover { background: var(--gh-accent-hover, #e3a857); }
+.gh-footer-edit .gh-story-preview-launch:hover { background: #0068d6; border-color: #0068d6; }
 .gh-footer-edit .gh-story-preview-hint {
   color: var(--gh-text-muted, #b8afc4);
   font-size: 1rem;

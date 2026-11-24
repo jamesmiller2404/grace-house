@@ -23,6 +23,10 @@ const YouTubeUrlField: React.FC<TextFieldClientProps> = ({
       ? field.admin.placeholder
       : "https://www.youtube.com/watch?v=... or https://vimeo.com/...";
 
+  const videoKey = parsed
+    ? `${parsed.provider}-${parsed.id}-${parsed.provider === "vimeo" ? parsed.hash || "" : ""}`
+    : "";
+
   return (
     <div className="field-type text" id={`field-${path.replace(/\./g, "__")}`}>
       <div className="field-type__wrap">
@@ -44,8 +48,23 @@ const YouTubeUrlField: React.FC<TextFieldClientProps> = ({
         </div>
       )}
       {parsed && (
-        <div style={{ maxWidth: "560px", marginTop: "8px" }}>
-          <VideoEmbed videoUrl={textValue} compact />
+        <div
+          className="gh-photo-block-preview"
+          style={{ maxWidth: "560px", marginTop: "8px", background: "transparent", border: "none" }}
+        >
+          <VideoEmbed key={videoKey} videoUrl={textValue} compact />
+          {!isDisabled && (
+            <button
+              type="button"
+              className="gh-photo-block-preview__remove"
+              style={{ zIndex: 10 }}
+              onClick={() => setValue("")}
+              aria-label="Remove video"
+              title="Remove video"
+            >
+              ×
+            </button>
+          )}
         </div>
       )}
     </div>

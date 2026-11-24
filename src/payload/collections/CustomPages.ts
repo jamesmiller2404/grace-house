@@ -105,7 +105,18 @@ access: {
       label: "Show in header menu",
       admin: {
         description:
-          'Tick to publish this page and add its name to the header\'s "More" dropdown. Leave unticked to keep it hidden while you work on it.',
+          'Tick to add this page to the header\'s "More" dropdown. Leave unticked to keep it off the header menu while still allowing you to link to it using the Direct Link below.',
+      },
+    },
+    {
+      name: "directLink",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/CustomPages/DirectLinkField.tsx",
+          },
+        },
       },
     },
     {
@@ -230,8 +241,8 @@ access: {
           type: "text",
           label: "Caption (optional)",
           admin: {
-            placeholder: "Caption...",
-            description: "Text shown in small type under the photo or video.",
+            placeholder: "Descriptive text shown below the photo or video...",
+            description: "Optional descriptive text displayed on the webpage below the photo or video.",
             condition: (_data, siblingData) => {
               const type = (siblingData as { type?: string } | null)?.type;
               return type === "Photo" || type === "Video";

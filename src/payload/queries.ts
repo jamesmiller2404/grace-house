@@ -964,10 +964,9 @@ export const getCustomNavItems = cache(
 );
 
 /**
- * One enabled custom page by URL slug, for its /pages/<slug> page. The slug
- * is derived from the title, so a renamed page moves to a new URL. Disabled
- * (or unknown) slugs return undefined — the page renderer turns that into a
- * 404, so a spare page stays invisible until it is switched on.
+ * One custom page by URL slug, for its /pages/<slug> page. The slug is derived
+ * from the title, so a renamed page moves to a new URL. Pages remain reachable
+ * via their direct link even when "Show in header menu" is unticked.
  */
 export const getCustomPageBySlug = cache(
   async (slug: string): Promise<CustomPageContent | undefined> => {
@@ -976,7 +975,6 @@ export const getCustomPageBySlug = cache(
     const { docs } = await payload.find({
       collection: "custom-pages",
       pagination: false,
-      where: { enabled: { equals: true } },
     });
     const doc = docs.find((page) => customPageSlug(page.title) === slug);
     return doc ? toCustomPageContent(doc) : undefined;

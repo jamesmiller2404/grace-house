@@ -10,6 +10,9 @@ type YTPlayerInstance = {
   seekTo: (seconds: number, allowSeekAhead: boolean) => void;
   getCurrentTime: () => number;
   getDuration: () => number;
+  loadModule?: (module: string) => void;
+  unloadModule?: (module: string) => void;
+  setOption?: (module: string, option: string, value: unknown) => void;
   destroy: () => void;
 };
 
@@ -28,11 +31,23 @@ type YTNamespace = {
   ) => YTPlayerInstance;
 };
 
+type VimeoTextTrack = {
+  language: string;
+  kind: string;
+  label: string;
+  mode: string;
+};
+
 type VimeoPlayerInstance = {
   play: () => Promise<void>;
   pause: () => Promise<void>;
   setCurrentTime: (seconds: number) => Promise<number>;
   getDuration: () => Promise<number>;
+  getVideoWidth: () => Promise<number>;
+  getVideoHeight: () => Promise<number>;
+  getTextTracks?: () => Promise<VimeoTextTrack[]>;
+  enableTextTrack?: (language: string, kind?: string) => Promise<unknown>;
+  disableTextTrack?: () => Promise<void>;
   on: (event: string, callback: (data?: { seconds?: number; duration?: number }) => void) => void;
   destroy: () => Promise<void>;
 };
@@ -163,6 +178,11 @@ export default function VideoEmbed({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [captionsOn, setCaptionsOn] = useState(false);
+  const [vimeoTracks, setVimeoTracks] = useState<VimeoTextTrack[]>([]);
+  const [aspectRatio, setAspectRatio] = useState<number>(() =>
+    videoUrl.includes("/shorts/") ? 9 / 16 : 16 / 9,
+  );
 
   const provider = parsed?.provider ?? null;
   const videoId = parsed?.id ?? null;
@@ -171,6 +191,23 @@ export default function VideoEmbed({
   useEffect(() => {
     if (provider !== "youtube" || !videoId) return;
     let cancelled = false;
+
+    void fetch(
+      `https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`)}&format=json`,
+    )
+      .then((res) => (res.ok ? res.json() : null))
+      .then((meta: { width?: unknown; height?: unknown } | null) => {
+        if (
+          !cancelled &&
+          typeof meta?.width === "number" &&
+          typeof meta?.height === "number" &&
+          meta.width > 0 &&
+          meta.height > 0
+        ) {
+          setAspectRatio(meta.width / meta.height);
+        }
+      })
+      .catch(() => undefined);
 
     void loadYouTubeAPI().then((YT) => {
       if (cancelled) return;
@@ -183,6 +220,7 @@ export default function VideoEmbed({
           rel: 0,
           modestbranding: 1,
           iv_load_policy: 3,
+          cc_load_policy: 0,
           playsinline: 1,
           fs: 1,
           disablekb: 0,
@@ -231,9 +269,19 @@ export default function VideoEmbed({
       const player = new Vimeo.Player(vimeoIframeRef.current);
       vimeoPlayerRef.current = player;
 
-      void player.getDuration().then((dur) => {
+      void Promise.all([
+        player.getDuration().catch(() => 0),
+        player.getVideoWidth().catch(() => 0),
+        player.getVideoHeight().catch(() => 0),
+        player.getTextTracks ? player.getTextTracks().catch(() => []) : Promise.resolve([]),
+      ]).then(([dur, w, h, tracks]) => {
         if (!cancelled) {
           if (Number.isFinite(dur) && dur > 0) setDuration(dur);
+          if (w > 0 && h > 0) setAspectRatio(w / h);
+          if (Array.isArray(tracks)) {
+            setVimeoTracks(tracks);
+            setCaptionsOn(tracks.some((t) => t.mode === "showing"));
+          }
           setReady(true);
         }
       });
@@ -342,6 +390,40 @@ export default function VideoEmbed({
     }
   };
 
+  const toggleCaptions = () => {
+    if (!ready) return;
+    const next = !captionsOn;
+    if (parsed.provider === "youtube") {
+      const yt = ytPlayerRef.current;
+      if (!yt) return;
+      if (next) {
+        yt.loadModule?.("captions");
+        yt.setOption?.("captions", "track", { languageCode: "en" });
+      } else {
+        yt.unloadModule?.("captions");
+      }
+      setCaptionsOn(next);
+      return;
+    }
+
+    const vimeo = vimeoPlayerRef.current;
+    if (!vimeo) return;
+    if (next) {
+      const preferred =
+        vimeoTracks.find((t) => t.language.startsWith("en")) || vimeoTracks[0];
+      if (preferred) {
+        void vimeo.enableTextTrack?.(preferred.language, preferred.kind);
+        setCaptionsOn(true);
+      }
+    } else {
+      void vimeo.disableTextTrack?.();
+      setCaptionsOn(false);
+    }
+  };
+
+  const canToggleCaptions =
+    parsed.provider === "youtube" || vimeoTracks.length > 0;
+
   const toggleFullscreen = async () => {
     const el = wrapperRef.current;
     if (!el) return;
@@ -357,35 +439,80 @@ export default function VideoEmbed({
   };
 
   return (
-    <figure className={compact ? "my-3" : "my-8"}>
+    <figure className={compact ? "my-3" : "my-8"} style={compact ? { margin: "12px 0" } : undefined}>
       <div
         ref={wrapperRef}
         className="flex flex-col overflow-hidden rounded-lg border border-ink/15 bg-black shadow-sm"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+          borderRadius: "8px",
+          background: "#000",
+          border: "1px solid rgba(201, 164, 92, 0.28)",
+          ...(!isFullscreen && aspectRatio < 1 ? { maxWidth: "420px" } : {}),
+        }}
       >
         <div
           className={
             isFullscreen
               ? "relative flex-1 w-full bg-black"
-              : "relative aspect-video w-full bg-black"
+              : "relative w-full bg-black"
           }
+          style={{
+            position: "relative",
+            width: "100%",
+            background: "#000",
+            ...(isFullscreen
+              ? { flex: "1 1 0%" }
+              : { aspectRatio: String(aspectRatio) }),
+          }}
         >
           {parsed.provider === "youtube" ? (
-            <div id={ytContainerId} className="h-full w-full" />
+            <div
+              key={`yt-${parsed.id}`}
+              id={ytContainerId}
+              className="h-full w-full"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            />
           ) : (
             <iframe
+              key={`vimeo-${parsed.id}-${parsed.hash || ""}`}
               ref={vimeoIframeRef}
               src={getVimeoEmbedUrl(parsed.id, parsed.hash)}
               title={caption || "Vimeo video"}
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
               className="h-full w-full border-0"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                border: 0,
+                display: "block",
+              }}
             />
           )}
         </div>
 
         <div
           className="flex flex-wrap items-center gap-2 bg-[#1d1825] px-3 py-2.5 text-[#f5f1ea] sm:flex-nowrap sm:gap-3"
-          style={{ borderTop: "1px solid rgba(201, 164, 92, 0.25)" }}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: "8px",
+            background: "#1d1825",
+            padding: "10px 12px",
+            color: "#f5f1ea",
+            borderTop: "1px solid rgba(201, 164, 92, 0.25)",
+          }}
         >
           <button
             type="button"
@@ -434,6 +561,24 @@ export default function VideoEmbed({
           <span className="ml-auto font-mono text-xs whitespace-nowrap text-[#dad5dd] sm:ml-0 sm:min-w-[78px] sm:text-right">
             {formatTime(currentTime)} / {formatTime(duration)}
           </span>
+
+          {canToggleCaptions && (
+            <button
+              type="button"
+              disabled={!ready}
+              onClick={toggleCaptions}
+              aria-pressed={captionsOn}
+              aria-label={captionsOn ? "Turn off captions" : "Turn on captions"}
+              className="inline-flex h-8 shrink-0 items-center justify-center rounded border px-2 text-xs font-bold transition disabled:opacity-50"
+              style={{
+                borderColor: captionsOn ? "#c9a45c" : "#4a405c",
+                background: captionsOn ? "#c9a45c" : "#261e32",
+                color: captionsOn ? "#141118" : "#f5f1ea",
+              }}
+            >
+              CC
+            </button>
+          )}
 
           <button
             type="button"
