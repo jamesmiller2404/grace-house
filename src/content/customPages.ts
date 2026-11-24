@@ -20,7 +20,8 @@ export type CustomPageBlock =
       linkHref?: string;
     }
   | { type: "heading"; text: string; linkLabel?: string; linkHref?: string }
-  | { type: "photo"; image: string; alt: string; caption?: string };
+  | { type: "photo"; image: string; alt: string; caption?: string }
+  | { type: "video"; videoUrl: string; caption?: string };
 
 /** One custom page as the front end renders it. */
 export type CustomPageContent = {

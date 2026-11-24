@@ -72,6 +72,7 @@ function buildPreviewProfile(
 
   type StoryBodyBlock =
   | { type: "photo"; image: string; caption?: string }
+  | { type: "video"; videoUrl: string; caption?: string }
   | { type: "h2"; text: string }
   | { type: "p"; text: string };
 
@@ -79,6 +80,16 @@ function buildPreviewProfile(
     (item): StoryBodyBlock[] => {
       const block = asRecord(item);
       const type = block.type;
+
+      if (type === "Video") {
+        const videoUrl = asText(block.videoUrl);
+        if (!videoUrl) return [];
+        return [{
+          type: "video",
+          videoUrl,
+          caption: asText(block.caption) || undefined,
+        }];
+      }
 
       if (type === "Photo") {
         const imageValue = block.image;

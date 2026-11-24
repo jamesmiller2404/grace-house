@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
+import { isValidVideoUrl } from "@/lib/videoEmbed";
 
 /**
  * The "What is Grace House" homepage section. Editors set one rendered title
@@ -77,6 +78,7 @@ export const Intro: CollectionConfig = {
               { label: "Header", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
+              { label: "Video", value: "Video" },
             ],
             defaultValue: "Paragraph",
             required: true,
@@ -126,14 +128,37 @@ export const Intro: CollectionConfig = {
           },
         },
         {
+          name: "videoUrl",
+          type: "text",
+          label: "Video Link",
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/YouTubeUrlField.tsx",
+              },
+            },
+            placeholder: "https://www.youtube.com/watch?v=... or https://vimeo.com/...",
+            description: "Paste a YouTube or Vimeo video link shown by this block.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Video",
+          },
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | null)?.type !== "Video" ||
+            (typeof value === "string" && isValidVideoUrl(value))
+              ? true
+              : "Enter a valid YouTube or Vimeo link for this Video block.",
+        },
+        {
           name: "caption",
           type: "text",
           label: "Caption (optional)",
           admin: {
             placeholder: "Caption...",
-            description: "Text shown under the photo.",
-            condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type === "Photo",
+            description: "Text shown under the photo or video.",
+            condition: (_data, siblingData) => {
+              const type = (siblingData as { type?: string } | null)?.type;
+              return type === "Photo" || type === "Video";
+            },
           },
         },
       ],

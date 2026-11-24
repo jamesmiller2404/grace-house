@@ -142,20 +142,30 @@ function toEventDetail(
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
     blocks: (doc.blocks ?? []).map((block) =>
-      block.type === "Photo"
+      block.type === "Video"
         ? {
-            type: "Photo" as const,
-            image: mediaUrl(block.image),
+            type: "Video" as const,
+            videoUrl: block.videoUrl ?? "",
             caption: block.caption ?? undefined,
           }
-        : block.type === "Heading"
-          ? { type: "Heading" as const, text: block.text ?? "" }
-          : {
-              type: "Paragraph" as const,
-              text: block.text ?? "",
-              content: (block as typeof block & { content?: unknown }).content,
-            },
-    ).filter((block) => block.type !== "Photo" || Boolean(block.image)),
+        : block.type === "Photo"
+          ? {
+              type: "Photo" as const,
+              image: mediaUrl(block.image),
+              caption: block.caption ?? undefined,
+            }
+          : block.type === "Heading"
+            ? { type: "Heading" as const, text: block.text ?? "" }
+            : {
+                type: "Paragraph" as const,
+                text: block.text ?? "",
+                content: (block as typeof block & { content?: unknown }).content,
+              },
+    ).filter(
+      (block) =>
+        (block.type !== "Photo" || Boolean(block.image)) &&
+        (block.type !== "Video" || Boolean(block.videoUrl)),
+    ),
     contact: {
       questions: "Questions?",
       phone: `Call ${contact.phone} or`,
@@ -299,20 +309,30 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
     },
     blocks:
       doc.blocks?.map((block) =>
-        block.type === "Photo"
+        block.type === "Video"
           ? {
-              type: "Photo" as const,
-              image: mediaUrl(block.image),
+              type: "Video" as const,
+              videoUrl: block.videoUrl ?? "",
               caption: block.caption ?? undefined,
             }
-          : {
-              type: block.type,
-              text: block.text ?? "",
-              content: (block as typeof block & { content?: unknown }).content,
-              linkLabel: block.linkLabel ?? undefined,
-              linkHref: block.linkHref ?? undefined,
-            },
-      ).filter((block) => block.type !== "Photo" || Boolean(block.image)) ?? d.blocks,
+          : block.type === "Photo"
+            ? {
+                type: "Photo" as const,
+                image: mediaUrl(block.image),
+                caption: block.caption ?? undefined,
+              }
+            : {
+                type: block.type,
+                text: block.text ?? "",
+                content: (block as typeof block & { content?: unknown }).content,
+                linkLabel: block.linkLabel ?? undefined,
+                linkHref: block.linkHref ?? undefined,
+              },
+      ).filter(
+        (block) =>
+          (block.type !== "Photo" || Boolean(block.image)) &&
+          (block.type !== "Video" || Boolean(block.videoUrl)),
+      ) ?? d.blocks,
   };
 });
 
@@ -369,10 +389,20 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
   type IntroRow = NonNullable<PayloadIntro["blocks"]>[number] & {
     content?: unknown;
     text?: string | null;
+    videoUrl?: string | null;
   };
 
   const blocks = ((doc.blocks ?? []) as IntroRow[])
     .map((block) => {
+      if (block.type === "Video") {
+        return block.videoUrl
+          ? {
+              type: "video" as const,
+              videoUrl: block.videoUrl,
+              caption: block.caption ?? undefined,
+            }
+          : null;
+      }
       if (block.type === "Photo") {
         const image = mediaUrl(block.image);
         return image
@@ -686,6 +716,13 @@ function mediaUrl(value: unknown): string {
 /** The story body blocks mapped to the h2/p sequence the page renders. */
 function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
   return (doc.body ?? []).map((block) => {
+    if (block.type === "Video") {
+      return {
+        type: "video" as const,
+        videoUrl: block.videoUrl ?? "",
+        caption: block.caption ?? undefined,
+      };
+    }
     if (block.type === "Photo") {
       return {
         type: "photo" as const,
@@ -700,7 +737,11 @@ function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
           text: block.text ?? "",
           content: (block as typeof block & { content?: unknown }).content,
         };
-  }).filter((block) => block.type !== "photo" || Boolean(block.image));
+  }).filter(
+    (block) =>
+      (block.type !== "photo" || Boolean(block.image)) &&
+      (block.type !== "video" || Boolean(block.videoUrl)),
+  );
 }
 
 /** Pronouns used by generated copy, derived from the story's Gender field. */
@@ -835,6 +876,17 @@ function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
     blocks: (doc.blocks ?? []).flatMap((block): CustomPageBlock[] => {
       // Photo rows render their Media image (with an optional caption).
       // A photo row with no image picked yet is skipped.
+      if (block.type === "Video") {
+        const videoUrl = block.videoUrl ?? "";
+        if (!videoUrl.trim()) return [];
+        return [
+          {
+            type: "video",
+            videoUrl,
+            caption: block.caption ?? undefined,
+          },
+        ];
+      }
       if (block.type === "Photo") {
         const image = mediaUrl(block.image);
         if (!image) return [];

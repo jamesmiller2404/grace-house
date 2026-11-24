@@ -6,7 +6,8 @@
 export type IntroBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text?: string; content?: unknown }
-  | { type: "photo"; image: string; alt: string; caption?: string };
+  | { type: "photo"; image: string; alt: string; caption?: string }
+  | { type: "video"; videoUrl: string; caption?: string };
 
 export type IntroContent = {
   title: string;

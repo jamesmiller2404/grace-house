@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getDonate } from "@/payload/queries";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 export const metadata: Metadata = {
   title: "Donate — Grace House",
@@ -120,6 +121,15 @@ export default async function SupportPage() {
         {/* Additional text blocks (e.g. Underground Clothing Connection) */}
         <div className="max-w-[70ch]">
           {d.blocks.map((block, i) => {
+            if (block.type === "Video" && block.videoUrl) {
+              return (
+                <YouTubeEmbed
+                  key={i}
+                  videoUrl={block.videoUrl}
+                  caption={block.caption}
+                />
+              );
+            }
             if (block.type === "Photo") {
               if (!block.image) return null;
               return (

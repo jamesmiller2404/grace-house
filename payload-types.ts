@@ -246,7 +246,7 @@ export interface Event {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
         text?: string | null;
         content?: {
           root: {
@@ -267,6 +267,10 @@ export interface Event {
          * Choose the photo shown inline on the event page.
          */
         image?: (number | null) | Media;
+        /**
+         * Paste a YouTube or Vimeo video link to embed on the event page.
+         */
+        videoUrl?: string | null;
         caption?: string | null;
         id?: string | null;
       }[]
@@ -313,7 +317,7 @@ export interface Story {
    */
   body?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
         text?: string | null;
         content?: {
           root: {
@@ -334,6 +338,10 @@ export interface Story {
          * Choose the photo shown inline in the story.
          */
         image?: (number | null) | Media;
+        /**
+         * Paste a YouTube or Vimeo video link to embed in the story.
+         */
+        videoUrl?: string | null;
         caption?: string | null;
         id?: string | null;
       }[]
@@ -444,7 +452,7 @@ export interface FeedingTheStreet {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
         /**
          * The heading text.
          */
@@ -477,7 +485,11 @@ export interface FeedingTheStreet {
          */
         image?: (number | null) | Media;
         /**
-         * Text shown in small type under the photo.
+         * Paste a YouTube or Vimeo video link shown by this block.
+         */
+        videoUrl?: string | null;
+        /**
+         * Text shown in small type under the photo or video.
          */
         caption?: string | null;
         id?: string | null;
@@ -503,7 +515,7 @@ export interface Intro {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
         /**
          * The header or paragraph text.
          */
@@ -531,7 +543,11 @@ export interface Intro {
          */
         image?: (number | null) | Media;
         /**
-         * Text shown under the photo.
+         * Paste a YouTube or Vimeo video link shown by this block.
+         */
+        videoUrl?: string | null;
+        /**
+         * Text shown under the photo or video.
          */
         caption?: string | null;
         id?: string | null;
@@ -800,7 +816,7 @@ export interface Donate {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
         text?: string | null;
         content?: {
           root: {
@@ -821,6 +837,10 @@ export interface Donate {
          * Choose the photo shown inline on the Donate page.
          */
         image?: (number | null) | Media;
+        /**
+         * Paste a YouTube or Vimeo video link shown inline on the Donate page.
+         */
+        videoUrl?: string | null;
         caption?: string | null;
         /**
          * The clickable words shown after the block's text. Example: for the text "Call us at" this would be "(916) 470-0408". Leave empty for a plain paragraph with no link.
@@ -909,7 +929,7 @@ export interface CustomPage {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
         /**
          * The heading text.
          */
@@ -934,7 +954,11 @@ export interface CustomPage {
          */
         image?: (number | null) | Media;
         /**
-         * Text shown in small type under the photo.
+         * Paste a YouTube or Vimeo video link shown by this block.
+         */
+        videoUrl?: string | null;
+        /**
+         * Text shown in small type under the photo or video.
          */
         caption?: string | null;
         id?: string | null;
@@ -1151,6 +1175,7 @@ export interface EventsSelect<T extends boolean = true> {
         text?: T;
         content?: T;
         image?: T;
+        videoUrl?: T;
         caption?: T;
         id?: T;
       };
@@ -1185,6 +1210,7 @@ export interface StoriesSelect<T extends boolean = true> {
         text?: T;
         content?: T;
         image?: T;
+        videoUrl?: T;
         caption?: T;
         id?: T;
       };
@@ -1256,6 +1282,7 @@ export interface FeedingTheStreetsSelect<T extends boolean = true> {
         linkLabel?: T;
         linkHref?: T;
         image?: T;
+        videoUrl?: T;
         caption?: T;
         id?: T;
       };
@@ -1302,6 +1329,7 @@ export interface IntroSelect<T extends boolean = true> {
         text?: T;
         content?: T;
         image?: T;
+        videoUrl?: T;
         caption?: T;
         id?: T;
       };
@@ -1398,6 +1426,7 @@ export interface DonateSelect<T extends boolean = true> {
         text?: T;
         content?: T;
         image?: T;
+        videoUrl?: T;
         caption?: T;
         linkLabel?: T;
         linkHref?: T;
@@ -1440,6 +1469,7 @@ export interface CustomPagesSelect<T extends boolean = true> {
         text?: T;
         content?: T;
         image?: T;
+        videoUrl?: T;
         caption?: T;
         id?: T;
       };

@@ -61,7 +61,7 @@ export type DonatePage = {
 /** One text block: a heading or a paragraph, with an optional link. */
 export type DonateBlock = {
   /** Whether the block renders as a heading or a paragraph. */
-  type: "Heading" | "Paragraph" | "Photo";
+  type: "Heading" | "Paragraph" | "Photo" | "Video";
   /**
    * The block text. Newlines render as line breaks, so a labeled block
    * (e.g. "Hours:\nWednesdays: 11am to 4pm.") can share one block.
@@ -71,7 +71,9 @@ export type DonateBlock = {
   content?: unknown;
   /** Uploaded photo URL for Photo blocks. */
   image?: string;
-  /** Optional caption shown under a photo. */
+  /** YouTube video URL for Video blocks. */
+  videoUrl?: string;
+  /** Optional caption shown under a photo or video. */
   caption?: string;
   /** Optional link text shown after the block (punctuation may be included). */
   linkLabel?: string;

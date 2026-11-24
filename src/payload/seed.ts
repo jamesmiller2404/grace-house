@@ -112,6 +112,13 @@ export async function seedEvents(payload: Payload): Promise<void> {
                 caption: block.caption,
               };
             }
+            if (block.type === "Video") {
+              return {
+                type: "Video" as const,
+                videoUrl: block.videoUrl,
+                caption: block.caption,
+              };
+            }
             return { type: block.type, text: block.text };
           }),
         ),
@@ -214,6 +221,13 @@ export async function seedIntro(payload: Payload): Promise<void> {
     if (block.type === "photo") {
       return {
         type: "Photo" as const,
+        caption: block.caption,
+      };
+    }
+    if (block.type === "video") {
+      return {
+        type: "Video" as const,
+        videoUrl: block.videoUrl,
         caption: block.caption,
       };
     }
@@ -562,6 +576,13 @@ export async function seedStories(payload: Payload): Promise<void> {
                   block.image,
                   `${profile.name} — story body photo`,
                 ),
+                caption: block.caption,
+              };
+            }
+            if (block.type === "video") {
+              return {
+                type: "Video" as const,
+                videoUrl: block.videoUrl,
                 caption: block.caption,
               };
             }

@@ -25,6 +25,14 @@ export default async function FeedingTheStreetsPage() {
   if (!doc) notFound();
 
   const blocks = (doc.blocks ?? []).map((block) => {
+    const rawType = (block as { type?: string }).type;
+    if (rawType === "Video") {
+      return {
+        type: "video",
+        videoUrl: (block as { videoUrl?: string | null }).videoUrl ?? "",
+        caption: block.caption ?? undefined,
+      } as { type: "video"; videoUrl: string; caption?: string };
+    }
     if (block.type === "Photo") {
       return {
         type: "photo",

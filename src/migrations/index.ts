@@ -47,6 +47,7 @@ import * as migration_20261118_190000_remove_media_lists from './20261118_190000
 import * as migration_20261119_010000_make_media_alt_nullable from './20261119_010000_make_media_alt_nullable';
 import * as migration_20261123_005702 from './20261123_005702';
 import * as migration_20261123_093836 from './20261123_093836';
+import * as migration_20261124_031423 from './20261124_031423';
 
 export const migrations = [
   {
@@ -292,6 +293,11 @@ export const migrations = [
   {
     up: migration_20261123_093836.up,
     down: migration_20261123_093836.down,
-    name: '20261123_093836'
+    name: '20261123_093836',
+  },
+  {
+    up: migration_20261124_031423.up,
+    down: migration_20261124_031423.down,
+    name: '20261124_031423'
   },
 ];

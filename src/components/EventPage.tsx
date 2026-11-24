@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { EventDetail } from "@/content/events";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 export type EventPageProps = {
   event: EventDetail;
@@ -151,6 +152,15 @@ export default function EventPage({ event }: EventPageProps) {
 
             <section className="mt-10">
               {event.blocks.map((block, index) => {
+                if (block.type === "Video") {
+                  return (
+                    <YouTubeEmbed
+                      key={index}
+                      videoUrl={block.videoUrl}
+                      caption={block.caption}
+                    />
+                  );
+                }
                 if (block.type === "Photo") {
                   return (
                     <figure key={index} className="my-8">

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { IntroBlock } from "@/content/intro";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 export type WelcomeProps = {
   title: string;
@@ -21,6 +22,13 @@ export default function Welcome({ title, blocks }: WelcomeProps) {
               <h3 key={index} className="font-heading text-ink mt-10 text-3xl sm:text-4xl">
                 {block.text}
               </h3>
+            );
+          }
+          if (block.type === "video") {
+            return (
+              <div key={index} className="mt-10 max-w-2xl">
+                <YouTubeEmbed videoUrl={block.videoUrl} caption={block.caption} />
+              </div>
             );
           }
           if (block.type === "photo") {

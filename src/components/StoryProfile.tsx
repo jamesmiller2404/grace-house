@@ -6,6 +6,7 @@ import type { StoryProfile as StoryProfileData } from "@/content/storyProfiles";
 import { pillars } from "@/content/pillars";
 import MemoriesGallery from "@/components/MemoriesGallery";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 export type StoryProfileProps = {
   profile: StoryProfileData;
@@ -93,6 +94,15 @@ export default function StoryProfile({
               <h2 key={i} className="font-heading text-anchor mt-10 text-3xl">
                 {block.text}
               </h2>
+            );
+          }
+          if (block.type === "video") {
+            return (
+              <YouTubeEmbed
+                key={i}
+                videoUrl={block.videoUrl}
+                caption={block.caption}
+              />
             );
           }
           if (block.type === "photo") {

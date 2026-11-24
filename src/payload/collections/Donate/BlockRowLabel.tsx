@@ -15,7 +15,7 @@ const BlockRowLabel: React.FC = () => {
   const { data, rowNumber } = useRowLabel<{ type?: string; text?: string; caption?: string }>();
   const type = data?.type || "Paragraph";
   const displayType = type === "Heading" ? "Header" : type;
-  const text = ((type === "Photo" ? data?.caption : data?.text) || "").trim();
+  const text = ((type === "Photo" || type === "Video" ? data?.caption : data?.text) || "").trim();
   const snippet = text.length > 40 ? `${text.slice(0, 40).trimEnd()}…` : text;
   const label = snippet ? `${displayType}: ${snippet}` : displayType;
   return <span>{`${(rowNumber ?? 0) + 1}. ${label}`}</span>;

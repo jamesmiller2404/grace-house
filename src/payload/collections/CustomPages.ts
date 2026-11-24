@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
+import { isValidVideoUrl } from "@/lib/videoEmbed";
 
 /**
  * Custom pages an editor can create and manage without a fixed page limit.
@@ -155,6 +156,7 @@ access: {
               { label: "Heading", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
+              { label: "Video", value: "Video" },
             ],
             defaultValue: "Paragraph",
             required: true,
@@ -202,15 +204,38 @@ access: {
           },
         },
         {
-          // Optional caption under the photo — only for Photo blocks.
+          name: "videoUrl",
+          type: "text",
+          label: "Video Link",
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/YouTubeUrlField.tsx",
+              },
+            },
+            placeholder: "https://www.youtube.com/watch?v=... or https://vimeo.com/...",
+            description: "Paste a YouTube or Vimeo video link shown by this block.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Video",
+          },
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | null)?.type !== "Video" ||
+            (typeof value === "string" && isValidVideoUrl(value))
+              ? true
+              : "Enter a valid YouTube or Vimeo link for this Video block.",
+        },
+        {
+          // Optional caption under the photo or video.
           name: "caption",
           type: "text",
           label: "Caption (optional)",
           admin: {
             placeholder: "Caption...",
-            description: "Text shown in small type under the photo.",
-            condition: (_data, siblingData) =>
-              (siblingData as { type?: string } | null)?.type === "Photo",
+            description: "Text shown in small type under the photo or video.",
+            condition: (_data, siblingData) => {
+              const type = (siblingData as { type?: string } | null)?.type;
+              return type === "Photo" || type === "Video";
+            },
           },
         },
       ],

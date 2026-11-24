@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CustomPageBlock } from "@/content/customPages";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
 
 /**
  * Renders a custom page's body — the blocks in the order the editor stacked
@@ -20,6 +21,13 @@ export default function CustomPageBlocks({
   return (
     <>
       {blocks.map((block, i) => {
+        if (block.type === "video") {
+          return (
+            <div key={i} className="mt-10 max-w-2xl">
+              <YouTubeEmbed videoUrl={block.videoUrl} caption={block.caption} />
+            </div>
+          );
+        }
         if (block.type === "photo") {
           return (
             <figure key={i} className="mt-10">

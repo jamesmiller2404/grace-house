@@ -8,6 +8,7 @@ import {
   createAdminNotification,
   formatActorName,
 } from "@/payload/lib/notifications";
+import { isValidVideoUrl } from "@/lib/videoEmbed";
 
 /**
  * Lives Changed / Stories — the Payload version of `StoryProfile` in
@@ -312,6 +313,7 @@ export const Stories: CollectionConfig = {
               { label: "Heading", value: "Heading" },
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
+              { label: "Video", value: "Video" },
             ],
             defaultValue: "Paragraph",
             required: true,
@@ -364,12 +366,36 @@ export const Stories: CollectionConfig = {
               : "Choose a photo for this Photo block.",
         },
         {
+          name: "videoUrl",
+          type: "text",
+          label: false,
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/YouTubeUrlField.tsx",
+              },
+            },
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | undefined)?.type === "Video",
+            placeholder: "https://www.youtube.com/watch?v=... or https://vimeo.com/...",
+            description: "Paste a YouTube or Vimeo video link to embed in the story.",
+          },
+          validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+            (siblingData as { type?: string } | undefined)?.type !== "Video" ||
+            (typeof value === "string" && isValidVideoUrl(value))
+              ? true
+              : "Enter a valid YouTube or Vimeo link for this Video block.",
+        },
+        {
           name: "caption",
           type: "text",
           label: false,
           admin: {
-            condition: (_data, siblingData) => (siblingData as { type?: string } | undefined)?.type === "Photo",
-            placeholder: "Photo caption (optional)...",
+            condition: (_data, siblingData) => {
+              const type = (siblingData as { type?: string } | undefined)?.type;
+              return type === "Photo" || type === "Video";
+            },
+            placeholder: "Caption (optional)...",
           },
         },
       ],

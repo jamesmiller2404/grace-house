@@ -33,6 +33,7 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { default as default_6f3e05a027a844c5250cf0d325175072 } from '../../../../src/payload/fields/YouTubeUrlField.tsx'
 import { default as default_f1ca57aa7dba24613cc7c7e44d2d5bbd } from '../../../../src/payload/collections/Events/BlockRowLabel.tsx'
 import { default as default_4e49b4194b19d8eb6aa0d3e1c3a2d3d1 } from '../../../../src/payload/fields/ContactSelect/PhoneField.tsx'
 import { default as default_bcf58fb3c735697e29276de8c79cca4d } from '../../../../src/payload/fields/ContactSelect/EmailField.tsx'
@@ -147,6 +148,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "./src/payload/fields/YouTubeUrlField.tsx#default": default_6f3e05a027a844c5250cf0d325175072,
   "./src/payload/collections/Events/BlockRowLabel.tsx#default": default_f1ca57aa7dba24613cc7c7e44d2d5bbd,
   "./src/payload/fields/ContactSelect/PhoneField.tsx#default": default_4e49b4194b19d8eb6aa0d3e1c3a2d3d1,
   "./src/payload/fields/ContactSelect/EmailField.tsx#default": default_bcf58fb3c735697e29276de8c79cca4d,

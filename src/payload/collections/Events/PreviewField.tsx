@@ -76,6 +76,10 @@ export default function EventsPreviewField() {
       imagePositionX: typeof data.imagePositionX === "number" ? data.imagePositionX : 50,
       imagePositionY: typeof data.imagePositionY === "number" ? data.imagePositionY : 50,
       blocks: rows(data.blocks).flatMap<EventDetail["blocks"][number]>((block): EventDetail["blocks"][number][] => {
+        if (block.type === "Video") {
+          const videoUrl = text(block.videoUrl);
+          return videoUrl ? [{ type: "Video" as const, videoUrl, caption: text(block.caption) || undefined }] : [];
+        }
         if (block.type === "Photo") {
           const image = imageFor(block.image);
           return image ? [{ type: "Photo" as const, image, caption: text(block.caption) }] : [];

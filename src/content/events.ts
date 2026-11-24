@@ -76,6 +76,7 @@ export type EventDetail = {
     | { type: "Heading"; text: string }
     | { type: "Paragraph"; text: string; content?: unknown }
     | { type: "Photo"; image: string; caption?: string }
+    | { type: "Video"; videoUrl: string; caption?: string }
   )[];
   contact: { questions: string; phone: string; email: string };
 };
