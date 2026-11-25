@@ -89,18 +89,23 @@ export default async function Home() {
     .map((section) => {
       // Overlay the editable hero heading / subline / image from the database.
       if (section.type === "hero") {
+        // If the primary button is enabled and still points at "#help" while
+        // the Help Strip is hidden, fall back to /get-help.
+        const primaryCta = hero.primaryCta
+          ? {
+              ...hero.primaryCta,
+              href:
+                hero.primaryCta.href === "#help" && !helpStripVisible
+                  ? "/get-help"
+                  : hero.primaryCta.href,
+            }
+          : undefined;
         return {
           ...section,
           props: {
             ...section.props,
             ...hero,
-            // Point the "Get Help" button at the "Get Help Now" strip when it
-            // is shown; otherwise send visitors to the standalone /get-help
-            // page so the button always leads somewhere useful.
-            primaryCta: {
-              label: section.props.primaryCta?.label ?? "Get Help",
-              href: helpStripVisible ? "#help" : "/get-help",
-            },
+            primaryCta,
           },
         };
       }

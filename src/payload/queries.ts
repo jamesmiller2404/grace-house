@@ -11,7 +11,7 @@ import {
   type DonatePage,
 } from "@/content/donate";
 import type { Hero as PayloadHero } from "../../payload-types";
-import { heroDefaults } from "@/content/hero";
+import { heroDefaults, type HeroContent } from "@/content/hero";
 import type { Intro as PayloadIntro } from "../../payload-types";
 import { introDefaults, type IntroContent } from "@/content/intro";
 import type { GetHelpNow as PayloadGetHelpNow } from "../../payload-types";
@@ -343,28 +343,151 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
  * is empty, the static defaults in src/content/hero.ts are used so the hero
  * never breaks.
  */
-export const getHero = cache(
-  async (): Promise<{ heading: string; eyebrow: string; image: string }> => {
-    await connection();
-    const payload = await getPayload({ config });
-    const { docs } = await payload.find({
-      collection: "hero",
-      limit: 1,
-    });
-    const doc = docs[0] as PayloadHero | undefined;
-    if (doc) {
-      return {
-        heading: doc.heading,
-        eyebrow: doc.eyebrow ?? heroDefaults.eyebrow,
-        image:
-          typeof doc.image === "object" && doc.image && doc.image.url
-            ? doc.image.url
-            : heroDefaults.image,
-      };
-    }
-    return heroDefaults;
-  },
-);
+export const getHero = cache(async (): Promise<HeroContent> => {
+  await connection();
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "hero",
+    limit: 1,
+  });
+  const doc = docs[0] as
+    | (PayloadHero & {
+        showCard?: boolean | null;
+        subtext?: string | null;
+        cardColor?: string | null;
+        cardOpacity?: number | null;
+        headingColor?: string | null;
+        eyebrowColor?: string | null;
+        subtextColor?: string | null;
+        headingFontSize?: number | null;
+        eyebrowFontSize?: number | null;
+        subtextFontSize?: number | null;
+        textShadow?: {
+          enabled?: boolean | null;
+          color?: string | null;
+          opacity?: number | null;
+          distance?: number | null;
+          angle?: number | null;
+          fuzziness?: number | null;
+          extent?: number | null;
+        } | null;
+        cardPositionX?: number | null;
+        cardPositionY?: number | null;
+        cardWidth?: number | null;
+        cardHeight?: number | null;
+        primaryCta?: {
+          enabled?: boolean | null;
+          label?: string | null;
+          href?: string | null;
+          bgColor?: string | null;
+          textColor?: string | null;
+        } | null;
+        secondaryCta?: {
+          enabled?: boolean | null;
+          label?: string | null;
+          href?: string | null;
+          bgColor?: string | null;
+          textColor?: string | null;
+        } | null;
+      })
+    | undefined;
+  if (doc) {
+    const primaryEnabled = doc.primaryCta?.enabled !== false;
+    const secondaryEnabled = doc.secondaryCta?.enabled !== false;
+    return {
+      heading: doc.heading ?? "",
+      eyebrow: doc.eyebrow ?? "",
+      subtext: doc.subtext ?? "",
+      image:
+        typeof doc.image === "object" && doc.image && doc.image.url
+          ? doc.image.url
+          : heroDefaults.image,
+      showCard: doc.showCard !== false,
+      cardColor: doc.cardColor || heroDefaults.cardColor,
+      cardOpacity:
+        typeof doc.cardOpacity === "number"
+          ? doc.cardOpacity
+          : heroDefaults.cardOpacity,
+      headingColor: doc.headingColor || heroDefaults.headingColor,
+      eyebrowColor: doc.eyebrowColor || heroDefaults.eyebrowColor,
+      subtextColor: doc.subtextColor || heroDefaults.subtextColor,
+      headingFontSize:
+        typeof doc.headingFontSize === "number" && doc.headingFontSize > 0
+          ? doc.headingFontSize
+          : heroDefaults.headingFontSize,
+      eyebrowFontSize:
+        typeof doc.eyebrowFontSize === "number" && doc.eyebrowFontSize > 0
+          ? doc.eyebrowFontSize
+          : heroDefaults.eyebrowFontSize,
+      subtextFontSize:
+        typeof doc.subtextFontSize === "number" && doc.subtextFontSize > 0
+          ? doc.subtextFontSize
+          : heroDefaults.subtextFontSize,
+      textShadow: {
+        enabled: Boolean(doc.textShadow?.enabled),
+        color: doc.textShadow?.color || heroDefaults.textShadow.color,
+        opacity:
+          typeof doc.textShadow?.opacity === "number"
+            ? doc.textShadow.opacity
+            : heroDefaults.textShadow.opacity,
+        distance:
+          typeof doc.textShadow?.distance === "number"
+            ? doc.textShadow.distance
+            : heroDefaults.textShadow.distance,
+        angle:
+          typeof doc.textShadow?.angle === "number"
+            ? doc.textShadow.angle
+            : heroDefaults.textShadow.angle,
+        fuzziness:
+          typeof doc.textShadow?.fuzziness === "number"
+            ? doc.textShadow.fuzziness
+            : heroDefaults.textShadow.fuzziness,
+        extent:
+          typeof doc.textShadow?.extent === "number"
+            ? doc.textShadow.extent
+            : heroDefaults.textShadow.extent,
+      },
+      cardPositionX:
+        typeof doc.cardPositionX === "number"
+          ? doc.cardPositionX
+          : heroDefaults.cardPositionX,
+      cardPositionY:
+        typeof doc.cardPositionY === "number"
+          ? doc.cardPositionY
+          : heroDefaults.cardPositionY,
+      cardWidth:
+        typeof doc.cardWidth === "number" && doc.cardWidth > 0
+          ? doc.cardWidth
+          : undefined,
+      cardHeight:
+        typeof doc.cardHeight === "number" && doc.cardHeight > 0
+          ? doc.cardHeight
+          : undefined,
+      primaryCta: primaryEnabled
+        ? {
+            label: doc.primaryCta?.label ?? heroDefaults.primaryCta!.label,
+            href: doc.primaryCta?.href ?? heroDefaults.primaryCta!.href,
+            bgColor:
+              doc.primaryCta?.bgColor || heroDefaults.primaryCta!.bgColor,
+            textColor:
+              doc.primaryCta?.textColor || heroDefaults.primaryCta!.textColor,
+          }
+        : undefined,
+      secondaryCta: secondaryEnabled
+        ? {
+            label: doc.secondaryCta?.label ?? heroDefaults.secondaryCta!.label,
+            href: doc.secondaryCta?.href ?? heroDefaults.secondaryCta!.href,
+            bgColor:
+              doc.secondaryCta?.bgColor || heroDefaults.secondaryCta!.bgColor,
+            textColor:
+              doc.secondaryCta?.textColor ||
+              heroDefaults.secondaryCta!.textColor,
+          }
+        : undefined,
+    };
+  }
+  return heroDefaults;
+});
 
 /**
  * The "What is Grace House" (Intro) section content for the home page: the

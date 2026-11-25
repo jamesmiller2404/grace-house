@@ -1,5 +1,8 @@
 import { default as default_0e6ae7dd37d9e40ca7cf61129450b3c7 } from '../../../../src/payload/collections/Hero/PreviewField.tsx'
 import { default as default_1e4b0eec1bbec3a72273beec88ca3055 } from '../../../../src/payload/fields/MediaPickerUploadField.tsx'
+import { default as default_6075597ee06f5b67d5c7007b44f2a198 } from '../../../../src/payload/collections/Hero/ColorField.tsx'
+import { default as default_0cf645db958cedd0af4201127e6b3045 } from '../../../../src/payload/collections/Hero/OpacityField.tsx'
+import { default as default_21c05273ab40f758ad1c946aeb7c3faa } from '../../../../src/payload/collections/Hero/CardPositionField.tsx'
 import { default as default_e889d5011edb8e6606ecd09103a08b96 } from '../../../../src/payload/components/DashboardListButton.tsx'
 import { default as default_4d09e2f6f2f389b7998294f488a949c3 } from '../../../../src/payload/collections/Hero/CancelToDashboardButton.tsx'
 import { default as default_80a0d172a23972da09ad94e08fdfb662 } from '../../../../src/payload/collections/Hero/DoneToListButton.tsx'
@@ -116,6 +119,9 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 export const importMap = {
   "./src/payload/collections/Hero/PreviewField.tsx#default": default_0e6ae7dd37d9e40ca7cf61129450b3c7,
   "./src/payload/fields/MediaPickerUploadField.tsx#default": default_1e4b0eec1bbec3a72273beec88ca3055,
+  "./src/payload/collections/Hero/ColorField.tsx#default": default_6075597ee06f5b67d5c7007b44f2a198,
+  "./src/payload/collections/Hero/OpacityField.tsx#default": default_0cf645db958cedd0af4201127e6b3045,
+  "./src/payload/collections/Hero/CardPositionField.tsx#default": default_21c05273ab40f758ad1c946aeb7c3faa,
   "./src/payload/components/DashboardListButton.tsx#default": default_e889d5011edb8e6606ecd09103a08b96,
   "./src/payload/collections/Hero/CancelToDashboardButton.tsx#default": default_4d09e2f6f2f389b7998294f488a949c3,
   "./src/payload/collections/Hero/DoneToListButton.tsx#default": default_80a0d172a23972da09ad94e08fdfb662,

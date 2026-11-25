@@ -145,28 +145,117 @@ html[data-theme='light'] .gh-hero-edit {
 .gh-hero-edit .field-label {
   color: var(--gh-hero-text);
 }
-/* Required-field marker (Heading). This field keeps the mockup's
-   placeholder-only look (label: false in Hero.ts), so Payload's labeled-field
-   asterisk never renders for it. Paint the same marker here: a red * at the
-   top-right corner of the box, using Payload's own required-star color. The
-   input carries the id on the input itself (input#field-heading); the
-   > .field-type__wrap child hop keeps the selector from also matching the
-   outer field wrappers. */
-.gh-hero-edit .field-type:has(> .field-type__wrap > input#field-heading) {
-  position: relative;
+/* Color, opacity, and interactive position controls */
+.gh-hero-edit .gh-hero-color-row,
+.gh-hero-edit .gh-hero-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.gh-hero-edit .field-type:has(> .field-type__wrap > input#field-heading)::after {
-  color: var(--theme-error-500);
-  content: "*";
-  font-size: calc(var(--base-body-size, 13) * 1px);
-  font-weight: 700;
-  line-height: 1;
+.gh-hero-edit .gh-hero-color-swatch {
+  width: 42px;
+  height: 38px;
+  padding: 2px !important;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.gh-hero-edit .gh-hero-color-hex {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 38px;
+  padding: 0 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.gh-hero-edit .gh-hero-range {
+  flex: 1 1 auto;
+  accent-color: var(--gh-accent, #c9a45c);
+  cursor: pointer;
+  background: transparent !important;
+  border: 0 !important;
+}
+.gh-hero-edit .gh-hero-slider-value {
+  min-width: 44px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--gh-hero-text);
+}
+.gh-hero-edit .gh-hero-reset-btn {
+  border: 1px solid var(--gh-border-strong, #4a405c);
+  border-radius: 6px;
+  background: var(--gh-hero-upload);
+  color: var(--gh-hero-text);
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.gh-hero-edit .gh-hero-reset-btn:hover {
+  border-color: var(--gh-accent, #c9a45c);
+}
+.gh-hero-edit .gh-hero-position-picker {
+  margin-bottom: 18px;
+}
+.gh-hero-edit .gh-hero-position-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.gh-hero-edit .gh-hero-position-stage {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--gh-border-strong, #4a405c);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+}
+.gh-hero-edit .gh-hero-position-card {
   position: absolute;
-  right: 6px;
-  top: -6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  pointer-events: none;
+  max-width: 92%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.gh-hero-edit .gh-hero-position-heading {
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+.gh-hero-edit .gh-hero-position-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.gh-hero-edit .gh-hero-position-sliders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+.gh-hero-edit .gh-hero-slider-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gh-hero-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.gh-hero-edit .gh-hero-slider-control span {
+  min-width: 52px;
 }
 /* Text boxes */
-.gh-hero-edit input:not([type="checkbox"]):not([type="radio"]) {
+.gh-hero-edit input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]) {
   background: var(--gh-hero-field) !important;
   border: 1px solid var(--gh-border-subtle, #312a3d) !important;
   border-radius: 8px !important;

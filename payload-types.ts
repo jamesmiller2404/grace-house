@@ -152,7 +152,7 @@ export interface UserAuthOperations {
   };
 }
 /**
- * The front page hero: the main heading, the subline beneath it, and the background image.
+ * The front page hero: background image, optional overlay card (color, opacity, position, size), optional heading/subline, and optional action buttons.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "hero".
@@ -160,17 +160,108 @@ export interface UserAuthOperations {
 export interface Hero {
   id: number;
   /**
-   * The main heading over the hero image (e.g. "Hope Starts Here").
+   * The background image behind the hero section. Optional — the site falls back to the default image when empty.
    */
-  heading: string;
+  image?: (number | null) | Media;
   /**
-   * The subline shown beneath the heading (e.g. "Faith-Based Recovery").
+   * Uncheck to hide the translucent card, text, and buttons and display only the hero background image.
+   */
+  showCard?: boolean | null;
+  /**
+   * Optional main heading inside the hero card (e.g. "Hope Starts Here"). Leave blank to hide.
+   */
+  heading?: string | null;
+  /**
+   * Optional subline shown beneath the heading (e.g. "Faith-Based Recovery"). Leave blank to hide.
    */
   eyebrow?: string | null;
   /**
-   * The background image behind the hero text. Optional — the site falls back to the default image when empty.
+   * Optional third line of text shown beneath the eyebrow. Leave blank to hide.
    */
-  image?: (number | null) | Media;
+  subtext?: string | null;
+  /**
+   * Hex color for the overlay card (default #0f172a).
+   */
+  cardColor?: string | null;
+  /**
+   * 0% is fully transparent, 100% is solid (default 55%).
+   */
+  cardOpacity?: number | null;
+  /**
+   * Hex color for the heading text (default #ffffff).
+   */
+  headingColor?: string | null;
+  /**
+   * Hex color for the subline text (default #c9a45c).
+   */
+  eyebrowColor?: string | null;
+  /**
+   * Desktop heading size in pixels (16–120, default 60).
+   */
+  headingFontSize?: number | null;
+  /**
+   * Desktop subline size in pixels (10–48, default 19).
+   */
+  eyebrowFontSize?: number | null;
+  /**
+   * Hex color for the optional third text line (default #f7f3eb).
+   */
+  subtextColor?: string | null;
+  /**
+   * Desktop third-line size in pixels (10–48, default 18).
+   */
+  subtextFontSize?: number | null;
+  textShadow?: {
+    enabled?: boolean | null;
+    color?: string | null;
+    opacity?: number | null;
+    /**
+     * How far the shadow is offset from the text (0–50px).
+     */
+    distance?: number | null;
+    /**
+     * Direction of the shadow in degrees (0–360°).
+     */
+    angle?: number | null;
+    /**
+     * Softness/blur radius of the shadow (0–50px).
+     */
+    fuzziness?: number | null;
+    /**
+     * How far the shadow expands outward before blurring (0–20px).
+     */
+    extent?: number | null;
+  };
+  /**
+   * 0% = left edge, 50% = centered, 100% = right edge.
+   */
+  cardPositionX?: number | null;
+  /**
+   * 0% = top edge, 50% = middle, 100% = bottom edge.
+   */
+  cardPositionY?: number | null;
+  /**
+   * Optional width in pixels (200–1200). Leave blank for default auto-fit width.
+   */
+  cardWidth?: number | null;
+  /**
+   * Optional minimum height in pixels (100–600). Leave blank for default auto-fit height.
+   */
+  cardHeight?: number | null;
+  primaryCta?: {
+    enabled?: boolean | null;
+    label?: string | null;
+    href?: string | null;
+    bgColor?: string | null;
+    textColor?: string | null;
+  };
+  secondaryCta?: {
+    enabled?: boolean | null;
+    label?: string | null;
+    href?: string | null;
+    bgColor?: string | null;
+    textColor?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1153,9 +1244,52 @@ export interface PayloadMigration {
  * via the `definition` "hero_select".
  */
 export interface HeroSelect<T extends boolean = true> {
+  image?: T;
+  showCard?: T;
   heading?: T;
   eyebrow?: T;
-  image?: T;
+  subtext?: T;
+  cardColor?: T;
+  cardOpacity?: T;
+  headingColor?: T;
+  eyebrowColor?: T;
+  headingFontSize?: T;
+  eyebrowFontSize?: T;
+  subtextColor?: T;
+  subtextFontSize?: T;
+  textShadow?:
+    | T
+    | {
+        enabled?: T;
+        color?: T;
+        opacity?: T;
+        distance?: T;
+        angle?: T;
+        fuzziness?: T;
+        extent?: T;
+      };
+  cardPositionX?: T;
+  cardPositionY?: T;
+  cardWidth?: T;
+  cardHeight?: T;
+  primaryCta?:
+    | T
+    | {
+        enabled?: T;
+        label?: T;
+        href?: T;
+        bgColor?: T;
+        textColor?: T;
+      };
+  secondaryCta?:
+    | T
+    | {
+        enabled?: T;
+        label?: T;
+        href?: T;
+        bgColor?: T;
+        textColor?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

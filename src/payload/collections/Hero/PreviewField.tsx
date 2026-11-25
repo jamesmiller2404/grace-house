@@ -49,13 +49,67 @@ export default function HeroPreviewField() {
     return () => controller.abort();
   }, [open, imageId, data.image]);
 
-  const preview = useMemo<HeroProps>(() => ({
-    heading: text(data.heading, "Hope Starts Here"),
-    eyebrow: text(data.eyebrow),
-    image: mediaUrl(data.image) || resolvedMedia[imageId] || "/images/hero1a.jpg",
-    primaryCta: { label: "Get Help", href: "#help" },
-    secondaryCta: { label: "Our Stories", href: "/#stories" },
-  }), [data, imageId, resolvedMedia]);
+  const preview = useMemo<HeroProps>(() => {
+    const primary = record(data.primaryCta);
+    const secondary = record(data.secondaryCta);
+    const shadowRec = record(data.textShadow);
+    const primaryEnabled = primary.enabled !== false;
+    const secondaryEnabled = secondary.enabled !== false;
+
+    return {
+      heading: text(data.heading),
+      eyebrow: text(data.eyebrow),
+      subtext: text(data.subtext),
+      image: mediaUrl(data.image) || resolvedMedia[imageId] || "/images/hero1a.jpg",
+      showCard: data.showCard !== false,
+      cardColor: text(data.cardColor, "#0f172a"),
+      cardOpacity: typeof data.cardOpacity === "number" ? data.cardOpacity : 55,
+      headingColor: text(data.headingColor, "#ffffff"),
+      eyebrowColor: text(data.eyebrowColor, "#c9a45c"),
+      subtextColor: text(data.subtextColor, "#f7f3eb"),
+      headingFontSize:
+        typeof data.headingFontSize === "number" && data.headingFontSize > 0
+          ? data.headingFontSize
+          : 60,
+      eyebrowFontSize:
+        typeof data.eyebrowFontSize === "number" && data.eyebrowFontSize > 0
+          ? data.eyebrowFontSize
+          : 19,
+      subtextFontSize:
+        typeof data.subtextFontSize === "number" && data.subtextFontSize > 0
+          ? data.subtextFontSize
+          : 18,
+      textShadow: {
+        enabled: Boolean(shadowRec.enabled),
+        color: text(shadowRec.color, "#000000"),
+        opacity: typeof shadowRec.opacity === "number" ? shadowRec.opacity : 75,
+        distance: typeof shadowRec.distance === "number" ? shadowRec.distance : 4,
+        angle: typeof shadowRec.angle === "number" ? shadowRec.angle : 135,
+        fuzziness: typeof shadowRec.fuzziness === "number" ? shadowRec.fuzziness : 6,
+        extent: typeof shadowRec.extent === "number" ? shadowRec.extent : 0,
+      },
+      cardPositionX: typeof data.cardPositionX === "number" ? data.cardPositionX : 50,
+      cardPositionY: typeof data.cardPositionY === "number" ? data.cardPositionY : 5,
+      cardWidth: typeof data.cardWidth === "number" && data.cardWidth > 0 ? data.cardWidth : undefined,
+      cardHeight: typeof data.cardHeight === "number" && data.cardHeight > 0 ? data.cardHeight : undefined,
+      primaryCta: primaryEnabled
+        ? {
+            label: text(primary.label, "Get Help"),
+            href: text(primary.href, "#help"),
+            bgColor: text(primary.bgColor, "#9e5640"),
+            textColor: text(primary.textColor, "#ffffff"),
+          }
+        : undefined,
+      secondaryCta: secondaryEnabled
+        ? {
+            label: text(secondary.label, "Our Stories"),
+            href: text(secondary.href, "/#stories"),
+            bgColor: text(secondary.bgColor, "#ffffff"),
+            textColor: text(secondary.textColor, "#242725"),
+          }
+        : undefined,
+    };
+  }, [data, imageId, resolvedMedia]);
 
   useEffect(() => {
     if (!open) return;
