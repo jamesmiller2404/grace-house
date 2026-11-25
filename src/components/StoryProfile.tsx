@@ -59,6 +59,11 @@ export default function StoryProfile({
               className="object-cover"
               style={{
                 objectPosition: `${profile.imagePositionX ?? 50}% ${profile.imagePositionY ?? 50}%`,
+                transform:
+                  profile.imageZoom && profile.imageZoom > 100
+                    ? `scale(${profile.imageZoom / 100})`
+                    : undefined,
+                transformOrigin: `${profile.imagePositionX ?? 50}% ${profile.imagePositionY ?? 50}%`,
               }}
             />
           </div>

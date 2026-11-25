@@ -17,6 +17,7 @@ export type StoryItem = {
   image: string;
   imagePositionX?: number;
   imagePositionY?: number;
+  imageZoom?: number;
   /** Where the card links — the person's story/profile page. */
   href: string;
   /** Opening pull quote shown on the profile card and in the profile hero. */

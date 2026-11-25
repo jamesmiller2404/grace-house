@@ -24,6 +24,11 @@ export type ImagePositionOptions = {
    * Defaults to "imagePositionX".
    */
   xField?: string;
+  /**
+   * Optional path of a sibling number field that holds zoom percentage
+   * (100-250). When provided, a zoom slider is shown below the preview.
+   */
+  zoomField?: string;
 };
 
 /**
@@ -65,6 +70,7 @@ export function ImagePositionField(
           aspectRatio: options.aspectRatio,
           imageField: options.imageField,
           xField: options.xField,
+          zoomField: options.zoomField,
         },
       },
     },

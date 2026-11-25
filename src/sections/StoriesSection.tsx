@@ -42,7 +42,7 @@ export default function StoriesSection({
                 href={story.href}
                 className="group flex flex-1 flex-col overflow-hidden bg-white shadow-[0_4px_10px_rgba(0,0,0,0.08)] transition hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] focus-visible:outline-2 focus-visible:outline-terra"
               >
-                <div className="relative h-64 shrink-0">
+                <div className="relative h-64 shrink-0 overflow-hidden">
                   <Image
                     src={story.image}
                     alt={story.name}
@@ -51,6 +51,11 @@ export default function StoriesSection({
                     className="object-cover"
                     style={{
                       objectPosition: `${story.imagePositionX ?? 50}% ${story.imagePositionY ?? 50}%`,
+                      transform:
+                        story.imageZoom && story.imageZoom > 100
+                          ? `scale(${story.imageZoom / 100})`
+                          : undefined,
+                      transformOrigin: `${story.imagePositionX ?? 50}% ${story.imagePositionY ?? 50}%`,
                     }}
                   />
                 </div>

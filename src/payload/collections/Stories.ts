@@ -114,6 +114,9 @@ export const Stories: CollectionConfig = {
       edit: {
         beforeDocumentControls: [
           {
+            path: "./src/payload/collections/Stories/StatusBadge.tsx",
+          },
+          {
             path: "./src/payload/collections/Stories/CancelToDashboardButton.tsx",
           },
           {
@@ -277,6 +280,17 @@ export const Stories: CollectionConfig = {
       },
     },
     {
+      name: "imageZoom",
+      type: "number",
+      label: "Image Zoom (%)",
+      defaultValue: 100,
+      min: 100,
+      max: 250,
+      admin: {
+        hidden: true,
+      },
+    },
+    {
       // The story hero renders the photo in a 4/5 portrait frame (see
       // src/components/StoryProfile.tsx).
       ...ImagePositionField(
@@ -287,7 +301,7 @@ export const Stories: CollectionConfig = {
           min: 0,
           max: 100,
         },
-        { aspectRatio: "4 / 5" },
+        { aspectRatio: "4 / 5", zoomField: "imageZoom" },
       ),
     },
     {

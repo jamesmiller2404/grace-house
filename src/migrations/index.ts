@@ -54,6 +54,7 @@ import * as migration_20261125_204702_hero_subtext_and_shadow from './20261125_2
 import * as migration_20261125_213000_restore_media_objectkey from './20261125_213000_restore_media_objectkey';
 import * as migration_20261125_220036_stories_drafts from './20261125_220036_stories_drafts';
 import * as migration_20261125_221500_backfill_stories_versions from './20261125_221500_backfill_stories_versions';
+import * as migration_20261125_234142_stories_image_zoom from './20261125_234142_stories_image_zoom';
 
 export const migrations = [
   {
@@ -335,5 +336,10 @@ export const migrations = [
     up: migration_20261125_221500_backfill_stories_versions.up,
     down: migration_20261125_221500_backfill_stories_versions.down,
     name: '20261125_221500_backfill_stories_versions',
+  },
+  {
+    up: migration_20261125_234142_stories_image_zoom.up,
+    down: migration_20261125_234142_stories_image_zoom.down,
+    name: '20261125_234142_stories_image_zoom'
   },
 ];

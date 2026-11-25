@@ -45,6 +45,7 @@ import { default as default_efa9dffc52114b53adee79502de11280 } from '../../../..
 import { default as default_a96ef3bf66508d75aa2839ab2d277713 } from '../../../../src/payload/collections/Events/EditView.tsx'
 import { default as default_660143d5cb63932c9c1a40c4d5011928 } from '../../../../src/payload/collections/Stories/StoryPreviewField.tsx'
 import { default as default_ccd3294f607e0fcee28fd4ebda9d64c7 } from '../../../../src/payload/collections/Stories/BodyRowLabel.tsx'
+import { default as default_47954ccfb5dbe947504533b622505f64 } from '../../../../src/payload/collections/Stories/StatusBadge.tsx'
 import { default as default_36bcfac68caf385e35e8afbdf797e0e1 } from '../../../../src/payload/collections/Stories/CancelToDashboardButton.tsx'
 import { default as default_26ae039daab2c0974bf13f4adc662368 } from '../../../../src/payload/collections/Stories/DoneToListButton.tsx'
 import { default as default_2cd92de4983d2a89abe8f915ada8e454 } from '../../../../src/payload/collections/Stories/EditView.tsx'
@@ -164,6 +165,7 @@ export const importMap = {
   "./src/payload/collections/Events/EditView.tsx#default": default_a96ef3bf66508d75aa2839ab2d277713,
   "./src/payload/collections/Stories/StoryPreviewField.tsx#default": default_660143d5cb63932c9c1a40c4d5011928,
   "./src/payload/collections/Stories/BodyRowLabel.tsx#default": default_ccd3294f607e0fcee28fd4ebda9d64c7,
+  "./src/payload/collections/Stories/StatusBadge.tsx#default": default_47954ccfb5dbe947504533b622505f64,
   "./src/payload/collections/Stories/CancelToDashboardButton.tsx#default": default_36bcfac68caf385e35e8afbdf797e0e1,
   "./src/payload/collections/Stories/DoneToListButton.tsx#default": default_26ae039daab2c0974bf13f4adc662368,
   "./src/payload/collections/Stories/EditView.tsx#default": default_2cd92de4983d2a89abe8f915ada8e454,

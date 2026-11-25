@@ -890,6 +890,7 @@ function toStoryItem(doc: PayloadStory): StoryItem {
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
+    imageZoom: doc.imageZoom ?? 100,
     heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
     href: `/stories/${storySlug(doc.name)}`,
     // Generated link copy always follows Gender, not the legacy readLabel or
@@ -909,6 +910,7 @@ function toStoryProfile(doc: PayloadStory): StoryProfile {
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_vertical.png",
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
+    imageZoom: (doc as PayloadStory & { imageZoom?: number | null }).imageZoom ?? 100,
     heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
     body: toStoryBody(doc),
     quoteBand: {

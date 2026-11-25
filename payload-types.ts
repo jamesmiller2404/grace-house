@@ -405,6 +405,7 @@ export interface Story {
    */
   image?: (number | null) | Media;
   imagePositionX?: number | null;
+  imageZoom?: number | null;
   imagePositionY?: number | null;
   /**
    * Add headers, paragraphs and photos in the order you would like them to appear. The first paragraph gets the drop cap on the first letter.
@@ -1346,6 +1347,7 @@ export interface StoriesSelect<T extends boolean = true> {
   date?: T;
   image?: T;
   imagePositionX?: T;
+  imageZoom?: T;
   imagePositionY?: T;
   body?:
     | T

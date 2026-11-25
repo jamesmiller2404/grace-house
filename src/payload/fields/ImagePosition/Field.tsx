@@ -114,6 +114,8 @@ type ImagePositionClientProps = {
   imageField?: string;
   /** Path of the sibling number field holding the horizontal position. Defaults to "imagePositionX". */
   xField?: string;
+  /** Optional path of a sibling number field holding zoom percentage (100-250). */
+  zoomField?: string;
 };
 
 const ImagePositionField: React.FC<
@@ -124,6 +126,7 @@ const ImagePositionField: React.FC<
   aspectRatio: aspectRatioProp,
   imageField: imageFieldName = "image",
   xField: xFieldName = "imagePositionX",
+  zoomField: zoomFieldName,
 }) => {
   // Resolve sibling fields relative to this field's location.
   // This supports both root-level fields and fields inside arrays.
@@ -133,12 +136,14 @@ const ImagePositionField: React.FC<
 
   const imageFieldPath = `${parentPath}${imageFieldName}`;
   const xFieldPath = `${parentPath}${xFieldName}`;
+  const zoomFieldPath = zoomFieldName ? `${parentPath}${zoomFieldName}` : "";
   // The frame the preview mimics — must match the frontend's image container.
   const aspectRatio = aspectRatioProp ?? "16 / 10";
   // The two saved percentages. This component is attached to imagePositionY
   // and also drives the hidden imagePositionX sibling field.
   const yField = useField<number>({ path });
   const xField = useField<number>({ path: xFieldPath });
+  const zField = useField<number>({ path: zoomFieldPath || path });
   // The sibling upload field's value (a media id), re-read whenever the
   // admin picks a different image or the form hydrates.
   const imageId = useFormFields((fields) =>
@@ -172,6 +177,7 @@ const ImagePositionField: React.FC<
 
   const xPercent = clamp(xField.value ?? 50, 0, 100);
   const yPercent = clamp(yField.value ?? 50, 0, 100);
+  const zoomPercent = zoomFieldName ? clamp(zField.value ?? 100, 100, 250) : 100;
 
   // Track the selected image: whenever the sibling `image` field's value
   // changes (or on first load), fetch its url and intrinsic dimensions.
@@ -312,11 +318,58 @@ const ImagePositionField: React.FC<
               // x% of the window — the same math the event page renders.
               left: -(layout.overflowX * xPercent) / 100,
               top: -(layout.overflowY * yPercent) / 100,
+              transform: zoomPercent > 100 ? `scale(${zoomPercent / 100})` : undefined,
+              transformOrigin: `${xPercent}% ${yPercent}%`,
             }}
           />
         )}
         {!media && <div style={styles.empty}>Image</div>}
       </div>
+      {media && layout && zoomFieldName && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            marginTop: 8,
+            maxWidth: 560,
+          }}
+        >
+          <label
+            htmlFor={`field-${zoomFieldPath}`}
+            style={{ fontSize: 12, fontWeight: 600, minWidth: 74 }}
+          >
+            Zoom: {zoomPercent}%
+          </label>
+          <input
+            id={`field-${zoomFieldPath}`}
+            type="range"
+            min={100}
+            max={250}
+            step={1}
+            value={zoomPercent}
+            onChange={(e) => zField.setValue(Number(e.target.value))}
+            style={{ flex: 1, cursor: "pointer" }}
+          />
+          {zoomPercent !== 100 && (
+            <button
+              type="button"
+              onClick={() => zField.setValue(100)}
+              style={{
+                fontSize: 12,
+                padding: "3px 8px",
+                borderRadius: 4,
+                border: "1px solid var(--theme-elevation-250)",
+                background: "transparent",
+                color: "inherit",
+                cursor: "pointer",
+              }}
+            >
+              Reset
+            </button>
+          )}
+        </div>
+      )}
       {media && layout && (
         <div className="gh-image-position-description" style={{ marginTop: 4, fontSize: 12 }}>
           Drag the image with your mouse or finger to set its position in the
