@@ -11,14 +11,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "hero" ADD COLUMN "text_shadow_distance" numeric DEFAULT 4;
   ALTER TABLE "hero" ADD COLUMN "text_shadow_angle" numeric DEFAULT 135;
   ALTER TABLE "hero" ADD COLUMN "text_shadow_fuzziness" numeric DEFAULT 6;
-  ALTER TABLE "hero" ADD COLUMN "text_shadow_extent" numeric DEFAULT 0;
-  ALTER TABLE "media" DROP COLUMN "_objectkey";`)
+  ALTER TABLE "hero" ADD COLUMN "text_shadow_extent" numeric DEFAULT 0;`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "media" ADD COLUMN "_objectkey" varchar;
-  ALTER TABLE "hero" DROP COLUMN "subtext";
+   ALTER TABLE "hero" DROP COLUMN "subtext";
   ALTER TABLE "hero" DROP COLUMN "subtext_color";
   ALTER TABLE "hero" DROP COLUMN "subtext_font_size";
   ALTER TABLE "hero" DROP COLUMN "text_shadow_enabled";
