@@ -52,6 +52,8 @@ import * as migration_20261125_194810 from './20261125_194810';
 import * as migration_20261125_202328_hero_font_sizes from './20261125_202328_hero_font_sizes';
 import * as migration_20261125_204702_hero_subtext_and_shadow from './20261125_204702_hero_subtext_and_shadow';
 import * as migration_20261125_213000_restore_media_objectkey from './20261125_213000_restore_media_objectkey';
+import * as migration_20261125_220036_stories_drafts from './20261125_220036_stories_drafts';
+import * as migration_20261125_221500_backfill_stories_versions from './20261125_221500_backfill_stories_versions';
 
 export const migrations = [
   {
@@ -323,5 +325,15 @@ export const migrations = [
     up: migration_20261125_213000_restore_media_objectkey.up,
     down: migration_20261125_213000_restore_media_objectkey.down,
     name: '20261125_213000_restore_media_objectkey',
+  },
+  {
+    up: migration_20261125_220036_stories_drafts.up,
+    down: migration_20261125_220036_stories_drafts.down,
+    name: '20261125_220036_stories_drafts',
+  },
+  {
+    up: migration_20261125_221500_backfill_stories_versions.up,
+    down: migration_20261125_221500_backfill_stories_versions.down,
+    name: '20261125_221500_backfill_stories_versions',
   },
 ];

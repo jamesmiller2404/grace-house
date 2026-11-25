@@ -501,6 +501,7 @@ export interface Story {
   pillar?: ('Select a pillar...' | 'Forgive Yourself' | "God's Timing" | 'A Giver, Not a Taker' | 'Restoration') | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1397,6 +1398,7 @@ export interface StoriesSelect<T extends boolean = true> {
   pillar?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

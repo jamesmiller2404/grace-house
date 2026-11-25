@@ -38,11 +38,16 @@ export const Stories: CollectionConfig = {
     singular: "Story",
     plural: "Lives Changed",
   },
-  // Public site content — allow anonymous reads of the REST API.
-  // (The site itself reads through the Local API, which bypasses access
-  // control; this opens the public /api/stories endpoint.)
+  versions: {
+    drafts: true,
+  },
+  // Public site content — allow anonymous reads of published stories only.
+  // Logged-in admins/editors can read both drafts and published stories.
   access: {
-    read: () => true,
+    read: ({ req }) => {
+      if (req.user?.role === "admin" || req.user?.role === "editor") return true;
+      return { _status: { equals: "published" } };
+    },
     create: ({ req }) =>
       req.user?.role === "admin" || req.user?.role === "editor",
     update: ({ req }) =>
@@ -56,10 +61,17 @@ export const Stories: CollectionConfig = {
         if (!req.user) return doc;
         const name = typeof doc.name === "string" && doc.name.trim() ? doc.name : "Story";
         const actorName = formatActorName(req.user);
+        const isDraft = doc._status === "draft";
 
         await createAdminNotification(req.payload, {
-          title: operation === "create" ? "New story published" : "Story updated",
-          message: `"${name}" was ${operation === "create" ? "created" : "updated"} by ${actorName}.`,
+          title: isDraft
+            ? operation === "create"
+              ? "Story draft saved"
+              : "Story draft updated"
+            : operation === "create"
+              ? "New story published"
+              : "Story published",
+          message: `"${name}" was ${isDraft ? "saved as a draft" : operation === "create" ? "published" : "updated"} by ${actorName}.`,
           category: "content",
           severity: "info",
           actionUrl: `/admin/collections/stories/${doc.id}`,
@@ -73,7 +85,7 @@ export const Stories: CollectionConfig = {
   admin: {
     group: "Community & Content",
     useAsTitle: "name",
-    defaultColumns: ["name", "role", "gender", "date", "pillar"],
+    defaultColumns: ["name", "_status", "role", "gender", "date", "pillar"],
     description:
       "The Lives Changed section: the people of Grace House — graduates, volunteers and staff — in their own words.",
     // Custom Edit view wrapper that paints the mockup frame

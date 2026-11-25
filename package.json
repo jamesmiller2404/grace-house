@@ -7,6 +7,8 @@
     "dev": "next dev",
     "build": "node -e \"process.env.R2_BUCKET ||= 'placeholder'; require('child_process').execSync('npx payload generate:importmap', { stdio: 'inherit' })\" && next build",
     "start": "next start",
+    "migrate": "npx payload migrate",
+    "migrate:create": "node -e \"process.env.R2_BUCKET ||= 'placeholder'; require('child_process').execSync('npx payload migrate:create ' + process.argv.slice(1).join(' '), { stdio: 'inherit' })\" --",
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check --end-of-line auto ."

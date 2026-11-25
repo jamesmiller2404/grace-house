@@ -111,6 +111,9 @@ export default function StoriesBrowser({ stories }: StoriesBrowserProps) {
                     fill
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
                     className="object-cover"
+                    style={{
+                      objectPosition: `${story.imagePositionX ?? 50}% ${story.imagePositionY ?? 50}%`,
+                    }}
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">

@@ -888,6 +888,8 @@ function toStoryItem(doc: PayloadStory): StoryItem {
     tag: doc.role === "Other" ? doc.roleLabel?.trim() || "Other" : doc.role || "Other",
     date: doc.date ?? "",
     image: mediaUrl(doc.image) || "/images/noPhotoAvailable_horizontall.png",
+    imagePositionX: doc.imagePositionX ?? 50,
+    imagePositionY: doc.imagePositionY ?? 50,
     heroQuote: doc.showPullQuote !== false ? doc.pullQuote ?? "" : "",
     href: `/stories/${storySlug(doc.name)}`,
     // Generated link copy always follows Gender, not the legacy readLabel or
@@ -939,6 +941,8 @@ export const getStories = cache(async (): Promise<StoryItem[]> => {
   const payload = await getPayload({ config });
   const { docs } = await payload.find({
     collection: "stories",
+    draft: false,
+    where: { _status: { equals: "published" } },
     limit: 100,
     sort: "name",
   });
@@ -956,6 +960,8 @@ export const getStoryProfiles = cache(async (): Promise<StoryProfile[]> => {
   const payload = await getPayload({ config });
   const { docs } = await payload.find({
     collection: "stories",
+    draft: false,
+    where: { _status: { equals: "published" } },
     limit: 100,
     sort: "name",
   });
@@ -974,6 +980,8 @@ export const getStoryProfileBySlug = cache(
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "stories",
+      draft: false,
+      where: { _status: { equals: "published" } },
       limit: 100,
       sort: "name",
     });

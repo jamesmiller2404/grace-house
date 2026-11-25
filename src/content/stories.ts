@@ -15,6 +15,8 @@ export type StoryItem = {
    *  Accepts "MM/DD/YYYY" (full date) or "MM/YYYY" (month and year only). */
   date: string;
   image: string;
+  imagePositionX?: number;
+  imagePositionY?: number;
   /** Where the card links — the person's story/profile page. */
   href: string;
   /** Opening pull quote shown on the profile card and in the profile hero. */
