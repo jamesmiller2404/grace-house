@@ -24,8 +24,8 @@ export default function CustomPageSection({ page }: CustomPageSectionProps) {
         <h2 className="font-heading text-ink text-4xl sm:text-5xl">
           {page.title}
         </h2>
-        <div className="max-w-[70ch]">
-          <CustomPageBlocks blocks={page.blocks} />
+        <div className={page.columns === "2" || page.columns === "3" ? "" : "max-w-[70ch]"}>
+          <CustomPageBlocks blocks={page.blocks} columns={page.columns} />
         </div>
       </div>
     </section>

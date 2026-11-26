@@ -29,6 +29,8 @@ export type CustomPageContent = {
   title: string;
   /** The URL slug (/pages/<slug>), derived from the title. */
   slug: string;
+  /** Number of content columns on desktop ("1", "2", or "3"). */
+  columns?: "1" | "2" | "3";
   blocks: CustomPageBlock[];
 };
 

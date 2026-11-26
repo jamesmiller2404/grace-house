@@ -113,6 +113,7 @@ import { default as default_affbcb01d7c37135bda62799520840e5 } from '../../../..
 import { default as default_b3a14a0640f60ac5042c64c794da4b88 } from '../../../../src/payload/components/DashboardWelcomeBanner.tsx'
 import { default as default_2d93c0f1ec8c2928bf72abe31dfe79d2 } from '../../../../src/payload/components/LoginNotice.tsx'
 import { default as default_8bffbe8c340a21ef392942cece6c6d0c } from '../../../../src/payload/components/NavClosedOnLoginProvider.tsx'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { default as default_93115a163f211dca91015775c3f5f710 } from '../../../../src/payload/components/ForgotPasswordView.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -233,6 +234,7 @@ export const importMap = {
   "./src/payload/components/DashboardWelcomeBanner.tsx#default": default_b3a14a0640f60ac5042c64c794da4b88,
   "./src/payload/components/LoginNotice.tsx#default": default_2d93c0f1ec8c2928bf72abe31dfe79d2,
   "./src/payload/components/NavClosedOnLoginProvider.tsx#default": default_8bffbe8c340a21ef392942cece6c6d0c,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "./src/payload/components/ForgotPasswordView.tsx#default": default_93115a163f211dca91015775c3f5f710,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

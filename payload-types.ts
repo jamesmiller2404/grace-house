@@ -1027,6 +1027,10 @@ export interface CustomPage {
    */
   title: string;
   /**
+   * Choose 1, 2, or 3 columns for desktop layout. Headings span the full width; photos, videos, and paragraphs flow across the columns.
+   */
+  columns?: ('1' | '2' | '3') | null;
+  /**
    * Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. A "Photo" block shows an image from the Media collection.
    */
   blocks?:
@@ -1609,6 +1613,7 @@ export interface BoardSelect<T extends boolean = true> {
 export interface CustomPagesSelect<T extends boolean = true> {
   enabled?: T;
   title?: T;
+  columns?: T;
   blocks?:
     | T
     | {

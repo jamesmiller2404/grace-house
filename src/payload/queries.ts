@@ -1003,9 +1003,13 @@ export const getStoryProfileBySlug = cache(
 
 /** Map one database custom page to the content the page renderer shows. */
 function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
+  const rawColumns = (doc as PayloadCustomPage & { columns?: string | null }).columns;
+  const columns: "1" | "2" | "3" =
+    rawColumns === "2" || rawColumns === "3" ? rawColumns : "1";
   return {
     title: doc.title,
     slug: customPageSlug(doc.title),
+    columns,
     blocks: (doc.blocks ?? []).flatMap((block): CustomPageBlock[] => {
       // Photo rows render their Media image (with an optional caption).
       // A photo row with no image picked yet is skipped.

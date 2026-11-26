@@ -88,7 +88,10 @@ export default function CustomPagesPreviewField() {
         linkHref: text(block.linkHref) || undefined,
       }];
     });
-    return { title, slug: customPageSlug(title), blocks };
+    const rawColumns = text(data.columns, "1");
+    const columns: "1" | "2" | "3" =
+      rawColumns === "2" || rawColumns === "3" ? rawColumns : "1";
+    return { title, slug: customPageSlug(title), columns, blocks };
   }, [data, resolvedMedia]);
 
   useEffect(() => {

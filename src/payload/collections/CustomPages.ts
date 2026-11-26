@@ -133,6 +133,21 @@ access: {
       },
     },
     {
+      name: "columns",
+      type: "select",
+      label: "Page Layout Columns",
+      defaultValue: "1",
+      options: [
+        { label: "1 Column (Default)", value: "1" },
+        { label: "2 Columns", value: "2" },
+        { label: "3 Columns", value: "3" },
+      ],
+      admin: {
+        description:
+          "Choose 1, 2, or 3 columns for desktop layout. Headings span the full width; photos, videos, and paragraphs flow across the columns.",
+      },
+    },
+    {
       // The page body: an ordered list of blocks, each either a Paragraph, a
       // Heading or a Photo (the same text-block pattern as the Donate page,
       // extended with a photo block), so content can be added and stacked in

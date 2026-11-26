@@ -58,8 +58,8 @@ export default async function CustomPage({ params }: Params) {
 
         {/* The page body — blocks in the order the editor stacked them
             (shared with the home page's "Custom Page" section). */}
-        <div className="max-w-[70ch]">
-          <CustomPageBlocks blocks={page.blocks} />
+        <div className={page.columns === "2" || page.columns === "3" ? "" : "max-w-[70ch]"}>
+          <CustomPageBlocks blocks={page.blocks} columns={page.columns} />
         </div>
       </div>
     </main>

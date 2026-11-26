@@ -55,6 +55,7 @@ import * as migration_20261125_213000_restore_media_objectkey from './20261125_2
 import * as migration_20261125_220036_stories_drafts from './20261125_220036_stories_drafts';
 import * as migration_20261125_221500_backfill_stories_versions from './20261125_221500_backfill_stories_versions';
 import * as migration_20261125_234142_stories_image_zoom from './20261125_234142_stories_image_zoom';
+import * as migration_20261126_001228_custom_pages_columns from './20261126_001228_custom_pages_columns';
 
 export const migrations = [
   {
@@ -340,6 +341,11 @@ export const migrations = [
   {
     up: migration_20261125_234142_stories_image_zoom.up,
     down: migration_20261125_234142_stories_image_zoom.down,
-    name: '20261125_234142_stories_image_zoom'
+    name: '20261125_234142_stories_image_zoom',
+  },
+  {
+    up: migration_20261126_001228_custom_pages_columns.up,
+    down: migration_20261126_001228_custom_pages_columns.down,
+    name: '20261126_001228_custom_pages_columns'
   },
 ];
