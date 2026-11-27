@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   buildHeroTextShadow,
@@ -11,6 +12,8 @@ export type HeroProps = {
   subtext?: string;
   body?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   showCard?: boolean;
   cardColor?: string;
   cardOpacity?: number;
@@ -43,6 +46,8 @@ export default function Hero({
   heading,
   subtext,
   image = "/images/hero1a.jpg",
+  imageWidth,
+  imageHeight,
   showCard = true,
   cardColor = "#0f172a",
   cardOpacity = 55,
@@ -77,13 +82,28 @@ export default function Hero({
 
   return (
     <section className="relative isolate overflow-hidden border-gold border-b-4 text-center">
-      {/* Full-width natural-aspect-ratio image so there is never top/bottom cropping */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={image}
-        alt=""
-        className="block w-full h-auto select-none"
-      />
+      {/* Full-width natural-aspect-ratio image so there is never top/bottom cropping.
+          Uses Next.js <Image> with the uploaded media's real dimensions for responsive
+          1x/2x Retina srcset & WebP/AVIF optimization. */}
+      {imageWidth && imageHeight ? (
+        <Image
+          src={image}
+          alt=""
+          width={imageWidth}
+          height={imageHeight}
+          priority
+          sizes="100vw"
+          quality={90}
+          className="block h-auto w-full select-none"
+        />
+      ) : (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={image}
+          alt=""
+          className="block h-auto w-full select-none"
+        />
+      )}
       {/* Light scrim only — the mockup keeps the photo bright */}
       <div className="pointer-events-none absolute inset-0 bg-ink/10" />
 

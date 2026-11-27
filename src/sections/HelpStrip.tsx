@@ -11,6 +11,7 @@ export type HelpStripProps = {
    */
   assessmentNote?: string;
   assessmentNoteContent?: unknown;
+  phonePrefix?: string;
   phone: string;
   phoneHref: string;
   /**
@@ -20,12 +21,27 @@ export type HelpStripProps = {
    */
   cta?: { label: string; href: string };
   ctaNote?: string;
+  /** Label shown before office hours (e.g. "Office hours:"). */
+  hoursPrefix?: string;
   /** Office hours shown under the phone number (e.g. "Mon–Fri, 9am–5pm"). */
   hours: string;
+  /** Optional rich-text override replacing the default phone + hours lines. */
+  contactContent?: unknown;
   facts: string[];
   crisisTitle?: string;
   crisisLines: { label: string; text: string; href: string }[];
 };
+
+function hasLexicalText(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  const node = value as { text?: unknown; children?: unknown[]; root?: unknown };
+  if (typeof node.text === "string" && node.text.trim().length > 0) return true;
+  if (node.root) return hasLexicalText(node.root);
+  if (Array.isArray(node.children)) {
+    return node.children.some((child) => hasLexicalText(child));
+  }
+  return false;
+}
 
 export default function HelpStrip({
   heading,
@@ -33,15 +49,19 @@ export default function HelpStrip({
   bodyContent,
   assessmentNote,
   assessmentNoteContent,
+  phonePrefix = "or call",
   phone,
   phoneHref,
   cta,
   ctaNote,
+  hoursPrefix = "Office hours:",
   hours,
+  contactContent,
   facts,
   crisisTitle,
   crisisLines,
 }: HelpStripProps) {
+  const showContactRichText = hasLexicalText(contactContent);
   return (
     <section
       id="help"
@@ -93,16 +113,29 @@ export default function HelpStrip({
               </div>
             )}
 
-            <p className="mt-5 text-2xl font-bold">
-              or call{" "}
-              <a href={phoneHref} className="whitespace-nowrap hover:underline">
-                {phone}
-              </a>
-            </p>
+            {showContactRichText ? (
+              <div className="mt-5 text-xl leading-relaxed [&_a]:font-bold [&_a]:underline [&_a]:underline-offset-4 [&_p+p]:mt-2">
+                <RichText data={contactContent as never} />
+              </div>
+            ) : (
+              <>
+                {phone && (
+                  <p className="mt-5 text-2xl font-bold">
+                    {phonePrefix?.trim() ? `${phonePrefix.trim()} ` : ""}
+                    <a href={phoneHref} className="whitespace-nowrap hover:underline">
+                      {phone}
+                    </a>
+                  </p>
+                )}
 
-            <p className="mt-2 text-xl font-semibold">
-              Office hours: {hours}
-            </p>
+                {hours?.trim() && (
+                  <p className="mt-2 text-xl font-semibold">
+                    {hoursPrefix?.trim() ? `${hoursPrefix.trim()} ` : ""}
+                    {hours}
+                  </p>
+                )}
+              </>
+            )}
           </div>
 
           <ul className="space-y-3 text-base md:pt-1">

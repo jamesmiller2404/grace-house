@@ -502,6 +502,14 @@ export const getHero = cache(async (): Promise<HeroContent> => {
         typeof doc.image === "object" && doc.image && doc.image.url
           ? doc.image.url
           : heroDefaults.image,
+      imageWidth:
+        typeof doc.image === "object" && doc.image && typeof doc.image.width === "number"
+          ? doc.image.width
+          : undefined,
+      imageHeight:
+        typeof doc.image === "object" && doc.image && typeof doc.image.height === "number"
+          ? doc.image.height
+          : undefined,
       showCard: doc.showCard !== false,
       cardColor: doc.cardColor || heroDefaults.cardColor,
       cardOpacity:
@@ -848,7 +856,7 @@ export const getHelpStrip = cache(async (): Promise<HelpStripProps> => {
     helpStripDefaults.phone;
   return {
     heading: doc.heading,
-    body: doc.body,
+    body: doc.body ?? "",
     bodyContent: (doc as typeof doc & { bodyContent?: unknown }).bodyContent,
     ...(showAssessment
       ? {
@@ -865,9 +873,17 @@ export const getHelpStrip = cache(async (): Promise<HelpStripProps> => {
           cta: undefined,
           ctaNote: undefined,
         }),
+    phonePrefix:
+      (doc as typeof doc & { phonePrefix?: string | null }).phonePrefix ??
+      "or call",
     phone,
     phoneHref: telHref(phone),
-    hours: doc.hours,
+    hoursPrefix:
+      (doc as typeof doc & { hoursPrefix?: string | null }).hoursPrefix ??
+      "Office hours:",
+    hours: doc.hours ?? "",
+    contactContent: (doc as typeof doc & { contactContent?: unknown })
+      .contactContent,
     facts: (doc.facts ?? []).map((fact) => fact.text),
     crisisTitle: doc.crisisTitle ?? undefined,
     crisisLines: (doc.crisisLines ?? []).map((line) => ({

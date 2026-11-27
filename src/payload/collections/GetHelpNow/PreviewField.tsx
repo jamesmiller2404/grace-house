@@ -22,17 +22,22 @@ function buildPreview(data: RecordValue, registeredPhones: RecordValue[]): HelpS
   return {
     heading: text(data.heading, "Need help now?"),
     body: text(data.body),
+    bodyContent: data.bodyContent,
     ...(showAssessment ? {
       assessmentNote: text(data.assessmentNote) || undefined,
+      assessmentNoteContent: data.assessmentNoteContent,
       cta: {
         label: text(data.ctaLabel, "Start Assessment"),
         href: text(data.ctaHref, "/assessment"),
       },
       ctaNote: text(data.ctaNote) || undefined,
     } : {}),
+    phonePrefix: typeof data.phonePrefix === "string" ? data.phonePrefix : "or call",
     phone,
     phoneHref: `tel:${phone.replace(/[^\d+]/g, "")}`,
+    hoursPrefix: typeof data.hoursPrefix === "string" ? data.hoursPrefix : "Office hours:",
     hours: text(data.hours),
+    contactContent: data.contactContent,
     facts: list(data.facts).map((item) => text(record(item).text)).filter(Boolean),
     crisisTitle: text(data.crisisTitle) || undefined,
     crisisLines: list(data.crisisLines).map((item) => ({

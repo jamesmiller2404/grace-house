@@ -20,6 +20,8 @@ export type HeroContent = {
   eyebrow: string;
   subtext: string;
   image: string;
+  imageWidth?: number;
+  imageHeight?: number;
   showCard: boolean;
   cardColor: string;
   cardOpacity: number;

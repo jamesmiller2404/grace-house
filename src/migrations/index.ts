@@ -60,6 +60,7 @@ import * as migration_20261126_014930_custom_pages_title_alignment from './20261
 import * as migration_20261126_025634_divider_images_and_mission_blocks from './20261126_025634_divider_images_and_mission_blocks';
 import * as migration_20261126_032800_divider_image_static_paths from './20261126_032800_divider_image_static_paths';
 import * as migration_20261126_081000_news_and_support from './20261126_081000_news_and_support';
+import * as migration_20261127_095500_get_help_now_editable_copy from './20261127_095500_get_help_now_editable_copy';
 
 export const migrations = [
   {
@@ -371,5 +372,10 @@ export const migrations = [
     up: migration_20261126_081000_news_and_support.up,
     down: migration_20261126_081000_news_and_support.down,
     name: '20261126_081000_news_and_support',
+  },
+  {
+    up: migration_20261127_095500_get_help_now_editable_copy.up,
+    down: migration_20261127_095500_get_help_now_editable_copy.down,
+    name: '20261127_095500_get_help_now_editable_copy',
   },
 ];

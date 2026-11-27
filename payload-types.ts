@@ -710,9 +710,9 @@ export interface GetHelpNow {
    * The strip's main heading (e.g. "Need help now?").
    */
   heading: string;
-  body: string;
+  body?: string | null;
   /**
-   * Format the opening line and add links using the editor toolbar.
+   * Format the opening paragraph(s) and add links using the editor toolbar.
    */
   bodyContent?: {
     root: {
@@ -765,17 +765,43 @@ export interface GetHelpNow {
    */
   ctaNote?: string | null;
   /**
-   * The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.
+   * Text shown before the phone number (e.g. "or call" or "Call us at"). Leave blank to show only the number.
    */
-  phoneChoice: string;
+  phonePrefix?: string | null;
+  /**
+   * The phone number shown after the lead-in text. Pick one registered in the Contact Info panel, or enter a custom one.
+   */
+  phoneChoice?: string | null;
   /**
    * The custom phone number — e.g. (916) 470-0408. The tel: link is derived automatically.
    */
   phoneCustom?: string | null;
   /**
-   * The office hours shown under the phone number.
+   * Label shown before the office hours (e.g. "Office hours:"). Leave blank to omit the label.
    */
-  hours: string;
+  hoursPrefix?: string | null;
+  /**
+   * The office hours shown under the phone number. Leave blank to hide.
+   */
+  hours?: string | null;
+  /**
+   * Optional rich-text override for the phone & office hours area below the button. When filled in, this replaces the default phone and office hours lines above.
+   */
+  contactContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * The ✓ lines shown on the right of the strip.
    */
@@ -1612,9 +1638,12 @@ export interface GetHelpNowSelect<T extends boolean = true> {
   ctaLabel?: T;
   ctaHref?: T;
   ctaNote?: T;
+  phonePrefix?: T;
   phoneChoice?: T;
   phoneCustom?: T;
+  hoursPrefix?: T;
   hours?: T;
+  contactContent?: T;
   facts?:
     | T
     | {

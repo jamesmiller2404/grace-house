@@ -129,17 +129,18 @@ export const GetHelpNow: CollectionConfig = {
     {
       name: "body",
       type: "textarea",
-      required: true,
+      required: false,
       label: false,
       admin: { hidden: true },
     },
     {
       name: "bodyContent",
       type: "richText",
-      label: false,
+      label: "Intro copy",
       admin: {
         className: "gh-help-now-body-input",
-        description: "Format the opening line and add links using the editor toolbar.",
+        description:
+          "Format the opening paragraph(s) and add links using the editor toolbar.",
       },
     },
     // The assessment toggle — the option that turns the whole assessment
@@ -207,14 +208,25 @@ export const GetHelpNow: CollectionConfig = {
     // the number there and this strip follows) with an "Other (enter
     // manually)" choice; the tel: link is derived at render time
     // (src/payload/queries.ts), so there is no link field to keep in sync.
+    {
+      name: "phonePrefix",
+      type: "text",
+      label: "Phone lead-in text",
+      defaultValue: "or call",
+      admin: {
+        placeholder: "or call",
+        description:
+          'Text shown before the phone number (e.g. "or call" or "Call us at"). Leave blank to show only the number.',
+      },
+    },
     ContactSelectField("phone", {
       name: "phoneChoice",
-      required: true,
+      required: false,
       label: "Phone number",
       admin: {
         placeholder: "(916) 470-0408",
         description:
-          'The phone number shown after "or call". Pick one registered in the Contact Info panel, or enter a custom one.',
+          "The phone number shown after the lead-in text. Pick one registered in the Contact Info panel, or enter a custom one.",
       },
     }),
     {
@@ -231,13 +243,34 @@ export const GetHelpNow: CollectionConfig = {
       },
     },
     {
+      name: "hoursPrefix",
+      type: "text",
+      label: "Office hours label",
+      defaultValue: "Office hours:",
+      admin: {
+        placeholder: "Office hours:",
+        description:
+          'Label shown before the office hours (e.g. "Office hours:"). Leave blank to omit the label.',
+      },
+    },
+    {
       name: "hours",
       type: "text",
-      required: true,
+      required: false,
       label: "Office hours",
       admin: {
         placeholder: "Mon–Fri, 9am–5pm",
-        description: "The office hours shown under the phone number.",
+        description: "The office hours shown under the phone number. Leave blank to hide.",
+      },
+    },
+    {
+      name: "contactContent",
+      type: "richText",
+      label: "Custom phone & hours block (rich text, optional)",
+      admin: {
+        className: "gh-help-now-body-input",
+        description:
+          "Optional rich-text override for the phone & office hours area below the button. When filled in, this replaces the default phone and office hours lines above.",
       },
     },
     // The quick facts (the ✓ lines) on the right of the strip.
