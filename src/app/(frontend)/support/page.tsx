@@ -5,6 +5,7 @@ import { getDonate } from "@/payload/queries";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
+import DividerImage from "@/components/DividerImage";
 
 export const metadata: Metadata = {
   title: "Donate — Grace House",
@@ -121,6 +122,15 @@ export default async function SupportPage() {
         {/* Additional text blocks (e.g. Underground Clothing Connection) */}
         <div className="max-w-[70ch]">
           {d.blocks.map((block, i) => {
+            if (block.type === "Divider" && block.image) {
+              return (
+                <DividerImage
+                  key={i}
+                  image={block.image}
+                  align={block.align}
+                />
+              );
+            }
             if (block.type === "Video" && block.videoUrl) {
               return (
                 <YouTubeEmbed

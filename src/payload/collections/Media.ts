@@ -671,12 +671,17 @@ export const Media: CollectionConfig = {
     adminThumbnail: ({ doc }) => {
       const mime = typeof doc.mimeType === "string" ? doc.mimeType : "";
       const filename = typeof doc.filename === "string" ? doc.filename : "";
-      if (isVideoMimeType(mime) || isVideoFilename(filename)) {
+      if (
+        isVideoMimeType(mime) ||
+        isVideoFilename(filename) ||
+        mime === "application/pdf" ||
+        filename.toLowerCase().endsWith(".pdf")
+      ) {
         return "";
       }
       return typeof doc.url === "string" ? doc.url : "";
     },
-    mimeTypes: ["image/*", ...VIDEO_MIME_TYPES],
+    mimeTypes: ["image/*", "application/pdf", ...VIDEO_MIME_TYPES],
     crop: false,
     focalPoint: false,
   },

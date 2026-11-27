@@ -7,7 +7,8 @@ export type IntroBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text?: string; content?: unknown }
   | { type: "photo"; image: string; alt: string; caption?: string }
-  | { type: "video"; videoUrl: string; caption?: string };
+  | { type: "video"; videoUrl: string; caption?: string }
+  | { type: "divider"; image: string; alt?: string; align?: "left" | "center" | "right" };
 
 export type IntroContent = {
   title: string;

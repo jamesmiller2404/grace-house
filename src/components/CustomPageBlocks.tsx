@@ -4,6 +4,7 @@ import type { CustomPageBlock } from "@/content/customPages";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
+import DividerImage from "@/components/DividerImage";
 
 /**
  * Renders a custom page's body — the blocks in the order the editor stacked
@@ -29,6 +30,17 @@ export default function CustomPageBlocks({
         : "";
 
   const content = blocks.map((block, i) => {
+    if (block.type === "divider") {
+      return (
+        <DividerImage
+          key={i}
+          image={block.image}
+          alt={block.alt}
+          align={block.align}
+          className={isMultiColumn ? "col-span-full" : ""}
+        />
+      );
+    }
     if (block.type === "video") {
       return (
         <div key={i} className={isMultiColumn ? "w-full" : "mt-10 max-w-2xl"}>

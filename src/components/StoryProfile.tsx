@@ -7,6 +7,7 @@ import { pillars } from "@/content/pillars";
 import MemoriesGallery from "@/components/MemoriesGallery";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
+import DividerImage from "@/components/DividerImage";
 
 export type StoryProfileProps = {
   profile: StoryProfileData;
@@ -99,6 +100,16 @@ export default function StoryProfile({
               <h2 key={i} className="font-heading text-anchor mt-10 text-3xl">
                 {block.text}
               </h2>
+            );
+          }
+          if (block.type === "divider") {
+            return (
+              <DividerImage
+                key={i}
+                image={block.image}
+                alt={block.alt}
+                align={block.align}
+              />
             );
           }
           if (block.type === "video") {

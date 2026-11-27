@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
+import { DividerBlockFields } from "@/payload/fields/DividerImage";
 import { isValidVideoUrl } from "@/lib/videoEmbed";
 
 /**
@@ -109,28 +110,43 @@ access: {
       },
     },
     {
-      name: "directLink",
-      type: "ui",
+      type: "row",
       admin: {
-        components: {
-          Field: {
-            path: "./src/payload/collections/CustomPages/DirectLinkField.tsx",
+        className: "gh-cp-title-row",
+      },
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          required: true,
+          // Placeholder-only look, like the Events and Hero forms (the required
+          // marker is painted by the Edit view — see ./CustomPages/EditView.tsx).
+          label: false,
+          admin: {
+            placeholder: "Page name...",
+            description:
+              'The page name — it becomes the heading on the page, the link label in the "More" dropdown and the URL (/pages/<page-name>). Renaming the page moves its URL.',
           },
         },
-      },
-    },
-    {
-      name: "title",
-      type: "text",
-      required: true,
-      // Placeholder-only look, like the Events and Hero forms (the required
-      // marker is painted by the Edit view — see ./CustomPages/EditView.tsx).
-      label: false,
-      admin: {
-        placeholder: "Page name...",
-        description:
-          'The page name — it becomes the heading on the page, the link label in the "More" dropdown and the URL (/pages/<page-name>). Renaming the page moves its URL.',
-      },
+        {
+          name: "titleAlignment",
+          type: "select",
+          label: false,
+          defaultValue: "left",
+          options: [
+            { label: "Left", value: "left" },
+            { label: "Center", value: "center" },
+            { label: "Right", value: "right" },
+          ],
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/collections/CustomPages/TitleAlignmentField.tsx",
+              },
+            },
+          },
+        },
+      ],
     },
     {
       name: "columns",
@@ -143,8 +159,22 @@ access: {
         { label: "3 Columns", value: "3" },
       ],
       admin: {
-        description:
-          "Choose 1, 2, or 3 columns for desktop layout. Headings span the full width; photos, videos, and paragraphs flow across the columns.",
+        components: {
+          Field: {
+            path: "./src/payload/collections/CustomPages/ColumnsField.tsx",
+          },
+        },
+      },
+    },
+    {
+      name: "directLink",
+      type: "ui",
+      admin: {
+        components: {
+          Field: {
+            path: "./src/payload/collections/CustomPages/DirectLinkField.tsx",
+          },
+        },
       },
     },
     {
@@ -183,11 +213,13 @@ access: {
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
               { label: "Video", value: "Video" },
+              { label: "Divider", value: "Divider" },
             ],
             defaultValue: "Paragraph",
             required: true,
           }),
         },
+        ...DividerBlockFields(),
         {
           // Headings remain plain text; paragraph copy uses Lexical formatting.
           name: "text",

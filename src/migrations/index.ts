@@ -56,6 +56,10 @@ import * as migration_20261125_220036_stories_drafts from './20261125_220036_sto
 import * as migration_20261125_221500_backfill_stories_versions from './20261125_221500_backfill_stories_versions';
 import * as migration_20261125_234142_stories_image_zoom from './20261125_234142_stories_image_zoom';
 import * as migration_20261126_001228_custom_pages_columns from './20261126_001228_custom_pages_columns';
+import * as migration_20261126_014930_custom_pages_title_alignment from './20261126_014930_custom_pages_title_alignment';
+import * as migration_20261126_025634_divider_images_and_mission_blocks from './20261126_025634_divider_images_and_mission_blocks';
+import * as migration_20261126_032800_divider_image_static_paths from './20261126_032800_divider_image_static_paths';
+import * as migration_20261126_081000_news_and_support from './20261126_081000_news_and_support';
 
 export const migrations = [
   {
@@ -346,6 +350,26 @@ export const migrations = [
   {
     up: migration_20261126_001228_custom_pages_columns.up,
     down: migration_20261126_001228_custom_pages_columns.down,
-    name: '20261126_001228_custom_pages_columns'
+    name: '20261126_001228_custom_pages_columns',
+  },
+  {
+    up: migration_20261126_014930_custom_pages_title_alignment.up,
+    down: migration_20261126_014930_custom_pages_title_alignment.down,
+    name: '20261126_014930_custom_pages_title_alignment',
+  },
+  {
+    up: migration_20261126_025634_divider_images_and_mission_blocks.up,
+    down: migration_20261126_025634_divider_images_and_mission_blocks.down,
+    name: '20261126_025634_divider_images_and_mission_blocks',
+  },
+  {
+    up: migration_20261126_032800_divider_image_static_paths.up,
+    down: migration_20261126_032800_divider_image_static_paths.down,
+    name: '20261126_032800_divider_image_static_paths',
+  },
+  {
+    up: migration_20261126_081000_news_and_support.up,
+    down: migration_20261126_081000_news_and_support.down,
+    name: '20261126_081000_news_and_support',
   },
 ];

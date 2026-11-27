@@ -175,6 +175,25 @@ html[data-theme='light'] .gh-custom-pages-edit {
   color: var(--gh-custom-pages-field-text);
   opacity: 0.33;
 }
+/* Keep Page Name and Heading Alignment icons on the same row except on very small screens */
+.gh-custom-pages-edit .gh-cp-title-row > .render-fields {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+.gh-custom-pages-edit .gh-cp-title-row > .render-fields > * {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin-bottom: 0 !important;
+}
+@media (max-width: 420px) {
+  .gh-custom-pages-edit .gh-cp-title-row > .render-fields {
+    grid-template-columns: 1fr !important;
+  }
+}
 /* Field helper text */
 .gh-custom-pages-edit .field-description {
   color: var(--gh-custom-pages-help);

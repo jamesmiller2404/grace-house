@@ -20,10 +20,28 @@ export default function CustomPageSection({ page }: CustomPageSectionProps) {
   return (
     <section className="bg-cream text-ink px-6 py-14">
       <div className="mx-auto max-w-6xl">
-        <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
-        <h2 className="font-heading text-ink text-4xl sm:text-5xl">
-          {page.title}
-        </h2>
+        <div
+          className={
+            page.titleAlignment === "center"
+              ? "text-center"
+              : page.titleAlignment === "right"
+                ? "text-right"
+                : "text-left"
+          }
+        >
+          <div
+            className={`bg-gold mb-4 h-[4px] w-28 rounded-full ${
+              page.titleAlignment === "center"
+                ? "mx-auto"
+                : page.titleAlignment === "right"
+                  ? "ml-auto"
+                  : ""
+            }`}
+          />
+          <h2 className="font-heading text-ink text-4xl sm:text-5xl">
+            {page.title}
+          </h2>
+        </div>
         <div className={page.columns === "2" || page.columns === "3" ? "" : "max-w-[70ch]"}>
           <CustomPageBlocks blocks={page.blocks} columns={page.columns} />
         </div>

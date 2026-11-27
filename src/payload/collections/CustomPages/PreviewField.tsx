@@ -59,6 +59,19 @@ export default function CustomPagesPreviewField() {
   const preview = useMemo<CustomPageContent>(() => {
     const title = text(data.title, "Page Name");
     const blocks: CustomPageBlock[] = rows(data.blocks).flatMap<CustomPageBlock>((block): CustomPageBlock[] => {
+      if (block.type === "Divider") {
+        const image = text(block.dividerImagePath).trim();
+        if (!image) return [];
+        const rawAlign = text(block.dividerAlign, "center");
+        const align: "left" | "center" | "right" =
+          rawAlign === "left" || rawAlign === "right" ? rawAlign : "center";
+        return [{
+          type: "divider" as const,
+          image,
+          alt: "",
+          align,
+        }];
+      }
       if (block.type === "Video") {
         const videoUrl = text(block.videoUrl);
         if (!videoUrl) return [];
@@ -91,7 +104,10 @@ export default function CustomPagesPreviewField() {
     const rawColumns = text(data.columns, "1");
     const columns: "1" | "2" | "3" =
       rawColumns === "2" || rawColumns === "3" ? rawColumns : "1";
-    return { title, slug: customPageSlug(title), columns, blocks };
+    const rawAlign = text(data.titleAlignment, "left");
+    const titleAlignment: "left" | "center" | "right" =
+      rawAlign === "center" || rawAlign === "right" ? rawAlign : "left";
+    return { title, slug: customPageSlug(title), columns, titleAlignment, blocks };
   }, [data, resolvedMedia]);
 
   useEffect(() => {

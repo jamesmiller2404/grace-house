@@ -110,6 +110,24 @@ function toEventItem(doc: PayloadEvent): EventItem {
   };
 }
 
+/** Extract image path and alignment from a Divider block. */
+function dividerFromBlock(block: unknown): {
+  image: string;
+  alt: string;
+  align: "left" | "center" | "right";
+} {
+  const b = (block ?? {}) as {
+    dividerImagePath?: string | null;
+    dividerAlign?: string | null;
+  };
+  const align: "left" | "center" | "right" =
+    b.dividerAlign === "left" || b.dividerAlign === "right"
+      ? b.dividerAlign
+      : "center";
+  const image = typeof b.dividerImagePath === "string" ? b.dividerImagePath.trim() : "";
+  return { image, alt: "", align };
+}
+
 /**
  * Map one database event to the full single-event page content. The contact
  * phone/email come in already resolved (getEventBySlug resolves the event's
@@ -142,7 +160,12 @@ function toEventDetail(
     imagePositionX: doc.imagePositionX ?? 50,
     imagePositionY: doc.imagePositionY ?? 50,
     blocks: (doc.blocks ?? []).map((block) =>
-      block.type === "Video"
+      (block as { type?: string }).type === "Divider"
+        ? {
+            type: "Divider" as const,
+            ...dividerFromBlock(block),
+          }
+        : block.type === "Video"
         ? {
             type: "Video" as const,
             videoUrl: block.videoUrl ?? "",
@@ -239,25 +262,97 @@ export const getEventBySlug = cache(
  * src/content/mission.ts is shown so the page never breaks.
  */
 export const getMissionPage = cache(
-  async (): Promise<{ title: string; body: string; bodyContent?: unknown }> => {
+  async (): Promise<{
+    title: string;
+    body: string;
+    bodyContent?: unknown;
+    blocks: CustomPageBlock[];
+  }> => {
     await connection();
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "mission-page",
       limit: 1,
+      depth: 2,
     });
-    const doc = docs[0] as PayloadMissionPage | undefined;
+    const doc = docs[0] as
+      | (PayloadMissionPage & {
+          bodyContent?: unknown;
+          blocks?: Array<{
+            type?: string;
+            text?: string | null;
+            content?: unknown;
+            image?: { url?: string | null; alt?: string | null } | number | null;
+            videoUrl?: string | null;
+            caption?: string | null;
+            dividerImage?: unknown;
+            dividerAlign?: string | null;
+          }> | null;
+        })
+      | undefined;
     if (doc) {
-      const formatted = (doc as PayloadMissionPage & { bodyContent?: unknown }).bodyContent;
+      const blocks: CustomPageBlock[] = (doc.blocks ?? []).flatMap(
+        (block): CustomPageBlock[] => {
+          if (block.type === "Divider") {
+            const d = dividerFromBlock(block);
+            if (!d.image) return [];
+            return [{ type: "divider", ...d }];
+          }
+          if (block.type === "Video") {
+            const videoUrl = block.videoUrl ?? "";
+            if (!videoUrl.trim()) return [];
+            return [
+              {
+                type: "video",
+                videoUrl,
+                caption: block.caption ?? undefined,
+              },
+            ];
+          }
+          if (block.type === "Photo") {
+            const url =
+              block.image && typeof block.image === "object"
+                ? (block.image.url ?? "")
+                : "";
+            if (!url) return [];
+            const alt =
+              block.image && typeof block.image === "object"
+                ? (block.image.alt ?? "")
+                : "";
+            return [
+              {
+                type: "photo",
+                image: url,
+                alt,
+                caption: block.caption ?? undefined,
+              },
+            ];
+          }
+          if (block.type === "Heading") {
+            const text = block.text ?? "";
+            if (!text.trim()) return [];
+            return [{ type: "heading", text }];
+          }
+          return [
+            {
+              type: "paragraph",
+              text: block.text ?? "",
+              content: block.content,
+            },
+          ];
+        },
+      );
       return {
         title: doc.title,
         body: doc.body ?? "",
-        bodyContent: formatted,
+        bodyContent: doc.bodyContent,
+        blocks,
       };
     }
     return {
       title: defaultMissionPage.missionHeading,
       body: defaultMissionPage.missionStatement,
+      blocks: [],
     };
   },
 );
@@ -309,7 +404,12 @@ export const getDonate = cache(async (): Promise<DonatePage> => {
     },
     blocks:
       doc.blocks?.map((block) =>
-        block.type === "Video"
+        (block as { type?: string }).type === "Divider"
+          ? {
+              type: "Divider" as const,
+              ...dividerFromBlock(block),
+            }
+          : block.type === "Video"
           ? {
               type: "Video" as const,
               videoUrl: block.videoUrl ?? "",
@@ -517,6 +617,10 @@ export const getIntro = cache(async (): Promise<IntroContent> => {
 
   const blocks = ((doc.blocks ?? []) as IntroRow[])
     .map((block) => {
+      if ((block as { type?: string }).type === "Divider") {
+        const d = dividerFromBlock(block);
+        return d.image ? { type: "divider" as const, ...d } : null;
+      }
       if (block.type === "Video") {
         return block.videoUrl
           ? {
@@ -839,6 +943,12 @@ function mediaUrl(value: unknown): string {
 /** The story body blocks mapped to the h2/p sequence the page renders. */
 function toStoryBody(doc: PayloadStory): StoryProfile["body"] {
   return (doc.body ?? []).map((block) => {
+    if ((block as { type?: string }).type === "Divider") {
+      return {
+        type: "divider" as const,
+        ...dividerFromBlock(block),
+      };
+    }
     if (block.type === "Video") {
       return {
         type: "video" as const,
@@ -1003,16 +1113,29 @@ export const getStoryProfileBySlug = cache(
 
 /** Map one database custom page to the content the page renderer shows. */
 function toCustomPageContent(doc: PayloadCustomPage): CustomPageContent {
-  const rawColumns = (doc as PayloadCustomPage & { columns?: string | null }).columns;
+  const ext = doc as PayloadCustomPage & {
+    columns?: string | null;
+    titleAlignment?: string | null;
+  };
   const columns: "1" | "2" | "3" =
-    rawColumns === "2" || rawColumns === "3" ? rawColumns : "1";
+    ext.columns === "2" || ext.columns === "3" ? ext.columns : "1";
+  const titleAlignment: "left" | "center" | "right" =
+    ext.titleAlignment === "center" || ext.titleAlignment === "right"
+      ? ext.titleAlignment
+      : "left";
   return {
     title: doc.title,
     slug: customPageSlug(doc.title),
     columns,
+    titleAlignment,
     blocks: (doc.blocks ?? []).flatMap((block): CustomPageBlock[] => {
       // Photo rows render their Media image (with an optional caption).
       // A photo row with no image picked yet is skipped.
+      if ((block as { type?: string }).type === "Divider") {
+        const d = dividerFromBlock(block);
+        if (!d.image) return [];
+        return [{ type: "divider", ...d }];
+      }
       if (block.type === "Video") {
         const videoUrl = block.videoUrl ?? "";
         if (!videoUrl.trim()) return [];
@@ -1192,3 +1315,95 @@ export const getBoardPage = cache(async (): Promise<{
     }),
   };
 });
+
+export type NewsAndSupportItem = {
+  id: string;
+  title: string;
+  type: "news" | "letter";
+  source: string;
+  /** ISO date string (YYYY-MM-DD). */
+  date: string;
+  year: number;
+  summary?: string;
+  externalUrl?: string;
+  fileUrl?: string;
+  fileSize?: number;
+  thumbnailUrl?: string;
+  thumbnailAlt?: string;
+};
+
+/**
+ * Published News & Support items (external news articles and PDF letters of
+ * support), newest first. Strictly excludes drafts (`draft: false` and
+ * `_status: 'published'`).
+ */
+export const getNewsAndSupport = cache(
+  async (): Promise<NewsAndSupportItem[]> => {
+    await connection();
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "news-and-support" as never,
+      draft: false,
+      where: { _status: { equals: "published" } },
+      sort: "-date",
+      limit: 200,
+      depth: 1,
+    });
+
+    const items: NewsAndSupportItem[] = [];
+    for (const raw of docs as Array<Record<string, unknown>>) {
+      const type = raw.type === "letter" ? "letter" : "news";
+      const title = typeof raw.title === "string" ? raw.title.trim() : "";
+      const source = typeof raw.source === "string" ? raw.source.trim() : "";
+      const rawDate = typeof raw.date === "string" ? raw.date : "";
+      if (!title || !source || !rawDate) continue;
+
+      const isoDate = toISODate(rawDate);
+      const year = Number(isoDate.slice(0, 4)) || new Date().getFullYear();
+
+      const fileObj =
+        raw.file && typeof raw.file === "object"
+          ? (raw.file as { url?: string | null; filesize?: number | null })
+          : null;
+      const thumbObj =
+        raw.thumbnail && typeof raw.thumbnail === "object"
+          ? (raw.thumbnail as {
+              url?: string | null;
+              thumbnailURL?: string | null;
+              alt?: string | null;
+            })
+          : null;
+
+      const externalUrl =
+        typeof raw.externalUrl === "string" && raw.externalUrl.trim()
+          ? raw.externalUrl.trim()
+          : undefined;
+      const fileUrl = fileObj?.url || undefined;
+
+      // Skip items missing their required destination
+      if (type === "news" && !externalUrl) continue;
+      if (type === "letter" && !fileUrl) continue;
+
+      items.push({
+        id: String(raw.id),
+        title,
+        type,
+        source,
+        date: isoDate,
+        year,
+        summary:
+          typeof raw.summary === "string" && raw.summary.trim()
+            ? raw.summary.trim()
+            : undefined,
+        externalUrl,
+        fileUrl,
+        fileSize:
+          typeof fileObj?.filesize === "number" ? fileObj.filesize : undefined,
+        thumbnailUrl: thumbObj?.thumbnailURL || thumbObj?.url || undefined,
+        thumbnailAlt: thumbObj?.alt || title,
+      });
+    }
+
+    return items;
+  },
+);

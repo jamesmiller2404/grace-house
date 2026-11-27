@@ -12,6 +12,7 @@ import { default as default_8fb18f05fb7e1dc39f9754122148e2b2 } from '../../../..
 import { default as default_d42955c86c375058446f6a8864360da8 } from '../../../../src/payload/fields/TimePicker/Field.tsx'
 import { default as default_d2ad3e3f48e6de33e184359a387bbb6b } from '../../../../src/payload/fields/ImagePosition/Field.tsx'
 import { default as default_3b3d89e528f3aec7d8ac7680d19f5694 } from '../../../../src/payload/fields/BlockTypeButtons/Field.tsx'
+import { default as default_ba887ecab39124a9bf8b594bb36c6ae5 } from '../../../../src/payload/fields/DividerImage/Field.tsx'
 import { default as default_0655dcc0a34d98f9a54187149d77f0b1 } from '../../../../src/payload/fields/BlockTextInput/Field.tsx'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -84,6 +85,8 @@ import { default as default_b480e6a4623521c97ef432b42617b6f5 } from '../../../..
 import { default as default_3226e0d2c8e56e8807ddb9ce6a7b06eb } from '../../../../src/payload/collections/Board/CancelToDashboardButton.tsx'
 import { default as default_cb9c7a6df18238a84ac29350285f9b8a } from '../../../../src/payload/collections/Board/DoneToListButton.tsx'
 import { default as default_c75f67b01273843b9738ce13d98c2992 } from '../../../../src/payload/collections/CustomPages/PreviewField.tsx'
+import { default as default_1984c987818bf5fef7a9a6efbf131842 } from '../../../../src/payload/collections/CustomPages/TitleAlignmentField.tsx'
+import { default as default_007993a190cb92e5affbe8d7d76c7c53 } from '../../../../src/payload/collections/CustomPages/ColumnsField.tsx'
 import { default as default_cd99ffc9c8d972182ca8188cf7006282 } from '../../../../src/payload/collections/CustomPages/DirectLinkField.tsx'
 import { default as default_0dda18def457283302775b43747f5a9f } from '../../../../src/payload/collections/UsersCancelToDashboardButton.tsx'
 import { default as default_406610a7604472cb1b28c015b6a61a3f } from '../../../../src/payload/collections/UsersDoneToListButton.tsx'
@@ -133,6 +136,7 @@ export const importMap = {
   "./src/payload/fields/TimePicker/Field.tsx#default": default_d42955c86c375058446f6a8864360da8,
   "./src/payload/fields/ImagePosition/Field.tsx#default": default_d2ad3e3f48e6de33e184359a387bbb6b,
   "./src/payload/fields/BlockTypeButtons/Field.tsx#default": default_3b3d89e528f3aec7d8ac7680d19f5694,
+  "./src/payload/fields/DividerImage/Field.tsx#default": default_ba887ecab39124a9bf8b594bb36c6ae5,
   "./src/payload/fields/BlockTextInput/Field.tsx#default": default_0655dcc0a34d98f9a54187149d77f0b1,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -205,6 +209,8 @@ export const importMap = {
   "./src/payload/collections/Board/CancelToDashboardButton.tsx#default": default_3226e0d2c8e56e8807ddb9ce6a7b06eb,
   "./src/payload/collections/Board/DoneToListButton.tsx#default": default_cb9c7a6df18238a84ac29350285f9b8a,
   "./src/payload/collections/CustomPages/PreviewField.tsx#default": default_c75f67b01273843b9738ce13d98c2992,
+  "./src/payload/collections/CustomPages/TitleAlignmentField.tsx#default": default_1984c987818bf5fef7a9a6efbf131842,
+  "./src/payload/collections/CustomPages/ColumnsField.tsx#default": default_007993a190cb92e5affbe8d7d76c7c53,
   "./src/payload/collections/CustomPages/DirectLinkField.tsx#default": default_cd99ffc9c8d972182ca8188cf7006282,
   "./src/payload/collections/UsersCancelToDashboardButton.tsx#default": default_0dda18def457283302775b43747f5a9f,
   "./src/payload/collections/UsersDoneToListButton.tsx#default": default_406610a7604472cb1b28c015b6a61a3f,

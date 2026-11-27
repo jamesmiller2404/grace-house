@@ -21,7 +21,8 @@ export type CustomPageBlock =
     }
   | { type: "heading"; text: string; linkLabel?: string; linkHref?: string }
   | { type: "photo"; image: string; alt: string; caption?: string }
-  | { type: "video"; videoUrl: string; caption?: string };
+  | { type: "video"; videoUrl: string; caption?: string }
+  | { type: "divider"; image: string; alt?: string; align?: "left" | "center" | "right" };
 
 /** One custom page as the front end renders it. */
 export type CustomPageContent = {
@@ -31,6 +32,8 @@ export type CustomPageContent = {
   slug: string;
   /** Number of content columns on desktop ("1", "2", or "3"). */
   columns?: "1" | "2" | "3";
+  /** Alignment of the page heading ("left", "center", or "right"). */
+  titleAlignment?: "left" | "center" | "right";
   blocks: CustomPageBlock[];
 };
 

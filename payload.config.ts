@@ -22,6 +22,7 @@ import { ContactInfo } from "@/payload/globals/ContactInfo";
 import { Footer } from "@/payload/globals/Footer";
 import { Faq } from "@/payload/collections/Faq";
 import { FeedingTheStreets } from "@/payload/collections/FeedingTheStreets";
+import { NewsAndSupport } from "@/payload/collections/NewsAndSupport";
 import { resolve } from "node:path";
 
 import {
@@ -58,6 +59,7 @@ export default buildConfig({
     Stories,
     Faq,
     FeedingTheStreets,
+    NewsAndSupport,
     Media,
     MediaTags,
     // Site Pages

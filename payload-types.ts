@@ -72,6 +72,7 @@ export interface Config {
     stories: Story;
     faq: Faq;
     'feeding-the-streets': FeedingTheStreet;
+    'news-and-support': NewsAndSupport;
     media: Media;
     'media-tags': MediaTag;
     intro: Intro;
@@ -94,6 +95,7 @@ export interface Config {
     stories: StoriesSelect<false> | StoriesSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     'feeding-the-streets': FeedingTheStreetsSelect<false> | FeedingTheStreetsSelect<true>;
+    'news-and-support': NewsAndSupportSelect<false> | NewsAndSupportSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'media-tags': MediaTagsSelect<false> | MediaTagsSelect<true>;
     intro: IntroSelect<false> | IntroSelect<true>;
@@ -337,7 +339,9 @@ export interface Event {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
         text?: string | null;
         content?: {
           root: {
@@ -412,7 +416,9 @@ export interface Story {
    */
   body?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
         text?: string | null;
         content?: {
           root: {
@@ -551,7 +557,9 @@ export interface FeedingTheStreet {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
         /**
          * The heading text.
          */
@@ -598,6 +606,39 @@ export interface FeedingTheStreet {
   createdAt: string;
 }
 /**
+ * External news articles and PDF letters of support displayed on /news-and-support. Save Draft to work in progress, or Publish when ready.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-and-support".
+ */
+export interface NewsAndSupport {
+  id: number;
+  title: string;
+  type: 'news' | 'letter';
+  date: string;
+  source: string;
+  summary?: string | null;
+  /**
+   * Full URL to the external news article (must start with https:// or http://).
+   */
+  externalUrl?: string | null;
+  /**
+   * Upload or choose a PDF file from Media.
+   */
+  file?: (number | null) | Media;
+  /**
+   * Optional image thumbnail shown on the card.
+   */
+  thumbnail?: (number | null) | Media;
+  /**
+   * Confirm the author consents to public display and that personal contact details and private participant info are redacted.
+   */
+  permissionConfirmed?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * The "What is Grace House" section on the home page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -614,7 +655,9 @@ export interface Intro {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
         /**
          * The header or paragraph text.
          */
@@ -773,9 +816,6 @@ export interface MissionPage {
    */
   title: string;
   body?: string | null;
-  /**
-   * The mission statement. Use the formatting toolbar for paragraphs, emphasis and links.
-   */
   bodyContent?: {
     root: {
       type: string;
@@ -791,6 +831,45 @@ export interface MissionPage {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Add headings, paragraphs, photos, videos, and divider graphics in the order they should appear on the Mission page.
+   */
+  blocks?:
+    | {
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
+        /**
+         * The heading text.
+         */
+        text?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * The photo shown by this block.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Paste a YouTube or Vimeo video link.
+         */
+        videoUrl?: string | null;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -915,7 +994,9 @@ export interface Donate {
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
         text?: string | null;
         content?: {
           root: {
@@ -1026,16 +1107,16 @@ export interface CustomPage {
    * The page name — it becomes the heading on the page, the link label in the "More" dropdown and the URL (/pages/<page-name>). Renaming the page moves its URL.
    */
   title: string;
-  /**
-   * Choose 1, 2, or 3 columns for desktop layout. Headings span the full width; photos, videos, and paragraphs flow across the columns.
-   */
+  titleAlignment?: ('left' | 'center' | 'right') | null;
   columns?: ('1' | '2' | '3') | null;
   /**
    * Add headings, paragraphs and photos in the order they should appear. In a paragraph or heading, newlines render as line breaks. A "Photo" block shows an image from the Media collection.
    */
   blocks?:
     | {
-        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video';
+        type: 'Heading' | 'Paragraph' | 'Photo' | 'Video' | 'Divider';
+        dividerImagePath?: string | null;
+        dividerAlign?: ('left' | 'center' | 'right') | null;
         /**
          * The heading text.
          */
@@ -1162,6 +1243,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'feeding-the-streets';
         value: number | FeedingTheStreet;
+      } | null)
+    | ({
+        relationTo: 'news-and-support';
+        value: number | NewsAndSupport;
       } | null)
     | ({
         relationTo: 'media';
@@ -1321,6 +1406,8 @@ export interface EventsSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
         text?: T;
         content?: T;
         image?: T;
@@ -1357,6 +1444,8 @@ export interface StoriesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
         text?: T;
         content?: T;
         image?: T;
@@ -1428,6 +1517,8 @@ export interface FeedingTheStreetsSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
         text?: T;
         content?: T;
         linkLabel?: T;
@@ -1439,6 +1530,24 @@ export interface FeedingTheStreetsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-and-support_select".
+ */
+export interface NewsAndSupportSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  date?: T;
+  source?: T;
+  summary?: T;
+  externalUrl?: T;
+  file?: T;
+  thumbnail?: T;
+  permissionConfirmed?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1477,6 +1586,8 @@ export interface IntroSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
         text?: T;
         content?: T;
         image?: T;
@@ -1530,6 +1641,19 @@ export interface MissionPageSelect<T extends boolean = true> {
   title?: T;
   body?: T;
   bodyContent?: T;
+  blocks?:
+    | T
+    | {
+        type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
+        text?: T;
+        content?: T;
+        image?: T;
+        videoUrl?: T;
+        caption?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1574,6 +1698,8 @@ export interface DonateSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
         text?: T;
         content?: T;
         image?: T;
@@ -1613,11 +1739,14 @@ export interface BoardSelect<T extends boolean = true> {
 export interface CustomPagesSelect<T extends boolean = true> {
   enabled?: T;
   title?: T;
+  titleAlignment?: T;
   columns?: T;
   blocks?:
     | T
     | {
         type?: T;
+        dividerImagePath?: T;
+        dividerAlign?: T;
         text?: T;
         content?: T;
         image?: T;

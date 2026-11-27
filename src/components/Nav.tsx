@@ -52,7 +52,7 @@ export default function Nav({
     <header className="bg-anchor text-cream">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-6 lg:gap-8 lg:py-[18px]">
         {/* Crown + wordmark */}
-        <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-5 lg:gap-7">
+        <Link href="/" className="flex min-w-0 items-center gap-3 sm:gap-4 xl:gap-7">
           <Image
             src="/images/crown.png"
             alt=""
@@ -60,13 +60,13 @@ export default function Nav({
             height={78}
             priority
             style={{ width: "auto" }}
-            className="h-8 shrink-0 sm:h-12 md:h-[78px]"
+            className="h-8 shrink-0 sm:h-12 md:h-14 xl:h-[78px]"
           />
           <span className="min-w-0">
-            <span className="font-heading text-[clamp(1.5rem,6vw,3.75rem)] block leading-none font-normal tracking-[0.04em] text-white sm:whitespace-nowrap">
+            <span className="font-heading text-[clamp(1.5rem,3.4vw,3.75rem)] block leading-none font-normal tracking-[0.04em] text-white sm:whitespace-nowrap">
               {site.name}
             </span>
-            <span className="text-gold mt-0.5 block font-sans text-[clamp(0.7rem,2.8vw,1.5rem)] leading-none font-medium tracking-wide uppercase sm:whitespace-nowrap">
+            <span className="text-gold mt-0.5 block font-sans text-[clamp(0.7rem,1.45vw,1.5rem)] leading-none font-medium tracking-wide uppercase sm:whitespace-nowrap">
               {site.tagline}
             </span>
           </span>
@@ -82,7 +82,7 @@ export default function Nav({
             <span className="translate-y-px">Donate</span>
           </Link>
 
-          <nav className="hidden items-center gap-0.5 text-[14px] lg:flex lg:gap-1 lg:text-[17px] mt-[24px]" aria-label="Main">
+          <nav className="mt-[24px] hidden items-center gap-0.5 text-[13px] lg:flex xl:gap-1 xl:text-[17px]" aria-label="Main">
             {nav.map((l) =>
               l.children ? (
                 <div
@@ -91,7 +91,7 @@ export default function Nav({
                 >
                   <button
                     type="button"
-                    className="border-cream/25 text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1.5 rounded-md border px-3 py-1 font-sans font-medium whitespace-nowrap focus-visible:outline-lift focus-visible:outline-2 focus-visible:outline-offset-2 lg:px-4 lg:py-1.5"
+                    className="border-cream/25 text-cream/90 hover:text-lift flex cursor-pointer items-center gap-1 rounded-md border px-2 py-1 font-sans font-medium whitespace-nowrap focus-visible:outline-lift focus-visible:outline-2 focus-visible:outline-offset-2 xl:gap-1.5 xl:px-4 xl:py-1.5"
                   >
                     {l.label}
                     <svg
@@ -127,7 +127,7 @@ export default function Nav({
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="border-cream/25 text-cream/90 hover:text-lift rounded-md border px-3 py-1 font-sans font-medium whitespace-nowrap lg:px-4 lg:py-1.5"
+                  className="border-cream/25 text-cream/90 hover:text-lift rounded-md border px-2 py-1 font-sans font-medium whitespace-nowrap xl:px-4 xl:py-1.5"
                 >
                   {l.label}
                 </Link>
@@ -165,8 +165,8 @@ export default function Nav({
           </details>
         </div>
       </div>
-      {/* Gold divider along the bottom edge of the header, mirroring the HelpStrip */}
-      <div aria-hidden="true" className="border-gold border-b-4" />
+      {/* 2px gold divider with a 1px dark hairline beneath so it stays crisp on light pages */}
+      <div aria-hidden="true" className="bg-gold border-anchor/35 h-[3px] border-b" />
     </header>
   );
 }

@@ -3,6 +3,7 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { IntroBlock } from "@/content/intro";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
+import DividerImage from "@/components/DividerImage";
 
 export type WelcomeProps = {
   title: string;
@@ -22,6 +23,16 @@ export default function Welcome({ title, blocks }: WelcomeProps) {
               <h3 key={index} className="font-heading text-ink mt-10 text-3xl sm:text-4xl">
                 {block.text}
               </h3>
+            );
+          }
+          if (block.type === "divider") {
+            return (
+              <DividerImage
+                key={index}
+                image={block.image}
+                alt={block.alt}
+                align={block.align}
+              />
             );
           }
           if (block.type === "video") {

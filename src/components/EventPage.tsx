@@ -4,6 +4,7 @@ import type { EventDetail } from "@/content/events";
 import { splitBlockParagraphs } from "@/lib/splitBlockParagraphs";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
+import DividerImage from "@/components/DividerImage";
 
 export type EventPageProps = {
   event: EventDetail;
@@ -152,6 +153,16 @@ export default function EventPage({ event }: EventPageProps) {
 
             <section className="mt-10">
               {event.blocks.map((block, index) => {
+                if (block.type === "Divider") {
+                  return (
+                    <DividerImage
+                      key={index}
+                      image={block.image}
+                      alt={block.alt}
+                      align={block.align}
+                    />
+                  );
+                }
                 if (block.type === "Video") {
                   return (
                     <YouTubeEmbed

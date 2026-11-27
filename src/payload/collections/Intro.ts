@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
+import { DividerBlockFields } from "@/payload/fields/DividerImage";
 import { isValidVideoUrl } from "@/lib/videoEmbed";
 
 /**
@@ -79,11 +80,13 @@ export const Intro: CollectionConfig = {
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
               { label: "Video", value: "Video" },
+              { label: "Divider", value: "Divider" },
             ],
             defaultValue: "Paragraph",
             required: true,
           }),
         },
+        ...DividerBlockFields(),
         {
           name: "text",
           type: "textarea",

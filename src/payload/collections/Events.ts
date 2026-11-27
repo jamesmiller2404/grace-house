@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { ContactSelectField } from "@/payload/fields/ContactSelect";
 import { ImagePositionField } from "@/payload/fields/ImagePosition";
 import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
+import { DividerBlockFields } from "@/payload/fields/DividerImage";
 import { StatusSelectField } from "@/payload/fields/StatusSelect";
 import { TimeField } from "@/payload/fields/TimePicker";
 import {
@@ -324,11 +325,13 @@ export const Events: CollectionConfig = {
               { label: "Paragraph", value: "Paragraph" },
               { label: "Photo", value: "Photo" },
               { label: "Video", value: "Video" },
+              { label: "Divider", value: "Divider" },
             ],
             defaultValue: "Paragraph",
             required: true,
           }),
         },
+        ...DividerBlockFields(),
         {
           name: "text",
           type: "textarea",

@@ -20,12 +20,27 @@ export default async function FeedingTheStreetsPage() {
   const { docs } = await payload.find({
     collection: "feeding-the-streets",
     limit: 1,
+    depth: 2,
   });
   const doc = docs[0];
   if (!doc) notFound();
 
   const blocks = (doc.blocks ?? []).map((block) => {
     const rawType = (block as { type?: string }).type;
+    if (rawType === "Divider") {
+      const b = block as {
+        dividerImagePath?: string | null;
+        dividerAlign?: string | null;
+      };
+      const align: "left" | "center" | "right" =
+        b.dividerAlign === "left" || b.dividerAlign === "right" ? b.dividerAlign : "center";
+      return {
+        type: "divider",
+        image: typeof b.dividerImagePath === "string" ? b.dividerImagePath.trim() : "",
+        alt: "",
+        align,
+      } as { type: "divider"; image: string; alt?: string; align?: "left" | "center" | "right" };
+    }
     if (rawType === "Video") {
       return {
         type: "video",

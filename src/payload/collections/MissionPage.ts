@@ -1,4 +1,7 @@
 import type { CollectionConfig } from "payload";
+import { BlockTypeButtonsField } from "@/payload/fields/BlockTypeButtons";
+import { DividerBlockFields } from "@/payload/fields/DividerImage";
+import { isValidVideoUrl } from "@/lib/videoEmbed";
 
 /**
  * Mission page copy — the Payload version of `missionPage` in
@@ -99,10 +102,120 @@ export const MissionPage: CollectionConfig = {
       type: "richText",
       label: false,
       admin: {
-        className: "gh-mission-body-input",
-        description:
-          "The mission statement. Use the formatting toolbar for paragraphs, emphasis and links.",
+        hidden: true,
       },
+    },
+    {
+      name: "blocks",
+      type: "array",
+      labels: {
+        singular: "Block",
+        plural: "Blocks",
+      },
+      admin: {
+        initCollapsed: false,
+        description:
+          "Add headings, paragraphs, photos, videos, and divider graphics in the order they should appear on the Mission page.",
+        components: {
+          RowLabel: {
+            path: "./src/payload/collections/CustomPages/BlockRowLabel.tsx",
+          },
+        },
+      },
+      fields: [
+        {
+          ...BlockTypeButtonsField({
+            name: "type",
+            options: [
+              { label: "Heading", value: "Heading" },
+              { label: "Paragraph", value: "Paragraph" },
+              { label: "Photo", value: "Photo" },
+              { label: "Video", value: "Video" },
+              { label: "Divider", value: "Divider" },
+            ],
+            defaultValue: "Paragraph",
+            required: true,
+          }),
+        },
+        ...DividerBlockFields(),
+        {
+          name: "text",
+          type: "textarea",
+          label: false,
+          admin: {
+            placeholder: "Heading...",
+            description: "The heading text.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Heading",
+            components: {
+              Field: { path: "./src/payload/fields/BlockTextInput/Field.tsx" },
+            },
+          },
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: false,
+          admin: {
+            className: "gh-mission-body-input",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Paragraph",
+          },
+        },
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/MediaPickerUploadField.tsx",
+              },
+            },
+            className: "gh-block-photo-input",
+            description: "The photo shown by this block.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Photo",
+          },
+        },
+        {
+          name: "videoUrl",
+          type: "text",
+          label: "Video Link",
+          admin: {
+            components: {
+              Field: {
+                path: "./src/payload/fields/YouTubeUrlField.tsx",
+              },
+            },
+            placeholder:
+              "https://www.youtube.com/watch?v=... or https://vimeo.com/...",
+            description: "Paste a YouTube or Vimeo video link.",
+            condition: (_data, siblingData) =>
+              (siblingData as { type?: string } | null)?.type === "Video",
+          },
+          validate: (
+            value: unknown,
+            { siblingData }: { siblingData?: unknown },
+          ) =>
+            (siblingData as { type?: string } | null)?.type !== "Video" ||
+            (typeof value === "string" && isValidVideoUrl(value))
+              ? true
+              : "Enter a valid YouTube or Vimeo link for this Video block.",
+        },
+        {
+          name: "caption",
+          type: "text",
+          label: "Caption (optional)",
+          admin: {
+            placeholder: "Descriptive text shown below the photo or video...",
+            condition: (_data, siblingData) => {
+              const t = (siblingData as { type?: string } | null)?.type;
+              return t === "Photo" || t === "Video";
+            },
+          },
+        },
+      ],
     },
   ],
 };

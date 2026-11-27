@@ -112,6 +112,9 @@ export async function seedEvents(payload: Payload): Promise<void> {
                 caption: block.caption,
               };
             }
+            if (block.type === "Divider") {
+              return { type: "Divider" as const, dividerAlign: block.align ?? "center" };
+            }
             if (block.type === "Video") {
               return {
                 type: "Video" as const,
@@ -223,6 +226,9 @@ export async function seedIntro(payload: Payload): Promise<void> {
         type: "Photo" as const,
         caption: block.caption,
       };
+    }
+    if (block.type === "divider") {
+      return { type: "Divider" as const, dividerAlign: block.align ?? "center" };
     }
     if (block.type === "video") {
       return {
@@ -579,7 +585,10 @@ export async function seedStories(payload: Payload): Promise<void> {
                 caption: block.caption,
               };
             }
-            if (block.type === "video") {
+            if (block.type === "divider") {
+      return { type: "Divider" as const, dividerAlign: block.align ?? "center" };
+    }
+    if (block.type === "video") {
               return {
                 type: "Video" as const,
                 videoUrl: block.videoUrl,
@@ -815,4 +824,42 @@ export async function seedFeedingTheStreets(payload: Payload): Promise<void> {
   payload.logger.info(
     "Seed: created the Feeding the Streets page from the hardcoded page content.",
   );
+}
+
+/**
+ * Seed the `divider-images` collection with the built-in Sunrise horizontal
+ * rule (`public/images/sunriseHR.png`) if no divider images exist yet.
+ */
+export async function seedDividerImages(payload: Payload): Promise<void> {
+  const existing = await payload.count({
+    collection: "divider-images" as never,
+  });
+  if (existing.totalDocs > 0) return;
+
+  try {
+    const filePath = path.resolve("public", "images", "sunriseHR.png");
+    const data = await readFile(filePath);
+    const media = await payload.create({
+      collection: "media",
+      data: {
+        alt: "Sunrise horizontal rule",
+      },
+      file: {
+        data,
+        mimetype: "image/png",
+        name: "sunriseHR.png",
+        size: data.length,
+      },
+    });
+    await payload.create({
+      collection: "divider-images" as never,
+      data: {
+        name: "Sunrise",
+        image: media.id,
+      } as never,
+    });
+  } catch (error) {
+    payload.logger.warn("Seed: could not seed Sunrise divider image.");
+    payload.logger.debug({ error });
+  }
 }

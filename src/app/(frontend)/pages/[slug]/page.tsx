@@ -53,8 +53,26 @@ export default async function CustomPage({ params }: Params) {
           </ol>
         </nav>
 
-        <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
-        <h1 className="font-heading text-ink text-5xl">{page.title}</h1>
+        <div
+          className={
+            page.titleAlignment === "center"
+              ? "text-center"
+              : page.titleAlignment === "right"
+                ? "text-right"
+                : "text-left"
+          }
+        >
+          <div
+            className={`bg-gold mb-4 h-[4px] w-28 rounded-full ${
+              page.titleAlignment === "center"
+                ? "mx-auto"
+                : page.titleAlignment === "right"
+                  ? "ml-auto"
+                  : ""
+            }`}
+          />
+          <h1 className="font-heading text-ink text-5xl">{page.title}</h1>
+        </div>
 
         {/* The page body — blocks in the order the editor stacked them
             (shared with the home page's "Custom Page" section). */}

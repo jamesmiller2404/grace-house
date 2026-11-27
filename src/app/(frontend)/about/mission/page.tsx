@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import CustomPageBlocks from "@/components/CustomPageBlocks";
+import DividerImage from "@/components/DividerImage";
 import { getMissionPage } from "@/payload/queries";
 
 export const metadata = {
@@ -8,56 +9,55 @@ export const metadata = {
 };
 
 /**
- * The Mission page, reading its Title and body text from the `mission-page`
- * collection in the database (managed in /admin/collections/mission-page).
+ * The Mission page, reading its Title and blocks (with legacy body/bodyContent
+ * fallback) from the `mission-page` collection in the database.
  */
 export default async function MissionPage() {
-  const { title, body, bodyContent } = await getMissionPage();
+  const { title, body, bodyContent, blocks } = await getMissionPage();
+  const hasBlocks = blocks && blocks.length > 0;
+
   return (
-    <>
-      <main className="flex-1 bg-cream px-6 py-14">
-        <div className="mx-auto max-w-6xl">
-          <nav
-            aria-label="Breadcrumb"
-            className="text-terra pb-1 text-base font-bold"
-          >
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link
-                  href="/"
-                  className="underline-offset-4 hover:underline"
-                >
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden className="text-ink/60 font-normal">›</li>
-              <li aria-current="page">{title}</li>
-            </ol>
-          </nav>
+    <main className="flex-1 bg-cream px-6 py-14">
+      <div className="mx-auto max-w-6xl">
+        <nav
+          aria-label="Breadcrumb"
+          className="text-terra pb-1 text-base font-bold"
+        >
+          <ol className="flex flex-wrap items-center gap-2">
+            <li>
+              <Link href="/" className="underline-offset-4 hover:underline">
+                Home
+              </Link>
+            </li>
+            <li aria-hidden className="text-ink/60 font-normal">
+              ›
+            </li>
+            <li aria-current="page">{title}</li>
+          </ol>
+        </nav>
 
-          {/* Mission */}
-          <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
-          <h1 className="font-heading text-ink text-5xl">{title}</h1>
-          {bodyContent ? (
-            <div className="gh-mission-rich-text mt-4 max-w-[60ch] text-lg leading-relaxed">
-              <RichText data={bodyContent as never} />
-            </div>
-          ) : (
-            <p className="whitespace-pre-line mt-4 max-w-[60ch] text-lg leading-relaxed">
-              {body}
-            </p>
-          )}
+        <div className="bg-gold mb-4 h-[4px] w-28 rounded-full" />
+        <h1 className="font-heading text-ink text-5xl">{title}</h1>
 
-          {/* Decorative sunrise illustration (transparent PNG) */}
-          <Image
-            src="/images/sunriseHR.png"
-            alt=""
-            width={959}
-            height={72}
-            className="mt-8 h-auto w-full max-w-[60ch]"
-          />
-        </div>
-      </main>
-    </>
+        {hasBlocks ? (
+          <div className="max-w-[70ch]">
+            <CustomPageBlocks blocks={blocks} />
+          </div>
+        ) : (
+          <>
+            {bodyContent ? (
+              <div className="gh-mission-rich-text mt-4 max-w-[60ch] text-lg leading-relaxed">
+                <RichText data={bodyContent as never} />
+              </div>
+            ) : (
+              <p className="whitespace-pre-line mt-4 max-w-[60ch] text-lg leading-relaxed">
+                {body}
+              </p>
+            )}
+            <DividerImage image="/images/dividers/sunriseHR.png" align="left" />
+          </>
+        )}
+      </div>
+    </main>
   );
 }
