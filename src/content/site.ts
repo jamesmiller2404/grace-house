@@ -23,11 +23,11 @@ export const site = {
         { label: "Board Members", href: "/about/board" },
         { label: "Staff", href: "/about/staff" },
         { label: "News & Support", href: "/news-and-support" },
+        { label: "Upcoming Events", href: "/events" },
       ],
     },
     { label: "Lives Changed", href: "/stories" },
     { label: "Feeding the Streets", href: "/feeding-the-streets" },
-    { label: "Upcoming Events", href: "/events" },
   ],
   facts: [
     "Private pay: no Medi-Cal or insurance",

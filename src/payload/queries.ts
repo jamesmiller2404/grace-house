@@ -1229,18 +1229,31 @@ export const getCustomPageById = cache(
  * for the site layout to hand to the nav. Disabled spare pages never appear.
  */
 export const getCustomNavItems = cache(
-  async (): Promise<CustomNavLink[]> => {
+  async (): Promise<{
+    lifeLinks: CustomNavLink[];
+    moreLinks: CustomNavLink[];
+  }> => {
     await connection();
     const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "custom-pages",
       pagination: false,
-      where: { enabled: { equals: true } },
+      sort: "title",
     });
-    return docs.map((doc) => ({
-      label: doc.title,
-      href: `/pages/${customPageSlug(doc.title)}`,
-    }));
+    const lifeLinks: CustomNavLink[] = [];
+    const moreLinks: CustomNavLink[] = [];
+    for (const doc of docs) {
+      const loc =
+        (doc as PayloadCustomPage & { menuLocation?: string | null })
+          .menuLocation ?? (doc.enabled ? "more" : "none");
+      const entry: CustomNavLink = {
+        label: doc.title,
+        href: `/pages/${customPageSlug(doc.title)}`,
+      };
+      if (loc === "life") lifeLinks.push(entry);
+      else if (loc === "more") moreLinks.push(entry);
+    }
+    return { lifeLinks, moreLinks };
   },
 );
 

@@ -46,7 +46,7 @@ access: {
   admin: {
     group: "Site Pages",
     useAsTitle: "title",
-    defaultColumns: ["title", "enabled", "updatedAt"],
+    defaultColumns: ["title", "menuLocation", "updatedAt"],
     description:
       'Spare pages you can use for anything. Tick "Show in header menu", name the page and add heading/paragraph/photo blocks — the page goes live at /pages/<page-name> and its name appears in the header\'s "More" dropdown.',
     // Custom Edit view wrapper that paints the mockup frame
@@ -97,16 +97,38 @@ access: {
       },
     },
     {
-      // Off by default — a spare page stays hidden (404, no menu link) until
-      // the editor turns it on. Ticking it and saving publishes both the page
-      // and its "More" dropdown link.
+      name: "menuLocation",
+      type: "select",
+      label: "Header Menu Placement",
+      defaultValue: "none",
+      options: [
+        { label: "Direct link only (not in header menu)", value: "none" },
+        { label: "Life at Grace House dropdown", value: "life" },
+        { label: "More dropdown", value: "more" },
+      ],
+      admin: {
+        description:
+          'Choose where this page appears in the header menu, or keep it as a direct-link-only page using the Direct Link below.',
+      },
+    },
+    {
+      // Legacy boolean kept hidden in sync with menuLocation for backwards compatibility.
       name: "enabled",
       type: "checkbox",
       defaultValue: false,
       label: "Show in header menu",
       admin: {
-        description:
-          'Tick to add this page to the header\'s "More" dropdown. Leave unticked to keep it off the header menu while still allowing you to link to it using the Direct Link below.',
+        hidden: true,
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData }) => {
+            const loc = (siblingData as { menuLocation?: string } | undefined)?.menuLocation;
+            if (loc === "life" || loc === "more") return true;
+            if (loc === "none") return false;
+            return undefined;
+          },
+        ],
       },
     },
     {

@@ -1128,8 +1128,9 @@ export interface Board {
 export interface CustomPage {
   id: number;
   /**
-   * Tick to add this page to the header's "More" dropdown. Leave unticked to keep it off the header menu while still allowing you to link to it using the Direct Link below.
+   * Choose where this page appears in the header menu, or keep it as a direct-link-only page using the Direct Link below.
    */
+  menuLocation?: ('none' | 'life' | 'more') | null;
   enabled?: boolean | null;
   /**
    * The page name — it becomes the heading on the page, the link label in the "More" dropdown and the URL (/pages/<page-name>). Renaming the page moves its URL.
@@ -1768,6 +1769,7 @@ export interface BoardSelect<T extends boolean = true> {
  * via the `definition` "custom-pages_select".
  */
 export interface CustomPagesSelect<T extends boolean = true> {
+  menuLocation?: T;
   enabled?: T;
   title?: T;
   titleAlignment?: T;

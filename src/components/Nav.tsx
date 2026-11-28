@@ -113,10 +113,12 @@ function TopBarIconSvg({ name }: { name: HeaderIconName }) {
  * bar is removed and the main header adjusts its spacing/height cleanly.
  */
 export default function Nav({
-  customLinks = [],
+  lifeLinks = [],
+  moreLinks = [],
   topBar = headerTopBarDefaults,
 }: {
-  customLinks?: CustomNavLink[];
+  lifeLinks?: CustomNavLink[];
+  moreLinks?: CustomNavLink[];
   topBar?: HeaderTopBarContent;
 }) {
   const mobileMenuRef = useRef<HTMLDetailsElement>(null);
@@ -126,13 +128,24 @@ export default function Nav({
   const rightMeasureRef = useRef<HTMLDivElement>(null);
   const [topBarWrapped, setTopBarWrapped] = useState(false);
 
-  const nav = [
+  const nav: Array<{
+    label: string;
+    href?: string;
+    children?: Array<{ label: string; href: string }>;
+  }> = [
     ...site.nav,
-    ...(customLinks.length > 0
+    {
+      label: "Life at Grace House",
+      children: lifeLinks.map((link) => ({
+        label: link.label,
+        href: link.href,
+      })),
+    },
+    ...(moreLinks.length > 0
       ? [
           {
             label: "More",
-            children: customLinks.map((link) => ({
+            children: moreLinks.map((link) => ({
               label: link.label,
               href: link.href,
             })),
@@ -396,24 +409,30 @@ export default function Nav({
                       />
                     </svg>
                   </button>
-                  <div className="invisible absolute left-0 top-full z-20 pt-2 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <div className="invisible absolute right-0 top-full z-20 pt-2 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                     <div className="bg-anchor ring-cream/20 w-56 rounded-md p-2 shadow-lg ring-1">
-                      {l.children.map((c) => (
-                        <Link
-                          key={c.href}
-                          href={c.href}
-                          className="text-cream/90 hover:bg-cream/10 hover:text-lift block rounded-md px-3 py-2 font-sans text-base font-medium"
-                        >
-                          {c.label}
-                        </Link>
-                      ))}
+                      {l.children.length > 0 ? (
+                        l.children.map((c) => (
+                          <Link
+                            key={c.href}
+                            href={c.href}
+                            className="text-cream/90 hover:bg-cream/10 hover:text-lift block rounded-md px-3 py-2 font-sans text-base font-medium"
+                          >
+                            {c.label}
+                          </Link>
+                        ))
+                      ) : (
+                        <span className="text-cream/60 block px-3 py-2 font-sans text-sm italic">
+                          Coming soon
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
               ) : (
                 <Link
                   key={l.href}
-                  href={l.href}
+                  href={l.href || "/"}
                   className="border-cream/25 text-cream/90 hover:text-lift rounded-md border px-2 py-1 font-sans font-medium whitespace-nowrap xl:px-3 xl:py-1.5"
                 >
                   {l.label}
@@ -435,20 +454,26 @@ export default function Nav({
                       <p className="text-gold px-3 pt-2 pb-1 text-xs font-bold tracking-wider uppercase">
                         {l.label}
                       </p>
-                      {l.children.map((c) => (
-                        <Link
-                          key={c.href}
-                          href={c.href}
-                          onClick={closeMobileMenu}
-                          className="text-cream/90 hover:bg-cream/10 block rounded-md px-3 py-2 text-base"
-                        >
-                          {c.label}
-                        </Link>
-                      ))}
+                      {l.children.length > 0 ? (
+                        l.children.map((c) => (
+                          <Link
+                            key={c.href}
+                            href={c.href}
+                            onClick={closeMobileMenu}
+                            className="text-cream/90 hover:bg-cream/10 block rounded-md px-3 py-2 text-base"
+                          >
+                            {c.label}
+                          </Link>
+                        ))
+                      ) : (
+                        <span className="text-cream/60 block px-3 py-2 text-sm italic">
+                          Coming soon
+                        </span>
+                      )}
                     </>
                   ) : (
                     <Link
-                      href={l.href}
+                      href={l.href || "/"}
                       onClick={closeMobileMenu}
                       className="text-cream/90 hover:bg-cream/10 block rounded-md px-3 py-2 text-base"
                     >

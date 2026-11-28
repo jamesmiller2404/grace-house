@@ -63,6 +63,7 @@ import * as migration_20261126_081000_news_and_support from './20261126_081000_n
 import * as migration_20261127_095500_get_help_now_editable_copy from './20261127_095500_get_help_now_editable_copy';
 import * as migration_20261127_105000_header_global from './20261127_105000_header_global';
 import * as migration_20261127_234500_header_top_bar_phone from './20261127_234500_header_top_bar_phone';
+import * as migration_20261128_004500_custom_pages_menu_location from './20261128_004500_custom_pages_menu_location';
 
 export const migrations = [
   {
@@ -389,5 +390,10 @@ export const migrations = [
     up: migration_20261127_234500_header_top_bar_phone.up,
     down: migration_20261127_234500_header_top_bar_phone.down,
     name: '20261127_234500_header_top_bar_phone',
+  },
+  {
+    up: migration_20261128_004500_custom_pages_menu_location.up,
+    down: migration_20261128_004500_custom_pages_menu_location.down,
+    name: '20261128_004500_custom_pages_menu_location',
   },
 ];

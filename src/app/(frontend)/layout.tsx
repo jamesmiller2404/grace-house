@@ -42,7 +42,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [customLinks, footerContact, headerTopBar] = await Promise.all([
+  const [customNav, footerContact, headerTopBar] = await Promise.all([
     getCustomNavItems(),
     getFooterContact(),
     getHeaderTopBar(),
@@ -51,7 +51,11 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${dmSerif.variable} ${source.variable}`}>
       <body className="flex min-h-screen flex-col">
-        <Nav customLinks={customLinks} topBar={headerTopBar} />
+        <Nav
+          lifeLinks={customNav.lifeLinks}
+          moreLinks={customNav.moreLinks}
+          topBar={headerTopBar}
+        />
         {children}
         <Footer
           phone={footerContact.phone}
