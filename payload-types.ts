@@ -117,11 +117,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-layout': HomeLayout;
+    header: Header;
     footer: Footer;
     'contact-info': ContactInfo;
   };
   globalsSelect: {
     'home-layout': HomeLayoutSelect<false> | HomeLayoutSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
   };
@@ -1895,6 +1897,90 @@ export interface HomeLayout {
   createdAt?: string | null;
 }
 /**
+ * Configure the site-wide header top bar: toggle visibility, add rich text, social media or utility icons, and action buttons with links.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  topBar?: {
+    /**
+     * Uncheck to hide the top bar across the entire site. When hidden, the main header automatically adjusts its layout and height.
+     */
+    enabled?: boolean | null;
+    /**
+     * Hex color for the top bar background (default #624e92).
+     */
+    backgroundColor?: string | null;
+    /**
+     * Default hex color for text and icons in the top bar (default #110d17).
+     */
+    textColor?: string | null;
+    /**
+     * Optional rich text shown on the left side of the top bar (supports bold, italic, and links).
+     */
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Optional phone number centered in the middle of the top bar (automatically clickable as a tel: link).
+     */
+    phone?: string | null;
+    /**
+     * Add clickable social media or utility icons (Facebook, Instagram, YouTube, Phone, Email, etc.) to the top bar.
+     */
+    icons?:
+      | {
+          icon:
+            | 'facebook'
+            | 'instagram'
+            | 'youtube'
+            | 'x'
+            | 'linkedin'
+            | 'tiktok'
+            | 'phone'
+            | 'mail'
+            | 'location'
+            | 'clock'
+            | 'heart'
+            | 'info';
+          label: string;
+          href: string;
+          openInNewTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Action buttons shown on the right side of the top bar (e.g. GET HELP and DONATE).
+     */
+    buttons?:
+      | {
+          label: string;
+          href: string;
+          bgColor?: string | null;
+          textColor?: string | null;
+          openInNewTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * The phone number, email address and street address shown in the footer's 'Get Help' column. Pick each one from the entries registered in the Contact Info panel (editing them there updates the footer automatically), or choose 'Other (enter manually)' for a one-off.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2010,6 +2096,43 @@ export interface HomeLayoutSelect<T extends boolean = true> {
         enabled?: T;
         customPage?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  topBar?:
+    | T
+    | {
+        enabled?: T;
+        backgroundColor?: T;
+        textColor?: T;
+        content?: T;
+        phone?: T;
+        icons?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              href?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              bgColor?: T;
+              textColor?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

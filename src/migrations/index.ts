@@ -61,6 +61,8 @@ import * as migration_20261126_025634_divider_images_and_mission_blocks from './
 import * as migration_20261126_032800_divider_image_static_paths from './20261126_032800_divider_image_static_paths';
 import * as migration_20261126_081000_news_and_support from './20261126_081000_news_and_support';
 import * as migration_20261127_095500_get_help_now_editable_copy from './20261127_095500_get_help_now_editable_copy';
+import * as migration_20261127_105000_header_global from './20261127_105000_header_global';
+import * as migration_20261127_234500_header_top_bar_phone from './20261127_234500_header_top_bar_phone';
 
 export const migrations = [
   {
@@ -377,5 +379,15 @@ export const migrations = [
     up: migration_20261127_095500_get_help_now_editable_copy.up,
     down: migration_20261127_095500_get_help_now_editable_copy.down,
     name: '20261127_095500_get_help_now_editable_copy',
+  },
+  {
+    up: migration_20261127_105000_header_global.up,
+    down: migration_20261127_105000_header_global.down,
+    name: '20261127_105000_header_global',
+  },
+  {
+    up: migration_20261127_234500_header_top_bar_phone.up,
+    down: migration_20261127_234500_header_top_bar_phone.down,
+    name: '20261127_234500_header_top_bar_phone',
   },
 ];

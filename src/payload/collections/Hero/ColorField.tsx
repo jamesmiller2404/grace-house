@@ -23,6 +23,8 @@ const DEFAULT_COLORS: Record<string, string> = {
   "primaryCta.textColor": "#ffffff",
   "secondaryCta.bgColor": "#ffffff",
   "secondaryCta.textColor": "#242725",
+  "topBar.backgroundColor": "#624e92",
+  "topBar.textColor": "#110d17",
 };
 
 const ColorField: TextFieldClientComponent = ({ field, path }) => {

@@ -18,6 +18,7 @@ import { Donate } from "@/payload/collections/Donate";
 import { CustomPages } from "@/payload/collections/CustomPages";
 import { GetHelpNow } from "@/payload/collections/GetHelpNow";
 import { HomeLayout } from "@/payload/globals/HomeLayout";
+import { Header } from "@/payload/globals/Header";
 import { ContactInfo } from "@/payload/globals/ContactInfo";
 import { Footer } from "@/payload/globals/Footer";
 import { Faq } from "@/payload/collections/Faq";
@@ -73,7 +74,7 @@ export default buildConfig({
     Users,
     AdminNotifications,
   ],
-  globals: [HomeLayout, Footer, ContactInfo],
+  globals: [HomeLayout, Header, Footer, ContactInfo],
   serverURL: siteURL,
   cors: trustedOrigins,
   csrf: trustedOrigins,

@@ -5,7 +5,11 @@ import {
 } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { getCustomNavItems, getFooterContact } from "@/payload/queries";
+import {
+  getCustomNavItems,
+  getFooterContact,
+  getHeaderTopBar,
+} from "@/payload/queries";
 import "./globals.css";
 
 // DM Serif Display ships in one weight only (400)
@@ -14,7 +18,12 @@ const dmSerif = DM_Serif_Display({
   weight: "400",
   variable: "--font-dm-serif",
 });
-const source = Source_Sans_3({ subsets: ["latin"], variable: "--font-source" });
+const source = Source_Sans_3({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-source",
+});
 
 export const metadata: Metadata = {
   title: "Grace House Nor Cal",
@@ -33,19 +42,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // The enabled custom (spare) pages become the header's "More" dropdown.
-  // Empty while every spare page is disabled — the dropdown then vanishes.
-  const customLinks = await getCustomNavItems();
-
-  // The phone number, email address and street address the footer shows,
-  // picked in the footer admin panel (/admin/globals/footer) from the Contact
-  // Info panel's registered entries — with the same fallback chain there.
-  const footerContact = await getFooterContact();
+  const [customLinks, footerContact, headerTopBar] = await Promise.all([
+    getCustomNavItems(),
+    getFooterContact(),
+    getHeaderTopBar(),
+  ]);
 
   return (
     <html lang="en" className={`${dmSerif.variable} ${source.variable}`}>
       <body className="flex min-h-screen flex-col">
-        <Nav customLinks={customLinks} />
+        <Nav customLinks={customLinks} topBar={headerTopBar} />
         {children}
         <Footer
           phone={footerContact.phone}

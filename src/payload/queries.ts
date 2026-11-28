@@ -12,6 +12,11 @@ import {
 } from "@/content/donate";
 import type { Hero as PayloadHero } from "../../payload-types";
 import { heroDefaults, type HeroContent } from "@/content/hero";
+import {
+  headerTopBarDefaults,
+  type HeaderIconName,
+  type HeaderTopBarContent,
+} from "@/content/header";
 import type { Intro as PayloadIntro } from "../../payload-types";
 import { introDefaults, type IntroContent } from "@/content/intro";
 import type { GetHelpNow as PayloadGetHelpNow } from "../../payload-types";
@@ -1423,3 +1428,77 @@ export const getNewsAndSupport = cache(
     return items;
   },
 );
+
+/**
+ * Site-wide header top utility bar configuration from the `header` global
+ * (/admin/globals/header). Falls back to `headerTopBarDefaults` before the
+ * global has been saved.
+ */
+export const getHeaderTopBar = cache(async (): Promise<HeaderTopBarContent> => {
+  await connection();
+  const payload = await getPayload({ config });
+  try {
+    const doc = (await payload.findGlobal({
+      slug: "header" as never,
+      depth: 0,
+    })) as {
+      topBar?: {
+        enabled?: boolean | null;
+        backgroundColor?: string | null;
+        textColor?: string | null;
+        content?: unknown;
+        phone?: string | null;
+        icons?: Array<{
+          icon?: string | null;
+          label?: string | null;
+          href?: string | null;
+          openInNewTab?: boolean | null;
+        }> | null;
+        buttons?: Array<{
+          label?: string | null;
+          href?: string | null;
+          bgColor?: string | null;
+          textColor?: string | null;
+          openInNewTab?: boolean | null;
+        }> | null;
+      } | null;
+    };
+
+    const tb = doc?.topBar;
+    if (!tb) return headerTopBarDefaults;
+
+    const icons = (tb.icons ?? [])
+      .filter((item) => item?.icon && item?.href)
+      .map((item) => ({
+        icon: item.icon as HeaderIconName,
+        label: item.label?.trim() || item.icon || "Link",
+        href: item.href!.trim(),
+        openInNewTab: item.openInNewTab !== false,
+      }));
+
+    const hasButtonsArray = Array.isArray(tb.buttons);
+    const buttons = hasButtonsArray
+      ? tb.buttons!
+          .filter((b) => b?.label?.trim() && b?.href?.trim())
+          .map((b) => ({
+            label: b.label!.trim(),
+            href: b.href!.trim(),
+            bgColor: b.bgColor || "#9e5640",
+            textColor: b.textColor || "#ffffff",
+            openInNewTab: Boolean(b.openInNewTab),
+          }))
+      : headerTopBarDefaults.buttons;
+
+    return {
+      enabled: tb.enabled !== false,
+      backgroundColor: tb.backgroundColor || headerTopBarDefaults.backgroundColor,
+      textColor: tb.textColor || headerTopBarDefaults.textColor,
+      content: tb.content,
+      phone: typeof tb.phone === "string" ? tb.phone.trim() : "",
+      icons,
+      buttons,
+    };
+  } catch {
+    return headerTopBarDefaults;
+  }
+});
